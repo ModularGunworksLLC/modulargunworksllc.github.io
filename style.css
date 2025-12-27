@@ -62,16 +62,6 @@ body {
   grid-template-columns: repeat(5, 1fr);
   gap: 20px;
 }
-
-.tile {
-  background: #222;
-  padding: 30px;
-  text-align: center;
-  color: #ddd;
-  text-decoration: none;
-  border-radius: 6px;
-  border: 1px solid #333;
-}
 .tile {
   background: #222;
   padding: 20px;
@@ -83,12 +73,16 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: space-between;
   gap: 10px;
+  aspect-ratio: 1 / 1; /* Makes the tile square */
+  overflow: hidden;
 }
 
 .tile img {
-  max-width: 100%;
-  height: auto;
+  max-height: 70%;
+  width: auto;
+  object-fit: contain;
   display: block;
   margin: 0 auto;
   border-radius: 6px;
@@ -98,6 +92,7 @@ body {
   font-size: 1.1rem;
   font-weight: bold;
 }
+
 
 .tile:hover {
   background: #333;
