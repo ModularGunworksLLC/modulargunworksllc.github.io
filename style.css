@@ -84,6 +84,7 @@ body {
   height: 100%;
   aspect-ratio: 1 / 1;   /* forces a square image box */
   object-fit: cover;     /* fills the square without stretching */
+  padding: 10px; /* <-- This creates space inside the square */
   border-radius: 6px;
   display: block;
 }
