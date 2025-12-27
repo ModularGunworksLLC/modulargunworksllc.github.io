@@ -145,6 +145,13 @@ body {
   align-items: center;
   z-index: 99999;
 }
+.popup-logo {
+  max-width: 200px;
+  margin-bottom: 20px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
 
 .popup-content {
   background: #222;
