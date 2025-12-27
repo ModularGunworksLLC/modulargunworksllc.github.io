@@ -59,14 +59,15 @@ body {
 /* ============================
    PROMO BANNER
    ============================ */
-
 .promo-banner {
-  background: #c40000; /* brighter red */
-  color: white;
-  text-align: center;
+  background: linear-gradient(to right, #c40000, #ff0000);
+  color: #fff;
   padding: 25px;
-  font-size: 1.2rem;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+  font-size: 1.3rem;
+  font-weight: bold;
+  text-shadow: 1px 1px 2px #000;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.6);
+  letter-spacing: 0.5px;
 }
 
 /* ============================
@@ -103,11 +104,10 @@ body {
   box-shadow: 0 2px 6px rgba(0,0,0,0.4);
   transition: all 0.25s ease-in-out;
 }
-
 .tile:hover {
   background: #333;
-  transform: scale(1.03);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.6);
+  transform: scale(1.05);
+  box-shadow: 0 6px 14px rgba(0,0,0,0.7);
 }
 
 .image-box {
@@ -123,12 +123,13 @@ body {
   object-fit: cover;
   display: block;
   border-radius: 6px;
+  box-shadow: 0 0 10px rgba(255,255,255,0.05);
 }
 
 .tile span {
-  font-size: 1.1rem;
-  font-weight: bold;
-  margin-top: auto;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #f2f2f2;
 }
 
 /* ============================
