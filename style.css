@@ -80,12 +80,12 @@ body {
 }
 
 .tile img {
-  max-height: 70%;
-  width: auto;
-  object-fit: contain;
-  display: block;
-  margin: 0 auto;
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 1 / 1;   /* forces a square image box */
+  object-fit: cover;     /* fills the square without stretching */
   border-radius: 6px;
+  display: block;
 }
 
 .tile span {
