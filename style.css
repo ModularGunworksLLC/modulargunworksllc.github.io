@@ -92,7 +92,7 @@ body {
   flex: 1;
   display: flex;
   justify-content: center;
-  transform: translateX(40px); /* nudges search bar to the right */
+  transform: translateX(70px); /* nudges search bar to the right */
 }
 
 .logo {
