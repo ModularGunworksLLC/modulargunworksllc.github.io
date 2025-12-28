@@ -1,18 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
 <head>
   <meta charset="UTF-8">
   <title>Privacy Policy – Modular Gunworks LLC</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" type="image/png" href="favicon.png">
 </head>
 
 <body>
 
-  <!-- HERO FLAG HEADER -->
-  <a href="index.html" class="hero-header">
-    <div class="hero-title">Modular Gunworks LLC</div>
-    <div class="hero-subtitle">Privacy Policy</div>
-  </a>
+  <!-- HERO FLAG HEADER (FULL WIDTH) -->
+  <div class="hero-header">
+    PRIVACY POLICY – MODULAR GUNWORKS LLC
+  </div>
 
   <!-- MAIN SITE HEADER -->
   <header class="site-header">
@@ -41,37 +40,15 @@
     <a href="shop/sale.md">ON SALE</a>
   </nav>
 
-  <!-- DOCUMENT HUB LAYOUT -->
-  <div class="doc-layout">
+  <!-- PAGE CONTENT (REPLACES CATEGORY GRID) -->
+  <section class="category-grid">
+    <h2>Privacy Policy</h2>
 
-    <!-- SIDEBAR -->
-    <aside class="doc-sidebar">
-      <h2>Explore Our Document Hub</h2>
-      <ul>
-        <li><a href="#sec-privacy-intro">Introduction</a></li>
-        <li><a href="#sec-privacy-changes">Changes to This Privacy Policy</a></li>
-        <li><a href="#sec-privacy-collection">Information Collection</a></li>
-        <li><a href="#sec-privacy-processing">Why We Process Your Information</a></li>
-        <li><a href="#sec-privacy-cookies">Cookies & Similar Technologies</a></li>
-        <li><a href="#sec-privacy-california">California Shine the Light Disclosure</a></li>
-        <li><a href="#sec-privacy-contact">Contact Us</a></li>
-        <li><a href="#sec-privacy-state-notices">US State Privacy Notices</a></li>
-        <li><a href="#sec-privacy-request">Make a Privacy Request</a></li>
-        <li><a href="#sec-privacy-choices">Your Privacy Choices</a></li>
-      </ul>
-    </aside>
+    <div class="policy-container">
 
-    <!-- MAIN CONTENT -->
-    <main class="doc-main">
-
-      <h1 class="policy-title">Privacy Policy – Modular Gunworks LLC</h1>
-      <p class="policy-updated">Last Updated: 23 September 2025</p>
+      <p class="policy-updated"><strong>Last Updated:</strong> 23 September 2025</p>
 
       <button id="expand-collapse-all" class="expand-all-btn">Expand All</button>
-
-      <!-- ============================
-           PRIVACY POLICY SECTIONS
-           ============================ -->
 
       <!-- INTRO -->
       <div id="sec-privacy-intro" class="policy-section">
@@ -220,8 +197,8 @@
         </div>
       </div>
 
-    </main>
-  </div>
+    </div>
+  </section>
 
   <!-- FOOTER -->
   <footer class="site-footer">
@@ -230,8 +207,8 @@
         <h4>Company</h4>
         <ul>
           <li><a href="about.html">About Modular Gunworks</a></li>
-          <li><a href="careers.html">Careers</a></li>
-          <li><a href="blog.html">Blog</a></li>
+          <li><a href="#">Careers</a></li>
+          <li><a href="#">Blog</a></li>
           <li><a href="contact.html">Contact Us</a></li>
         </ul>
       </div>
@@ -239,30 +216,116 @@
       <div>
         <h4>Info</h4>
         <ul>
-          <li><a href="terms.html#sec-faq">FAQ</a></li>
-          <li><a href="terms.html#sec-ffl-transfer">FFL Transfers</a></li>
-          <li><a href="order-status.html">Order Status</a></li>
-          <li><a href="terms.html#sec-shipping-policy">Shipping Info</a></li>
+          <li><a href="#">FAQ</a></li>
+          <li><a href="#">FFL Transfers</a></li>
+          <li><a href="#">Order Status</a></li>
+          <li><a href="#">Shipping Info</a></li>
         </ul>
       </div>
 
       <div>
         <h4>Legal</h4>
         <ul>
-          <li><a href="terms.html#sec-terms">Terms & Conditions</a></li>
+          <li><a href="terms.html">Terms & Conditions</a></li>
           <li><a href="privacy.html">Privacy Policy</a></li>
-          <li><a href="terms.html#sec-returns">Return Policy</a></li>
+          <li><a href="#">Return Policy</a></li>
         </ul>
       </div>
     </div>
 
     <div class="footer-bottom">
-      © 2025 Modular Gunworks LLC. All rights reserved.  
-      <br>support@modulargunworks.com
+      <p>© 2025 Modular Gunworks LLC. All rights reserved.</p>
+      <p><a href="mailto:support@modulargunworks.com">support@modulargunworks.com</a></p>
     </div>
   </footer>
 
-  <script src="scripts.js"></script>
+  <!-- AGE VERIFICATION POPUP -->
+  <div id="age-verification" class="popup">
+    <div class="popup-content">
+      <img src="images/modular-gunworks-llc.png" alt="Modular Gunworks LLC" class="popup-logo">
+
+      <h2>Are you at least 18 years old?</h2>
+      <p>By entering this site, you agree to our 
+        <a href="privacy.html">Privacy Policy</a> and 
+        <a href="terms.html">Terms & Conditions</a>.
+      </p>
+
+      <label class="remember">
+        <input type="checkbox" id="remember-me">
+        Remember me temporarily while I shop
+      </label>
+
+      <div class="popup-buttons">
+        <button id="yes-button">YES</button>
+        <button id="no-button">NO</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Add bullet icons to all policy-toggle buttons
+    document.querySelectorAll('.policy-toggle').forEach(btn => {
+      if (!btn.querySelector('.bullet-icon')) {
+        const icon = document.createElement('span');
+        icon.classList.add('bullet-icon');
+        btn.prepend(icon);
+      }
+    });
+
+    // Individual expand/collapse
+    document.querySelectorAll('.policy-toggle').forEach(toggle => {
+      const content = toggle.nextElementSibling;
+      if (content && content.style.display !== 'block') {
+        content.style.display = 'none';
+      }
+      toggle.addEventListener('click', () => {
+        const isOpen = content.style.display === 'block';
+        content.style.display = isOpen ? 'none' : 'block';
+        toggle.classList.toggle('open', !isOpen);
+      });
+    });
+
+    // Expand / Collapse All
+    const expandAllBtn = document.getElementById('expand-collapse-all');
+    if (expandAllBtn) {
+      expandAllBtn.addEventListener('click', () => {
+        const toggles = document.querySelectorAll('.policy-toggle');
+        const expand = expandAllBtn.textContent.trim() === 'Expand All';
+        toggles.forEach(toggle => {
+          const content = toggle.nextElementSibling;
+          if (!content) return;
+          content.style.display = expand ? 'block' : 'none';
+          toggle.classList.toggle('open', expand);
+        });
+        expandAllBtn.textContent = expand ? 'Collapse All' : 'Expand All';
+      });
+    }
+
+    // Age verification popup
+    const popup = document.getElementById('age-verification');
+    const yesBtn = document.getElementById('yes-button');
+    const noBtn = document.getElementById('no-button');
+    const rememberMe = document.getElementById('remember-me');
+
+    const confirmed = localStorage.getItem('ageConfirmed');
+
+    if (!confirmed) {
+      popup.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+    }
+
+    yesBtn.onclick = () => {
+      if (rememberMe.checked) {
+        localStorage.setItem('ageConfirmed', 'true');
+      }
+      popup.style.display = 'none';
+      document.body.style.overflow = 'auto';
+    };
+
+    noBtn.onclick = () => {
+      window.location.href = 'https://www.google.com';
+    };
+  </script>
 
 </body>
 </html>
