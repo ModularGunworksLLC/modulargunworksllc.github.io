@@ -13,10 +13,12 @@
     <div class="header-left">
       <img src="images/modular-gunworks-llc.png" alt="Modular Gunworks LLC Logo" class="logo">
     </div>
-
-    <div class="header-center">
-      <input type="text" class="search-bar" placeholder="Search ammo, gear, or answers...">
-    </div>
+<form class="search-form" action="/search">
+  <input type="text" class="search-bar" name="q" placeholder="Search ammo, gear, or answers...">
+  <button type="submit" class="search-button">
+    <img src="images/search-icon.svg" alt="Search">
+  </button>
+</form>
 
     <div class="header-right">
       <a href="#">Account Login</a>
