@@ -60,6 +60,30 @@ body {
   /* --- OPTIONAL FADE-IN ANIMATION --- */
   animation: fadeIn 1.2s ease-out;
 }
+.hero-header {
+  display: flex; /* keep your layout */
+  text-decoration: none; /* remove underline */
+  color: inherit; /* keep white text */
+}
+.hero-title {
+  font-size: 3rem;
+  font-weight: 900;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  -webkit-text-stroke: 1px rgba(0,0,0,0.6);
+  text-shadow:
+    0 0 8px rgba(0,0,0,0.9),
+    0 0 12px rgba(0,0,0,0.7),
+    2px 2px 4px rgba(0,0,0,0.9);
+}
+
+.hero-subtitle {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-top: 0.35rem;
+  opacity: 0.95;
+  letter-spacing: 2px;
+}
 
 /* --- OPTIONAL BACKPLATE (UNCOMMENT TO ENABLE) --- 
 .hero-header::before {
