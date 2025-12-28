@@ -61,7 +61,7 @@ body {
   animation: fadeIn 1.2s ease-out;
 }
 
-/* --- OPTIONAL BACKPLATE (UNCOMMENT TO ENABLE) --- */
+/* --- OPTIONAL BACKPLATE (UNCOMMENT TO ENABLE) --- 
 .hero-header::before {
   content: "";
   position: absolute;
