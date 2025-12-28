@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Privacy Policy - Modular Gunworks LLC</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <div class="hero-header">
+    Privacy Policy
+  </div>
+
+  <div class="policy-container">
+    <h1 class="policy-title">Privacy Policy</h1>
+    <p class="policy-updated">Last Updated: 23 Sept 2025</p>
+
+    <div class="policy-section">
+      <button class="policy-toggle">Introduction</button>
+      <div class="policy-content">
+        <p>
+          This Privacy Policy explains how Modular Gunworks LLC collects, uses, and protects your information.
+        </p>
+      </div>
+    </div>
+
+    <!-- Add more sections here -->
+  </div>
+
+  <script>
+    const toggles = document.querySelectorAll('.policy-toggle');
+    toggles.forEach(toggle => {
+      toggle.addEventListener('click', () => {
+        const content = toggle.nextElementSibling;
+        content.style.display = content.style.display === 'block' ? 'none' : 'block';
+      });
+    });
+  </script>
+
+</body>
+</html>
