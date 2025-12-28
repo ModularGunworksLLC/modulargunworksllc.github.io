@@ -706,3 +706,7 @@ a {
 .policy-section {
   position: relative;          /* ensures absolute positioning stays correct */
 }
+/* FORCE bullet holes farther right */
+.doc-main .policy-toggle .bullet-icon {
+  right: 0 !important;   /* flush right */
+}
