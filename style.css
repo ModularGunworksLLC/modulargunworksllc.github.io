@@ -233,6 +233,11 @@ body {
 .search-bar::placeholder {
   color: #777;
 }
+.search-bar:hover {
+  border-color: #0033aa;
+  box-shadow: 0 0 6px rgba(0,51,170,0.25);
+  background-color: #fafafa;
+}
 
 .search-bar:focus {
   border-color: #0033aa;
