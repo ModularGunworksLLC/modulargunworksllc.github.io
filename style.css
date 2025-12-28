@@ -229,9 +229,21 @@ body {
   z-index: 1000;
 }
 
+/* Logo with tactical badge styling */
 .logo {
   height: 55px;
   width: auto;
+  padding: 6px 12px;
+  background: rgba(255,255,255,0.9);
+  border: 1px solid rgba(0,0,0,0.15);
+  border-radius: 6px;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.25);
+  transition: box-shadow 0.25s ease, transform 0.25s ease;
+}
+
+.logo:hover {
+  box-shadow: 0 5px 14px rgba(0,0,0,0.35);
+  transform: translateY(-2px);
 }
 
 .header-left {
@@ -246,13 +258,27 @@ body {
   justify-content: center;
 }
 
+/* Search bar with magnifying glass icon */
 .search-bar {
   width: 100%;
   max-width: 500px;
-  padding: 12px 15px;
+  padding: 12px 15px 12px 42px; /* space for icon */
   border-radius: 4px;
   border: 1px solid #ccc;
   font-size: 1rem;
+
+  background-image: url('images/search-icon.png');
+  background-repeat: no-repeat;
+  background-size: 18px;
+  background-position: 12px center;
+
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.search-bar:focus {
+  border-color: #0033aa;
+  box-shadow: 0 0 6px rgba(0,51,170,0.35);
+  outline: none;
 }
 
 .header-right a {
@@ -266,6 +292,7 @@ body {
 .header-right a:hover {
   color: #001f66;
 }
+
 
 /* ============================
    CATEGORY NAVIGATION BAR
