@@ -208,7 +208,9 @@
     <!-- MAIN CONTENT -->
     <main class="doc-main">
       <h1 class="policy-title">Terms & Conditions – Modular Gunworks LLC</h1>
-      <p class="policy-updated">Last Updated: 23 Sept 2025</p>
+      <p class="policy-updated">Last Updated: 27 December 2025</p>
+      <button id="expand-collapse-all" class="expand-all-btn">Expand All</button>
+
 
       <!-- TERMS & CONDITIONS CORE -->
       <div id="sec-terms" class="doc-section-anchor"></div>
@@ -1268,41 +1270,74 @@
   </div>
 
   <script>
-    // Collapsible sections
-    const toggles = document.querySelectorAll('.policy-toggle');
-    toggles.forEach(toggle => {
-      toggle.addEventListener('click', () => {
-        const content = toggle.nextElementSibling;
-        const isOpen = content.style.display === 'block';
-        content.style.display = isOpen ? 'none' : 'block';
-      });
-    });
+  // Add bullet icons to all policy-toggle buttons
+  document.querySelectorAll('.policy-toggle').forEach(btn => {
+    if (!btn.querySelector('.bullet-icon')) {
+      const icon = document.createElement('span');
+      icon.classList.add('bullet-icon');
+      btn.prepend(icon);
+    }
+  });
 
-    // Age verification popup
-    const popup = document.getElementById('age-verification');
-    const yesBtn = document.getElementById('yes-button');
-    const noBtn = document.getElementById('no-button');
-    const rememberMe = document.getElementById('remember-me');
+  // Individual expand/collapse for each section + bullet-hole state
+  document.querySelectorAll('.policy-toggle').forEach(toggle => {
+    const content = toggle.nextElementSibling;
 
-    const confirmed = localStorage.getItem('ageConfirmed');
-
-    if (!confirmed) {
-      popup.style.display = 'flex';
-      document.body.style.overflow = 'hidden';
+    // Start collapsed by default
+    if (content && content.style.display !== 'block') {
+      content.style.display = 'none';
     }
 
-    yesBtn.onclick = () => {
-      if (rememberMe.checked) {
-        localStorage.setItem('ageConfirmed', 'true');
-      }
-      popup.style.display = 'none';
-      document.body.style.overflow = 'auto';
-    };
+    toggle.addEventListener('click', () => {
+      if (!content) return;
+      const isOpen = content.style.display === 'block';
+      content.style.display = isOpen ? 'none' : 'block';
+      toggle.classList.toggle('open', !isOpen);
+    });
+  });
 
-    noBtn.onclick = () => {
-      window.location.href = 'https://www.google.com';
-    };
-  </script>
+  // Expand / Collapse All button
+  const expandAllBtn = document.getElementById('expand-collapse-all');
+  if (expandAllBtn) {
+    expandAllBtn.addEventListener('click', () => {
+      const toggles = document.querySelectorAll('.policy-toggle');
+      const expand = expandAllBtn.textContent.trim() === 'Expand All';
 
+      toggles.forEach(toggle => {
+        const content = toggle.nextElementSibling;
+        if (!content) return;
+        content.style.display = expand ? 'block' : 'none';
+        toggle.classList.toggle('open', expand);
+      });
+
+      expandAllBtn.textContent = expand ? 'Collapse All' : 'Expand All';
+    });
+  }
+
+  // Age verification popup
+  const popup = document.getElementById('age-verification');
+  const yesBtn = document.getElementById('yes-button');
+  const noBtn = document.getElementById('no-button');
+  const rememberMe = document.getElementById('remember-me');
+
+  const confirmed = localStorage.getItem('ageConfirmed');
+
+  if (!confirmed) {
+    popup.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+  }
+
+  yesBtn.onclick = () => {
+    if (rememberMe.checked) {
+      localStorage.setItem('ageConfirmed', 'true');
+    }
+    popup.style.display = 'none';
+    document.body.style.overflow = 'auto';
+  };
+
+  noBtn.onclick = () => {
+    window.location.href = 'https://www.google.com';
+  };
+</script>
 </body>
 </html>
