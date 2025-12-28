@@ -437,6 +437,7 @@ body {
    DOCUMENT HUB – LIGHT TACTICAL THEME (ACTIVE)
    ============================================================ */
 
+/* Layout container */
 .doc-layout {
   display: flex;
   max-width: 1400px;
@@ -445,6 +446,7 @@ body {
   padding: 40px 20px;
 }
 
+/* Sidebar */
 .doc-sidebar {
   width: 280px;
   max-height: calc(100vh - 220px);
@@ -454,7 +456,7 @@ body {
 
   padding: 1rem;
   border-radius: 6px;
-  background-color: rgba(255, 255, 255, 0.20);
+  background-color: rgba(255, 255, 255, 0.20); /* frosted glass */
   border: 1px solid rgba(0, 0, 0, 0.15);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.08);
   color: #000;
@@ -487,10 +489,11 @@ body {
   text-decoration: underline;
 }
 
+/* Main content wrapper */
 .doc-main {
   flex: 1;
   min-width: 0;
-  background-color: rgba(255, 255, 255, 0.20);
+  background-color: rgba(255, 255, 255, 0.20); /* frosted glass */
   border-radius: 6px;
   border: 1px solid rgba(0, 0, 0, 0.15);
   box-shadow: 0 0 10px rgba(0,0,0,0.08);
@@ -498,6 +501,7 @@ body {
   color: #000;
 }
 
+/* Title + Last Updated */
 .policy-title {
   font-size: 2rem;
   font-weight: 800;
@@ -512,6 +516,7 @@ body {
   text-align: center;
 }
 
+/* Expand All / Collapse All button */
 .expand-all-btn {
   display: block;
   margin-left: auto;
@@ -532,6 +537,7 @@ body {
   background-color: rgba(255,255,255,0.28);
 }
 
+/* Collapsible sections */
 .policy-section {
   width: 100%;
   display: block;
@@ -542,6 +548,8 @@ body {
   margin-bottom: 0.75rem;
   box-shadow: 0 0 8px rgba(0,0,0,0.03);
 }
+
+/* Toggle bar */
 .policy-toggle {
   position: relative;
   width: 100%;
@@ -559,7 +567,7 @@ body {
   align-items: center;
 }
 
-/* Subtle but clearly visible hover */
+/* Hover when closed */
 .policy-toggle:hover {
   background-color: rgba(255,255,255,0.22);
 }
@@ -569,11 +577,12 @@ body {
   background-color: rgba(255,255,255,0.28);
 }
 
-/* Hover while open (slightly stronger) */
+/* Hover when open */
 .policy-toggle.open:hover {
   background-color: rgba(255,255,255,0.32);
 }
 
+/* Bullet-hole icon */
 .policy-toggle .bullet-icon {
   position: absolute;
   top: 50%;
@@ -588,12 +597,14 @@ body {
   background-image: url('data:image/svg+xml;utf8,<svg width="14" height="14" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg"><circle cx="7" cy="7" r="3" fill="black"/><path d="M7 0 L7 3 M7 11 L7 14 M0 7 L3 7 M11 7 L14 7 M2 2 L4 4 M10 10 L12 12 M2 12 L4 10 M10 4 L12 2" stroke="black" stroke-width="1"/></svg>');
 }
 
+/* Expanded bullet-hole */
 .policy-toggle.open .bullet-icon {
   transform: scale(1.25);
   opacity: 1;
   background-image: url('data:image/svg+xml;utf8,<svg width="14" height="14" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg"><circle cx="7" cy="7" r="4" fill="black"/><path d="M7 0 L7 4 M7 10 L7 14 M0 7 L4 7 M10 7 L14 7 M1 1 L5 5 M9 9 L13 13 M1 13 L5 9 M9 5 L13 1" stroke="black" stroke-width="1.2"/></svg>');
 }
 
+/* Content */
 .policy-content {
   display: none;
   padding: 0.75rem 1rem 1rem 1rem;
@@ -610,6 +621,7 @@ body {
   padding-left: 1.1rem;
   margin: 0.4rem 0 0.6rem 0;
 }
+
 .policy-content li {
   margin-bottom: 0.25rem;
 }
