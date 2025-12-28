@@ -67,6 +67,11 @@ body {
   opacity: 0.95;
   letter-spacing: 2px;
 }
+.hero-header > * {
+  position: relative;
+  z-index: 2;
+}
+
 
 /* --- OPTIONAL BACKPLATE (UNCOMMENT TO ENABLE) --- 
 .hero-header::before {
@@ -102,6 +107,7 @@ body {
   position: relative;
   z-index: 2;
 }
+
 
 /* --- FADE-IN KEYFRAMES --- */
 @keyframes fadeIn {
