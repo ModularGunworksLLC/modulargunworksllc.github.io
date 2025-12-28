@@ -68,15 +68,19 @@
 
   /* Expand All / Collapse All button */
   .expand-all-btn {
-    margin-bottom: 1rem;
-    padding: 0.5rem 1rem;
-    background-color: rgba(255,255,255,0.1);
-    border: 1px solid rgba(255,255,255,0.2);
-    color: #fff;
-    cursor: pointer;
-    border-radius: 4px;
-    font-size: 0.9rem;
-  }
+  display: block;        /* allows margin auto to work */
+  margin-left: auto;     /* pushes button to the RIGHT */
+  margin-right: 0;
+  margin-bottom: 1rem;
+  padding: 0.5rem 1rem;
+  background-color: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.2);
+  color: #fff;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 0.9rem;
+}
+
 
   .expand-all-btn:hover {
     background-color: rgba(255,255,255,0.2);
@@ -125,9 +129,9 @@
   }
 
   .policy-updated {
-    font-size: 0.9rem;
-    opacity: 0.75;
-    margin-bottom: 1.5rem;
+    text-align: center;
+    width: 100%;
+    font-size: 0.85rem;
   }
 
   .policy-subsection {
