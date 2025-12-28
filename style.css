@@ -8,10 +8,35 @@ body {
   background: #1a1a1a; /* brighter than #111 */
   color: #e5e5e5;      /* brighter text */
 }
+@media (max-width: 600px) {
+  .hero-header {
+    height: 150px;
+    font-size: 1.4rem;
+    padding: 0 10px;
+  }
+}
 
 /* ============================
    HEADER
    ============================ */
+.hero-header {
+  height: 220px; /* adjust as needed */
+  background-image: url('images/header-flag.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+
+  color: #ffffff;
+  font-size: 2.2rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+}
 
 .site-header {
   display: flex;
