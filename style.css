@@ -493,3 +493,35 @@ body {
   top: -80px;
   visibility: hidden;
 }
+/* ============================
+   TEMPORARY WHITE THEME PREVIEW
+   ============================ */
+
+body {
+  background: #ffffff !important;
+  color: #000000 !important;
+}
+
+.site-header {
+  background: #ffffff !important;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15) !important;
+}
+
+.hero-header {
+  background-color: #ffffff !important;
+  filter: none !important;
+}
+
+.category-card,
+.category-tile,
+.card,
+.section,
+.container {
+  background: #ffffff !important;
+  color: #000000 !important;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1) !important;
+}
+
+a {
+  color: #0033aa !important;
+}
