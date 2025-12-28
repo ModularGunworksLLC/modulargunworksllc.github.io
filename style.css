@@ -698,15 +698,19 @@ a {
   margin-right: 0;
   text-align: right;
 }
-/* Move bullet holes farther right without affecting text */
-.policy-toggle .bullet-icon {
-  right: 0.5rem !important;   /* closer to the edge */
+/* ============================================================
+   BULLET HOLE ALIGNMENT — RIGHT SIDE (FINAL CLEAN VERSION)
+   ============================================================ */
+
+/* Ensure toggle is the positioning container */
+.policy-toggle {
+  position: relative;
 }
 
-.policy-section {
-  position: relative;          /* ensures absolute positioning stays correct */
-}
-/* FORCE bullet holes farther right */
-.doc-main .policy-toggle .bullet-icon {
-  right: 0 !important;   /* flush right */
+/* Bullet hole pinned to the far right */
+.policy-toggle .bullet-icon {
+  position: absolute;
+  top: 50%;
+  right: 0.5rem;      /* adjust this number to taste */
+  transform: translateY(-50%);
 }
