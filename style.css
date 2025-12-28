@@ -542,7 +542,6 @@ body {
   margin-bottom: 0.75rem;
   box-shadow: 0 0 8px rgba(0,0,0,0.03);
 }
-
 .policy-toggle {
   position: relative;
   width: 100%;
@@ -554,18 +553,25 @@ body {
   font-weight: 600;
   font-size: 1rem;
   text-align: left;
-  transition: background-color 0.2s ease;
+  transition: background-color 0.25s ease;
   white-space: normal;
   display: flex;
   align-items: center;
 }
 
+/* Subtle but clearly visible hover */
 .policy-toggle:hover {
-  background-color: rgba(255,255,255,0.18);
+  background-color: rgba(255,255,255,0.22);
 }
 
+/* Open state */
 .policy-toggle.open {
-  background-color: rgba(255,255,255,0.24);
+  background-color: rgba(255,255,255,0.28);
+}
+
+/* Hover while open (slightly stronger) */
+.policy-toggle.open:hover {
+  background-color: rgba(255,255,255,0.32);
 }
 
 .policy-toggle .bullet-icon {
