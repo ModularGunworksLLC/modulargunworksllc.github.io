@@ -673,3 +673,28 @@ body {
 a {
   color: #0033aa;
 }
+/* ============================
+   PRIVACY / TERMS HEADER ALIGNMENT
+   ============================ */
+
+/* Title centered */
+.policy-title {
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Last Updated centered */
+.policy-updated {
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Expand All button right aligned */
+.expand-all-btn {
+  display: block;
+  margin-left: auto;   /* pushes it right */
+  margin-right: 0;
+  text-align: right;
+}
