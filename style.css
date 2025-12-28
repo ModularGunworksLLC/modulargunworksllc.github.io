@@ -121,67 +121,6 @@ body {
 .popup-buttons button:hover {
   background: #666;
 }
-
-.doc-layout {
-  display: flex;
-  gap: 30px;
-  padding: 40px 20px;
-  max-width: 1400px;
-  margin: 0 auto;
-}
-
-.doc-sidebar {
-  width: 280px;
-  background: #111;
-  padding: 20px;
-  border-radius: 6px;
-  border: 1px solid #333;
-  height: fit-content;
-  box-shadow: 0 0 10px rgba(0,0,0,0.4);
-  color: #fff;
-}
-
-.doc-main {
-  flex: 1;
-  background: #111;
-  padding: 30px;
-  border-radius: 6px;
-  border: 1px solid #333;
-  box-shadow: 0 0 10px rgba(0,0,0,0.4);
-  color: #ddd;
-}
-
-.policy-section {
-  margin-bottom: 20px;
-  border: 1px solid #333;
-  border-radius: 6px;
-  background: #1a1a1a;
-  overflow: hidden;
-  box-shadow: 0 0 8px rgba(0,0,0,0.4);
-}
-
-.policy-toggle {
-  width: 100%;
-  background: #222;
-  color: #fff;
-  padding: 14px 18px;
-  font-size: 1rem;
-  font-weight: 600;
-  border: none;
-  cursor: pointer;
-  text-align: left;
-  border-bottom: 1px solid #333;
-}
-
-.policy-toggle:hover {
-  background: #2c2c2c;
-}
-
-.policy-content {
-  padding: 18px;
-  display: none;
-  color: #ddd;
-}
 */
 
 /* ============================================================
@@ -210,7 +149,7 @@ body {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  filter: brightness(2.5); /* same brightness you liked in dark theme */
+  filter: brightness(2.5);
 
   display: flex;
   justify-content: center;
@@ -259,7 +198,7 @@ body {
   letter-spacing: 2px;
 }
 
-/* Mobile tweak for hero */
+/* Mobile tweak */
 @media (max-width: 600px) {
   .hero-header {
     height: 150px;
@@ -268,14 +207,14 @@ body {
   }
 }
 
-/* Fade-in keyframes */
+/* Fade-in */
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(-10px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 
 /* ============================
-   TOP SITE HEADER (LOGO + SEARCH + LINKS)
+   TOP SITE HEADER
    ============================ */
 
 .site-header {
@@ -444,7 +383,7 @@ body {
   position: fixed;
   inset: 0;
   background: rgba(0,0,0,0.85);
-  display: none; /* JS will set to flex */
+  display: none;
   justify-content: center;
   align-items: center;
   z-index: 99999;
@@ -494,81 +433,38 @@ body {
   font-size: 0.9rem;
 }
 
-/* ============================
-   POLICY DOC STYLE (BULLET HOLES)
-   ============================ */
-
-.expand-all-btn {
-  margin-bottom: 1rem;
-  padding: 0.5rem 1rem;
-  background-color: rgba(0,0,0,0.05);
-  border: 1px solid rgba(0,0,0,0.15);
-  color: #000;
-  cursor: pointer;
-  border-radius: 4px;
-  font-size: 0.9rem;
-}
-
-.expand-all-btn:hover {
-  background-color: rgba(0,0,0,0.08);
-}
-
-.policy-toggle {
-  position: relative;
-  padding-left: 2rem;
-  display: flex;
-  align-items: center;
-  gap: 0.35rem;
-}
-
-/* Bullet-hole icon (collapsed) */
-.policy-toggle .bullet-icon {
-  width: 14px;
-  height: 14px;
-  display: inline-block;
-  background-size: cover;
-  background-repeat: no-repeat;
-  transition: transform 0.25s ease, opacity 0.25s ease;
-  opacity: 0.9;
-  background-image: url('data:image/svg+xml;utf8,<svg width="14" height="14" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg"><circle cx="7" cy="7" r="3" fill="black"/><path d="M7 0 L7 3 M7 11 L7 14 M0 7 L3 7 M11 7 L14 7 M2 2 L4 4 M10 10 L12 12 M2 12 L4 10 M10 4 L12 2" stroke="black" stroke-width="1"/></svg>');
-}
-
-/* Expanded state */
-.policy-toggle.open .bullet-icon {
-  transform: scale(1.25);
-  opacity: 1;
-  background-image: url('data:image/svg+xml;utf8,<svg width="14" height="14" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg"><circle cx="7" cy="7" r="4" fill="black"/><path d="M7 0 L7 4 M7 10 L7 14 M0 7 L4 7 M10 7 L14 7 M1 1 L5 5 M9 9 L13 13 M1 13 L5 9 M9 5 L13 1" stroke="black" stroke-width="1.2"/></svg>');
-}
-
-/* ============================
-   DOCUMENT HUB LAYOUT (LIGHT THEME)
-   ============================ */
+/* ============================================================
+   DOCUMENT HUB – LIGHT TACTICAL THEME (ACTIVE)
+   ============================================================ */
 
 .doc-layout {
   display: flex;
-  gap: 30px;
-  padding: 40px 20px;
   max-width: 1400px;
-  margin: 0 auto;
+  margin: 2rem auto;
+  gap: 2rem;
+  padding: 40px 20px;
 }
 
-/* SIDEBAR */
 .doc-sidebar {
   width: 280px;
-  background: #ffffff;
-  padding: 20px;
+  max-height: calc(100vh - 220px);
+  overflow-y: auto;
+  position: sticky;
+  top: 140px;
+
+  padding: 1rem;
   border-radius: 6px;
-  border: 1px solid #ddd;
-  height: fit-content;
-  box-shadow: 0 0 10px rgba(0,0,0,0.08);
+  background-color: rgba(255, 255, 255, 0.20);
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.08);
+  color: #000;
 }
 
 .doc-sidebar h2 {
-  margin-top: 0;
-  font-size: 1.3rem;
-  font-weight: 700;
-  color: #000;
-  margin-bottom: 15px;
+  font-size: 1.1rem;
+  margin-bottom: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
 }
 
 .doc-sidebar ul {
@@ -578,7 +474,7 @@ body {
 }
 
 .doc-sidebar li {
-  margin-bottom: 10px;
+  margin-bottom: 0.35rem;
 }
 
 .doc-sidebar a {
@@ -588,69 +484,128 @@ body {
 }
 
 .doc-sidebar a:hover {
-  color: #001f66;
+  text-decoration: underline;
 }
 
-/* MAIN CONTENT AREA */
 .doc-main {
   flex: 1;
-  background: #ffffff;
-  padding: 30px;
+  min-width: 0;
+  background-color: rgba(255, 255, 255, 0.20);
   border-radius: 6px;
-  border: 1px solid #ddd;
+  border: 1px solid rgba(0, 0, 0, 0.15);
   box-shadow: 0 0 10px rgba(0,0,0,0.08);
+  padding: 30px;
+  color: #000;
 }
 
-/* SECTION TITLE */
 .policy-title {
   font-size: 2rem;
   font-weight: 800;
   margin-bottom: 5px;
   color: #000;
+  text-align: center;
 }
 
 .policy-updated {
   margin-bottom: 20px;
   color: #666;
+  text-align: center;
 }
 
-/* COLLAPSIBLE SECTIONS */
+.expand-all-btn {
+  display: block;
+  margin-left: auto;
+  margin-right: 0;
+  margin-bottom: 1rem;
+  padding: 0.5rem 1rem;
+
+  background-color: rgba(255,255,255,0.20);
+  border: 1px solid rgba(0,0,0,0.15);
+  color: #000;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  text-align: right;
+}
+
+.expand-all-btn:hover {
+  background-color: rgba(255,255,255,0.28);
+}
+
 .policy-section {
-  margin-bottom: 20px;
-  border: 1px solid #ddd;
+  width: 100%;
+  display: block;
   border-radius: 6px;
-  background: #fafafa;
   overflow: hidden;
+  background-color: rgba(255, 255, 255, 0.20);
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  margin-bottom: 0.75rem;
   box-shadow: 0 0 8px rgba(0,0,0,0.03);
 }
 
 .policy-toggle {
+  position: relative;
   width: 100%;
-  background: #f0f0f0;
-  color: #000;
-  padding: 14px 18px;
-  font-size: 1rem;
-  font-weight: 600;
+  padding: 0.75rem 2.5rem 0.75rem 1rem;
+  background-color: rgba(255,255,255,0.12);
   border: none;
+  color: #000;
   cursor: pointer;
+  font-weight: 600;
+  font-size: 1rem;
   text-align: left;
-  border-bottom: 1px solid #ddd;
+  transition: background-color 0.2s ease;
+  white-space: normal;
+  display: flex;
+  align-items: center;
 }
 
 .policy-toggle:hover {
-  background: #e5e5e5;
+  background-color: rgba(255,255,255,0.18);
+}
+
+.policy-toggle.open {
+  background-color: rgba(255,255,255,0.24);
+}
+
+.policy-toggle .bullet-icon {
+  position: absolute;
+  top: 50%;
+  right: 0.5rem;
+  transform: translateY(-50%);
+  width: 14px;
+  height: 14px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  opacity: 0.9;
+  transition: transform 0.25s ease, opacity 0.25s ease;
+  background-image: url('data:image/svg+xml;utf8,<svg width="14" height="14" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg"><circle cx="7" cy="7" r="3" fill="black"/><path d="M7 0 L7 3 M7 11 L7 14 M0 7 L3 7 M11 7 L14 7 M2 2 L4 4 M10 10 L12 12 M2 12 L4 10 M10 4 L12 2" stroke="black" stroke-width="1"/></svg>');
+}
+
+.policy-toggle.open .bullet-icon {
+  transform: scale(1.25);
+  opacity: 1;
+  background-image: url('data:image/svg+xml;utf8,<svg width="14" height="14" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg"><circle cx="7" cy="7" r="4" fill="black"/><path d="M7 0 L7 4 M7 10 L7 14 M0 7 L4 7 M10 7 L14 7 M1 1 L5 5 M9 9 L13 13 M1 13 L5 9 M9 5 L13 1" stroke="black" stroke-width="1.2"/></svg>');
 }
 
 .policy-content {
-  padding: 18px;
   display: none;
-  color: #222;
+  padding: 0.75rem 1rem 1rem 1rem;
   font-size: 0.95rem;
+  color: #000;
   line-height: 1.5rem;
 }
 
+.policy-content p {
+  margin-bottom: 0.6rem;
+}
+
 .policy-content ul {
-  padding-left: 20px;
+  padding-left: 1.1rem;
+  margin: 0.4rem 0 0.6rem 0;
+}
+.policy-content li {
+  margin-bottom: 0.25rem;
 }
 
 .policy-content h4 {
@@ -659,58 +614,180 @@ body {
   color: #000;
 }
 
-/* Invisible anchor for sidebar scroll alignment */
+/* Subsections */
+.policy-subsection {
+  margin: 0.5rem 0;
+  border-radius: 4px;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  overflow: hidden;
+}
+
+.policy-subsection .policy-toggle {
+  font-size: 0.9rem;
+  padding: 0.5rem 2.25rem 0.5rem 0.75rem;
+}
+
+.policy-subsection .policy-content {
+  font-size: 0.9rem;
+  padding: 0.6rem 0.75rem 0.75rem 0.75rem;
+}
+
+/* Anchor targets for sidebar links */
 .doc-section-anchor {
-  position: relative;
-  top: -80px;
-  visibility: hidden;
+  scroll-margin-top: 140px;
 }
 
-/* ============================
-   GLOBAL LINKS (LIGHT THEME)
-   ============================ */
-
-a {
-  color: #0033aa;
-}
-/* ============================
-   PRIVACY / TERMS HEADER ALIGNMENT
-   ============================ */
-
-/* Title centered */
-.policy-title {
-  text-align: center;
-  margin-left: auto;
-  margin-right: auto;
+/* ============================================================
+   DARK TACTICAL THEME (PRESERVED FOR FUTURE USE)
+   ============================================================ */
+/*
+.doc-layout {
+  display: flex;
+  max-width: 1400px;
+  margin: 2rem auto;
+  gap: 2rem;
+  padding: 40px 20px;
 }
 
-/* Last Updated centered */
+.doc-sidebar {
+  width: 280px;
+  max-height: calc(100vh - 220px);
+  overflow-y: auto;
+  position: sticky;
+  top: 140px;
+
+  padding: 1rem;
+  border-radius: 6px;
+  background-color: rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 0 10px rgba(0,0,0,0.4);
+  color: #f0f0f0;
+}
+
+.doc-sidebar a {
+  color: #f0f0f0;
+}
+
+.doc-sidebar a:hover {
+  text-decoration: underline;
+}
+
+.doc-main {
+  flex: 1;
+  min-width: 0;
+  background-color: rgba(0, 0, 0, 0.35);
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 0 10px rgba(0,0,0,0.4);
+  padding: 30px;
+  color: #f0f0f0;
+}
+
+.policy-title,
 .policy-updated {
-  text-align: center;
-  margin-left: auto;
-  margin-right: auto;
+  color: #f0f0f0;
 }
 
-/* Expand All button right aligned */
 .expand-all-btn {
   display: block;
-  margin-left: auto;   /* pushes it right */
+  margin-left: auto;
   margin-right: 0;
+  margin-bottom: 1rem;
+  padding: 0.5rem 1rem;
+
+  background-color: rgba(255,255,255,0.10);
+  border: 1px solid rgba(255,255,255,0.20);
+  color: #fff;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 0.9rem;
   text-align: right;
 }
-/* ============================================================
-   BULLET HOLE ALIGNMENT — RIGHT SIDE (FINAL CLEAN VERSION)
-   ============================================================ */
 
-/* Ensure toggle is the positioning container */
-.policy-toggle {
-  position: relative;
+.expand-all-btn:hover {
+  background-color: rgba(255,255,255,0.18);
 }
 
-/* Bullet hole pinned to the far right */
+.policy-section {
+  width: 100%;
+  display: block;
+  border-radius: 4px;
+  overflow: hidden;
+  background-color: rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  margin-bottom: 0.5rem;
+}
+
+.policy-toggle {
+  position: relative;
+  width: 100%;
+  padding: 0.75rem 2.5rem 0.75rem 1rem;
+  background-color: rgba(255,255,255,0.03);
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  font-weight: 600;
+  text-align: left;
+  transition: background-color 0.2s ease;
+  white-space: normal;
+  display: flex;
+  align-items: center;
+}
+
+.policy-toggle:hover {
+  background-color: rgba(255,255,255,0.07);
+}
+
+.policy-toggle.open {
+  background-color: rgba(255,255,255,0.10);
+}
+
 .policy-toggle .bullet-icon {
   position: absolute;
   top: 50%;
-  right: 0.5rem;      /* adjust this number to taste */
+  right: 1rem;
   transform: translateY(-50%);
+  width: 14px;
+  height: 14px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  opacity: 0.9;
+  transition: transform 0.25s ease, opacity 0.25s ease;
+  background-image: url('data:image/svg+xml;utf8,<svg width="14" height="14" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg"><circle cx="7" cy="7" r="3" fill="black"/><path d="M7 0 L7 3 M7 11 L7 14 M0 7 L3 7 M11 7 L14 7 M2 2 L4 4 M10 10 L12 12 M2 12 L4 10 M10 4 L12 2" stroke="black" stroke-width="1"/></svg>');
 }
+
+.policy-toggle.open .bullet-icon {
+  transform: scale(1.25);
+  opacity: 1;
+  background-image: url('data:image/svg+xml;utf8,<svg width="14" height="14" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg"><circle cx="7" cy="7" r="4" fill="black"/><path d="M7 0 L7 4 M7 10 L7 14 M0 7 L4 7 M10 7 L14 7 M1 1 L5 5 M9 9 L13 13 M1 13 L5 9 M9 5 L13 1" stroke="black" stroke-width="1.2"/></svg>');
+}
+
+.policy-content {
+  display: none;
+  padding: 0.75rem 1rem 1rem 1rem;
+  font-size: 0.95rem;
+  color: #f0f0f0;
+  line-height: 1.5rem;
+}
+
+.policy-subsection {
+  margin: 0.5rem 0;
+  border-radius: 3px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  overflow: hidden;
+}
+
+.policy-subsection .policy-toggle {
+  font-size: 0.9rem;
+  padding: 0.5rem 0.75rem;
+}
+
+.policy-subsection .policy-content {
+  font-size: 0.9rem;
+  padding: 0.6rem 0.75rem 0.75rem 0.75rem;
+}
+
+.doc-section-anchor {
+  scroll-margin-top: 140px;
+}
+*/
