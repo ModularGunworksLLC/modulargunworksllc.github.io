@@ -20,51 +20,34 @@ body {
    HEADER
    ============================ */
 .hero-header {
-  /* --- FULL WIDTH BREAKOUT --- */
   width: 100vw;
   margin-left: calc(50% - 50vw);
   margin-right: calc(50% - 50vw);
-
-  /* --- SIZE & BACKGROUND --- */
   height: 220px;
   background-image: url('images/header-flag.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-
-  /* --- VISIBILITY BOOST --- */
   filter: brightness(2.5);
-
-  /* --- LAYOUT --- */
   display: flex;
   justify-content: center;
   align-items: center;
   text-align: center;
-
-  /* --- TEXT STYLE (UPGRADED) --- */
   color: #ffffff;
-  font-size: 3rem;          /* bigger, stronger */
-  font-weight: 900;         /* tactical bold */
-  letter-spacing: 3px;      /* more presence */
+  font-size: 3rem;
+  font-weight: 900;
+  letter-spacing: 3px;
   text-transform: uppercase;
-
-  /* --- OUTLINE FOR CLARITY --- */
   -webkit-text-stroke: 1px rgba(0,0,0,0.6);
-
-  /* --- PREMIUM GLOW / DEPTH --- */
   text-shadow:
     0 0 8px rgba(0,0,0,0.9),
     0 0 12px rgba(0,0,0,0.7),
     2px 2px 4px rgba(0,0,0,0.9);
-
-  /* --- OPTIONAL FADE-IN ANIMATION --- */
   animation: fadeIn 1.2s ease-out;
+  position: relative;
+  text-decoration: none;
 }
-.hero-header {
-  display: flex; /* keep your layout */
-  text-decoration: none; /* remove underline */
-  color: inherit; /* keep white text */
-}
+
 .hero-title {
   font-size: 3rem;
   font-weight: 900;
@@ -100,10 +83,7 @@ body {
    HEADER BRIGHTENING OVERLAY
    ============================ */
 
-.hero-header {
-  position: relative;
-}
-
+/*
 .hero-header::before {
   content: "";
   position: absolute;
