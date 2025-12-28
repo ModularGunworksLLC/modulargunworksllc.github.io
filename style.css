@@ -214,7 +214,7 @@ body {
 }
 
 /* ============================
-   TOP SITE HEADER
+   TOP HEADER BAR (LOGO + SEARCH + ACCOUNT)
    ============================ */
 
 .site-header {
@@ -222,16 +222,22 @@ body {
   justify-content: space-between;
   align-items: center;
   background: #ffffff;
-  padding: 15px 20px;
+  padding: 12px 20px;
   box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
 }
 
 .logo {
-  height: 50px;
+  height: 55px;
+  width: auto;
 }
 
 .header-left {
   width: 285px;
+  display: flex;
+  align-items: center;
 }
 
 .header-center {
@@ -241,52 +247,93 @@ body {
 }
 
 .search-bar {
-  width: 600px;
-  padding: 15px;
+  width: 100%;
+  max-width: 500px;
+  padding: 12px 15px;
   border-radius: 4px;
   border: 1px solid #ccc;
+  font-size: 1rem;
 }
 
 .header-right a {
   margin-left: 20px;
   color: #0033aa;
   text-decoration: none;
+  font-weight: 600;
+  transition: color 0.2s ease;
+}
+
+.header-right a:hover {
+  color: #001f66;
 }
 
 /* ============================
-   CATEGORY NAV BAR
+   CATEGORY NAVIGATION BAR
    ============================ */
 
 .category-nav {
-  background: #ffffff;
-  padding: 10px 20px;
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 20px;
+  gap: 18px;
+  padding: 12px 20px;
+  background: #ffffff;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  position: sticky;
+  top: 75px; /* sits below header */
+  z-index: 999;
 }
 
 .category-nav a {
   color: #0033aa;
   text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+  padding: 6px 8px;
+  transition: color 0.2s ease, background-color 0.2s ease;
+}
+
+.category-nav a:hover {
+  background-color: rgba(0,0,0,0.05);
+  border-radius: 4px;
+  color: #001f66;
 }
 
 /* ============================
-   PROMO BANNER
+   PROMO STRIP
    ============================ */
 
 .promo-banner {
   background: #312eca;
   color: #fff;
-  padding: 25px;
-  font-size: 1.3rem;
+  padding: 18px;
+  font-size: 1.1rem;
   font-weight: bold;
+  text-align: center;
   text-shadow: 1px 1px 2px #000;
   box-shadow: 0 2px 8px rgba(0,0,0,0.2);
   letter-spacing: 0.5px;
-  text-align: center;
 }
+
+/* ============================
+   RESPONSIVE TUNING
+   ============================ */
+
+@media (max-width: 600px) {
+  .search-bar {
+    max-width: 100%;
+  }
+
+  .category-nav {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .logo {
+    height: 40px;
+  }
+}
+
 
 /* ============================
    CATEGORY GRID
