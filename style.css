@@ -92,12 +92,15 @@ body {
 .logo {
   height: 50px;
 }
+.header-left {
+  width: 250px; /* balances the right side */
+}
+
 .header-center {
   flex: 1;
   display: flex;
   justify-content: center;
-  transform: translateX(70px); /* nudges search bar to the right */
-}
+  }
 
 .search-bar {
   width: 600px;
