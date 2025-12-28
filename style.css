@@ -542,19 +542,30 @@ body {
   margin-bottom: 0.75rem;
   box-shadow: 0 0 8px rgba(0,0,0,0.03);
 }
-/* Stronger hover + smoother animation */
+
 .policy-toggle {
+  position: relative;
+  width: 100%;
+  padding: 0.75rem 2.5rem 0.75rem 1rem;
   background-color: rgba(255,255,255,0.12);
-  transition: background-color 0.25s ease, transform 0.15s ease;
+  border: none;
+  color: #000;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 1rem;
+  text-align: left;
+  transition: background-color 0.2s ease;
+  white-space: normal;
+  display: flex;
+  align-items: center;
 }
 
 .policy-toggle:hover {
-  background-color: rgba(255,255,255,0.32); /* much clearer hover */
-  transform: translateX(3px);               /* subtle tactile shift */
+  background-color: rgba(255,255,255,0.18);
 }
 
-.policy-toggle.open:hover {
-  background-color: rgba(255,255,255,0.38); /* stronger when open */
+.policy-toggle.open {
+  background-color: rgba(255,255,255,0.24);
 }
 
 .policy-toggle .bullet-icon {
