@@ -166,7 +166,6 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 20px; /* add spacing between sections */
   background: #ffffff;
   padding: 16px 20px;
   box-shadow: 0 2px 6px rgba(0,0,0,0.15);
@@ -203,40 +202,31 @@ body {
   transform: translateY(-2px);
 }
 
+/* Left side (logo) */
 .header-left {
   width: 285px;
   display: flex;
   align-items: center;
 }
-.header-right {
-  width: 285px;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 16px;
-}
 
-/* ============================
-   SEARCH BAR (FIXED)
-   ============================ */
-
+/* Center (search bar) */
 .header-center {
   flex: 1;
   display: flex;
   justify-content: center;
 }
 
-/* Wrapper for input + button */
+/* Search form wrapper */
 .search-form {
   position: relative;
   width: 100%;
   max-width: 500px;
 }
 
-/* Input field */
+/* Search input */
 .search-bar {
   width: 100%;
-  padding: 12px 44px 12px 15px; /* space for icon button */
+  padding: 12px 44px 12px 15px;
   border-radius: 4px;
   border: 1px solid #ccc;
   font-size: 1rem;
@@ -260,7 +250,7 @@ body {
   background-color: #fdfdfd;
 }
 
-/* Clickable magnifying glass button */
+/* Magnifying glass button */
 .search-button {
   position: absolute;
   right: 12px;
@@ -287,13 +277,12 @@ body {
   transform: scale(1.1);
 }
 
-/* ============================
-   RIGHT SIDE (ACCOUNT + TOGGLE + CART)
-   ============================ */
-
+/* Right side (account links, toggle, cart) */
 .header-right {
+  width: 285px;
   display: flex;
   align-items: center;
+  justify-content: flex-end;
   gap: 16px;
 }
 
