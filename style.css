@@ -368,3 +368,128 @@ body {
   opacity: 1;
   background-image: url('data:image/svg+xml;utf8,<svg width="14" height="14" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg"><circle cx="7" cy="7" r="4" fill="black"/><path d="M7 0 L7 4 M7 10 L7 14 M0 7 L4 7 M10 7 L14 7 M1 1 L5 5 M9 9 L13 13 M1 13 L5 9 M9 5 L13 1" stroke="black" stroke-width="1.2"/></svg>');
 }
+/* ============================
+   DOCUMENT HUB LAYOUT (MATCH TERMS PAGE)
+   ============================ */
+
+.doc-layout {
+  display: flex;
+  gap: 30px;
+  padding: 40px 20px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* SIDEBAR */
+.doc-sidebar {
+  width: 280px;
+  background: #111;
+  padding: 20px;
+  border-radius: 6px;
+  border: 1px solid #333;
+  height: fit-content;
+  box-shadow: 0 0 10px rgba(0,0,0,0.4);
+}
+
+.doc-sidebar h2 {
+  margin-top: 0;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 15px;
+}
+
+.doc-sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.doc-sidebar li {
+  margin-bottom: 10px;
+}
+
+.doc-sidebar a {
+  color: #ccc;
+  text-decoration: none;
+  font-size: 0.95rem;
+}
+
+.doc-sidebar a:hover {
+  color: #fff;
+}
+
+/* MAIN CONTENT AREA */
+.doc-main {
+  flex: 1;
+  background: #111;
+  padding: 30px;
+  border-radius: 6px;
+  border: 1px solid #333;
+  box-shadow: 0 0 10px rgba(0,0,0,0.4);
+}
+
+/* SECTION TITLE */
+.policy-title {
+  font-size: 2rem;
+  font-weight: 800;
+  margin-bottom: 5px;
+  color: #fff;
+}
+
+.policy-updated {
+  margin-bottom: 20px;
+  color: #bbb;
+}
+
+/* COLLAPSIBLE SECTIONS */
+.policy-section {
+  margin-bottom: 20px;
+  border: 1px solid #333;
+  border-radius: 6px;
+  background: #1a1a1a;
+  overflow: hidden;
+  box-shadow: 0 0 8px rgba(0,0,0,0.4);
+}
+
+.policy-toggle {
+  width: 100%;
+  background: #222;
+  color: #fff;
+  padding: 14px 18px;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  border-bottom: 1px solid #333;
+}
+
+.policy-toggle:hover {
+  background: #2c2c2c;
+}
+
+.policy-content {
+  padding: 18px;
+  display: none;
+  color: #ddd;
+  font-size: 0.95rem;
+  line-height: 1.5rem;
+}
+
+.policy-content ul {
+  padding-left: 20px;
+}
+
+.policy-content h4 {
+  margin-top: 15px;
+  margin-bottom: 5px;
+  color: #fff;
+}
+
+/* Invisible anchor for sidebar scroll alignment */
+.doc-section-anchor {
+  position: relative;
+  top: -80px;
+  visibility: hidden;
+}
