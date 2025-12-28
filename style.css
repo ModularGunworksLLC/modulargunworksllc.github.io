@@ -33,7 +33,7 @@ body {
   background-repeat: no-repeat;
 
   /* --- VISIBILITY BOOST --- */
-  filter: brightness(2.0);
+  filter: brightness(2.5);
 
   /* --- LAYOUT --- */
   display: flex;
