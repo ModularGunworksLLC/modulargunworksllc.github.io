@@ -223,7 +223,7 @@ body {
   border-radius: 4px;
   border: 1px solid #ccc;
   font-size: 1rem;
-  background-image: url('images/search-icon.png');
+  background-image: url('images/search-icon.svg');
   background-repeat: no-repeat;
   background-size: 18px;
   background-position: right 12px center;
