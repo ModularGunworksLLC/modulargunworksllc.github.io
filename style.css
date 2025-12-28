@@ -698,3 +698,11 @@ a {
   margin-right: 0;
   text-align: right;
 }
+/* Move bullet holes farther right without affecting text */
+.policy-toggle .bullet-icon {
+  right: 0.5rem !important;   /* closer to the edge */
+}
+
+.policy-section {
+  position: relative;          /* ensures absolute positioning stays correct */
+}
