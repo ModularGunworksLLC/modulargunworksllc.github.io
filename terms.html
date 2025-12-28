@@ -6,132 +6,170 @@
   <link rel="stylesheet" href="style.css">
   <link rel="icon" type="image/png" href="favicon.png">
 
-  <style>
-    /* Document Hub Layout */
-    .doc-layout {
-      display: flex;
-      max-width: 1200px;
-      margin: 2rem auto;
-      gap: 2rem;
-    }
+ <style>
+  /* Document Hub Layout */
+  .doc-layout {
+    display: flex;
+    max-width: 1200px;
+    margin: 2rem auto;
+    gap: 2rem;
+  }
 
-    .doc-sidebar {
-      width: 280px;
-      max-height: calc(100vh - 220px);
-      overflow-y: auto;
-      position: sticky;
-      top: 140px;
-      padding: 1rem;
-      border-radius: 4px;
-      background-color: rgba(0, 0, 0, 0.35);
-    }
+  .doc-sidebar {
+    width: 280px;
+    max-height: calc(100vh - 220px);
+    overflow-y: auto;
+    position: sticky;
+    top: 140px;
+    padding: 1rem;
+    border-radius: 4px;
+    background-color: rgba(0, 0, 0, 0.35);
+  }
 
-    .doc-sidebar h2 {
-      font-size: 1.1rem;
-      margin-bottom: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-    }
+  .doc-sidebar h2 {
+    font-size: 1.1rem;
+    margin-bottom: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
 
-    .doc-sidebar ul {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
+  .doc-sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
 
-    .doc-sidebar li {
-      margin-bottom: 0.35rem;
-    }
+  .doc-sidebar li {
+    margin-bottom: 0.35rem;
+  }
 
-    .doc-sidebar a {
-      color: #f0f0f0;
-      text-decoration: none;
-      font-size: 0.95rem;
-    }
+  .doc-sidebar a {
+    color: #f0f0f0;
+    text-decoration: none;
+    font-size: 0.95rem;
+  }
 
-    .doc-sidebar a:hover {
-      text-decoration: underline;
-    }
+  .doc-sidebar a:hover {
+    text-decoration: underline;
+  }
 
-    .doc-main {
-      flex: 1;
-      min-width: 0;
-    }
+  .doc-main {
+    flex: 1;
+    min-width: 0;
+  }
 
-    .policy-title {
-      margin-top: 1rem;
-    }
+  .policy-title {
+    margin-top: 1rem;
+  }
 
-    .doc-section-anchor {
-      scroll-margin-top: 140px;
-    }
+  .doc-section-anchor {
+    scroll-margin-top: 140px;
+  }
 
-    /* Reuse collapsible behavior from your existing terms */
-    .policy-section {
-      margin-bottom: 1rem;
-      border-radius: 4px;
-      overflow: hidden;
-      background-color: rgba(0, 0, 0, 0.35);
-      border: 1px solid rgba(255, 255, 255, 0.07);
-    }
+  /* Expand All / Collapse All button */
+  .expand-all-btn {
+    margin-bottom: 1rem;
+    padding: 0.5rem 1rem;
+    background-color: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: #fff;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 0.9rem;
+  }
 
-    .policy-toggle {
-  position: relative;
-  padding-left: 2rem;
-  width: 100%;
-  text-align: left;
-  background: none;
-  border: none;
-  color: #fff;
-  cursor: pointer;
-  font-weight: 600;
-  display: block; /* IMPORTANT — fixes right-side alignment */
-}
+  .expand-all-btn:hover {
+    background-color: rgba(255,255,255,0.2);
+  }
 
+  /* Collapsible sections */
+  .policy-section {
+    margin-bottom: 1rem;
+    border-radius: 4px;
+    overflow: hidden;
+    background-color: rgba(0, 0, 0, 0.35);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+  }
 
-    .policy-content {
-      display: none;
-      padding: 0.75rem 1rem 1rem 1rem;
-      font-size: 0.95rem;
-    }
+  .policy-toggle {
+    position: relative;
+    padding-left: 2rem;
+    width: 100%;
+    text-align: left;
+    background: none;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    font-weight: 600;
+    display: block;
+  }
 
-    .policy-content p {
-      margin-bottom: 0.6rem;
-    }
+  .policy-content {
+    display: none;
+    padding: 0.75rem 1rem 1rem 1rem;
+    font-size: 0.95rem;
+  }
 
-    .policy-content ul {
-      padding-left: 1.1rem;
-      margin: 0.4rem 0 0.6rem 0;
-    }
+  .policy-content p {
+    margin-bottom: 0.6rem;
+  }
 
-    .policy-content li {
-      margin-bottom: 0.25rem;
-    }
+  .policy-content ul {
+    padding-left: 1.1rem;
+    margin: 0.4rem 0 0.6rem 0;
+  }
 
-    .policy-updated {
-      font-size: 0.9rem;
-      opacity: 0.75;
-      margin-bottom: 1.5rem;
-    }
+  .policy-content li {
+    margin-bottom: 0.25rem;
+  }
 
-    .policy-subsection {
-      margin: 0.5rem 0;
-      border-radius: 3px;
-      border: 1px solid rgba(255, 255, 255, 0.05);
-      overflow: hidden;
-    }
+  .policy-updated {
+    font-size: 0.9rem;
+    opacity: 0.75;
+    margin-bottom: 1.5rem;
+  }
 
-    .policy-subsection .policy-toggle {
-      font-size: 0.9rem;
-      padding: 0.5rem 0.75rem;
-    }
+  .policy-subsection {
+    margin: 0.5rem 0;
+    border-radius: 3px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    overflow: hidden;
+  }
 
-    .policy-subsection .policy-content {
-      font-size: 0.9rem;
-      padding: 0.6rem 0.75rem 0.75rem 0.75rem;
-    }
-  </style>
+  .policy-subsection .policy-toggle {
+    font-size: 0.9rem;
+    padding: 0.5rem 0.75rem;
+  }
+
+  .policy-subsection .policy-content {
+    font-size: 0.9rem;
+    padding: 0.6rem 0.75rem 0.75rem 0.75rem;
+  }
+
+  /* Bullet-hole icon (collapsed state: splatter) */
+  .policy-toggle .bullet-icon {
+    position: absolute;
+    left: 0.75rem;          /* forces icon to the LEFT */
+    top: 50%;
+    transform: translateY(-50%);
+    width: 14px;
+    height: 14px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    opacity: 0.9;
+    transition: transform 0.25s ease, opacity 0.25s ease;
+    background-image: url('data:image/svg+xml;utf8,<svg width="14" height="14" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg"><circle cx="7" cy="7" r="3" fill="black"/><path d="M7 0 L7 3 M7 11 L7 14 M0 7 L3 7 M11 7 L14 7 M2 2 L4 4 M10 10 L12 12 M2 12 L4 10 M10 4 L12 2" stroke="black" stroke-width="1"/></svg>');
+  }
+
+  /* Expanded state: cracked bullet hole */
+  .policy-toggle.open .bullet-icon {
+    transform: scale(1.25);
+    opacity: 1;
+    background-image: url('data:image/svg+xml;utf8,<svg width="14" height="14" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg"><circle cx="7" cy="7" r="4" fill="black"/><path d="M7 0 L7 4 M7 10 L7 14 M0 7 L4 7 M10 7 L14 7 M1 1 L5 5 M9 9 L13 13 M1 13 L5 9 M9 5 L13 1" stroke="black" stroke-width="1.2"/></svg>');
+  }
+</style>
 </head>
+
 
 <body>
 
