@@ -33,7 +33,7 @@ body {
   background-repeat: no-repeat;
 
   /* --- VISIBILITY BOOST --- */
-  filter: brightness(1.55);
+  filter: brightness(1.45);
 
   /* --- LAYOUT --- */
   display: flex;
@@ -95,7 +95,7 @@ body {
 
 .search-bar {
   width: 350px;
-  padding: 10px;
+  padding: 30px;
   border-radius: 4px;
   border: none;
 }
