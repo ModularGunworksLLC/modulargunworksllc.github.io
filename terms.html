@@ -103,17 +103,18 @@
 .policy-toggle {
   position: relative;
   width: 100%;
-  padding: 0.75rem 1rem;
+  padding: 0.75rem 2.5rem 0.75rem 1rem; /* extra right padding for bullet */
   background: none;
   border: none;
   color: #fff;
   cursor: pointer;
   font-weight: 600;
   text-align: left;
-  white-space: nowrap;
   background-color: rgba(255,255,255,0.03);
   transition: background-color 0.2s ease;
+  white-space: normal; /* allow wrapping if needed */
 }
+
 
 
 .policy-toggle:hover {
@@ -171,10 +172,12 @@
 
 /* Bullet-hole icon (flex version) */
 .policy-toggle .bullet-icon {
+  position: absolute;
+  top: 50%;
+  right: 1rem;
+  transform: translateY(-50%);
   width: 14px;
   height: 14px;
-  margin-left: auto;        /* push icon to right */
-  margin-right: 0.5rem;
   background-size: cover;
   background-repeat: no-repeat;
   opacity: 0.9;
