@@ -20,11 +20,18 @@ body {
    HEADER
    ============================ */
 .hero-header {
-  height: 220px; /* adjust as needed */
+  width: 100vw; /* full viewport width */
+  margin-left: calc(50% - 50vw); /* break out of container */
+  margin-right: calc(50% - 50vw);
+  
+
+  height: 220px;
   background-image: url('images/header-flag.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+
+  filter: brightness(1.45);
 
   display: flex;
   justify-content: center;
