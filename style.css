@@ -299,3 +299,48 @@ body {
   margin-top: 15px;
   font-size: 0.9rem;
 }
+/* policy doc style */
+/* ===== Document Hub Bullet-Hole Toggles & Expand-All Button ===== */
+
+.expand-all-btn {
+  margin-bottom: 1rem;
+  padding: 0.5rem 1rem;
+  background-color: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.2);
+  color: #fff;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 0.9rem;
+}
+
+.expand-all-btn:hover {
+  background-color: rgba(255,255,255,0.2);
+}
+
+/* Adjust toggle layout to make room for bullet icon */
+.policy-toggle {
+  position: relative;
+  padding-left: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+/* Bullet-hole icon (collapsed state: splatter) */
+.policy-toggle .bullet-icon {
+  width: 14px;
+  height: 14px;
+  display: inline-block;
+  background-size: cover;
+  background-repeat: no-repeat;
+  transition: transform 0.25s ease, opacity 0.25s ease;
+  opacity: 0.9;
+  background-image: url('data:image/svg+xml;utf8,<svg width="14" height="14" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg"><circle cx="7" cy="7" r="3" fill="black"/><path d="M7 0 L7 3 M7 11 L7 14 M0 7 L3 7 M11 7 L14 7 M2 2 L4 4 M10 10 L12 12 M2 12 L4 10 M10 4 L12 2" stroke="black" stroke-width="1"/></svg>');
+}
+
+/* Expanded state: cracked/stronger bullet hole */
+.policy-toggle.open .bullet-icon {
+  transform: scale(1.25);
+  opacity: 1;
+  background-image: url('data:image/svg+xml;utf8,<svg width="14" height="14" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg"><circle cx="7" cy="7" r="4" fill="black"/><path d="M7 0 L7 4 M7 10 L7 14 M0 7 L4 7 M10 7 L14 7 M1 1 L5 5 M9 9 L13 13 M1 13 L5 9 M9 5 L13 1" stroke="black" stroke-width="1.2"/></svg>');
+}
