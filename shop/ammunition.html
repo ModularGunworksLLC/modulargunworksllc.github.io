@@ -9,7 +9,7 @@
 
 <body>
 
-  <!-- HEADER -->
+  <!-- TOP HEADER BAR -->
   <header class="site-header">
     <div class="header-left">
       <img src="../images/modular-gunworks-llc.png" alt="Modular Gunworks LLC Logo" class="logo" id="site-logo">
@@ -28,6 +28,7 @@
       <a href="#">Account Login</a>
       <a href="#">Help Center</a>
       <a href="#">View Cart</a>
+
       <button id="theme-toggle" class="theme-toggle-icon" aria-label="Toggle Theme">
         <span id="theme-icon">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
@@ -40,7 +41,7 @@
     </div>
   </header>
 
-  <!-- NAVIGATION -->
+  <!-- CATEGORY NAVIGATION -->
   <nav class="category-nav">
     <a href="ammunition.html" class="active-category">Ammunition</a>
     <a href="guns.html">Guns</a>
@@ -54,11 +55,12 @@
     <a href="sale.html">ON SALE</a>
   </nav>
 
-  <!-- HERO -->
+  <!-- HERO FLAG HEADER -->
   <div class="hero-header">
     <div class="hero-text">Ammunition</div>
   </div>
 
+  <!-- AMMO HERO -->
   <section class="ammo-hero">
     <div class="ammo-hero-inner">
       <h1>Ammunition</h1>
@@ -66,11 +68,11 @@
     </div>
   </section>
 
-  <!-- PAGE LAYOUT -->
+  <!-- AMMUNITION LAYOUT -->
   <main class="ammo-layout">
 
-    <!-- SIDEBAR FILTERS -->
-    <aside class="ammo-sidebar">
+    <!-- FILTER SIDEBAR (STICKY-READY) -->
+    <aside class="ammo-sidebar sticky-sidebar">
       <h2>Filter Ammo</h2>
 
       <div id="filter-caliber" class="ammo-filter-group">
@@ -104,13 +106,31 @@
         </ul>
       </div>
 
+      <div id="filter-price" class="ammo-filter-group">
+        <h3>Price</h3>
+        <ul class="filter-list">
+          <li><label><input type="checkbox" data-price="0-9.99"> Under $10</label></li>
+          <li><label><input type="checkbox" data-price="10-19.99">$10–$20</label></li>
+          <li><label><input type="checkbox" data-price="20-39.99">$20–$40</label></li>
+          <li><label><input type="checkbox" data-price="40-79.99">$40–$80</label></li>
+          <li><label><input type="checkbox" data-price="80-9999">$80+</label></li>
+        </ul>
+      </div>
+
+      <div id="filter-stock" class="ammo-filter-group">
+        <h3>Availability</h3>
+        <label>
+          <input type="checkbox" id="filter-in-stock">
+          In Stock Only
+        </label>
+      </div>
     </aside>
 
     <!-- MAIN CONTENT -->
     <section class="ammo-main">
 
-      <!-- SORT BAR -->
-      <div class="ammo-sort-bar">
+      <!-- SORT BAR (STICKY-READY) -->
+      <div class="ammo-sort-bar sticky-sort">
         <div class="ammo-sort-left">
           <span class="ammo-result-count">Loading inventory...</span>
         </div>
@@ -132,8 +152,15 @@
       <!-- UNIFIED GRID HEADER -->
       <h2 class="ammo-unified-header">Industry Standard</h2>
 
-      <!-- UNIFIED GRID (DYNAMIC) -->
+      <!-- UNIFIED GRID (DYNAMIC, PAGINATED) -->
       <div id="ammo-unified-grid" class="ammo-grid"></div>
+
+      <!-- PAGINATION CONTROLS -->
+      <div id="ammo-pagination" class="ammo-pagination">
+        <button class="page-btn" data-page="prev" disabled>Previous</button>
+        <span class="page-info">Page 1 of 1</span>
+        <button class="page-btn" data-page="next" disabled>Next</button>
+      </div>
 
     </section>
   </main>
