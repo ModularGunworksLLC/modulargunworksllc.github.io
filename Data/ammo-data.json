@@ -1,0 +1,16 @@
+[
+  {
+    "id": "9mm-federal-115-fmj-50",
+    "title": "9mm 115gr FMJ — 50 Rounds",
+    "brand": "Federal",
+    "caliber": "9mm Luger",
+    "grain": 115,
+    "bullet_type": "FMJ",
+    "case_material": "Brass",
+    "rounds": 50,
+    "price": 17.99,
+    "image": "../images/ammo/9mm-generic.jpg",
+    "category": "handgun",
+    "url": "ammo-product.html"
+  }
+]
