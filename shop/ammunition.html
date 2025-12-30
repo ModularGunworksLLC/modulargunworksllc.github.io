@@ -9,40 +9,39 @@
 
 <body>
 
-  <!-- TOP HEADER BAR (same as index, paths adjusted) -->
+  <!-- TOP HEADER BAR -->
   <header class="site-header">
-  <div class="header-left">
-    <img src="../images/modular-gunworks-llc.png" alt="Modular Gunworks LLC Logo" class="logo" id="site-logo">
-  </div>
+    <div class="header-left">
+      <img src="../images/modular-gunworks-llc.png" alt="Modular Gunworks LLC Logo" class="logo" id="site-logo">
+    </div>
 
-  <div class="header-center">
-    <form class="search-form" action="/search">
-      <input type="text" class="search-bar" name="q" placeholder="Search ammo, gear, or answers...">
-      <button type="submit" class="search-button">
-        <img src="../images/search-icon.svg" alt="Search">
+    <div class="header-center">
+      <form class="search-form" action="/search">
+        <input type="text" class="search-bar" name="q" placeholder="Search ammo, gear, or answers...">
+        <button type="submit" class="search-button">
+          <img src="../images/search-icon.svg" alt="Search">
+        </button>
+      </form>
+    </div>
+
+    <div class="header-right">
+      <a href="#">Account Login</a>
+      <a href="#">Help Center</a>
+      <a href="#">View Cart</a>
+
+      <button id="theme-toggle" class="theme-toggle-icon" aria-label="Toggle Theme">
+        <span id="theme-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3
+                     7 7 0 0 0 21 12.79z"></path>
+          </svg>
+        </span>
       </button>
-    </form>
-  </div>
+    </div>
+  </header>
 
-  <div class="header-right">
-    <a href="#">Account Login</a>
-    <a href="#">Help Center</a>
-    <a href="#">View Cart</a>
-    <button id="theme-toggle" class="theme-toggle-icon" aria-label="Toggle Theme">
-      <span id="theme-icon">
-        <!-- Default icon: Moon (light mode) -->
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
-             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M21 12.79A9 9 0 1 1 11.21 3
-                   7 7 0 0 0 21 12.79z"></path>
-        </svg>
-      </span>
-    </button>
-  </div>
-</header>
-
-
-  <!-- CATEGORY NAVIGATION (Ammunition link points here) -->
+  <!-- CATEGORY NAVIGATION -->
   <nav class="category-nav">
     <a href="ammunition.html" class="active-category">Ammunition</a>
     <a href="guns.html">Guns</a>
@@ -56,18 +55,12 @@
     <a href="sale.html">ON SALE</a>
   </nav>
 
-  <!-- OPTIONAL: reuse promo banner if you want it on category pages -->
-  <!--
-  <section class="promo-banner">
-    <h2>Ammo Deals Incoming</h2>
-    <p>RSR Dealer Inventory Coming Soon • Sign Up for Alerts</p>
-  </section>
-  -->
-<!-- HERO FLAG HEADER (FULL WIDTH) -->
+  <!-- HERO FLAG HEADER -->
   <div class="hero-header">
     <div class="hero-text">Ammunition</div>
   </div>
-  <!-- AMMUNITION PAGE HERO -->
+
+  <!-- AMMO HERO -->
   <section class="ammo-hero">
     <div class="ammo-hero-inner">
       <h1>Ammunition</h1>
@@ -75,7 +68,7 @@
     </div>
   </section>
 
-  <!-- AMMUNITION LAYOUT: SIDEBAR FILTERS + PRODUCT GRID -->
+  <!-- AMMUNITION LAYOUT -->
   <main class="ammo-layout">
 
     <!-- FILTER SIDEBAR -->
@@ -117,9 +110,10 @@
       </div>
     </aside>
 
-    <!-- CONTENT: SORT BAR + PRODUCT GRID -->
+    <!-- MAIN CONTENT -->
     <section class="ammo-main">
-      <div id="ammo-container"></div>
+
+      <!-- SORT BAR -->
       <div class="ammo-sort-bar">
         <div class="ammo-sort-left">
           <span class="ammo-result-count">Showing placeholder inventory • RSR integration coming soon</span>
@@ -136,7 +130,10 @@
         </div>
       </div>
 
-      <!-- AMMO CATEGORY QUICK LINKS -->
+      <!-- PRODUCT GRID (JS RENDERS HERE) -->
+      <div id="ammo-container" class="ammo-grid-wrapper"></div>
+
+      <!-- CATEGORY QUICK LINKS -->
       <section class="ammo-category-grid">
         <h2>Shop by Ammo Type</h2>
         <div class="ammo-category-tiles">
@@ -147,6 +144,16 @@
           <a href="#specialty-ammo" class="ammo-cat-tile">Specialty / Defense</a>
         </div>
       </section>
+
+    </section> <!-- closes .ammo-main -->
+  </main> <!-- closes .ammo-layout -->
+
+  <!-- SCRIPTS -->
+  <script src="../scripts/ammo-loader.js"></script>
+  <script src="../scripts/theme-toggle.js"></script>
+
+</body>
+</html>
 
       <!-- HANDGUN AMMO SECTION -->
       <section id="handgun-ammo" class="ammo-section">
