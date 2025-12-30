@@ -1,36 +1,46 @@
 <!DOCTYPE html>
-<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Ammunition | Modular Gunworks LLC</title>
-  <link rel="stylesheet" href="../style.css">
-  <link rel="icon" type="image/png" href="../favicon.png">
+  <title>Modular Gunworks LLC</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" type="image/png" href="favicon.png">
 </head>
 
 <body>
 
-  <!-- TOP HEADER BAR (same as index, paths adjusted) -->
-  <header class="site-header">
-    <div class="header-left">
-      <img src="../images/modular-gunworks-llc.png" alt="Modular Gunworks LLC Logo" class="logo">
-    </div>
+  <!-- TOP HEADER BAR (LOGO + SEARCH + ACCOUNT LINKS) -->
+ <header class="site-header">
+  <div class="header-left">
+    <img src="images/modular-gunworks-llc.png" alt="Modular Gunworks LLC Logo" class="logo">
+  </div>
 
-    <div class="header-center">
-      <form class="search-form" action="/search">
-        <input type="text" class="search-bar" name="q" placeholder="Search ammo, gear, or answers...">
-        <button type="submit" class="search-button">
-          <img src="../images/search-icon.svg" alt="Search">
-        </button>
-      </form>
-    </div>
+  <div class="header-center">
+    <form class="search-form" action="/search">
+      <input type="text" class="search-bar" name="q" placeholder="Search ammo, gear, or answers...">
+      <button type="submit" class="search-button">
+        <img src="images/search-icon.svg" alt="Search">
+      </button>
+    </form>
+  </div>
 
-    <div class="header-right">
-      <a href="#">Account Login</a>
-      <a href="#">Help Center</a>
-      <a href="#">View Cart</a>
-    </div>
-  </header>
+ <div class="header-right">
+  <a href="#">Account Login</a>
+  <a href="#">Help Center</a>
+  <a href="#">View Cart</a>
 
+  <button id="theme-toggle" class="theme-toggle-icon" aria-label="Toggle Theme">
+    <span id="theme-icon">
+      <!-- Default icon: Moon (light mode) -->
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+           stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3
+                 7 7 0 0 0 21 12.79z"></path>
+      </svg>
+    </span>
+  </button>
+</div>
+
+</header>
   <!-- CATEGORY NAVIGATION (Ammunition link points here) -->
   <nav class="category-nav">
     <a href="ammunition.html" class="active-category">Ammunition</a>
@@ -249,19 +259,46 @@
 <script>
   const toggleBtn = document.getElementById("theme-toggle");
   const themeIcon = document.getElementById("theme-icon");
-  const currentTheme = localStorage.getItem("theme");
+  const savedTheme = localStorage.getItem("theme");
+
+  const moonSVG = `
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M21 12.79A9 9 0 1 1 11.21 3
+               7 7 0 0 0 21 12.79z"></path>
+    </svg>
+  `;
+
+  const sunSVG = `
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  `;
 
   function applyTheme(theme) {
-    document.body.classList.toggle("dark-theme", theme === "dark");
-    themeIcon.src = theme === "dark" ? "images/icon-sun.svg" : "images/icon-moon.svg";
+    const isDark = theme === "dark";
+    document.body.classList.toggle("dark-theme", isDark);
+    themeIcon.innerHTML = isDark ? sunSVG : moonSVG;
     localStorage.setItem("theme", theme);
   }
 
-  // Apply saved theme on load
-  applyTheme(currentTheme === "dark" ? "dark" : "light");
+  // Load saved theme
+  applyTheme(savedTheme === "dark" ? "dark" : "light");
 
+  // Toggle on click
   toggleBtn.onclick = () => {
-    const newTheme = document.body.classList.contains("dark-theme") ? "light" : "dark";
+    const newTheme = document.body.classList.contains("dark-theme")
+      ? "light"
+      : "dark";
     applyTheme(newTheme);
   };
 </script>
