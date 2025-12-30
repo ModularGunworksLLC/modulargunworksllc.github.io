@@ -17,17 +17,38 @@
   </div>
 </a>-->
 
-  <!-- MAIN SITE HEADER -->
-  <header class="site-header">
-    <div class="header-left"></div>
-    <div class="header-center">
-      <input type="text" class="search-bar" placeholder="Search products...">
-    </div>
-    <div class="header-right">
-      <a href="#">Account Login</a>
-      <a href="#">Help Center</a>
-      <a href="#">View Cart</a>
-    </div>
+  <!-- TOP HEADER BAR (LOGO + SEARCH + ACCOUNT LINKS) -->
+ <header class="site-header">
+  <div class="header-left">
+    <img src="images/modular-gunworks-llc.png" alt="Modular Gunworks LLC Logo" class="logo">
+  </div>
+
+  <div class="header-center">
+    <form class="search-form" action="/search">
+      <input type="text" class="search-bar" name="q" placeholder="Search ammo, gear, or answers...">
+      <button type="submit" class="search-button">
+        <img src="images/search-icon.svg" alt="Search">
+      </button>
+    </form>
+  </div>
+
+ <div class="header-right">
+  <a href="#">Account Login</a>
+  <a href="#">Help Center</a>
+  <a href="#">View Cart</a>
+
+  <button id="theme-toggle" class="theme-toggle-icon" aria-label="Toggle Theme">
+    <span id="theme-icon">
+      <!-- Default icon: Moon (light mode) -->
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+           stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3
+                 7 7 0 0 0 21 12.79z"></path>
+      </svg>
+    </span>
+  </button>
+</div>
+
   </header>
 
   <!-- NAVIGATION -->
@@ -46,7 +67,7 @@
 <!-- HERO FLAG HEADER (FULL WIDTH) -->
   <div class="hero-header">
     <div class="hero-title">MODULAR GUNWORKS LLC</div>
-    <div class="hero-subtitle">TERMS & DOCUMENT HUB</div>
+    <div class="hero-subtitle">Privacy Policy</div>
   </div>
   <!-- DOCUMENT HUB LAYOUT -->
   <div class="doc-layout">
