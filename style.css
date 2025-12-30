@@ -915,404 +915,129 @@ body.header-shrink .category-nav {
   background: #0033aa;
   color: #ffffff;
 }
-/* ============================
-   AMMUNITION PAGE LAYOUT
-   ============================ */
+/* ================================
+   AMMO PAGE — MODULAR GUNWORKS
+   Clean, Tactical, Responsive Layout
+   ================================ */
 
-.ammo-hero {
-  padding: 30px 20px 20px 20px;
-  background: linear-gradient(to right, #0033aa, #0b31a5);
-  color: #fff;
-  text-align: center;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-}
-
-.ammo-hero-inner h1 {
-  font-size: 2.2rem;
-  margin-bottom: 8px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-}
-
-.ammo-hero-inner p {
-  font-size: 1rem;
-  max-width: 800px;
-  margin: 0 auto;
-}
-
-.ammo-layout {
+/* Container for all ammo sections */
+#ammo-container {
+  width: 100%;
   max-width: 1400px;
-  margin: 30px auto 40px auto;
-  padding: 0 20px;
-  display: grid;
-  grid-template-columns: 280px 1fr;
-  gap: 24px;
-  box-sizing: border-box;
+  margin: 0 auto;
+  padding: 20px;
 }
 
-/* Sidebar filters */
-.ammo-sidebar {
-  background-color: rgba(255,255,255,0.90);
-  border-radius: 6px;
-  border: 1px solid rgba(0,0,0,0.15);
-  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
-  padding: 16px 18px;
-}
-
-.ammo-sidebar h2 {
-  font-size: 1.1rem;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  margin-bottom: 12px;
-}
-
-.ammo-filter-group {
-  margin-bottom: 16px;
-}
-
-.ammo-filter-group h3 {
-  font-size: 0.95rem;
-  margin-bottom: 6px;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-}
-
-.ammo-filter-group ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.ammo-filter-group li {
-  margin-bottom: 4px;
-}
-
-.ammo-filter-group a {
-  color: #0033aa;
-  text-decoration: none;
-  font-size: 0.9rem;
-}
-
-.ammo-filter-group a:hover {
-  text-decoration: underline;
-}
-
-/* Main ammo content */
-.ammo-main {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-/* Sort bar */
-.ammo-sort-bar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: rgba(255,255,255,0.90);
-  border-radius: 6px;
-  border: 1px solid rgba(0,0,0,0.15);
-  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
-  padding: 10px 14px;
-  font-size: 0.9rem;
-}
-
-.ammo-result-count {
-  color: #555;
-}
-
-.ammo-sort-right {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.ammo-sort-right select {
-  padding: 4px 8px;
-  font-size: 0.9rem;
-}
-
-/* Category quick tiles */
-.ammo-category-grid h2 {
-  font-size: 1.4rem;
-  margin-bottom: 10px;
-}
-
-.ammo-category-tiles {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-
-.ammo-cat-tile {
-  padding: 8px 12px;
-  border-radius: 4px;
-  border: 1px solid #0033aa;
-  color: #0033aa;
-  text-decoration: none;
-  font-size: 0.9rem;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  background-color: #ffffff;
-  transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
-}
-
-.ammo-cat-tile:hover {
-  background-color: #0033aa;
-  color: #ffffff;
-  transform: translateY(-1px);
-}
-
-/* Ammo sections */
+/* Category section wrapper */
 .ammo-section {
-  margin-top: 18px;
+  margin-bottom: 60px;
 }
 
+/* Category headers */
 .ammo-section h2 {
-  font-size: 1.4rem;
-  margin-bottom: 10px;
+  font-size: 2rem;
+  margin-bottom: 20px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.15);
+  text-transform: capitalize;
+  letter-spacing: 0.5px;
 }
 
-/* Ammo product cards */
+/* Product grid */
 .ammo-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 18px;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 22px;
 }
 
+/* Product card */
 .ammo-card {
-  background: #ffffff;
-  border-radius: 6px;
-  border: 1px solid #ddd;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  background: rgba(20, 20, 20, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  padding: 16px;
+  text-align: center;
+  transition: all 0.25s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
 }
 
+/* Hover effect */
 .ammo-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 6px 14px rgba(0,0,0,0.18);
-  border-color: #0033aa;
+  transform: translateY(-4px);
+  border-color: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.45);
 }
 
-.ammo-card-image {
+/* Product image */
+.ammo-card img {
   width: 100%;
-  aspect-ratio: 4 / 3;
-  overflow: hidden;
-  background: #f5f5f5;
-}
-
-.ammo-card-image img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
-.ammo-card-body {
-  padding: 12px 14px 14px 14px;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.ammo-card-title {
-  font-size: 1rem;
-  margin: 0;
-}
-
-.ammo-card-meta {
-  font-size: 0.9rem;
-  color: #555;
-}
-
-.ammo-card-specs {
-  list-style: none;
-  padding: 0;
-  margin: 4px 0;
-  font-size: 0.85rem;
-}
-
-.ammo-card-specs li {
-  margin-bottom: 2px;
-}
-
-.ammo-card-footer {
-  margin-top: 6px;
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  gap: 8px;
-}
-
-.ammo-card-price {
-  display: flex;
-  flex-direction: column;
-}
-
-.ammo-price-main {
-  font-weight: 700;
-  font-size: 1.1rem;
-}
-
-.ammo-price-sub {
-  font-size: 0.8rem;
-  color: #555;
-}
-
-.ammo-card-button {
-  padding: 6px 10px;
-  border-radius: 4px;
-  background: #0033aa;
-  color: #ffffff;
-  text-decoration: none;
-  font-size: 0.85rem;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  white-space: nowrap;
-}
-
-.ammo-card-button:hover {
-  background: #001f66;
-}
-
-/* Ammo product detail page */
-.ammo-product-layout {
-  max-width: 1200px;
-  margin: 30px auto 40px auto;
-  padding: 0 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-}
-
-.ammo-product-main {
-  display: grid;
-  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.4fr);
-  gap: 24px;
-}
-
-.ammo-product-gallery img {
-  width: 100%;
-  border-radius: 6px;
-  border: 1px solid #ddd;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-}
-
-.ammo-product-info h1 {
-  font-size: 1.8rem;
-  margin-bottom: 6px;
-}
-
-.ammo-product-brand {
-  font-size: 0.95rem;
-  color: #555;
-  margin-bottom: 10px;
-}
-
-.ammo-product-price-block {
-  margin-bottom: 10px;
-}
-
-.ammo-product-price {
-  font-size: 1.6rem;
-  font-weight: 800;
-}
-
-.ammo-product-price-sub {
-  font-size: 0.9rem;
-  color: #555;
-}
-
-.ammo-product-key-specs {
-  list-style: none;
-  padding: 0;
-  margin: 10px 0;
-  font-size: 0.95rem;
-}
-
-.ammo-product-key-specs li {
-  margin-bottom: 4px;
-}
-
-.ammo-product-actions {
-  margin: 12px 0;
-}
-
-.ammo-add-to-cart {
-  padding: 10px 20px;
-  border-radius: 4px;
-  border: none;
-  background: #0033aa;
-  color: #fff;
-  font-weight: 700;
-  cursor: pointer;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-}
-
-.ammo-add-to-cart:hover {
-  background: #001f66;
-}
-
-.ammo-product-stock {
-  font-size: 0.9rem;
-  margin-top: 6px;
-}
-
-.ammo-product-stock.in-stock {
-  color: #0b7207;
-}
-
-.ammo-product-meta p {
-  font-size: 0.85rem;
-  color: #555;
-  margin: 2px 0;
-}
-
-.ammo-product-details h2 {
-  font-size: 1.3rem;
-  margin-bottom: 6px;
-}
-
-.ammo-product-details p {
-  font-size: 0.95rem;
+  height: 150px;
+  object-fit: contain;
   margin-bottom: 12px;
 }
 
-.ammo-spec-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 0.95rem;
-}
-
-.ammo-spec-table th,
-.ammo-spec-table td {
-  border: 1px solid #ddd;
-  padding: 6px 8px;
-}
-
-.ammo-spec-table th {
-  width: 35%;
-  background: #f5f5f5;
-  text-align: left;
-}
-
-/* Related ammo */
-.ammo-related h2 {
-  font-size: 1.3rem;
+/* Title */
+.ammo-card h3 {
+  font-size: 1.1rem;
   margin-bottom: 8px;
+  min-height: 48px;
+  line-height: 1.25;
 }
 
-/* Responsive tweaks */
-@media (max-width: 900px) {
-  .ammo-layout {
+/* Brand + Caliber line */
+.ammo-meta {
+  font-size: 0.9rem;
+  opacity: 0.85;
+  margin-bottom: 6px;
+}
+
+/* Grain + Bullet type */
+.ammo-details {
+  font-size: 0.85rem;
+  opacity: 0.75;
+  margin-bottom: 10px;
+}
+
+/* Price */
+.ammo-price {
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: #4caf50;
+  margin-top: 10px;
+}
+
+/* Error message */
+.error {
+  color: #ff6b6b;
+  font-size: 1.2rem;
+  text-align: center;
+  padding: 20px;
+}
+
+/* ================================
+   RESPONSIVE TWEAKS
+   ================================ */
+
+@media (max-width: 768px) {
+  .ammo-section h2 {
+    font-size: 1.6rem;
+  }
+
+  .ammo-card {
+    padding: 14px;
+  }
+
+  .ammo-card img {
+    height: 130px;
+  }
+}
+
+@media (max-width: 480px) {
+  .ammo-grid {
     grid-template-columns: 1fr;
   }
 
-  .ammo-product-main {
-    grid-template-columns: 1fr;
+  .ammo-card img {
+    height: 120px;
   }
 }
