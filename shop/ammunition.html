@@ -246,6 +246,20 @@
     </div>
   </footer>
 <script src="../scripts/ammo-loader.js"></script>
+<script>
+  const toggleBtn = document.getElementById("theme-toggle");
+  const currentTheme = localStorage.getItem("theme");
+
+  if (currentTheme === "dark") {
+    document.body.classList.add("dark-theme");
+  }
+
+  toggleBtn.onclick = () => {
+    document.body.classList.toggle("dark-theme");
+    const isDark = document.body.classList.contains("dark-theme");
+    localStorage.setItem("theme", isDark ? "dark" : "light");
+  };
+</script>
 
 </body>
 </html>

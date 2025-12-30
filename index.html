@@ -27,12 +27,13 @@
     <a href="#">Account Login</a>
     <a href="#">Help Center</a>
     <a href="#">View Cart</a>
+    <button id="theme-toggle" class="theme-toggle">Toggle Theme</button>
   </div>
 </header>
 
   <!-- CATEGORY NAVIGATION (STICKY) -->
   <nav class="category-nav">
-    <a href="shop/ammunition.md">Ammunition</a>
+    <a href="shop/ammunition.html">Ammunition</a>
     <a href="shop/guns.md">Guns</a>
     <a href="shop/magazines.md">Magazines</a>
     <a href="shop/gun-parts.md">Gun Parts</a>
@@ -61,7 +62,7 @@
 
   <div class="grid">
 
-    <a class="tile" href="shop/ammunition.md">
+    <a class="tile" href="shop/ammunition.html">
   <div class="image-box">
     <img src="images/categories/ammunition.jpg" alt="Ammunition">
   </div>
@@ -218,6 +219,20 @@
 
   noBtn.onclick = () => {
     window.location.href = 'https://www.google.com';
+  };
+</script>
+<script>
+  const toggleBtn = document.getElementById("theme-toggle");
+  const currentTheme = localStorage.getItem("theme");
+
+  if (currentTheme === "dark") {
+    document.body.classList.add("dark-theme");
+  }
+
+  toggleBtn.onclick = () => {
+    document.body.classList.toggle("dark-theme");
+    const isDark = document.body.classList.contains("dark-theme");
+    localStorage.setItem("theme", isDark ? "dark" : "light");
   };
 </script>
 
