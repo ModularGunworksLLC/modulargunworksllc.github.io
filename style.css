@@ -507,52 +507,56 @@ body.header-shrink .category-nav {
   background-position: center;
   background-repeat: no-repeat;
   filter: brightness(2.5);
+
   display: flex;
+  flex-direction: column; /* ensures stacked title + subtitle */
   justify-content: center;
   align-items: center;
   text-align: center;
+
   color: #ffffff;
-  font-size: 3rem;
-  font-weight: 900;
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  -webkit-text-stroke: 1px rgba(0,0,0,0.6);
-  text-shadow:
-    0 0 8px rgba(0,0,0,0.9),
-    0 0 12px rgba(0,0,0,0.7),
-    2px 2px 4px rgba(0,0,0,0.9);
   animation: fadeIn 1.2s ease-out;
   position: relative;
-  text-decoration: none;
 }
 
+/* Optional wrapper if you ever use it */
 .hero-text {
   position: relative;
   z-index: 2;
 }
+
+/* MAIN TITLE (if used) */
 .hero-title {
   font-size: 3rem;
   font-weight: 900;
   letter-spacing: 3px;
   text-transform: uppercase;
-  margin-bottom: 6px; /* creates the space you want */
-}
 
-.hero-subtitle {
-  font-size: 3rem;
-  font-weight: 900;
-  letter-spacing: 3px;
-  text-transform: uppercase;
   -webkit-text-stroke: 1px rgba(0,0,0,0.6);
   text-shadow:
     0 0 8px rgba(0,0,0,0.9),
     0 0 12px rgba(0,0,0,0.7),
     2px 2px 4px rgba(0,0,0,0.9);
+
+  margin-bottom: 6px; /* spacing between title + subtitle */
 }
 
+/* SUBTITLE (Privacy Policy, Terms Hub, etc.) */
 .hero-subtitle {
+  font-size: 2rem; /* slightly smaller than title */
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+
+  -webkit-text-stroke: 1px rgba(0,0,0,0.6);
+  text-shadow:
+    0 0 8px rgba(0,0,0,0.9),
+    0 0 12px rgba(0,0,0,0.7),
+    2px 2px 4px rgba(0,0,0,0.9);
+
   display: block;
 }
+
 
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(-10px); }
