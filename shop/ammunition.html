@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Ammunition | Modular Gunworks LLC</title>
+  <link rel="stylesheet" href="../style.css">
+  <link rel="icon" type="image/png" href="../favicon.png">
+</head>
+
+<body>
+
+  <!-- TOP HEADER BAR (same as index, paths adjusted) -->
+  <header class="site-header">
+    <div class="header-left">
+      <img src="../images/modular-gunworks-llc.png" alt="Modular Gunworks LLC Logo" class="logo">
+    </div>
+
+    <div class="header-center">
+      <form class="search-form" action="/search">
+        <input type="text" class="search-bar" name="q" placeholder="Search ammo, gear, or answers...">
+        <button type="submit" class="search-button">
+          <img src="../images/search-icon.svg" alt="Search">
+        </button>
+      </form>
+    </div>
+
+    <div class="header-right">
+      <a href="#">Account Login</a>
+      <a href="#">Help Center</a>
+      <a href="#">View Cart</a>
+    </div>
+  </header>
+
+  <!-- CATEGORY NAVIGATION (Ammunition link points here) -->
+  <nav class="category-nav">
+    <a href="ammunition.html" class="active-category">Ammunition</a>
+    <a href="guns.html">Guns</a>
+    <a href="magazines.html">Magazines</a>
+    <a href="gun-parts.html">Gun Parts</a>
+    <a href="gear.html">Gear</a>
+    <a href="optics.html">Optics & Sights</a>
+    <a href="reloading.html">Reloading</a>
+    <a href="survival.html">Prep & Survival</a>
+    <a href="brands.html">Brands</a>
+    <a href="sale.html">ON SALE</a>
+  </nav>
+
+  <!-- OPTIONAL: reuse promo banner if you want it on category pages -->
+  <!--
+  <section class="promo-banner">
+    <h2>Ammo Deals Incoming</h2>
+    <p>RSR Dealer Inventory Coming Soon • Sign Up for Alerts</p>
+  </section>
+  -->
+
+  <!-- AMMUNITION PAGE HERO -->
+  <section class="ammo-hero">
+    <div class="ammo-hero-inner">
+      <h1>Ammunition</h1>
+      <p>Handgun, rifle, shotgun, and rimfire ammunition from trusted manufacturers — powered by RSR Group distribution.</p>
+    </div>
+  </section>
+
+  <!-- AMMUNITION LAYOUT: SIDEBAR FILTERS + PRODUCT GRID -->
+  <main class="ammo-layout">
+
+    <!-- FILTER SIDEBAR -->
+    <aside class="ammo-sidebar">
+      <h2>Filter Ammo</h2>
+
+      <div class="ammo-filter-group">
+        <h3>Caliber</h3>
+        <ul>
+          <li><a href="?caliber=9mm">9mm Luger</a></li>
+          <li><a href="?caliber=556">5.56 NATO / .223</a></li>
+          <li><a href="?caliber=308">.308 Win</a></li>
+          <li><a href="?caliber=65cm">6.5 Creedmoor</a></li>
+          <li><a href="?caliber=22lr">.22 LR</a></li>
+          <li><a href="?caliber=12ga">12 Gauge</a></li>
+        </ul>
+      </div>
+
+      <div class="ammo-filter-group">
+        <h3>Type</h3>
+        <ul>
+          <li><a href="?type=fmj">FMJ / Target</a></li>
+          <li><a href="?type=jhp">JHP / Defense</a></li>
+          <li><a href="?type=match">Match / Precision</a></li>
+          <li><a href="?type=steel">Steel Case</a></li>
+          <li><a href="?type=bulk">Bulk Packs</a></li>
+        </ul>
+      </div>
+
+      <div class="ammo-filter-group">
+        <h3>Brand</h3>
+        <ul>
+          <li><a href="?brand=Federal">Federal</a></li>
+          <li><a href="?brand=Winchester">Winchester</a></li>
+          <li><a href="?brand=Hornady">Hornady</a></li>
+          <li><a href="?brand=PMC">PMC</a></li>
+          <li><a href="?brand=PPU">PPU</a></li>
+        </ul>
+      </div>
+    </aside>
+
+    <!-- CONTENT: SORT BAR + PRODUCT GRID -->
+    <section class="ammo-main">
+      <div class="ammo-sort-bar">
+        <div class="ammo-sort-left">
+          <span class="ammo-result-count">Showing placeholder inventory • RSR integration coming soon</span>
+        </div>
+        <div class="ammo-sort-right">
+          <label for="sort-by">Sort by:</label>
+          <select id="sort-by" name="sort">
+            <option value="featured">Featured</option>
+            <option value="price-asc">Price: Low to High</option>
+            <option value="price-desc">Price: High to Low</option>
+            <option value="grain-asc">Grain Weight: Low to High</option>
+            <option value="grain-desc">Grain Weight: High to Low</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- AMMO CATEGORY QUICK LINKS -->
+      <section class="ammo-category-grid">
+        <h2>Shop by Ammo Type</h2>
+        <div class="ammo-category-tiles">
+          <a href="#handgun-ammo" class="ammo-cat-tile">Handgun Ammo</a>
+          <a href="#rifle-ammo" class="ammo-cat-tile">Rifle Ammo</a>
+          <a href="#rimfire-ammo" class="ammo-cat-tile">Rimfire Ammo</a>
+          <a href="#shotgun-ammo" class="ammo-cat-tile">Shotgun Ammo</a>
+          <a href="#specialty-ammo" class="ammo-cat-tile">Specialty / Defense</a>
+        </div>
+      </section>
+
+      <!-- HANDGUN AMMO SECTION -->
+      <section id="handgun-ammo" class="ammo-section">
+        <h2>Handgun Ammunition</h2>
+        <div class="ammo-grid">
+
+          <!-- Example product card -->
+          <article class="ammo-card">
+            <a href="ammo-product.html" class="ammo-card-image-link">
+              <div class="ammo-card-image">
+                <img src="../images/ammo/9mm-generic.jpg" alt="9mm 115gr FMJ - 50 Rounds">
+              </div>
+            </a>
+            <div class="ammo-card-body">
+              <h3 class="ammo-card-title">
+                9mm 115gr FMJ — 50 Rounds
+              </h3>
+              <p class="ammo-card-meta">
+                Federal • Brass • Target
+              </p>
+              <ul class="ammo-card-specs">
+                <li><strong>Caliber:</strong> 9mm Luger</li>
+                <li><strong>Grain:</strong> 115 gr</li>
+                <li><strong>Rounds:</strong> 50</li>
+              </ul>
+              <div class="ammo-card-footer">
+                <div class="ammo-card-price">
+                  <span class="ammo-price-main">$17.99</span>
+                  <span class="ammo-price-sub">$0.36 / rd</span>
+                </div>
+                <a href="ammo-product.html" class="ammo-card-button">View Details</a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Duplicate this card structure for more placeholder items -->
+
+        </div>
+      </section>
+
+      <!-- RIFLE AMMO SECTION -->
+      <section id="rifle-ammo" class="ammo-section">
+        <h2>Rifle Ammunition</h2>
+        <div class="ammo-grid">
+          <!-- Repeat ammo-card blocks here -->
+        </div>
+      </section>
+
+      <!-- RIMFIRE AMMO SECTION -->
+      <section id="rimfire-ammo" class="ammo-section">
+        <h2>Rimfire Ammunition</h2>
+        <div class="ammo-grid">
+          <!-- Repeat ammo-card blocks here -->
+        </div>
+      </section>
+
+      <!-- SHOTGUN AMMO SECTION -->
+      <section id="shotgun-ammo" class="ammo-section">
+        <h2>Shotgun Ammunition</h2>
+        <div class="ammo-grid">
+          <!-- Repeat ammo-card blocks here -->
+        </div>
+      </section>
+
+      <!-- SPECIALTY AMMO SECTION -->
+      <section id="specialty-ammo" class="ammo-section">
+        <h2>Specialty & Defense Ammunition</h2>
+        <div class="ammo-grid">
+          <!-- Repeat ammo-card blocks here -->
+        </div>
+      </section>
+
+    </section>
+  </main>
+
+  <!-- FOOTER (paths adjusted) -->
+  <footer class="site-footer">
+    <div class="footer-columns">
+      <div>
+        <h4>Company</h4>
+        <ul>
+          <li><a href="../about.html">About Modular Gunworks</a></li>
+          <li><a href="#">Careers</a></li>
+          <li><a href="#">Blog</a></li>
+          <li><a href="../contact.html">Contact Us</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4>Info</h4>
+        <ul>
+          <li><a href="#">FAQ</a></li>
+          <li><a href="#">FFL Transfers</a></li>
+          <li><a href="#">Order Status</a></li>
+          <li><a href="#">Shipping Info</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="#">Terms & Conditions</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Return Policy</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>© 2025 Modular Gunworks LLC. All rights reserved.</p>
+      <p><a href="mailto:support@modulargunworks.com">support@modulargunworks.com</a></p>
+    </div>
+  </footer>
+<script src="../scripts/ammo-loader.js"></script>
+
+</body>
+</html>
