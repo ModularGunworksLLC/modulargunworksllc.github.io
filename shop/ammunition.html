@@ -11,25 +11,36 @@
 
   <!-- TOP HEADER BAR (same as index, paths adjusted) -->
   <header class="site-header">
-    <div class="header-left">
-      <img src="../images/modular-gunworks-llc.png" alt="Modular Gunworks LLC Logo" class="logo">
-    </div>
+  <div class="header-left">
+    <img src="../images/modular-gunworks-llc.png" alt="Modular Gunworks LLC Logo" class="logo" id="site-logo">
+  </div>
 
-    <div class="header-center">
-      <form class="search-form" action="/search">
-        <input type="text" class="search-bar" name="q" placeholder="Search ammo, gear, or answers...">
-        <button type="submit" class="search-button">
-          <img src="../images/search-icon.svg" alt="Search">
-        </button>
-      </form>
-    </div>
+  <div class="header-center">
+    <form class="search-form" action="/search">
+      <input type="text" class="search-bar" name="q" placeholder="Search ammo, gear, or answers...">
+      <button type="submit" class="search-button">
+        <img src="../images/search-icon.svg" alt="Search">
+      </button>
+    </form>
+  </div>
 
-    <div class="header-right">
-      <a href="#">Account Login</a>
-      <a href="#">Help Center</a>
-      <a href="#">View Cart</a>
-    </div>
-  </header>
+  <div class="header-right">
+    <a href="#">Account Login</a>
+    <a href="#">Help Center</a>
+    <a href="#">View Cart</a>
+    <button id="theme-toggle" class="theme-toggle-icon" aria-label="Toggle Theme">
+      <span id="theme-icon">
+        <!-- Default icon: Moon (light mode) -->
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3
+                   7 7 0 0 0 21 12.79z"></path>
+        </svg>
+      </span>
+    </button>
+  </div>
+</header>
+
 
   <!-- CATEGORY NAVIGATION (Ammunition link points here) -->
   <nav class="category-nav">
