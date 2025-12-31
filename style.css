@@ -501,7 +501,10 @@ body.header-shrink .category-nav {
   width: 100vw;
   margin-left: calc(50% - 50vw);
   margin-right: calc(50% - 50vw);
-  height: 220px;
+
+  /* FIX: increase height so text can grow */
+  height: 380px; /* ← adjust to 340 / 380 / 420 depending on how big you want it */
+
   background-image: url('images/header-flag.jpg');
   background-size: cover;
   background-position: center;
@@ -509,7 +512,7 @@ body.header-shrink .category-nav {
   filter: brightness(1.4);
 
   display: flex;
-  flex-direction: column; /* ensures stacked title + subtitle */
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   text-align: center;
@@ -519,15 +522,15 @@ body.header-shrink .category-nav {
   position: relative;
 }
 
-/* Optional wrapper if you ever use it */
+/* Optional wrapper */
 .hero-text {
   position: relative;
   z-index: 2;
 }
 
-/* MAIN TITLE (if used) */
+/* MAIN TITLE (Homepage) */
 .hero-home-title {
-  font-size: 6rem; /* ← this is the real fix */
+  font-size: 6rem; /* now this will actually show full size */
   font-weight: 900;
   font-family: 'Arial Black', 'Impact', sans-serif;
   letter-spacing: 2px;
@@ -545,11 +548,9 @@ body.header-shrink .category-nav {
   padding: 0 20px;
 }
 
-
-
 /* SUBTITLE (Privacy Policy, Terms Hub, etc.) */
 .hero-subtitle {
-  font-size: 4rem; /* bigger and bolder */
+  font-size: 4rem;
   font-weight: 900;
   font-family: 'Arial Black', 'Impact', sans-serif;
   letter-spacing: 2px;
