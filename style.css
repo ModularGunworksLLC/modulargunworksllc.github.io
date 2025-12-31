@@ -503,7 +503,7 @@ body.header-shrink .category-nav {
   margin-right: calc(50% - 50vw);
 
   /* FIX: increase height so text can grow */
-  height: 380px; /* ← adjust to 340 / 380 / 420 depending on how big you want it */
+  height: 300px; /* ← adjust to 340 / 380 / 420 depending on how big you want it */
 
   background-image: url('images/header-flag.jpg');
   background-size: cover;
