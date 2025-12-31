@@ -8,18 +8,26 @@
 </head>
 <body>
 
-   <!-- HERO FLAG HEADER -
- <a href="index.html" class="hero-header">
+ <!-- HERO FLAG HEADER (disabled)
+<a href="index.html" class="hero-header">
   <div class="hero-text">
     <div class="hero-title">MODULAR GUNWORKS LLC</div>
     <div class="hero-subtitle">Privacy Policy</div>
   </div>
-</a>-->
+</a>
+-->
+
 
   <!-- TOP HEADER BAR (LOGO + SEARCH + ACCOUNT LINKS) -->
- <header class="site-header">
+<header class="site-header">
+
   <div class="header-left">
-    <img src="images/modular-gunworks-llc.png" alt="Modular Gunworks LLC Logo" class="logo">
+    <a href="/index.html" title="Return to Homepage">
+      <img src="images/modular-gunworks-llc.png" 
+           alt="Modular Gunworks LLC Logo" 
+           class="logo" 
+           id="site-logo">
+    </a>
   </div>
 
   <div class="header-center">
@@ -31,24 +39,23 @@
     </form>
   </div>
 
- <div class="header-right">
-  <a href="#">Account Login</a>
-  <a href="#">Help Center</a>
-  <a href="#">View Cart</a>
+  <div class="header-right">
+    <a href="#">Account Login</a>
+    <a href="#">Help Center</a>
+    <a href="#">View Cart</a>
 
-  <button id="theme-toggle" class="theme-toggle-icon" aria-label="Toggle Theme">
-    <span id="theme-icon">
-      <!-- Default icon: Moon (light mode) -->
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
-           stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M21 12.79A9 9 0 1 1 11.21 3
-                 7 7 0 0 0 21 12.79z"></path>
-      </svg>
-    </span>
-  </button>
-</div>
+    <button id="theme-toggle" class="theme-toggle-icon" aria-label="Toggle Theme">
+      <span id="theme-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3
+                   7 7 0 0 0 21 12.79z"></path>
+        </svg>
+      </span>
+    </button>
+  </div>
 
-  </header>
+</header>
 
   <!-- NAVIGATION -->
   <nav class="category-nav">
