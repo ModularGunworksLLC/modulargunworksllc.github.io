@@ -506,7 +506,7 @@ body.header-shrink .category-nav {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  filter: brightness(2.5);
+  filter: brightness(1.4);
 
   display: flex;
   flex-direction: column; /* ensures stacked title + subtitle */
@@ -527,7 +527,7 @@ body.header-shrink .category-nav {
 
 /* MAIN TITLE (if used) */
 .hero-home-title {
-  font-size: 4.2rem;
+  font-size: 6rem; /* ← this is the real fix */
   font-weight: 900;
   font-family: 'Arial Black', 'Impact', sans-serif;
   letter-spacing: 2px;
@@ -540,8 +540,11 @@ body.header-shrink .category-nav {
     2px 2px 6px rgba(0,0,0,1);
 
   display: block;
-  margin-bottom: 0;
+  position: relative;
+  z-index: 2;
+  padding: 0 20px;
 }
+
 
 
 /* SUBTITLE (Privacy Policy, Terms Hub, etc.) */
