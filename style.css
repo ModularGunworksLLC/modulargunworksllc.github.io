@@ -526,37 +526,40 @@ body.header-shrink .category-nav {
 }
 
 /* MAIN TITLE (if used) */
-.hero-title {
-  font-size: 3rem;
+.hero-home-title {
+  font-size: 4.2rem;
   font-weight: 900;
-  letter-spacing: 3px;
-  text-transform: uppercase;
-
-  -webkit-text-stroke: 1px rgba(0,0,0,0.6);
-  text-shadow:
-    0 0 8px rgba(0,0,0,0.9),
-    0 0 12px rgba(0,0,0,0.7),
-    2px 2px 4px rgba(0,0,0,0.9);
-
-  margin-bottom: 6px; /* spacing between title + subtitle */
-}
-
-/* SUBTITLE (Privacy Policy, Terms Hub, etc.) */
-.hero-subtitle {
-  font-size: 3rem; /* slightly smaller than title */
-  font-weight: 700;
+  font-family: 'Arial Black', 'Impact', sans-serif;
   letter-spacing: 2px;
   text-transform: uppercase;
 
-  -webkit-text-stroke: 1px rgba(0,0,0,0.6);
+  -webkit-text-stroke: 1.2px rgba(0,0,0,0.7);
   text-shadow:
-    0 0 8px rgba(0,0,0,0.9),
-    0 0 12px rgba(0,0,0,0.7),
-    2px 2px 4px rgba(0,0,0,0.9);
+    0 0 10px rgba(0,0,0,1),
+    0 0 14px rgba(0,0,0,0.9),
+    2px 2px 6px rgba(0,0,0,1);
+
+  display: block;
+  margin-bottom: 0;
+}
+
+
+/* SUBTITLE (Privacy Policy, Terms Hub, etc.) */
+.hero-subtitle {
+  font-size: 4rem; /* bigger and bolder */
+  font-weight: 900;
+  font-family: 'Arial Black', 'Impact', sans-serif;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+
+  -webkit-text-stroke: 1.2px rgba(0,0,0,0.7);
+  text-shadow:
+    0 0 10px rgba(0,0,0,1),
+    0 0 14px rgba(0,0,0,0.9),
+    2px 2px 6px rgba(0,0,0,1);
 
   display: block;
 }
-
 
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(-10px); }
