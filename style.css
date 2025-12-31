@@ -530,7 +530,12 @@ body.header-shrink .category-nav {
 
 /* MAIN TITLE (Homepage) */
 .hero-home-title {
-  font-size: 6rem; /* now this will actually show full size */
+  display: block;              /* force block layout */
+  width: 100%;                 /* allow full scaling */
+  text-align: center;          /* center it */
+  font-size: 6rem !important;  /* override all other rules */
+  line-height: 1.1;            /* prevent vertical squish */
+
   font-weight: 900;
   font-family: 'Arial Black', 'Impact', sans-serif;
   letter-spacing: 2px;
@@ -542,11 +547,11 @@ body.header-shrink .category-nav {
     0 0 14px rgba(0,0,0,0.9),
     2px 2px 6px rgba(0,0,0,1);
 
-  display: block;
   position: relative;
   z-index: 2;
   padding: 0 20px;
 }
+
 
 /* SUBTITLE (Privacy Policy, Terms Hub, etc.) */
 .hero-subtitle {
