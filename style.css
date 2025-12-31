@@ -530,7 +530,7 @@ body.header-shrink .category-nav {
 
 /* MAIN TITLE (Homepage) */
 .hero-home-title {
-  font-size: 4.2rem; /* ← tuned down from 6rem */
+  font-size: 3.0rem; /* ← tuned down from 6rem */
   font-weight: 900;
   font-family: 'Arial Black', 'Impact', sans-serif;
   letter-spacing: 2px;
