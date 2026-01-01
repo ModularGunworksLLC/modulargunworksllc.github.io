@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Guns | Modular Gunworks LLC</title>
+  <link rel="stylesheet" href="../style.css">
+  <link rel="icon" type="image/png" href="../favicon.png">
+</head>
+
+<body>
+
+  <!-- TOP HEADER BAR -->
+  <header class="site-header">
+    <div class="header-left">
+      <a href="../index.html" title="Return to Homepage">
+        <img src="../images/modular-gunworks-llc.png" alt="Modular Gunworks LLC Logo" class="logo" id="site-logo">
+      </a>
+    </div>
+
+    <div class="header-center">
+      <form class="search-form" action="/search">
+        <input type="text" class="search-bar" name="q" placeholder="Search guns, ammo, or answers...">
+        <button type="submit" class="search-button">
+          <img src="../images/search-icon.svg" alt="Search">
+        </button>
+      </form>
+    </div>
+
+    <div class="header-right">
+      <a href="#">Account Login</a>
+      <a href="#">Help Center</a>
+      <a href="#">View Cart</a>
+
+      <button id="theme-toggle" class="theme-toggle-icon" aria-label="Toggle Theme">
+        <span id="theme-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3
+                     7 7 0 0 0 21 12.79z"></path>
+          </svg>
+        </span>
+      </button>
+    </div>
+  </header>
+
+  <!-- CATEGORY NAVIGATION -->
+  <nav class="category-nav">
+    <a href="ammunition.html">Ammunition</a>
+    <a href="guns.html" class="active-category">Guns</a>
+    <a href="magazines.html">Magazines</a>
+    <a href="gun-parts.html">Gun Parts</a>
+    <a href="gear.html">Gear</a>
+    <a href="optics.html">Optics & Sights</a>
+    <a href="reloading.html">Reloading</a>
+    <a href="survival.html">Prep & Survival</a>
+    <a href="brands.html">Brands</a>
+    <a href="sale.html">ON SALE</a>
+  </nav>
+
+  <!-- HERO FLAG HEADER -->
+ <div class="hero-header">
+  <div class="hero-home-title">Guns</div>
+</div>
+
+  <!-- GUNS HERO -->
+  <section class="guns-hero">
+    <div class="guns-hero-inner">
+      <h1>Guns</h1>
+      <p>Discover a wide selection of guns for sale, including rifles, shotguns, and handguns from top brands</p>
+    </div>
+  </section>
+
+  <!-- GUNS LAYOUT -->
+  <main class="guns-layout">
+
+    <!-- VIEW TOGGLE AND FILTERS BAR -->
+    <div class="guns-toolbar">
+      <div class="guns-view-toggle">
+        <button id="grid-view" class="view-btn active" title="Grid View">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="3" width="7" height="7"></rect>
+            <rect x="14" y="3" width="7" height="7"></rect>
+            <rect x="14" y="14" width="7" height="7"></rect>
+            <rect x="3" y="14" width="7" height="7"></rect>
+          </svg>
+        </button>
+        <button id="list-view" class="view-btn" title="List View">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="8" y1="6" x2="21" y2="6"></line>
+            <line x1="8" y1="12" x2="21" y2="12"></line>
+            <line x1="8" y1="18" x2="21" y2="18"></line>
+            <line x1="3" y1="6" x2="3.01" y2="6"></line>
+            <line x1="3" y1="12" x2="3.01" y2="12"></line>
+            <line x1="3" y1="18" x2="3.01" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <div class="guns-filter-sort">
+        <button id="filter-toggle" class="filter-btn">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
+          </svg>
+          FILTER
+        </button>
+
+        <div class="sort-dropdown">
+          <label for="sort-by">Sort:</label>
+          <select id="sort-by">
+            <option value="featured">Featured</option>
+            <option value="price-asc">Price: Low to High</option>
+            <option value="price-desc">Price: High to Low</option>
+            <option value="rating">Highest Rated</option>
+            <option value="newest">Newest</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- FILTER SIDEBAR (COLLAPSIBLE) -->
+    <aside id="guns-sidebar" class="guns-sidebar">
+      <div class="sidebar-header">
+        <h2>Filter Guns</h2>
+        <button id="sidebar-close" class="sidebar-close-btn">×</button>
+      </div>
+
+      <div id="filter-type" class="guns-filter-group">
+        <h3>Type</h3>
+        <ul class="filter-list"></ul>
+      </div>
+
+      <div id="filter-brand" class="guns-filter-group">
+        <h3>Brand</h3>
+        <ul class="filter-list"></ul>
+      </div>
+
+      <div id="filter-caliber" class="guns-filter-group">
+        <h3>Caliber</h3>
+        <ul class="filter-list"></ul>
+      </div>
+
+      <div id="filter-price" class="guns-filter-group">
+        <h3>Price</h3>
+        <ul class="filter-list">
+          <li><label><input type="checkbox" data-price="0-199.99"> Under $200</label></li>
+          <li><label><input type="checkbox" data-price="200-499.99">$200–$500</label></li>
+          <li><label><input type="checkbox" data-price="500-999.99">$500–$1000</label></li>
+          <li><label><input type="checkbox" data-price="1000-1999.99">$1000–$2000</label></li>
+          <li><label><input type="checkbox" data-price="2000-99999">$2000+</label></li>
+        </ul>
+      </div>
+
+      <div id="filter-stock" class="guns-filter-group">
+        <h3>Availability</h3>
+        <label>
+          <input type="checkbox" id="filter-in-stock">
+          In Stock Only
+        </label>
+      </div>
+
+      <div class="filter-actions">
+        <button id="clear-filters" class="clear-filters-btn">Clear All Filters</button>
+      </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <section class="guns-main">
+
+      <!-- RESULTS HEADER -->
+      <div class="guns-results-header">
+        <span id="guns-result-count" class="result-count">Loading firearms...</span>
+      </div>
+
+      <!-- CATEGORY SECTIONS (DYNAMIC) -->
+      <div id="category-sections"></div>
+
+      <!-- PRODUCTS GRID/LIST -->
+      <div id="guns-products" class="guns-products grid-view"></div>
+
+      <!-- PAGINATION -->
+      <div id="guns-pagination" class="guns-pagination">
+        <button class="page-btn prev-btn" data-page="prev" disabled>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="15,18 9,12 15,6"></polyline>
+          </svg>
+          Previous
+        </button>
+        <span id="page-info" class="page-info">Page 1 of 1</span>
+        <button class="page-btn next-btn" data-page="next" disabled>
+          Next
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="9,18 15,12 9,6"></polyline>
+          </svg>
+        </button>
+      </div>
+
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="footer-content">
+      <p>&copy; 2024 Modular Gunworks LLC. All rights reserved.</p>
+      <p>FFL Dealer | Veteran Owned | Serving [Your Area]</p>
+      <nav class="footer-nav">
+        <a href="../about.html">About</a>
+        <a href="../contact.html">Contact</a>
+        <a href="../privacy.html">Privacy</a>
+        <a href="../terms.html">Terms</a>
+      </nav>
+    </div>
+  </footer>
+
+  <!-- SCRIPTS -->
+  <script src="../scripts/theme-toggle.js"></script>
+  <script src="../scripts/guns-loader.js"></script>
+
+</body>
+</html>

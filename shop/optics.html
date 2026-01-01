@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Ammunition | Modular Gunworks LLC</title>
+  <title>Optics & Sights | Modular Gunworks LLC</title>
   <link rel="stylesheet" href="../style.css">
   <link rel="icon" type="image/png" href="../favicon.png">
 </head>
@@ -19,7 +19,7 @@
 
     <div class="header-center">
       <form class="search-form" action="/search">
-        <input type="text" class="search-bar" name="q" placeholder="Search ammo, gear, or answers...">
+        <input type="text" class="search-bar" name="q" placeholder="Search optics, sights, or answers...">
         <button type="submit" class="search-button">
           <img src="../images/search-icon.svg" alt="Search">
         </button>
@@ -45,12 +45,12 @@
 
   <!-- CATEGORY NAVIGATION -->
   <nav class="category-nav">
-    <a href="ammunition.html" class="active-category">Ammunition</a>
+    <a href="ammunition.html">Ammunition</a>
     <a href="guns.html">Guns</a>
     <a href="magazines.html">Magazines</a>
     <a href="gun-parts.html">Gun Parts</a>
     <a href="gear.html">Gear</a>
-    <a href="optics.html">Optics & Sights</a>
+    <a href="optics.html" class="active-category">Optics & Sights</a>
     <a href="reloading.html">Reloading</a>
     <a href="survival.html">Prep & Survival</a>
     <a href="brands.html">Brands</a>
@@ -59,25 +59,25 @@
 
   <!-- HERO FLAG HEADER -->
  <div class="hero-header">
-  <div class="hero-home-title">Ammunition</div>
+  <div class="hero-home-title">Optics & Sights</div>
 </div>
-  <!-- AMMO HERO -->
+  <!-- OPTICS HERO -->
   <section class="ammo-hero">
     <div class="ammo-hero-inner">
-      <h1>Ammunition</h1>
-      <p>Handgun, rifle, shotgun, and rimfire ammunition from trusted manufacturers</p>
+      <h1>Optics & Sights</h1>
+      <p>Red dots, scopes, magnifiers, night vision, and thermal from trusted manufacturers</p>
     </div>
   </section>
 
-  <!-- AMMUNITION LAYOUT -->
+  <!-- OPTICS LAYOUT -->
   <main class="ammo-layout">
 
     <!-- FILTER SIDEBAR (STICKY-READY) -->
     <aside class="ammo-sidebar sticky-sidebar">
-      <h2>Filter Ammo</h2>
+      <h2>Filter Optics</h2>
 
-      <div id="filter-caliber" class="ammo-filter-group">
-        <h3>Caliber</h3>
+      <div id="filter-type" class="ammo-filter-group">
+        <h3>Type</h3>
         <ul class="filter-list"></ul>
       </div>
 
@@ -86,35 +86,24 @@
         <ul class="filter-list"></ul>
       </div>
 
-      <div id="filter-type" class="ammo-filter-group">
-        <h3>Bullet Type</h3>
-        <ul class="filter-list"></ul>
-      </div>
-
-      <div id="filter-case" class="ammo-filter-group">
-        <h3>Case Material</h3>
-        <ul class="filter-list"></ul>
-      </div>
-
-      <div id="filter-grain" class="ammo-filter-group">
-        <h3>Grain Weight</h3>
+      <div id="filter-magnification" class="ammo-filter-group">
+        <h3>Magnification</h3>
         <ul class="filter-list">
-          <li><label><input type="checkbox" data-grain="0-40"> 0–40 gr</label></li>
-          <li><label><input type="checkbox" data-grain="41-80"> 41–80 gr</label></li>
-          <li><label><input type="checkbox" data-grain="81-150"> 81–150 gr</label></li>
-          <li><label><input type="checkbox" data-grain="151-250"> 151–250 gr</label></li>
-          <li><label><input type="checkbox" data-grain="251-999"> 250+ gr</label></li>
+          <li><label><input type="checkbox" data-magnification="1x"> 1x (Red Dot)</label></li>
+          <li><label><input type="checkbox" data-magnification="1-4x"> 1-4x</label></li>
+          <li><label><input type="checkbox" data-magnification="4-10x"> 4-10x</label></li>
+          <li><label><input type="checkbox" data-magnification="10x+"> 10x+</label></li>
         </ul>
       </div>
 
       <div id="filter-price" class="ammo-filter-group">
         <h3>Price</h3>
         <ul class="filter-list">
-          <li><label><input type="checkbox" data-price="0-9.99"> Under $10</label></li>
-          <li><label><input type="checkbox" data-price="10-19.99">$10–$20</label></li>
-          <li><label><input type="checkbox" data-price="20-39.99">$20–$40</label></li>
-          <li><label><input type="checkbox" data-price="40-79.99">$40–$80</label></li>
-          <li><label><input type="checkbox" data-price="80-9999">$80+</label></li>
+          <li><label><input type="checkbox" data-price="0-99.99"> Under $100</label></li>
+          <li><label><input type="checkbox" data-price="100-299.99">$100–$300</label></li>
+          <li><label><input type="checkbox" data-price="300-599.99">$300–$600</label></li>
+          <li><label><input type="checkbox" data-price="600-999.99">$600–$1000</label></li>
+          <li><label><input type="checkbox" data-price="1000-99999">$1000+</label></li>
         </ul>
       </div>
 
@@ -141,24 +130,12 @@
             <option value="featured">Featured</option>
             <option value="price-asc">Price: Low to High</option>
             <option value="price-desc">Price: High to Low</option>
-            <option value="grain-asc">Grain: Low to High</option>
-            <option value="grain-desc">Grain: High to Low</option>
           </select>
         </div>
       </div>
 
-      <!-- CATEGORY SECTIONS (DYNAMIC) -->
-      <div id="category-sections"></div>
-
-      <!-- BULK AMMO SECTION -->
-      <section class="bulk-ammo-section">
-        <h2 class="bulk-ammo-header">Bulk Ammunition Deals</h2>
-        <p class="bulk-ammo-description">Save big on bulk packs perfect for range days and training</p>
-        <div id="bulk-ammo-grid" class="ammo-grid bulk-grid"></div>
-      </section>
-
       <!-- UNIFIED GRID HEADER -->
-      <h2 class="ammo-unified-header">All Ammunition</h2>
+      <h2 class="ammo-unified-header">All Optics & Sights</h2>
 
       <!-- UNIFIED GRID (DYNAMIC, PAGINATED) -->
       <div id="ammo-unified-grid" class="ammo-grid"></div>
@@ -174,7 +151,7 @@
   </main>
 
   <!-- SCRIPTS -->
-  <script src="../scripts/ammo-loader.js"></script>
+  <script src="../scripts/optics-loader.js"></script>
   <script src="../scripts/theme-toggle.js"></script>
 
 </body>

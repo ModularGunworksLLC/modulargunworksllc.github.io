@@ -1,0 +1,74 @@
+[
+  {
+    "id": "survival-001",
+    "title": "MRE Meal Ready to Eat - 12 Pack",
+    "brand": "Various",
+    "type": "Food",
+    "price": 89.99,
+    "in_stock": true,
+    "rating": 4,
+    "reviews": 245,
+    "shelf_life": "5 years",
+    "calories": "1200 per meal"
+  },
+  {
+    "id": "survival-002",
+    "title": "Katadyn Hiker Pro Water Filter",
+    "brand": "Katadyn",
+    "type": "Water Purification",
+    "price": 99.99,
+    "in_stock": true,
+    "rating": 5,
+    "reviews": 892,
+    "capacity": "1 liter/minute",
+    "filter_life": "1500 liters"
+  },
+  {
+    "id": "survival-003",
+    "title": "Gerber Bear Grylls Survival Knife",
+    "brand": "Gerber",
+    "type": "Knife",
+    "price": 49.99,
+    "in_stock": true,
+    "rating": 4,
+    "reviews": 156,
+    "blade_length": "3 inches",
+    "material": "420HC steel"
+  },
+  {
+    "id": "survival-004",
+    "title": "First Aid Kit - 200 Piece",
+    "brand": "Adventure Medical",
+    "type": "Medical",
+    "price": 39.99,
+    "in_stock": true,
+    "rating": 5,
+    "reviews": 78,
+    "pieces": 200,
+    "weight": "1.2 lbs"
+  },
+  {
+    "id": "survival-005",
+    "title": "BioLite SolarPanel 5+",
+    "brand": "BioLite",
+    "type": "Power",
+    "price": 149.99,
+    "in_stock": true,
+    "rating": 4,
+    "reviews": 34,
+    "output": "5W",
+    "compatibility": "USB devices"
+  },
+  {
+    "id": "survival-006",
+    "title": "Emergency Radio with Hand Crank",
+    "brand": "RunningSnail",
+    "type": "Communication",
+    "price": 29.99,
+    "in_stock": true,
+    "rating": 4,
+    "reviews": 203,
+    "power_sources": "Solar, hand crank, batteries",
+    "features": "AM/FM, weather radio"
+  }
+]

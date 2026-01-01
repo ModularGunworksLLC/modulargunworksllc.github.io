@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Ammunition | Modular Gunworks LLC</title>
+  <title>Gear | Modular Gunworks LLC</title>
   <link rel="stylesheet" href="../style.css">
   <link rel="icon" type="image/png" href="../favicon.png">
 </head>
@@ -19,7 +19,7 @@
 
     <div class="header-center">
       <form class="search-form" action="/search">
-        <input type="text" class="search-bar" name="q" placeholder="Search ammo, gear, or answers...">
+        <input type="text" class="search-bar" name="q" placeholder="Search gear, holsters, or answers...">
         <button type="submit" class="search-button">
           <img src="../images/search-icon.svg" alt="Search">
         </button>
@@ -45,11 +45,11 @@
 
   <!-- CATEGORY NAVIGATION -->
   <nav class="category-nav">
-    <a href="ammunition.html" class="active-category">Ammunition</a>
+    <a href="ammunition.html">Ammunition</a>
     <a href="guns.html">Guns</a>
     <a href="magazines.html">Magazines</a>
     <a href="gun-parts.html">Gun Parts</a>
-    <a href="gear.html">Gear</a>
+    <a href="gear.html" class="active-category">Gear</a>
     <a href="optics.html">Optics & Sights</a>
     <a href="reloading.html">Reloading</a>
     <a href="survival.html">Prep & Survival</a>
@@ -59,25 +59,25 @@
 
   <!-- HERO FLAG HEADER -->
  <div class="hero-header">
-  <div class="hero-home-title">Ammunition</div>
+  <div class="hero-home-title">Gear</div>
 </div>
-  <!-- AMMO HERO -->
+  <!-- GEAR HERO -->
   <section class="ammo-hero">
     <div class="ammo-hero-inner">
-      <h1>Ammunition</h1>
-      <p>Handgun, rifle, shotgun, and rimfire ammunition from trusted manufacturers</p>
+      <h1>Gear & Accessories</h1>
+      <p>Holsters, slings, lights, bags, and tactical equipment from trusted manufacturers</p>
     </div>
   </section>
 
-  <!-- AMMUNITION LAYOUT -->
+  <!-- GEAR LAYOUT -->
   <main class="ammo-layout">
 
     <!-- FILTER SIDEBAR (STICKY-READY) -->
     <aside class="ammo-sidebar sticky-sidebar">
-      <h2>Filter Ammo</h2>
+      <h2>Filter Gear</h2>
 
-      <div id="filter-caliber" class="ammo-filter-group">
-        <h3>Caliber</h3>
+      <div id="filter-type" class="ammo-filter-group">
+        <h3>Type</h3>
         <ul class="filter-list"></ul>
       </div>
 
@@ -86,35 +86,19 @@
         <ul class="filter-list"></ul>
       </div>
 
-      <div id="filter-type" class="ammo-filter-group">
-        <h3>Bullet Type</h3>
+      <div id="filter-category" class="ammo-filter-group">
+        <h3>Category</h3>
         <ul class="filter-list"></ul>
-      </div>
-
-      <div id="filter-case" class="ammo-filter-group">
-        <h3>Case Material</h3>
-        <ul class="filter-list"></ul>
-      </div>
-
-      <div id="filter-grain" class="ammo-filter-group">
-        <h3>Grain Weight</h3>
-        <ul class="filter-list">
-          <li><label><input type="checkbox" data-grain="0-40"> 0–40 gr</label></li>
-          <li><label><input type="checkbox" data-grain="41-80"> 41–80 gr</label></li>
-          <li><label><input type="checkbox" data-grain="81-150"> 81–150 gr</label></li>
-          <li><label><input type="checkbox" data-grain="151-250"> 151–250 gr</label></li>
-          <li><label><input type="checkbox" data-grain="251-999"> 250+ gr</label></li>
-        </ul>
       </div>
 
       <div id="filter-price" class="ammo-filter-group">
         <h3>Price</h3>
         <ul class="filter-list">
-          <li><label><input type="checkbox" data-price="0-9.99"> Under $10</label></li>
-          <li><label><input type="checkbox" data-price="10-19.99">$10–$20</label></li>
-          <li><label><input type="checkbox" data-price="20-39.99">$20–$40</label></li>
-          <li><label><input type="checkbox" data-price="40-79.99">$40–$80</label></li>
-          <li><label><input type="checkbox" data-price="80-9999">$80+</label></li>
+          <li><label><input type="checkbox" data-price="0-49.99"> Under $50</label></li>
+          <li><label><input type="checkbox" data-price="50-99.99">$50–$100</label></li>
+          <li><label><input type="checkbox" data-price="100-199.99">$100–$200</label></li>
+          <li><label><input type="checkbox" data-price="200-499.99">$200–$500</label></li>
+          <li><label><input type="checkbox" data-price="500-99999">$500+</label></li>
         </ul>
       </div>
 
@@ -141,24 +125,12 @@
             <option value="featured">Featured</option>
             <option value="price-asc">Price: Low to High</option>
             <option value="price-desc">Price: High to Low</option>
-            <option value="grain-asc">Grain: Low to High</option>
-            <option value="grain-desc">Grain: High to Low</option>
           </select>
         </div>
       </div>
 
-      <!-- CATEGORY SECTIONS (DYNAMIC) -->
-      <div id="category-sections"></div>
-
-      <!-- BULK AMMO SECTION -->
-      <section class="bulk-ammo-section">
-        <h2 class="bulk-ammo-header">Bulk Ammunition Deals</h2>
-        <p class="bulk-ammo-description">Save big on bulk packs perfect for range days and training</p>
-        <div id="bulk-ammo-grid" class="ammo-grid bulk-grid"></div>
-      </section>
-
       <!-- UNIFIED GRID HEADER -->
-      <h2 class="ammo-unified-header">All Ammunition</h2>
+      <h2 class="ammo-unified-header">All Gear</h2>
 
       <!-- UNIFIED GRID (DYNAMIC, PAGINATED) -->
       <div id="ammo-unified-grid" class="ammo-grid"></div>
@@ -174,7 +146,7 @@
   </main>
 
   <!-- SCRIPTS -->
-  <script src="../scripts/ammo-loader.js"></script>
+  <script src="../scripts/gear-loader.js"></script>
   <script src="../scripts/theme-toggle.js"></script>
 
 </body>

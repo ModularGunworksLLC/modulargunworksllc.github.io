@@ -6,99 +6,55 @@ const PAGE_SIZE = 24; // industry-standard default for grid pages
 // ======================================================
 // LOAD JSON
 // ======================================================
-async function loadAmmo() {
-  const response = await fetch("../Data/ammo-data.json");
+async function loadGear() {
+  const response = await fetch("../Data/gear-data.json");
   const data = await response.json();
   return data;
-}
-
-// ======================================================
-// BUILD LOADING SKELETON
-// ======================================================
-function buildSkeletonCard() {
-  return `
-    <article class="ammo-card skeleton-card">
-      <div class="ammo-card-image skeleton skeleton-image"></div>
-      <div class="ammo-card-body">
-        <div class="skeleton skeleton-title"></div>
-        <div class="skeleton skeleton-text"></div>
-        <div class="skeleton skeleton-text"></div>
-        <div class="skeleton skeleton-text"></div>
-      </div>
-    </article>
-  `;
-}
-
-function showLoadingSkeleton(container, count = 6) {
-  container.innerHTML = Array(count).fill().map(() => buildSkeletonCard()).join("");
 }
 
 // ======================================================
 // GET STOCK IMAGE FOR PRODUCT
 // ======================================================
 function getStockImage(item) {
-  // Map calibers to relevant stock image keywords
+  // Map gear types to relevant stock image keywords
   const imageMap = {
-    // Handgun
-    "9mm": "9mm-ammo,handgun-ammunition",
-    ".45 ACP": "45-acp-ammo,colt-1911",
-    ".40 S&W": ".40-caliber-ammo,handgun",
-    ".380 ACP": "380-acp-ammo,pocket-pistol",
-    ".22 LR": "22-lr-ammo,rimfire-ammunition",
-    ".38 Special": "38-special-ammo,revolver",
-    ".357 Magnum": "357-magnum-ammo,revolver",
-    "10mm": "10mm-ammo,handgun-ammunition",
-    ".44 Magnum": "44-magnum-ammo,revolver",
-
-    // Rifle
-    "5.56x45mm": "556-ammo,ar-15-ammunition",
-    ".223 Remington": "223-ammo,ar-15",
-    "7.62x39mm": "762x39-ammo,ak-47-ammunition",
-    ".308 Winchester": "308-ammo,rifle-ammunition",
-    ".270 Winchester": "270-winchester-ammo,rifle",
-    ".30-06 Springfield": "30-06-ammo,rifle-ammunition",
-    ".300 Win Mag": "300-win-mag-ammo,rifle",
-    "6.5 Creedmoor": "65-creedmoor-ammo,precision-rifle",
-
-    // Shotgun
-    "12 Gauge": "12-gauge-ammo,shotgun-shells",
-    "20 Gauge": "20-gauge-ammo,shotgun",
-    "410 Gauge": "410-gauge-ammo,shotgun",
-
-    // Rimfire
-    "17 HMR": "17-hmr-ammo,varmint-rifle",
-    ".22 WMR": ".22-wmr-ammo,rimfire"
+    "Holster": "gun-holster,tactical-holster",
+    "Magazine": "magazine-pouch,ammo-pouch",
+    "Belt": "tactical-belt,duty-belt",
+    "Weapon Light": "weapon-light,tactical-light",
+    "Optics": "riflescope,optics",
+    "Sling": "rifle-sling,tactical-sling"
   };
 
-  const caliber = item.caliber;
-  const keyword = imageMap[caliber] || "ammunition,ammo";
+  const type = item.type;
+  const keyword = imageMap[type] || "tactical-gear,military-equipment";
 
   // Use Unsplash for high-quality stock images
   return `https://source.unsplash.com/featured/300x200/?${encodeURIComponent(keyword)}`;
 }
+
+// ======================================================
+// BUILD GEAR CARD
+// ======================================================
 function buildCard(item) {
   const inStock =
     item.in_stock === undefined
       ? true
-      : !!item.in_stock; // default to true until RSR data
+      : !!item.in_stock;
 
   const stockLabel = inStock ? "In Stock" : "Out of Stock";
 
-  // Add sample rating (in real app, this would come from data)
-  const rating = item.rating || Math.floor(Math.random() * 2) + 4; // 4-5 stars randomly
+  // Add sample rating
+  const rating = item.rating || Math.floor(Math.random() * 2) + 4;
   const reviewCount = item.reviews || Math.floor(Math.random() * 50) + 10;
 
   const stars = '★'.repeat(rating) + '☆'.repeat(5 - rating);
 
-  // Deal badge if price is low
-  const dealBadge = item.price < 20 ? '<div class="deal-badge">DEAL</div>' : '';
-
   return `
     <article class="ammo-card ${inStock ? "" : "ammo-out-of-stock"}">
-      ${dealBadge}
       <a href="ammo-product.html?id=${item.id}" class="ammo-card-image-link">
         <div class="ammo-card-image">
-          <img src="${getStockImage(item)}" alt="${item.title}" loading="lazy" onerror="this.src='https://via.placeholder.com/300x200/333/fff?text=${encodeURIComponent(item.caliber)}'">
+          <img src="${getStockImage(item)}" alt="${item.title}" loading="lazy" onerror="this.src='https://via.placeholder.com/300x200/333/fff?text=${encodeURIComponent(item.type)}'">
         </div>
       </a>
       <div class="ammo-card-body">
@@ -107,17 +63,18 @@ function buildCard(item) {
           <span class="stars">${stars}</span>
           <span class="review-count">(${reviewCount})</span>
         </div>
-        <p class="ammo-card-meta">${item.brand} • ${item.case_material} • ${item.bullet_type}</p>
+        <p class="ammo-card-meta">${item.brand} • ${item.type}</p>
         <ul class="ammo-card-specs">
-          <li><strong>Caliber:</strong> ${item.caliber}</li>
-          <li><strong>Grain:</strong> ${item.grain} gr</li>
-          <li><strong>Rounds:</strong> ${item.rounds}</li>
+          ${item.material ? `<li><strong>Material:</strong> ${item.material}</li>` : ''}
+          ${item.capacity ? `<li><strong>Capacity:</strong> ${item.capacity}</li>` : ''}
+          ${item.caliber ? `<li><strong>Caliber:</strong> ${item.caliber}</li>` : ''}
+          ${item.lumens ? `<li><strong>Lumens:</strong> ${item.lumens}</li>` : ''}
+          ${item.magnification ? `<li><strong>Magnification:</strong> ${item.magnification}</li>` : ''}
           <li><strong>Status:</strong> ${stockLabel}</li>
         </ul>
         <div class="ammo-card-footer">
           <div class="ammo-card-price">
             <span class="ammo-price-main">$${item.price.toFixed(2)}</span>
-            <span class="ammo-price-sub">$${(item.price / item.rounds).toFixed(2)} / rd</span>
           </div>
           <button class="ammo-card-button" onclick="addToCart('${item.id}')">ADD TO CART</button>
         </div>
@@ -127,70 +84,8 @@ function buildCard(item) {
 }
 
 // ======================================================
-// BUILD CATEGORY SECTIONS (TOP OF PAGE)
+// BUILD UNIFIED GRID
 // ======================================================
-function buildCategorySections(filteredItems) {
-  const container = document.getElementById("category-sections");
-  container.innerHTML = "";
-
-  const order = ["rimfire", "handgun", "rifle", "shotgun"];
-  const MAX_PER_SECTION = 6; // Limit to prevent lag
-
-  order.forEach(category => {
-    const sectionItems = filteredItems.filter(i => i.category === category);
-    if (sectionItems.length === 0) return;
-
-    const displayItems = sectionItems.slice(0, MAX_PER_SECTION);
-    const hasMore = sectionItems.length > MAX_PER_SECTION;
-
-    const section = document.createElement("section");
-    section.className = "ammo-section";
-    section.id = `${category}-ammo`;
-
-    section.innerHTML = `
-      <h2>${category.charAt(0).toUpperCase() + category.slice(1)} Ammunition</h2>
-      <div class="ammo-grid">
-        ${displayItems.map(buildCard).join("")}
-      </div>
-      ${hasMore ? `<button class="show-more-btn" onclick="showMoreCategory('${category}')">Show ${sectionItems.length - MAX_PER_SECTION} More</button>` : ''}
-    `;
-
-    container.appendChild(section);
-  });
-}
-
-// ======================================================
-// SHOW MORE ITEMS IN CATEGORY
-// ======================================================
-function showMoreCategory(category) {
-  const section = document.getElementById(`${category}-ammo`);
-  const grid = section.querySelector('.ammo-grid');
-  const button = section.querySelector('.show-more-btn');
-
-  // Get all items for this category
-  const allItems = window.allAmmoData || [];
-  const categoryItems = allItems.filter(i => i.category === category);
-
-  // Show all items
-  grid.innerHTML = categoryItems.map(buildCard).join("");
-  button.remove();
-}
-
-// ======================================================
-// BUILD BULK AMMO GRID
-// ======================================================
-function buildBulkAmmoGrid(allItems) {
-  const bulkItems = allItems.filter(item => item.rounds >= 500); // Bulk packs
-  const bulkGrid = document.getElementById("bulk-ammo-grid");
-
-  if (bulkItems.length > 0) {
-    bulkGrid.innerHTML = bulkItems.slice(0, 6).map(buildCard).join(""); // Show first 6
-  } else {
-    // Fallback to high-round items
-    const highRoundItems = allItems.filter(item => item.rounds >= 100).slice(0, 6);
-    bulkGrid.innerHTML = highRoundItems.map(buildCard).join("");
-  }
-}
 function buildUnifiedGrid(items, currentPage, totalPages) {
   const grid = document.getElementById("ammo-unified-grid");
   grid.innerHTML = items.map(buildCard).join("");
@@ -211,22 +106,19 @@ function buildUnifiedGrid(items, currentPage, totalPages) {
 function populateFilterLists(allItems) {
   const unique = (arr) => [...new Set(arr)].sort();
 
-  const calibers = unique(allItems.map(i => i.caliber));
   const brands = unique(allItems.map(i => i.brand));
-  const types = unique(allItems.map(i => i.bullet_type));
-  const cases = unique(allItems.map(i => i.case_material));
+  const types = unique(allItems.map(i => i.type));
 
   const fill = (id, values, attr) => {
     const ul = document.querySelector(`#${id} .filter-list`);
+    if (!ul) return;
     ul.innerHTML = values
       .map(v => `<li><label><input type="checkbox" data-${attr}="${v}"> ${v}</label></li>`)
       .join("");
   };
 
-  fill("filter-caliber", calibers, "caliber");
-  fill("filter-brand", brands, "brand");
   fill("filter-type", types, "type");
-  fill("filter-case", cases, "case");
+  fill("filter-brand", brands, "brand");
 }
 
 // ======================================================
@@ -238,18 +130,15 @@ function applyFilters(allItems) {
   const checkedDatasets = (selector) =>
     [...document.querySelectorAll(selector + ":checked")].map(cb => cb.dataset);
 
-  const calibers = checkedDatasets("input[data-caliber]");
-  const brands = checkedDatasets("input[data-brand]");
   const types = checkedDatasets("input[data-type]");
-  const cases = checkedDatasets("input[data-case]");
-  const grains = checkedDatasets("input[data-grain]");
+  const brands = checkedDatasets("input[data-brand]");
   const prices = checkedDatasets("input[data-price]");
   const inStockOnly = document.getElementById("filter-in-stock")?.checked;
 
-  // Caliber
-  if (calibers.length) {
+  // Type
+  if (types.length) {
     filtered = filtered.filter(i =>
-      calibers.some(c => c.caliber === i.caliber)
+      types.some(t => t.type === i.type)
     );
   }
 
@@ -257,30 +146,6 @@ function applyFilters(allItems) {
   if (brands.length) {
     filtered = filtered.filter(i =>
       brands.some(b => b.brand === i.brand)
-    );
-  }
-
-  // Bullet Type
-  if (types.length) {
-    filtered = filtered.filter(i =>
-      types.some(t => t.type === i.bullet_type)
-    );
-  }
-
-  // Case Material
-  if (cases.length) {
-    filtered = filtered.filter(i =>
-      cases.some(c => c.case === i.case_material)
-    );
-  }
-
-  // Grain ranges
-  if (grains.length) {
-    filtered = filtered.filter(i =>
-      grains.some(g => {
-        const [min, max] = g.grain.split("-").map(Number);
-        return i.grain >= min && i.grain <= max;
-      })
     );
   }
 
@@ -294,12 +159,11 @@ function applyFilters(allItems) {
     );
   }
 
-  // In stock only (future RSR integration)
+  // In stock only
   if (inStockOnly) {
     filtered = filtered.filter(i => {
       if (i.in_stock !== undefined) return !!i.in_stock;
-      if (i.available_quantity !== undefined) return i.available_quantity > 0;
-      return true; // default to in stock until we have real data
+      return true;
     });
   }
 
@@ -315,10 +179,7 @@ function applySorting(items) {
 
   if (sort === "price-asc") sorted.sort((a, b) => a.price - b.price);
   if (sort === "price-desc") sorted.sort((a, b) => b.price - a.price);
-  if (sort === "grain-asc") sorted.sort((a, b) => a.grain - b.grain);
-  if (sort === "grain-desc") sorted.sort((a, b) => b.grain - a.grain);
 
-  // "featured" falls through to original ordering
   return sorted;
 }
 
@@ -329,7 +190,6 @@ function applyURLParams() {
   const params = new URLSearchParams(window.location.search);
 
   params.forEach((value, key) => {
-    // Example: ?caliber=9mm
     const selector = `input[data-${key}="${value}"]`;
     const el = document.querySelector(selector);
     if (el) el.checked = true;
@@ -354,19 +214,8 @@ function scrollToUnifiedGrid() {
 // ======================================================
 // MAIN INITIALIZER
 // ======================================================
-loadAmmo().then(data => {
-  const allItems = [
-    ...data.rimfire,
-    ...data.handgun,
-    ...data.rifle,
-    ...data.shotgun
-  ];
-
-  // Store globally for showMoreCategory function
-  window.allAmmoData = allItems;
-
+loadGear().then(allItems => {
   populateFilterLists(allItems);
-  buildBulkAmmoGrid(allItems); // Add bulk ammo section
   applyURLParams();
 
   let currentPage = 1;
@@ -386,8 +235,7 @@ loadAmmo().then(data => {
     document.querySelector(".ammo-result-count").textContent =
       `Showing ${pageItems.length} of ${totalResults} results`;
 
-    buildCategorySections(filtered);      // sections show limited items
-    buildUnifiedGrid(pageItems, currentPage, totalPages); // unified grid paginated
+    buildUnifiedGrid(pageItems, currentPage, totalPages);
 
     if (scroll) scrollToUnifiedGrid();
   }
@@ -431,6 +279,5 @@ loadAmmo().then(data => {
 // ADD TO CART FUNCTION
 // ======================================================
 function addToCart(productId) {
-  // Simple cart simulation - in real app, this would integrate with backend
   alert(`Added ${productId} to cart! (Demo - not functional yet)`);
 }

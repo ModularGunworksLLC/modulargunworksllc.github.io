@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Contact Us | Modular Gunworks LLC</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" type="image/png" href="favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+
+  <!-- TOP HEADER BAR (LOGO + SEARCH + ACCOUNT LINKS) -->
+  <header class="site-header">
+    <div class="header-left">
+      <a href="index.html" title="Return to Homepage">
+        <img src="images/modular-gunworks-llc.png" alt="Modular Gunworks LLC Logo" class="logo" id="site-logo">
+      </a>
+    </div>
+
+    <div class="header-center">
+      <form class="search-form" action="/search">
+        <input type="text" class="search-bar" name="q" placeholder="Search ammo, gear, or answers...">
+        <button type="submit" class="search-button">
+          <img src="images/search-icon.svg" alt="Search">
+        </button>
+      </form>
+    </div>
+
+    <div class="header-right">
+      <a href="#">Account Login</a>
+      <a href="#">Help Center</a>
+      <a href="#">View Cart</a>
+
+      <button id="theme-toggle" class="theme-toggle-icon" aria-label="Toggle Theme">
+        <span id="theme-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+        </span>
+      </button>
+    </div>
+  </header>
+
+  <!-- CATEGORY NAVIGATION -->
+  <nav class="category-nav">
+    <a href="shop/ammunition.html">Ammunition</a>
+    <a href="shop/guns.html">Guns</a>
+    <a href="shop/magazines.html">Magazines</a>
+    <a href="shop/gun-parts.html">Gun Parts</a>
+    <a href="shop/gear.html">Gear</a>
+    <a href="shop/optics.html">Optics & Sights</a>
+    <a href="shop/reloading.html">Reloading</a>
+    <a href="shop/survival.html">Prep & Survival</a>
+    <a href="shop/brands.html">Brands</a>
+    <a href="shop/sale.html">ON SALE</a>
+  </nav>
+
+  <!-- HERO HEADER -->
+  <div class="hero-header">
+    <div class="hero-home-title">Contact Us</div>
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <main class="contact-content">
+    <section class="contact-section">
+      <h1>Get in Touch</h1>
+      <p>We'd love to hear from you. Send us a message and we'll respond as soon as possible.</p>
+
+      <form class="contact-form" action="/submit-contact" method="post">
+        <div class="form-group">
+          <label for="name">Name *</label>
+          <input type="text" id="name" name="name" required>
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email *</label>
+          <input type="email" id="email" name="email" required>
+        </div>
+
+        <div class="form-group">
+          <label for="subject">Subject</label>
+          <input type="text" id="subject" name="subject">
+        </div>
+
+        <div class="form-group">
+          <label for="message">Message *</label>
+          <textarea id="message" name="message" rows="5" required></textarea>
+        </div>
+
+        <button type="submit" class="submit-button">Send Message</button>
+      </form>
+
+      <div class="contact-info">
+        <h2>Other Ways to Reach Us</h2>
+        <p><strong>Email:</strong> info@modulargunworks.com</p>
+        <p><strong>Phone:</strong> (256) 555-0123</p>
+        <p><strong>Address:</strong> Huntsville, Alabama</p>
+      </div>
+    </section>
+  </main>
+
+  <!-- SCRIPTS -->
+  <script src="scripts/theme-toggle.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,74 @@
+[
+  {
+    "id": "gear-001",
+    "title": "Blackhawk SERPA Level 2 Duty Holster - Right Hand",
+    "brand": "Blackhawk",
+    "type": "Holster",
+    "price": 89.99,
+    "in_stock": true,
+    "rating": 4,
+    "reviews": 245,
+    "material": "Polymer",
+    "color": "Black"
+  },
+  {
+    "id": "gear-002",
+    "title": "Magpul PMAG 30-Round Magazine - Black",
+    "brand": "Magpul",
+    "type": "Magazine",
+    "price": 14.99,
+    "in_stock": true,
+    "rating": 5,
+    "reviews": 892,
+    "capacity": 30,
+    "caliber": "5.56x45mm"
+  },
+  {
+    "id": "gear-003",
+    "title": "5.11 Tactical Range Ready Belt",
+    "brand": "5.11 Tactical",
+    "type": "Belt",
+    "price": 39.99,
+    "in_stock": true,
+    "rating": 4,
+    "reviews": 156,
+    "material": "Nylon",
+    "width": "1.5 inch"
+  },
+  {
+    "id": "gear-004",
+    "title": "SureFire Scout Light Pro - 1500 Lumens",
+    "brand": "SureFire",
+    "type": "Weapon Light",
+    "price": 299.99,
+    "in_stock": true,
+    "rating": 5,
+    "reviews": 78,
+    "lumens": 1500,
+    "runtime": "1.5 hours"
+  },
+  {
+    "id": "gear-005",
+    "title": "Trijicon AccuPower 1-8x28 Riflescope",
+    "brand": "Trijicon",
+    "type": "Optics",
+    "price": 1499.99,
+    "in_stock": true,
+    "rating": 5,
+    "reviews": 34,
+    "magnification": "1-8x",
+    "objective": "28mm"
+  },
+  {
+    "id": "gear-006",
+    "title": "Blue Force Gear Vickers Sling - 2 Point",
+    "brand": "Blue Force Gear",
+    "type": "Sling",
+    "price": 34.99,
+    "in_stock": true,
+    "rating": 4,
+    "reviews": 203,
+    "material": "Nylon",
+    "adjustment": "Quick-adjust"
+  }
+]

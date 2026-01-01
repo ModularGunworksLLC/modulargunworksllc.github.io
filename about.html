@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>About Us | Modular Gunworks LLC</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" type="image/png" href="favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+
+  <!-- TOP HEADER BAR (LOGO + SEARCH + ACCOUNT LINKS) -->
+  <header class="site-header">
+    <div class="header-left">
+      <a href="index.html" title="Return to Homepage">
+        <img src="images/modular-gunworks-llc.png" alt="Modular Gunworks LLC Logo" class="logo" id="site-logo">
+      </a>
+    </div>
+
+    <div class="header-center">
+      <form class="search-form" action="/search">
+        <input type="text" class="search-bar" name="q" placeholder="Search ammo, gear, or answers...">
+        <button type="submit" class="search-button">
+          <img src="images/search-icon.svg" alt="Search">
+        </button>
+      </form>
+    </div>
+
+    <div class="header-right">
+      <a href="#">Account Login</a>
+      <a href="#">Help Center</a>
+      <a href="#">View Cart</a>
+
+      <button id="theme-toggle" class="theme-toggle-icon" aria-label="Toggle Theme">
+        <span id="theme-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+        </span>
+      </button>
+    </div>
+  </header>
+
+  <!-- CATEGORY NAVIGATION -->
+  <nav class="category-nav">
+    <a href="shop/ammunition.html">Ammunition</a>
+    <a href="shop/guns.html">Guns</a>
+    <a href="shop/magazines.html">Magazines</a>
+    <a href="shop/gun-parts.html">Gun Parts</a>
+    <a href="shop/gear.html">Gear</a>
+    <a href="shop/optics.html">Optics & Sights</a>
+    <a href="shop/reloading.html">Reloading</a>
+    <a href="shop/survival.html">Prep & Survival</a>
+    <a href="shop/brands.html">Brands</a>
+    <a href="shop/sale.html">ON SALE</a>
+  </nav>
+
+  <!-- HERO HEADER -->
+  <div class="hero-header">
+    <div class="hero-home-title">About Modular Gunworks LLC</div>
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <main class="about-content">
+    <section class="about-section">
+      <h1>Our Mission</h1>
+      <p>Modular Gunworks LLC is a veteran-owned Federal Firearms Licensee (FFL) based in Huntsville, Alabama. Our mission is to provide a clean, reliable, and professional storefront experience for firearms, suppressors, optics, ammunition, and tactical gear.</p>
+    </section>
+
+    <section class="about-section">
+      <h1>Our Story</h1>
+      <p>Founded by veterans with decades of experience in the firearms industry, Modular Gunworks was built to serve the needs of responsible gun owners. We focus on quality products, exceptional customer service, and compliance with all federal and state regulations.</p>
+    </section>
+
+    <section class="about-section">
+      <h1>Our Values</h1>
+      <ul>
+        <li><strong>Integrity</strong>: Honest business practices and transparent pricing.</li>
+        <li><strong>Quality</strong>: Only the best products from trusted manufacturers.</li>
+        <li><strong>Service</strong>: Personalized support for all your firearms needs.</li>
+        <li><strong>Community</strong>: Supporting veterans and responsible gun ownership.</li>
+      </ul>
+    </section>
+
+    <section class="about-section">
+      <h1>Contact Us</h1>
+      <p>For questions or to place an order, reach out to us:</p>
+      <p><strong>Email:</strong> info@modulargunworks.com</p>
+      <p><strong>Phone:</strong> (256) 555-0123</p>
+      <p><strong>Address:</strong> Huntsville, Alabama</p>
+      <a href="contact.html" class="contact-button">Send us a message</a>
+    </section>
+  </main>
+
+  <!-- SCRIPTS -->
+  <script src="scripts/theme-toggle.js"></script>
+
+</body>
+</html>

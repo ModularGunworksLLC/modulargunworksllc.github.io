@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Ammunition | Modular Gunworks LLC</title>
+  <title>Magazines | Modular Gunworks LLC</title>
   <link rel="stylesheet" href="../style.css">
   <link rel="icon" type="image/png" href="../favicon.png">
 </head>
@@ -19,7 +19,7 @@
 
     <div class="header-center">
       <form class="search-form" action="/search">
-        <input type="text" class="search-bar" name="q" placeholder="Search ammo, gear, or answers...">
+        <input type="text" class="search-bar" name="q" placeholder="Search magazines, ammo, or answers...">
         <button type="submit" class="search-button">
           <img src="../images/search-icon.svg" alt="Search">
         </button>
@@ -45,9 +45,9 @@
 
   <!-- CATEGORY NAVIGATION -->
   <nav class="category-nav">
-    <a href="ammunition.html" class="active-category">Ammunition</a>
+    <a href="ammunition.html">Ammunition</a>
     <a href="guns.html">Guns</a>
-    <a href="magazines.html">Magazines</a>
+    <a href="magazines.html" class="active-category">Magazines</a>
     <a href="gun-parts.html">Gun Parts</a>
     <a href="gear.html">Gear</a>
     <a href="optics.html">Optics & Sights</a>
@@ -59,25 +59,25 @@
 
   <!-- HERO FLAG HEADER -->
  <div class="hero-header">
-  <div class="hero-home-title">Ammunition</div>
+  <div class="hero-home-title">Magazines</div>
 </div>
-  <!-- AMMO HERO -->
-  <section class="ammo-hero">
-    <div class="ammo-hero-inner">
-      <h1>Ammunition</h1>
-      <p>Handgun, rifle, shotgun, and rimfire ammunition from trusted manufacturers</p>
+  <!-- MAGAZINES HERO -->
+  <section class="magazines-hero">
+    <div class="magazines-hero-inner">
+      <h1>Magazines</h1>
+      <p>High-capacity magazines for pistols, rifles, and specialty platforms</p>
     </div>
   </section>
 
-  <!-- AMMUNITION LAYOUT -->
+  <!-- MAGAZINES LAYOUT -->
   <main class="ammo-layout">
 
     <!-- FILTER SIDEBAR (STICKY-READY) -->
     <aside class="ammo-sidebar sticky-sidebar">
-      <h2>Filter Ammo</h2>
+      <h2>Filter Magazines</h2>
 
-      <div id="filter-caliber" class="ammo-filter-group">
-        <h3>Caliber</h3>
+      <div id="filter-type" class="ammo-filter-group">
+        <h3>Type</h3>
         <ul class="filter-list"></ul>
       </div>
 
@@ -86,24 +86,19 @@
         <ul class="filter-list"></ul>
       </div>
 
-      <div id="filter-type" class="ammo-filter-group">
-        <h3>Bullet Type</h3>
+      <div id="filter-caliber" class="ammo-filter-group">
+        <h3>Caliber</h3>
         <ul class="filter-list"></ul>
       </div>
 
-      <div id="filter-case" class="ammo-filter-group">
-        <h3>Case Material</h3>
-        <ul class="filter-list"></ul>
-      </div>
-
-      <div id="filter-grain" class="ammo-filter-group">
-        <h3>Grain Weight</h3>
+      <div id="filter-capacity" class="ammo-filter-group">
+        <h3>Capacity</h3>
         <ul class="filter-list">
-          <li><label><input type="checkbox" data-grain="0-40"> 0–40 gr</label></li>
-          <li><label><input type="checkbox" data-grain="41-80"> 41–80 gr</label></li>
-          <li><label><input type="checkbox" data-grain="81-150"> 81–150 gr</label></li>
-          <li><label><input type="checkbox" data-grain="151-250"> 151–250 gr</label></li>
-          <li><label><input type="checkbox" data-grain="251-999"> 250+ gr</label></li>
+          <li><label><input type="checkbox" data-capacity="0-10"> 1–10 rounds</label></li>
+          <li><label><input type="checkbox" data-capacity="11-20"> 11–20 rounds</label></li>
+          <li><label><input type="checkbox" data-capacity="21-30"> 21–30 rounds</label></li>
+          <li><label><input type="checkbox" data-capacity="31-50"> 31–50 rounds</label></li>
+          <li><label><input type="checkbox" data-capacity="51-100"> 51+ rounds</label></li>
         </ul>
       </div>
 
@@ -141,24 +136,12 @@
             <option value="featured">Featured</option>
             <option value="price-asc">Price: Low to High</option>
             <option value="price-desc">Price: High to Low</option>
-            <option value="grain-asc">Grain: Low to High</option>
-            <option value="grain-desc">Grain: High to Low</option>
           </select>
         </div>
       </div>
 
-      <!-- CATEGORY SECTIONS (DYNAMIC) -->
-      <div id="category-sections"></div>
-
-      <!-- BULK AMMO SECTION -->
-      <section class="bulk-ammo-section">
-        <h2 class="bulk-ammo-header">Bulk Ammunition Deals</h2>
-        <p class="bulk-ammo-description">Save big on bulk packs perfect for range days and training</p>
-        <div id="bulk-ammo-grid" class="ammo-grid bulk-grid"></div>
-      </section>
-
       <!-- UNIFIED GRID HEADER -->
-      <h2 class="ammo-unified-header">All Ammunition</h2>
+      <h2 class="ammo-unified-header">All Magazines</h2>
 
       <!-- UNIFIED GRID (DYNAMIC, PAGINATED) -->
       <div id="ammo-unified-grid" class="ammo-grid"></div>
@@ -173,8 +156,22 @@
     </section>
   </main>
 
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="footer-content">
+      <p>&copy; 2024 Modular Gunworks LLC. All rights reserved.</p>
+      <p>FFL Dealer | Veteran Owned | Serving [Your Area]</p>
+      <nav class="footer-nav">
+        <a href="../about.html">About</a>
+        <a href="../contact.html">Contact</a>
+        <a href="../privacy.html">Privacy</a>
+        <a href="../terms.html">Terms</a>
+      </nav>
+    </div>
+  </footer>
+
   <!-- SCRIPTS -->
-  <script src="../scripts/ammo-loader.js"></script>
+  <script src="../scripts/magazines-loader.js"></script>
   <script src="../scripts/theme-toggle.js"></script>
 
 </body>
