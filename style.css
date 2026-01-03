@@ -212,6 +212,7 @@ body {
 }
 
 /* Logo */
+# The logo container (if used)
 .logo {
   height: 55px;
   width: auto;
@@ -221,6 +222,13 @@ body {
   border-radius: 6px;
   box-shadow: 0 3px 8px rgba(0,0,0,0.25);
   transition: box-shadow 0.25s ease, transform 0.25s ease, height 0.25s ease;
+}
+
+/* Restrict logo image size in header */
+.site-logo {
+  max-width: 120px;
+  height: auto;
+  display: block;
 }
 #site-logo {
   cursor: pointer;
@@ -1536,6 +1544,8 @@ text-shadow:
   text-align: center;
   transition: all 0.25s ease;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
+  position: relative;
+  overflow: visible;
 }
 
 /* Hover effect */
@@ -1543,6 +1553,7 @@ text-shadow:
   transform: translateY(-4px);
   border-color: rgba(255, 255, 255, 0.25);
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.45);
+  z-index: 2;
 }
 
 /* Product image */
@@ -1551,6 +1562,9 @@ text-shadow:
   height: 150px;
   object-fit: contain;
   margin-bottom: 12px;
+  background: #fff;
+  border-radius: 6px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
 }
 
 /* Title */
@@ -1583,38 +1597,85 @@ text-shadow:
 
 /* Price */
 .ammo-card-price {
-  font-size: 1.25rem;
-  font-weight: bold;
-  color: #4caf50;
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #1a7f37;
   margin-top: 10px;
+  margin-bottom: 0.2em;
+  letter-spacing: 0.5px;
 }
 
 .ammo-price-main {
   display: block;
-  font-size: 1.4rem;
+  font-size: 2rem;
+  font-weight: 900;
+  color: #d32f2f;
+  margin-bottom: 0.1em;
 }
 
 .ammo-price-sub {
   font-size: 0.9rem;
   color: #666;
+  font-weight: 500;
+  margin-top: 0.1em;
 }
 
 /* Button */
 .ammo-card-button {
-  background: #d32f2f;
-  color: white;
+  background: linear-gradient(90deg, #d32f2f 60%, #ff9800 100%);
+  color: #fff;
   border: none;
-  padding: 8px 16px;
-  border-radius: 4px;
+  padding: 12px 0;
+  border-radius: 6px;
   cursor: pointer;
-  font-size: 0.9rem;
-  font-weight: bold;
-  transition: background 0.3s;
-  margin-top: 10px;
+  font-size: 1.1rem;
+  font-weight: 900;
+  transition: background 0.3s, box-shadow 0.2s;
+  margin-top: 14px;
+  width: 100%;
+  box-shadow: 0 2px 8px rgba(211,47,47,0.08);
+  letter-spacing: 0.5px;
 }
 
 .ammo-card-button:hover {
+  background: linear-gradient(90deg, #b71c1c 60%, #ff9800 100%);
+  box-shadow: 0 4px 16px rgba(211,47,47,0.18);
+}
+
+/* In Stock/Out of Stock badge */
+.ammo-stock-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: #1a7f37;
+  color: #fff;
+  font-size: 0.85rem;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 12px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.10);
+  z-index: 3;
+  letter-spacing: 0.5px;
+}
+.ammo-out-of-stock .ammo-stock-badge {
   background: #b71c1c;
+}
+
+/* Sale/Deal badge */
+.deal-badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: linear-gradient(90deg, #ff9800 60%, #d32f2f 100%);
+  color: #fff;
+  font-size: 0.85rem;
+  font-weight: 900;
+  padding: 3px 12px;
+  border-radius: 12px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.10);
+  z-index: 3;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
 }
 
 /* Error message */

@@ -19,7 +19,7 @@
 
     <div class="header-center">
       <form class="search-form" action="/search">
-        <input type="text" class="search-bar" name="q" placeholder="Search gun parts, accessories, or answers...">
+        <input type="text" class="search-bar" name="q" placeholder="Search guns, ammo, or answers...">
         <button type="submit" class="search-button">
           <img src="../images/search-icon.svg" alt="Search">
         </button>
@@ -63,9 +63,8 @@
 </div>
   <!-- GUN PARTS HERO -->
   <section class="ammo-hero">
-    <div class="ammo-hero-inner">
-      <h1>Gun Parts & Accessories</h1>
-      <p>Shop AR parts, AK parts, triggers, barrels, and more from trusted manufacturers</p>
+    <div class="ammo-hero-inner" style="text-align: center;">
+      <p style="font-size: 1.2em;">Shop AR parts, AK parts, triggers, barrels, and more from trusted manufacturers</p>
     </div>
   </section>
 
@@ -74,23 +73,25 @@
 
     <!-- FILTER SIDEBAR (STICKY-READY) -->
     <aside class="ammo-sidebar sticky-sidebar">
-      <h2>Filter Parts</h2>
-
+      <h2>Filter Gun Parts</h2>
       <div id="filter-type" class="ammo-filter-group">
         <h3>Type</h3>
-        <ul class="filter-list"></ul>
+        <ul class="filter-list">
+          <li><label><input type="checkbox" data-type="AR"> AR Parts</label></li>
+          <li><label><input type="checkbox" data-type="AK"> AK Parts</label></li>
+          <li><label><input type="checkbox" data-type="Trigger"> Triggers</label></li>
+          <li><label><input type="checkbox" data-type="Barrel"> Barrels</label></li>
+          <li><label><input type="checkbox" data-type="Other"> Other</label></li>
+        </ul>
       </div>
-
       <div id="filter-brand" class="ammo-filter-group">
         <h3>Brand</h3>
         <ul class="filter-list"></ul>
       </div>
-
       <div id="filter-category" class="ammo-filter-group">
         <h3>Category</h3>
         <ul class="filter-list"></ul>
       </div>
-
       <div id="filter-price" class="ammo-filter-group">
         <h3>Price</h3>
         <ul class="filter-list">
@@ -101,7 +102,6 @@
           <li><label><input type="checkbox" data-price="500-99999">$500+</label></li>
         </ul>
       </div>
-
       <div id="filter-stock" class="ammo-filter-group">
         <h3>Availability</h3>
         <label>
@@ -144,7 +144,42 @@
 
     </section>
   </main>
+  <footer class="site-footer">
+    <div class="footer-columns">
+      <div>
+        <h4>Company</h4>
+        <ul>
+          <li><a href="about.html">About Modular Gunworks</a></li>
+          <li><a href="blog.html">Blog</a></li>
+          <li><a href="contact.html">Contact Us</a></li>
+        </ul>
+      </div>
 
+      <div>
+        <h4>Info</h4>
+        <ul>
+          <li><a href="faq.html">FAQ</a></li>
+          <li><a href="ffl.html">FFL Transfers</a></li>
+          <li><a href="order-status.html">Order Status</a></li>
+          <li><a href="shipping.html">Shipping Info</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="terms.html">Terms & Conditions</a></li>
+          <li><a href="privacy.html">Privacy Policy</a></li>
+          <li><a href="returns.html">Return Policy</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>© 2025 Modular Gunworks LLC. All rights reserved.</p>
+      <p><a href="mailto:modulargunworks@gmail.com">modulargunworks@gmail.com</a></p>
+    </div>
+  </footer>
   <!-- SCRIPTS -->
   <script src="../scripts/gun-parts-loader.js"></script>
   <script src="../scripts/theme-toggle.js"></script>

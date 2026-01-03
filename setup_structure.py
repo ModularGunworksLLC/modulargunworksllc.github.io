@@ -12,7 +12,7 @@ files = {
     "about.html": "",
     "contact.html": "",
     "shop/ammunition.md": "",
-    "shop/guns.md": "",
+    "shop/guns.html": "",
     "shop/magazines.md": "",
     "shop/gun-parts.md": "",
     "shop/gear.md": "",

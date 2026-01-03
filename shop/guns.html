@@ -58,87 +58,39 @@
   </nav>
 
   <!-- HERO FLAG HEADER -->
- <div class="hero-header">
-  <div class="hero-home-title">Guns</div>
-</div>
-
+  <div class="hero-header">
+    <div class="hero-home-title">Guns</div>
+  </div>
   <!-- GUNS HERO -->
-  <section class="guns-hero">
-    <div class="guns-hero-inner">
-            <p>Discover a wide selection of guns for sale, including rifles, shotguns, and handguns from top brands</p>
+  <section class="ammo-hero">
+    <div class="ammo-hero-inner" style="text-align: center;">
+      <p style="font-size: 1.2em;">Handguns, rifles, shotguns, and more from trusted manufacturers</p>
     </div>
   </section>
 
   <!-- GUNS LAYOUT -->
-  <main class="guns-layout">
-
-    <!-- VIEW TOGGLE AND FILTERS BAR -->
-    <div class="guns-toolbar">
-      <div class="guns-view-toggle">
-        <button id="grid-view" class="view-btn active" title="Grid View">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <rect x="3" y="3" width="7" height="7"></rect>
-            <rect x="14" y="3" width="7" height="7"></rect>
-            <rect x="14" y="14" width="7" height="7"></rect>
-            <rect x="3" y="14" width="7" height="7"></rect>
-          </svg>
-        </button>
-        <button id="list-view" class="view-btn" title="List View">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <line x1="8" y1="6" x2="21" y2="6"></line>
-            <line x1="8" y1="12" x2="21" y2="12"></line>
-            <line x1="8" y1="18" x2="21" y2="18"></line>
-            <line x1="3" y1="6" x2="3.01" y2="6"></line>
-            <line x1="3" y1="12" x2="3.01" y2="12"></line>
-            <line x1="3" y1="18" x2="3.01" y2="18"></line>
-          </svg>
-        </button>
-      </div>
-
-      <div class="guns-filter-sort">
-        <button id="filter-toggle" class="filter-btn">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
-          </svg>
-          FILTER
-        </button>
-
-        <div class="sort-dropdown">
-          <label for="sort-by">Sort:</label>
-          <select id="sort-by">
-            <option value="featured">Featured</option>
-            <option value="price-asc">Price: Low to High</option>
-            <option value="price-desc">Price: High to Low</option>
-            <option value="rating">Highest Rated</option>
-            <option value="newest">Newest</option>
-          </select>
-        </div>
-      </div>
-    </div>
-
-    <!-- FILTER SIDEBAR (COLLAPSIBLE) -->
-    <aside id="guns-sidebar" class="guns-sidebar">
-      <div class="sidebar-header">
-        <h2>Filter Guns</h2>
-        <button id="sidebar-close" class="sidebar-close-btn">×</button>
-      </div>
-
-      <div id="filter-type" class="guns-filter-group">
+  <main class="ammo-layout">
+    <!-- FILTER SIDEBAR (STICKY-READY) -->
+    <aside class="ammo-sidebar sticky-sidebar">
+      <h2>Filter Guns</h2>
+      <div id="filter-type" class="ammo-filter-group">
         <h3>Type</h3>
-        <ul class="filter-list"></ul>
+        <ul class="filter-list">
+          <li><label><input type="checkbox" data-type="Handgun"> Handgun</label></li>
+          <li><label><input type="checkbox" data-type="Rifle"> Rifle</label></li>
+          <li><label><input type="checkbox" data-type="Shotgun"> Shotgun</label></li>
+          <li><label><input type="checkbox" data-type="Other"> Other</label></li>
+        </ul>
       </div>
-
-      <div id="filter-brand" class="guns-filter-group">
+      <div id="filter-brand" class="ammo-filter-group">
         <h3>Brand</h3>
         <ul class="filter-list"></ul>
       </div>
-
-      <div id="filter-caliber" class="guns-filter-group">
+      <div id="filter-caliber" class="ammo-filter-group">
         <h3>Caliber</h3>
         <ul class="filter-list"></ul>
       </div>
-
-      <div id="filter-price" class="guns-filter-group">
+      <div id="filter-price" class="ammo-filter-group">
         <h3>Price</h3>
         <ul class="filter-list">
           <li><label><input type="checkbox" data-price="0-199.99"> Under $200</label></li>
@@ -148,65 +100,122 @@
           <li><label><input type="checkbox" data-price="2000-99999">$2000+</label></li>
         </ul>
       </div>
-
-      <div id="filter-stock" class="guns-filter-group">
+      <div id="filter-stock" class="ammo-filter-group">
         <h3>Availability</h3>
         <label>
           <input type="checkbox" id="filter-in-stock">
           In Stock Only
         </label>
       </div>
-
-      <div class="filter-actions">
-        <button id="clear-filters" class="clear-filters-btn">Clear All Filters</button>
-      </div>
     </aside>
 
     <!-- MAIN CONTENT -->
-    <section class="guns-main">
-
-      <!-- RESULTS HEADER -->
-      <div class="guns-results-header">
-        <span id="guns-result-count" class="result-count">Loading firearms...</span>
+    <section class="ammo-main">
+      <!-- SORT BAR (STICKY-READY) -->
+      <div class="ammo-sort-bar sticky-sort">
+        <div class="ammo-sort-left">
+          <span class="ammo-result-count">Loading inventory...</span>
+        </div>
+        <div class="ammo-sort-right">
+          <label for="sort-by">Sort by:</label>
+          <select id="sort-by">
+            <option value="featured">Featured</option>
+            <option value="price-asc">Price: Low to High</option>
+            <option value="price-desc">Price: High to Low</option>
+          </select>
+        </div>
       </div>
 
-      <!-- CATEGORY SECTIONS (DYNAMIC) -->
-      <div id="category-sections"></div>
+      <!-- UNIFIED GRID HEADER -->
+      <h2 class="ammo-unified-header">All Guns</h2>
 
-      <!-- PRODUCTS GRID/LIST -->
-      <div id="guns-products" class="guns-products grid-view"></div>
+      <!-- UNIFIED GRID (DYNAMIC, PAGINATED) -->
+      <div id="ammo-unified-grid" class="ammo-grid"></div>
 
-      <!-- PAGINATION -->
-      <div id="guns-pagination" class="guns-pagination">
-        <button class="page-btn prev-btn" data-page="prev" disabled>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <polyline points="15,18 9,12 15,6"></polyline>
-          </svg>
-          Previous
-        </button>
-        <span id="page-info" class="page-info">Page 1 of 1</span>
-        <button class="page-btn next-btn" data-page="next" disabled>
-          Next
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <polyline points="9,18 15,12 9,6"></polyline>
-          </svg>
-        </button>
+      <!-- PAGINATION CONTROLS -->
+      <div id="ammo-pagination" class="ammo-pagination">
+        <button class="page-btn" data-page="prev" disabled>Previous</button>
+        <span class="page-info">Page 1 of 1</span>
+        <button class="page-btn" data-page="next" disabled>Next</button>
       </div>
-
     </section>
   </main>
 
-  <!-- FOOTER -->
   <footer class="site-footer">
-    <div class="footer-content">
-      <p>&copy; 2024 Modular Gunworks LLC. All rights reserved.</p>
-      <p>FFL Dealer | Veteran Owned | Serving [Your Area]</p>
-      <nav class="footer-nav">
-        <a href="../about.html">About</a>
-        <a href="../contact.html">Contact</a>
-        <a href="../privacy.html">Privacy</a>
-        <a href="../terms.html">Terms</a>
-      </nav>
+    <div class="footer-columns">
+      <div>
+        <h4>Company</h4>
+        <ul>
+          <li><a href="about.html">About Modular Gunworks</a></li>
+          <li><a href="blog.html">Blog</a></li>
+          <li><a href="contact.html">Contact Us</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4>Info</h4>
+        <ul>
+          <li><a href="faq.html">FAQ</a></li>
+          <li><a href="ffl.html">FFL Transfers</a></li>
+          <li><a href="order-status.html">Order Status</a></li>
+          <li><a href="shipping.html">Shipping Info</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="terms.html">Terms & Conditions</a></li>
+          <li><a href="privacy.html">Privacy Policy</a></li>
+          <li><a href="returns.html">Return Policy</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>© 2025 Modular Gunworks LLC. All rights reserved.</p>
+      <p><a href="mailto:modulargunworks@gmail.com">modulargunworks@gmail.com</a></p>
+    </div>
+  </footer>
+
+  <script src="../scripts/guns-loader.js"></script>
+  <script src="../scripts/theme-toggle.js"></script>
+
+</body>
+</html>
+    <div class="footer-columns">
+      <div>
+        <h4>Company</h4>
+        <ul>
+          <li><a href="about.html">About Modular Gunworks</a></li>
+          <li><a href="blog.html">Blog</a></li>
+          <li><a href="contact.html">Contact Us</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4>Info</h4>
+        <ul>
+          <li><a href="faq.html">FAQ</a></li>
+          <li><a href="ffl.html">FFL Transfers</a></li>
+          <li><a href="order-status.html">Order Status</a></li>
+          <li><a href="shipping.html">Shipping Info</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="terms.html">Terms & Conditions</a></li>
+          <li><a href="privacy.html">Privacy Policy</a></li>
+          <li><a href="returns.html">Return Policy</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>© 2025 Modular Gunworks LLC. All rights reserved.</p>
+      <p><a href="mailto:modulargunworks@gmail.com">modulargunworks@gmail.com</a></p>
     </div>
   </footer>
 

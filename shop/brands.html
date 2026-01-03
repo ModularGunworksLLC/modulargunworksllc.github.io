@@ -1,3 +1,158 @@
-# Shop by Brand
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Shop by Brand | Modular Gunworks LLC</title>
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+  <!-- TOP HEADER BAR (LOGO + SEARCH + ACCOUNT LINKS) -->
+  <header class="site-header">
+    <div class="header-left">
+      <a href="../index.html" title="Return to Homepage">
+        <img src="../images/modular-gunworks-llc.png" alt="Modular Gunworks LLC Logo" class="logo" id="site-logo" style="max-width:120px;height:auto;display:block;">
+      </a>
+    </div>
+    <div class="header-center">
+      <form class="search-form" action="/search">
+        <input type="text" class="search-bar" name="q" placeholder="Search brands, gear, or answers...">
+        <button type="submit" class="search-button">
+          <img src="../images/search-icon.svg" alt="Search">
+        </button>
+      </form>
+    </div>
+    <div class="header-right">
+      <a href="#">Account Login</a>
+      <a href="#">Help Center</a>
+      <a href="#">View Cart</a>
+      <button id="theme-toggle" class="theme-toggle-icon" aria-label="Toggle Theme">
+        <span id="theme-icon"></span>
+      </button>
+    </div>
+  </header>
 
-Browse all brands carried by Modular Gunworks LLC.
+  <!-- CATEGORY NAVIGATION (STICKY) -->
+  <nav class="category-nav">
+    <a href="ammunition.html">Ammunition</a>
+    <a href="guns.html">Guns</a>
+    <a href="magazines.html">Magazines</a>
+    <a href="gun-parts.html">Gun Parts</a>
+    <a href="gear.html">Gear</a>
+    <a href="optics.html">Optics & Sights</a>
+    <a href="reloading.html">Reloading</a>
+    <a href="survival.html">Prep & Survival</a>
+    <a href="brands.html" class="active">Brands</a>
+    <a href="sale.html">ON SALE</a>
+  </nav>
+
+  <!-- HERO BANNER WITH TITLE -->
+  <div class="hero-header">
+    <div class="hero-home-title">Shop by Brand</div>
+  </div>
+
+  <!-- BRANDS GRID (CENTERED) -->
+  <section class="category-grid">
+    <h2>Browse All Brands</h2>
+    <div class="grid">
+      <a class="tile" href="../brands/a/aero-precision.md">
+        <div class="image-box">
+          <img src="../images/brands/aero-precision.png" alt="Aero Precision">
+        </div>
+        <span>Aero Precision</span>
+      </a>
+      <a class="tile" href="../brands/f/fn-america.md">
+        <div class="image-box">
+          <img src="../images/brands/fn-america.png" alt="FN America">
+        </div>
+        <span>FN America</span>
+      </a>
+      <a class="tile" href="../brands/g/glock.md">
+        <div class="image-box">
+          <img src="../images/brands/glock.png" alt="Glock">
+        </div>
+        <span>Glock</span>
+      </a>
+      <a class="tile" href="../brands/h/hk.md">
+        <div class="image-box">
+          <img src="../images/brands/hk.png" alt="Heckler & Koch">
+        </div>
+        <span>Heckler & Koch</span>
+      </a>
+      <a class="tile" href="../brands/h/holosun.md">
+        <div class="image-box">
+          <img src="../images/brands/holosun.png" alt="Holosun">
+        </div>
+        <span>Holosun</span>
+      </a>
+      <a class="tile" href="../brands/m/magpul.md">
+        <div class="image-box">
+          <img src="../images/brands/magpul.png" alt="Magpul">
+        </div>
+        <span>Magpul</span>
+      </a>
+      <a class="tile" href="../brands/r/ruger.md">
+        <div class="image-box">
+          <img src="../images/brands/ruger.png" alt="Ruger">
+        </div>
+        <span>Ruger</span>
+      </a>
+      <a class="tile" href="../brands/s/sig-sauer.md">
+        <div class="image-box">
+          <img src="../images/brands/sig-sauer.png" alt="SIG Sauer">
+        </div>
+        <span>SIG Sauer</span>
+      </a>
+      <a class="tile" href="../brands/s/smith-and-wesson.md">
+        <div class="image-box">
+          <img src="../images/brands/smith-and-wesson.png" alt="Smith & Wesson">
+        </div>
+        <span>Smith & Wesson</span>
+      </a>
+      <a class="tile" href="../brands/s/springfield-armory.md">
+        <div class="image-box">
+          <img src="../images/brands/springfield-armory.png" alt="Springfield Armory">
+        </div>
+        <span>Springfield Armory</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="footer-columns">
+      <div>
+        <h4>Company</h4>
+        <ul>
+          <li><a href="../about.html">About Modular Gunworks</a></li>
+          <li><a href="../blog.html">Blog</a></li>
+          <li><a href="../contact.html">Contact Us</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Info</h4>
+        <ul>
+          <li><a href="../faq.html">FAQ</a></li>
+          <li><a href="../ffl.html">FFL Transfers</a></li>
+          <li><a href="../order-status.html">Order Status</a></li>
+          <li><a href="../shipping.html">Shipping Info</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="../terms.html">Terms & Conditions</a></li>
+          <li><a href="../privacy.html">Privacy Policy</a></li>
+          <li><a href="../returns.html">Return Policy</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 Modular Gunworks LLC. All rights reserved.</p>
+      <p><a href="mailto:modulargunworks@gmail.com">modulargunworks@gmail.com</a></p>
+    </div>
+  </footer>
+
+  <!-- THEME TOGGLE SCRIPT -->
+  <script src="../scripts/theme-toggle.js"></script>
+</body>
+</html>

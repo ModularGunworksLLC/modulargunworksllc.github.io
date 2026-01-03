@@ -92,9 +92,12 @@ function buildCard(item) {
 
   // Deal badge if price is low
   const dealBadge = item.price < 20 ? '<div class="deal-badge">DEAL</div>' : '';
+  // In stock badge
+  const stockBadge = `<div class="ammo-stock-badge">${stockLabel}</div>`;
 
   return `
     <article class="ammo-card ${inStock ? "" : "ammo-out-of-stock"}">
+      ${stockBadge}
       ${dealBadge}
       <a href="ammo-product.html?id=${item.id}" class="ammo-card-image-link">
         <div class="ammo-card-image">
@@ -112,7 +115,6 @@ function buildCard(item) {
           <li><strong>Caliber:</strong> ${item.caliber}</li>
           <li><strong>Grain:</strong> ${item.grain} gr</li>
           <li><strong>Rounds:</strong> ${item.rounds}</li>
-          <li><strong>Status:</strong> ${stockLabel}</li>
         </ul>
         <div class="ammo-card-footer">
           <div class="ammo-card-price">
@@ -208,102 +210,20 @@ function buildUnifiedGrid(items, currentPage, totalPages) {
 // ======================================================
 // AUTO-GENERATE FILTER LISTS
 // ======================================================
+// Filter lists are now populated by ammo-filters.js
 function populateFilterLists(allItems) {
-  const unique = (arr) => [...new Set(arr)].sort();
-
-  const calibers = unique(allItems.map(i => i.caliber));
-  const brands = unique(allItems.map(i => i.brand));
-  const types = unique(allItems.map(i => i.bullet_type));
-  const cases = unique(allItems.map(i => i.case_material));
-
-  const fill = (id, values, attr) => {
-    const ul = document.querySelector(`#${id} .filter-list`);
-    ul.innerHTML = values
-      .map(v => `<li><label><input type="checkbox" data-${attr}="${v}"> ${v}</label></li>`)
-      .join("");
-  };
-
-  fill("filter-caliber", calibers, "caliber");
-  fill("filter-brand", brands, "brand");
-  fill("filter-type", types, "type");
-  fill("filter-case", cases, "case");
+  // No-op: handled by ammo-filters.js
 }
 
 // ======================================================
 // FILTER ENGINE
 // ======================================================
+// Filtering is now handled by ammo-filters.js; fallback to allItems if no filter is active
 function applyFilters(allItems) {
-  let filtered = [...allItems];
-
-  const checkedDatasets = (selector) =>
-    [...document.querySelectorAll(selector + ":checked")].map(cb => cb.dataset);
-
-  const calibers = checkedDatasets("input[data-caliber]");
-  const brands = checkedDatasets("input[data-brand]");
-  const types = checkedDatasets("input[data-type]");
-  const cases = checkedDatasets("input[data-case]");
-  const grains = checkedDatasets("input[data-grain]");
-  const prices = checkedDatasets("input[data-price]");
-  const inStockOnly = document.getElementById("filter-in-stock")?.checked;
-
-  // Caliber
-  if (calibers.length) {
-    filtered = filtered.filter(i =>
-      calibers.some(c => c.caliber === i.caliber)
-    );
+  if (window.filteredAmmoData) {
+    return window.filteredAmmoData;
   }
-
-  // Brand
-  if (brands.length) {
-    filtered = filtered.filter(i =>
-      brands.some(b => b.brand === i.brand)
-    );
-  }
-
-  // Bullet Type
-  if (types.length) {
-    filtered = filtered.filter(i =>
-      types.some(t => t.type === i.bullet_type)
-    );
-  }
-
-  // Case Material
-  if (cases.length) {
-    filtered = filtered.filter(i =>
-      cases.some(c => c.case === i.case_material)
-    );
-  }
-
-  // Grain ranges
-  if (grains.length) {
-    filtered = filtered.filter(i =>
-      grains.some(g => {
-        const [min, max] = g.grain.split("-").map(Number);
-        return i.grain >= min && i.grain <= max;
-      })
-    );
-  }
-
-  // Price ranges
-  if (prices.length) {
-    filtered = filtered.filter(i =>
-      prices.some(p => {
-        const [min, max] = p.price.split("-").map(Number);
-        return i.price >= min && i.price <= max;
-      })
-    );
-  }
-
-  // In stock only (future RSR integration)
-  if (inStockOnly) {
-    filtered = filtered.filter(i => {
-      if (i.in_stock !== undefined) return !!i.in_stock;
-      if (i.available_quantity !== undefined) return i.available_quantity > 0;
-      return true; // default to in stock until we have real data
-    });
-  }
-
-  return filtered;
+  return allItems;
 }
 
 // ======================================================
@@ -395,12 +315,10 @@ loadAmmo().then(data => {
   // Initial render
   updatePage();
 
-  // Checkbox filters
-  document.addEventListener("change", (e) => {
-    if (e.target.matches("input[type=checkbox]")) {
-      currentPage = 1;
-      updatePage({ scroll: true });
-    }
+  // Listen for filter changes from ammo-filters.js
+  document.addEventListener('ammoFiltersChanged', (e) => {
+    currentPage = 1;
+    updatePage({ scroll: true });
   });
 
   // Sorting
