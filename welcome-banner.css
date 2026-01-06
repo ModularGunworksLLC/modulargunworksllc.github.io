@@ -1,0 +1,13 @@
+/* Small blue banner for welcome message */
+.welcome-banner {
+  background: #0033aa;
+  color: #fff;
+  padding: 10px 24px;
+  border-radius: 8px;
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin: 0 auto 18px auto;
+  display: inline-block;
+  box-shadow: 0 2px 8px rgba(0,51,170,0.10);
+  letter-spacing: 0.01em;
+}

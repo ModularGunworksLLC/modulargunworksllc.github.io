@@ -7,7 +7,9 @@ const PAGE_SIZE = 24; // industry-standard default for grid pages
 // LOAD JSON
 // ======================================================
 async function loadSale() {
-  const response = await fetch("../Data/sale-data.json");
+  // Add cache-busting query string to always fetch latest data
+  const cacheBuster = Date.now();
+  const response = await fetch(`../Data/sale-data.json?_=${cacheBuster}`);
   const data = await response.json();
   return data;
 }
