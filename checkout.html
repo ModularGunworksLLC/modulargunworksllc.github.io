@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Checkout - Shopping Cart Demo</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- PayPal SDK -->
+  <script src="https://www.paypal.com/sdk/js?client-id=ASArfh5BwCVYpK1zGwrOYctsiunuJUqcTWHiKQ0w09YH-7qxwYCWxuqQZNRwJ2J9wihe76wZUR0znZT0&currency=USD"></script>
+</head>
+<body>
+  <!-- TOP HEADER BAR (LOGO + SEARCH + ACCOUNT LINKS) -->
+  <header class="site-header">
+    <div class="header-left">
+      <a href="index.html" title="Return to Homepage">
+        <img src="images/modular-gunworks-llc.png" alt="Modular Gunworks LLC Logo" class="logo site-logo" id="site-logo">
+      </a>
+    </div>
+    <div class="header-center">
+      <form class="search-form" action="/search">
+        <input type="text" class="search-bar" name="q" placeholder="Search ammo, gear, or answers...">
+        <button type="submit" class="search-button">
+          <img src="images/search-icon.svg" alt="Search">
+        </button>
+      </form>
+    </div>
+    <div class="header-right">
+      <a href="#">Account Login</a>
+      <a href="#">Help Center</a>
+      <a href="cart.html">View Cart</a>
+      <button id="theme-toggle" class="theme-toggle-icon" aria-label="Toggle Theme">
+        <span id="theme-icon">
+          <!-- Default icon: Moon (light mode) -->
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+        </span>
+      </button>
+    </div>
+  </header>
+
+  <!-- CATEGORY NAVIGATION (STICKY) -->
+  <nav class="category-nav">
+    <a class="nav-link paused" href="#" tabindex="-1" title="Coming Soon">Ammunition</a>
+    <!-- <a class="nav-link paused" href="#" tabindex="-1" title="Coming Soon">Guns</a> -->
+    <a class="nav-link paused" href="#" tabindex="-1" title="Coming Soon">Magazines</a>
+    <a class="nav-link paused" href="#" tabindex="-1" title="Coming Soon">Gun Parts</a>
+    <a class="nav-link paused" href="#" tabindex="-1" title="Coming Soon">Gear</a>
+    <a class="nav-link paused" href="#" tabindex="-1" title="Coming Soon">Optics & Sights</a>
+    <a class="nav-link paused" href="#" tabindex="-1" title="Coming Soon">Reloading</a>
+    <a class="nav-link paused" href="#" tabindex="-1" title="Coming Soon">Prep & Survival</a>
+    <a class="nav-link paused" href="#" tabindex="-1" title="Coming Soon">Brands</a>
+    <a class="nav-link paused" href="#" tabindex="-1" title="Coming Soon">ON SALE</a>
+  </nav>
+  <main>
+    <div style="max-width:520px;margin:40px auto;padding:0 12px;">
+      <!-- Progress Bar -->
+      <div style="display:flex;align-items:center;justify-content:center;margin-bottom:32px;gap:8px;font-size:1.05rem;">
+        <span style="color:#0033aa;font-weight:600;">Cart</span>
+        <span style="color:#bbb;">&#8594;</span>
+        <span style="color:#0033aa;font-weight:600;">Checkout</span>
+        <span style="color:#bbb;">&#8594;</span>
+        <span style="color:#bbb;">Confirmation</span>
+      </div>
+      <section style="background:#fff;border-radius:12px;box-shadow:0 4px 24px rgba(0,0,0,0.08);padding:32px 24px 24px 24px;">
+        <h2 style="margin-top:0;font-size:1.3rem;letter-spacing:0.01em;">Order Summary</h2>
+        <div id="order-summary" style="margin-bottom:24px;"></div>
+        <hr style="margin:24px 0;">
+        <h2 style="font-size:1.15rem;margin-bottom:12px;">Pay Securely with PayPal</h2>
+        <div id="paypal-button-container" style="margin-top:12px;"></div>
+        <a href="cart.html" style="display:inline-block;margin-top:32px;color:#0033aa;text-decoration:underline;font-size:0.98rem;" onclick="event.preventDefault();window.location.replace('cart.html');">&#8592; Back to Cart</a>
+      </section>
+    </div>
+  </main>
+  <script>
+    // Populate order summary from localStorage
+    const orderSummary = document.getElementById('order-summary');
+    const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+    // Map SKUs to images
+    const productImages = {
+      'DEMO-001': 'images/thumbnails/BW0826BG_2.webp',
+      'DEMO-002': 'images/thumbnails/BW1160BL.webp'
+    };
+    let total = 0;
+    if (cart.length === 0) {
+      orderSummary.innerHTML = '<p>Your cart is empty.</p>';
+      document.getElementById('paypal-button-container').style.display = 'none';
+    } else {
+      orderSummary.innerHTML = '<ul style="list-style:none;padding:0;">' + cart.map(item => {
+        total += item.price * item.qty;
+        const imgSrc = productImages[item.sku] || '';
+        return `<li style="display:flex;align-items:center;gap:16px;margin-bottom:10px;">
+          <img src="${imgSrc}" alt="${item.name}" style="width:48px;height:48px;object-fit:cover;border-radius:8px;background:#f5f7fa;">
+          <span>${item.name} (x${item.qty}) - $${(item.price * item.qty).toFixed(2)}</span>
+        </li>`;
+      }).join('') + `</ul><p><strong>Total: $${total.toFixed(2)}</strong></p>`;
+    }
+
+    // Show PayPal button directly and let PayPal collect shipping info
+    if (cart.length > 0) {
+      paypal.Buttons({
+        createOrder: function(data, actions) {
+          return actions.order.create({
+            purchase_units: [{
+              amount: {
+                value: total.toFixed(2)
+              },
+              description: 'Demo Cart Purchase'
+            }],
+            application_context: {
+              shipping_preference: 'GET_FROM_FILE' // Let PayPal collect shipping info
+            }
+          });
+        },
+        onApprove: function(data, actions) {
+          return actions.order.capture().then(function(details) {
+            // Clear cart and redirect to confirmation
+            localStorage.removeItem('cart');
+            window.location.href = 'confirmation.html';
+          });
+        }
+      }).render('#paypal-button-container');
+    }
+  </script>
+</body>
+</html>

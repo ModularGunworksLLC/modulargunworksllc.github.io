@@ -28,8 +28,15 @@
  <div class="header-right">
   <a href="#">Account Login</a>
   <a href="#">Help Center</a>
-  <a href="#">View Cart</a>
-
+  <div class="cart-header-icon" id="cart-header-icon" style="position:relative;display:inline-block;cursor:pointer;margin-left:12px;">
+      <a href="cart.html" id="view-cart-link" style="color:#0033aa;font-size:1.05rem;font-weight:600;text-decoration:none;vertical-align:middle;padding:0 2px;transition:text-decoration 0.2s;">View Cart</a>
+      <span id="cart-badge" style="position:absolute;top:-8px;right:-8px;background:#e74c3c;color:#fff;font-size:0.95rem;padding:2px 7px;border-radius:50%;display:none;min-width:20px;text-align:center;">0</span>
+      <style>
+        .header-right a#view-cart-link:hover {
+          text-decoration: underline;
+        }
+      </style>
+  </div>
   <button id="theme-toggle" class="theme-toggle-icon" aria-label="Toggle Theme">
     <span id="theme-icon">
       <!-- Default icon: Moon (light mode) -->
@@ -41,13 +48,25 @@
     </span>
   </button>
 </div>
+</body>
+<!-- Side Cart Drawer -->
+<div id="side-cart" style="position:fixed;top:0;right:-400px;width:360px;height:100vh;background:#fff;box-shadow:-2px 0 16px rgba(0,0,0,0.18);z-index:9999;transition:right 0.35s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;">
+  <div style="display:flex;align-items:center;justify-content:space-between;padding:20px 20px 10px 20px;border-bottom:1px solid #eee;">
+    <h2 style="margin:0;font-size:1.2rem;">My Cart</h2>
+    <button id="close-side-cart" style="background:none;border:none;font-size:1.7rem;cursor:pointer;">&times;</button>
+  </div>
+  <div id="side-cart-items" style="flex:1;overflow-y:auto;padding:18px 20px 0 20px;"></div>
+  <div id="side-cart-footer" style="padding:18px 20px 20px 20px;border-top:1px solid #eee;background:#fafbfc;"></div>
+</div>
+<div id="side-cart-backdrop" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.18);z-index:9998;"></div>
+<script src="scripts/side-cart.js"></script>
 
 </header>
 
   <!-- CATEGORY NAVIGATION (STICKY) -->
   <nav class="category-nav">
     <a class="nav-link paused" href="#" tabindex="-1" title="Coming Soon">Ammunition</a>
-    <a class="nav-link paused" href="#" tabindex="-1" title="Coming Soon">Guns</a>
+    <!-- <a class="nav-link paused" href="#" tabindex="-1" title="Coming Soon">Guns</a> -->
     <a class="nav-link paused" href="#" tabindex="-1" title="Coming Soon">Magazines</a>
     <a class="nav-link paused" href="#" tabindex="-1" title="Coming Soon">Gun Parts</a>
     <a class="nav-link paused" href="#" tabindex="-1" title="Coming Soon">Gear</a>
@@ -66,11 +85,8 @@
 
   <!-- HERO FLAG HEADER (FULL WIDTH) -->
   <div class="hero-header">
-  <div class="hero-home-title">WELCOME TO MODULAR GUNWORKS LLC</div>
-  <div class="hero-welcome-message">
-    <p>We're excited to launch soon! While we await our dealership approval, feel free to <a href="contact.html">reach out with any questions</a> or just say hello. Thank you for visiting!</p>
+    <div class="hero-home-title">WELCOME TO MODULAR GUNWORKS LLC</div>
   </div>
-</div>
 
  <!-- CATEGORY GRID -->
 <section class="category-grid">
@@ -85,6 +101,7 @@
       </div>
       <span>Ammunition</span>
     </div>
+    <!--
     <div class="tile">
       <div class="image-box">
         <img src="images/categories/guns.jpg" alt="Guns">
@@ -92,6 +109,7 @@
       </div>
       <span>Guns</span>
     </div>
+    -->
     <div class="tile">
       <div class="image-box">
         <img src="images/categories/magazines.jpg" alt="Magazines">
@@ -141,6 +159,7 @@
       </div>
       <span>Shop by Brand</span>
     </div>
+
     <div class="tile">
       <div class="image-box">
         <img src="images/categories/sale.jpg" alt="Sale">
@@ -148,6 +167,13 @@
       </div>
       <span>On Sale</span>
     </div>
+
+    <a class="tile demo-tile" href="demo-product.html">
+      <div class="image-box">
+        <img src="images/categories/Demo.jpg" alt="Cart Demo">
+      </div>
+      <span>Demo</span>
+    </a>
 
   </div>
 </section>

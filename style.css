@@ -1,3 +1,14 @@
+/* Special style for the Demo (Cart) tile */
+.demo-tile {
+  background: #0033aa;
+  color: #fff;
+  border-color: #0033aa;
+}
+.demo-tile:hover {
+  background: #0055cc;
+  color: #fff;
+  border-color: #0055cc;
+}
 .hero-banner-summary {
   margin-top: 8px;
   font-size: 1.3rem;
