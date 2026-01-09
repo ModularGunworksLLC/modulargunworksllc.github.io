@@ -3,47 +3,99 @@
 <head>
   <meta charset="UTF-8">
   <title>Your Cart | Modular Gunworks LLC</title>
-  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="../styles/design-system.css">
+  <link rel="stylesheet" href="../styles/components.css">
+  <link rel="stylesheet" href="../styles/layout.css">
+  <link rel="stylesheet" href="../styles/age-gate.css">
   <link rel="icon" type="image/png" href="../favicon.png">
+  <script src="../scripts/age-gate.js"></script>
 </head>
 <body>
-  <header class="site-header">
-    <div class="header-left">
-      <a href="../index.html" title="Return to Homepage">
-        <img src="../images/modular-gunworks-llc.png" alt="Modular Gunworks LLC Logo" class="logo site-logo" id="site-logo">
-      </a>
-    </div>
-    <div class="header-center">
-      <form class="search-form" action="/search">
-        <input type="text" class="search-bar" name="q" placeholder="Search ammo, gear, or answers...">
-        <button type="submit" class="search-button">
-          <img src="../images/search-icon.svg" alt="Search">
-        </button>
+  <header id="site-header">
+    <nav class="header-nav flex flex-center" style="justify-content:space-between; align-items:center; padding:1.5rem 2rem; background:linear-gradient(90deg,rgba(24,26,27,0.45) 0%,rgba(24,26,27,0.18) 100%), url('../images/header-flag.png') center 40%/cover no-repeat; filter:brightness(1.25) contrast(1.15) saturate(1.2); position:sticky; top:0; z-index:100; box-shadow:0 2px 8px rgba(0,0,0,0.08); min-height:160px;">
+      <div class="flex flex-center" style="gap:1rem; align-items:center; position:relative; z-index:1;">
+        <img src="../images/modular-gunworks-llc.png" alt="Modular Gunworks LLC Logo" style="height:56px; width:auto; background:transparent; border-radius:6px; padding:2px; box-shadow:0 1px 4px rgba(0,0,0,0.08);">
+        <a href="../index.html" class="header-logo" style="font-size:2rem; color:#fff; text-shadow:0 2px 8px #000, 0 1px 0 #222, 0 0 4px #fff; text-decoration:none; font-weight:900; letter-spacing:2px;">Modular Gunworks LLC</a>
+      </div>
+      <form class="search-bar" style="flex:1; max-width:500px; margin:0 2rem; display:flex; position:relative; z-index:1;">
+        <input type="text" placeholder="Search ammo, gear, or answers..." style="flex:1; padding:0.6rem; border-radius:4px 0 0 4px; font-size:1rem;">
+        <button type="submit" class="button" style="border-radius:0 4px 4px 0;">Search</button>
       </form>
-    </div>
-    <div class="header-right">
-      <a href="#">Account Login</a>
-      <a href="#">Help Center</a>
-      <a href="cart.html">View Cart</a>
-      <button id="theme-toggle" class="theme-toggle-icon" aria-label="Toggle Theme">
-        <span id="theme-icon">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-          </svg>
-        </span>
-      </button>
+      <div class="flex flex-center" style="gap:2rem; align-items:center; position:relative; z-index:1;">
+        <a href="#" style="color:var(--color-text-light); text-decoration:none; font-weight:600; font-size:1.1rem;">Account</a>
+        <a href="#" style="color:var(--color-text-light); text-decoration:none; font-weight:600; font-size:1.1rem;">Help</a>
+        <a href="cart.html" style="color:var(--color-text-light); text-decoration:none; font-weight:600; font-size:1.1rem;">Cart</a>
+        <button id="theme-toggle" class="theme-toggle-icon" aria-label="Toggle Theme">
+          <span id="theme-icon"></span>
+        </button>
+      </div>
+    </nav>
+    <nav class="main-categories" style="background:var(--color-accent); padding:0.5rem 2rem; box-shadow:0 2px 8px rgba(0,0,0,0.04);">
+      <div class="flex" style="gap:2.5rem; justify-content:center;">
+        <a href="ammunition.html" class="main-cat-link">Ammunition</a>
+        <a href="magazines.html" class="main-cat-link">Magazines</a>
+        <a href="gun-parts.html" class="main-cat-link">Gun Parts</a>
+        <a href="gear.html" class="main-cat-link">Gear</a>
+        <a href="optics.html" class="main-cat-link">Optics & Sights</a>
+        <a href="reloading.html" class="main-cat-link">Reloading</a>
+        <a href="survival.html" class="main-cat-link">Prep & Survival</a>
+        <a href="brands.html" class="main-cat-link">Brands</a>
+        <a href="sale.html" class="main-cat-link">ON SALE</a>
+        <a href="../services.html" class="main-cat-link" style="color:#ffcc00; font-weight:bold;">SERVICES</a>
+      </div>
+    </nav>
+    <div class="promo-banner" style="background:linear-gradient(90deg, var(--color-primary) 0%, var(--color-accent) 100%); color:#fff; text-align:center; font-size:1.15rem; font-weight:600; padding:0.75rem 0; letter-spacing:1px;">
+      <span>Veteran-Owned • Free Shipping on Firearms • FFL Transfers Available • Precision Gunsmithing</span>
     </div>
   </header>
   <main class="cart-main" style="max-width:600px;margin:2rem auto;">
     <h2>Your Shopping Cart</h2>
     <div id="cart-items"></div>
     <div id="cart-total" style="font-size:1.2em;margin:1em 0;"></div>
-    <div id="paypal-button-container"></div>
+    <div style="display: grid; gap: 1rem;">
+      <a href="checkout.html" style="display: block; padding: 1rem; text-align: center; background: var(--color-primary); color: white; text-decoration: none; border-radius: 4px; font-weight: bold; font-size: 1.1rem;">Proceed to Checkout</a>
+      <div id="paypal-button-container"></div>
+    </div>
   </main>
   <footer class="site-footer">
-    <div class="footer-bottom">
-      <p>© 2025 Modular Gunworks LLC. All rights reserved.</p>
-      <p><a href="mailto:modulargunworks@gmail.com">modulargunworks@gmail.com</a></p>
+    <div class="footer-columns" style="display:flex; justify-content:center; gap:4rem; background:#181a1b; color:#fff; padding:2.5rem 1rem 1.5rem 1rem;">
+      <div style="min-width:160px;">
+        <h4 style="color:#fff; text-align:center;">Shop</h4>
+        <ul style="list-style:none; padding:0; text-align:center;">
+          <li><a href="ammunition.html" style="color:#fff; text-decoration:none;">Ammunition</a></li>
+          <li><a href="magazines.html" style="color:#fff; text-decoration:none;">Magazines</a></li>
+          <li><a href="gun-parts.html" style="color:#fff; text-decoration:none;">Gun Parts</a></li>
+          <li><a href="gear.html" style="color:#fff; text-decoration:none;">Gear</a></li>
+          <li><a href="optics.html" style="color:#fff; text-decoration:none;">Optics & Sights</a></li>
+          <li><a href="reloading.html" style="color:#fff; text-decoration:none;">Reloading</a></li>
+          <li><a href="survival.html" style="color:#fff; text-decoration:none;">Prep & Survival</a></li>
+          <li><a href="brands.html" style="color:#fff; text-decoration:none;">Brands</a></li>
+          <li><a href="sale.html" style="color:#fff; text-decoration:none;">ON SALE</a></li>
+        </ul>
+      </div>
+      <div style="min-width:160px;">
+        <h4 style="color:#fff; text-align:center;">Company</h4>
+        <ul style="list-style:none; padding:0; text-align:center;">
+          <li><a href="../about.html" style="color:#fff; text-decoration:none;">About</a></li>
+          <li><a href="../services.html" style="color:#ffcc00; text-decoration:none; font-weight:bold;">Services</a></li>
+          <li><a href="../contact.html" style="color:#fff; text-decoration:none;">Contact</a></li>
+          <li><a href="../faq.html" style="color:#fff; text-decoration:none;">FAQ</a></li>
+        </ul>
+      </div>
+      <div style="min-width:160px;">
+        <h4 style="color:#fff; text-align:center;">Legal</h4>
+        <ul style="list-style:none; padding:0; text-align:center;">
+          <li><a href="../terms.html" style="color:#fff; text-decoration:none;">Terms & Conditions</a></li>
+          <li><a href="../privacy.html" style="color:#fff; text-decoration:none;">Privacy Policy</a></li>
+          <li><a href="../returns.html" style="color:#fff; text-decoration:none;">Return Policy</a></li>
+          <li><a href="../order-status.html" style="color:#fff; text-decoration:none;">Order Status</a></li>
+          <li><a href="../shipping.html" style="color:#fff; text-decoration:none;">Shipping Info</a></li>
+        </ul>
+      </div>
+    </div>
+    <div style="text-align:center; color:#fff; background:#181a1b; padding:1rem 0 0.5rem 0; font-size:1rem;">
+      <p>All firearm sales comply with federal, state, and local laws. FFL required for applicable items. Not all products available in all states.</p>
+      <p>© 2026 Modular Gunworks LLC. All rights reserved. <a href="mailto:modulargunworks@gmail.com" style="color:#fff; text-decoration:underline;">modulargunworks@gmail.com</a></p>
     </div>
   </footer>
   <script src="https://www.paypal.com/sdk/js?client-id=AYd1GcwFQbrNbYKm2nYjeGLYy4Cfdh7aH3AtrjrtJHFgSLbUJC_8CHo-DXmNZXJqjqFIEsmIe-e02OPA&currency=USD"></script>

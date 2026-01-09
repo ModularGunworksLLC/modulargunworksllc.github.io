@@ -2,10 +2,12 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Checkout - Shopping Cart Demo</title>
+  <title>Checkout</title>
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="styles/age-gate.css">
   <!-- PayPal SDK -->
   <script src="https://www.paypal.com/sdk/js?client-id=ASArfh5BwCVYpK1zGwrOYctsiunuJUqcTWHiKQ0w09YH-7qxwYCWxuqQZNRwJ2J9wihe76wZUR0znZT0&currency=USD"></script>
+  <script src="scripts/age-gate.js"></script>
 </head>
 <body>
   <!-- TOP HEADER BAR (LOGO + SEARCH + ACCOUNT LINKS) -->
@@ -78,8 +80,7 @@
     const cart = JSON.parse(localStorage.getItem('cart') || '[]');
     // Map SKUs to images
     const productImages = {
-      'DEMO-001': 'images/thumbnails/BW0826BG_2.webp',
-      'DEMO-002': 'images/thumbnails/BW1160BL.webp'
+      // ...existing code...
     };
     let total = 0;
     if (cart.length === 0) {
@@ -105,7 +106,7 @@
               amount: {
                 value: total.toFixed(2)
               },
-              description: 'Demo Cart Purchase'
+              // ...existing code...
             }],
             application_context: {
               shipping_preference: 'GET_FROM_FILE' // Let PayPal collect shipping info

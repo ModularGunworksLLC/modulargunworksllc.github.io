@@ -1,81 +1,126 @@
 <!DOCTYPE html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Modular Gunworks LLC</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Modular Gunworks LLC - Huntsville, AL's premier gun shop. Ammunition, firearms, optics, gear, FFL transfers & expert gunsmith services. Veteran-owned, local gunsmith.">
+  <meta name="keywords" content="gun shop Huntsville AL, FFL transfer, gunsmith services, ammunition store, hunting gear, tactical gear, local gun dealer, Madison County">
+  <meta name="author" content="Modular Gunworks LLC">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#181a1b">
+  
+  <!-- Local Business Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "name": "Modular Gunworks LLC",
+    "image": "https://modulargunworks.com/images/modular-gunworks-llc.png",
+    "description": "Veteran-owned gun shop and gunsmith services in Huntsville, Alabama",
+    "telephone": "(256) 867-5309",
+    "email": "modulargunworks@gmail.com",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Huntsville",
+      "addressLocality": "Huntsville",
+      "addressRegion": "AL",
+      "postalCode": "35803",
+      "addressCountry": "US"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": "34.7304",
+      "longitude": "-86.5881"
+    },
+    "openingHoursSpecification": [
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+        "opens": "10:00",
+        "closes": "18:00"
+      },
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": "Saturday",
+        "opens": "10:00",
+        "closes": "16:00"
+      }
+    ],
+    "sameAs": [
+      "https://www.facebook.com/modulargunworks",
+      "https://www.instagram.com/modulargunworks"
+    ]
+  }
+  </script>
+
+  <!-- Open Graph Tags -->
+  <meta property="og:title" content="Modular Gunworks LLC - Huntsville Gun Shop & Gunsmith">
+  <meta property="og:description" content="Huntsville's trusted gun shop. Ammunition, firearms, FFL transfers, expert gunsmith services. Veteran-owned local business.">
+  <meta property="og:type" content="business.business">
+  <meta property="og:url" content="https://modulargunworks.com/">
+  <meta property="og:image" content="https://modulargunworks.com/images/modular-gunworks-llc.png">
+  <meta property="og:locale" content="en_US">
+
+  <!-- Twitter Card Tags -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Modular Gunworks LLC - Huntsville Gun Shop">
+  <meta name="twitter:description" content="Expert gunsmith, FFL transfers, ammunition, and tactical gear in Huntsville, AL">
+  <meta name="twitter:image" content="https://modulargunworks.com/images/modular-gunworks-llc.png">
+
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://modulargunworks.com/">
+
+  <title>Modular Gunworks LLC - Gun Shop & Gunsmith in Huntsville, AL</title>
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="styles/design-system.css">
+  <link rel="stylesheet" href="styles/components.css">
+  <link rel="stylesheet" href="styles/layout.css">
+  <link rel="stylesheet" href="styles/age-gate.css">
   <link rel="icon" type="image/png" href="favicon.png">
+  <script src="scripts/age-gate.js"></script>
 </head>
 
 <body>
 
   <!-- TOP HEADER BAR (LOGO + SEARCH + ACCOUNT LINKS) -->
- <header class="site-header">
-  <div class="header-left">
-    <a href="index.html" title="Return to Homepage">
-      <img src="images/modular-gunworks-llc.png" alt="Modular Gunworks LLC Logo" class="logo site-logo" id="site-logo">
-    </a>
-  </div>
+  <header id="site-header">
+    <nav class="header-nav flex flex-center" style="justify-content:space-between; align-items:center; padding:1.5rem 2rem; background:linear-gradient(90deg,rgba(24,26,27,0.45) 0%,rgba(24,26,27,0.18) 100%), url('images/header-flag.png') center 40%/cover no-repeat; filter:brightness(1.25) contrast(1.15) saturate(1.2); position:sticky; top:0; z-index:100; box-shadow:0 2px 8px rgba(0,0,0,0.08); min-height:160px;">
+      <div class="flex flex-center" style="gap:1rem; align-items:center; position:relative; z-index:1;">
+        <img src="images/modular-gunworks-llc.png" alt="Modular Gunworks LLC Logo" style="height:56px; width:auto; background:transparent; border-radius:6px; padding:2px; box-shadow:0 1px 4px rgba(0,0,0,0.08);">
+        <a href="index.html" class="header-logo" style="font-size:2rem; color:#fff; text-shadow:0 2px 8px #000, 0 1px 0 #222, 0 0 4px #fff; text-decoration:none; font-weight:900; letter-spacing:2px;">Modular Gunworks LLC</a>
+      </div>
+      <form class="search-bar" style="flex:1; max-width:500px; margin:0 2rem; display:flex; position:relative; z-index:1;">
+        <input type="text" placeholder="Search ammo, gear, or answers..." style="flex:1; padding:0.6rem; border-radius:4px 0 0 4px; font-size:1rem;">
+        <button type="submit" class="button" style="border-radius:0 4px 4px 0;">Search</button>
+      </form>
+      <div class="flex flex-center" style="gap:2rem; align-items:center; position:relative; z-index:1;">
+        <a href="#" style="color:var(--color-text-light); text-decoration:none; font-weight:600; font-size:1.1rem;">Account</a>
+        <a href="#" style="color:var(--color-text-light); text-decoration:none; font-weight:600; font-size:1.1rem;">Help</a>
+        <a href="cart.html" style="color:var(--color-text-light); text-decoration:none; font-weight:600; font-size:1.1rem;">Cart</a>
+        <button id="theme-toggle" class="theme-toggle-icon" aria-label="Toggle Theme">
+          <span id="theme-icon"></span>
+        </button>
+      </div>
+    </nav>
+    <nav class="main-categories" style="background:var(--color-accent); padding:0.5rem 2rem; box-shadow:0 2px 8px rgba(0,0,0,0.04);">
+      <div class="flex" style="gap:2.5rem; justify-content:center;">
+        <a href="shop/ammunition.html" class="main-cat-link">Ammunition</a>
+        <a href="shop/magazines.html" class="main-cat-link">Magazines</a>
+        <a href="shop/gun-parts.html" class="main-cat-link">Gun Parts</a>
+        <a href="shop/gear.html" class="main-cat-link">Gear</a>
+        <a href="shop/optics.html" class="main-cat-link">Optics & Sights</a>
+        <a href="shop/reloading.html" class="main-cat-link">Reloading</a>
+        <a href="shop/survival.html" class="main-cat-link">Prep & Survival</a>
+        <a href="shop/brands.html" class="main-cat-link">Brands</a>
+        <a href="shop/sale.html" class="main-cat-link">ON SALE</a>
+        <a href="services.html" class="main-cat-link" style="color:#ffcc00; font-weight:bold;">SERVICES</a>
+      </div>
+    </nav>
+    <div class="promo-banner" style="background:linear-gradient(90deg, var(--color-primary) 0%, var(--color-accent) 100%); color:#fff; text-align:center; font-size:1.15rem; font-weight:600; padding:0.75rem 0; letter-spacing:1px;">
+      <span>Veteran-Owned • Free Shipping on Firearms • FFL Transfers Available • Precision Gunsmithing</span>
+    </div>
+  </header>
 
-  <div class="header-center">
-    <form class="search-form" action="/search">
-      <input type="text" class="search-bar" name="q" placeholder="Search ammo, gear, or answers...">
-      <button type="submit" class="search-button">
-        <img src="images/search-icon.svg" alt="Search">
-      </button>
-    </form>
-  </div>
-
- <div class="header-right">
-  <a href="#">Account Login</a>
-  <a href="#">Help Center</a>
-  <div class="cart-header-icon" id="cart-header-icon" style="position:relative;display:inline-block;cursor:pointer;margin-left:12px;">
-      <a href="cart.html" id="view-cart-link" style="color:#0033aa;font-size:1.05rem;font-weight:600;text-decoration:none;vertical-align:middle;padding:0 2px;transition:text-decoration 0.2s;">View Cart</a>
-      <span id="cart-badge" style="position:absolute;top:-8px;right:-8px;background:#e74c3c;color:#fff;font-size:0.95rem;padding:2px 7px;border-radius:50%;display:none;min-width:20px;text-align:center;">0</span>
-      <style>
-        .header-right a#view-cart-link:hover {
-          text-decoration: underline;
-        }
-      </style>
-  </div>
-  <button id="theme-toggle" class="theme-toggle-icon" aria-label="Toggle Theme">
-    <span id="theme-icon">
-      <!-- Default icon: Moon (light mode) -->
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
-           stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M21 12.79A9 9 0 1 1 11.21 3
-                 7 7 0 0 0 21 12.79z"></path>
-      </svg>
-    </span>
-  </button>
-</div>
-</body>
-<!-- Side Cart Drawer -->
-<div id="side-cart" style="position:fixed;top:0;right:-400px;width:360px;height:100vh;background:#fff;box-shadow:-2px 0 16px rgba(0,0,0,0.18);z-index:9999;transition:right 0.35s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;">
-  <div style="display:flex;align-items:center;justify-content:space-between;padding:20px 20px 10px 20px;border-bottom:1px solid #eee;">
-    <h2 style="margin:0;font-size:1.2rem;">My Cart</h2>
-    <button id="close-side-cart" style="background:none;border:none;font-size:1.7rem;cursor:pointer;">&times;</button>
-  </div>
-  <div id="side-cart-items" style="flex:1;overflow-y:auto;padding:18px 20px 0 20px;"></div>
-  <div id="side-cart-footer" style="padding:18px 20px 20px 20px;border-top:1px solid #eee;background:#fafbfc;"></div>
-</div>
-<div id="side-cart-backdrop" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.18);z-index:9998;"></div>
-<script src="scripts/side-cart.js"></script>
-
-</header>
-
-  <!-- CATEGORY NAVIGATION (STICKY) -->
-  <nav class="category-nav">
-    <a class="nav-link paused" href="#" tabindex="-1" title="Coming Soon">Ammunition</a>
-    <!-- <a class="nav-link paused" href="#" tabindex="-1" title="Coming Soon">Guns</a> -->
-    <a class="nav-link paused" href="#" tabindex="-1" title="Coming Soon">Magazines</a>
-    <a class="nav-link paused" href="#" tabindex="-1" title="Coming Soon">Gun Parts</a>
-    <a class="nav-link paused" href="#" tabindex="-1" title="Coming Soon">Gear</a>
-    <a class="nav-link paused" href="#" tabindex="-1" title="Coming Soon">Optics & Sights</a>
-    <a class="nav-link paused" href="#" tabindex="-1" title="Coming Soon">Reloading</a>
-    <a class="nav-link paused" href="#" tabindex="-1" title="Coming Soon">Prep & Survival</a>
-    <a class="nav-link paused" href="#" tabindex="-1" title="Coming Soon">Brands</a>
-    <a class="nav-link paused" href="#" tabindex="-1" title="Coming Soon">ON SALE</a>
-  </nav>
  
   <!-- PROMO BANNER -
   <section class="promo-banner">
@@ -83,10 +128,6 @@
     <p>Use Code: <strong>Build</strong> • Free Shipping Over $249</p>
   </section> -->
 
-  <!-- HERO FLAG HEADER (FULL WIDTH) -->
-  <div class="hero-header">
-    <div class="hero-home-title">WELCOME TO MODULAR GUNWORKS LLC</div>
-  </div>
 
  <!-- CATEGORY GRID -->
 <section class="category-grid">
@@ -94,125 +135,114 @@
 
   <div class="grid">
 
-    <div class="tile">
+    <a class="tile" href="shop/ammunition.html">
       <div class="image-box">
         <img src="images/categories/ammunition.jpg" alt="Ammunition">
-        <div class="coming-soon-overlay">Coming Soon</div>
       </div>
       <span>Ammunition</span>
-    </div>
+    </a>
     <!--
-    <div class="tile">
+    <a class="tile" href="shop/guns.html">
       <div class="image-box">
         <img src="images/categories/guns.jpg" alt="Guns">
-        <div class="coming-soon-overlay">Coming Soon</div>
       </div>
       <span>Guns</span>
-    </div>
+    </a>
     -->
-    <div class="tile">
+    <a class="tile" href="shop/magazines.html">
       <div class="image-box">
         <img src="images/categories/magazines.jpg" alt="Magazines">
-        <div class="coming-soon-overlay">Coming Soon</div>
       </div>
       <span>Magazines</span>
-    </div>
-    <div class="tile">
+    </a>
+    <a class="tile" href="shop/gun-parts.html">
       <div class="image-box">
         <img src="images/categories/gun-parts.jpg" alt="Gun Parts">
-        <div class="coming-soon-overlay">Coming Soon</div>
       </div>
       <span>Gun Parts</span>
-    </div>
-    <div class="tile">
+    </a>
+    <a class="tile" href="shop/gear.html">
       <div class="image-box">
         <img src="images/categories/gear.jpg" alt="Gear">
-        <div class="coming-soon-overlay">Coming Soon</div>
       </div>
       <span>Gear</span>
-    </div>
-    <div class="tile">
+    </a>
+    <a class="tile" href="shop/optics.html">
       <div class="image-box">
-        <img src="images/categories/optics.jpg" alt="Optics">
-        <div class="coming-soon-overlay">Coming Soon</div>
+        <img src="images/categories/optics.jpg" alt="Optics & Sights">
       </div>
       <span>Optics & Sights</span>
-    </div>
-    <div class="tile">
+    </a>
+    <a class="tile" href="shop/reloading.html">
       <div class="image-box">
         <img src="images/categories/reloading.jpg" alt="Reloading">
-        <div class="coming-soon-overlay">Coming Soon</div>
       </div>
       <span>Reloading</span>
-    </div>
-    <div class="tile">
+    </a>
+    <a class="tile" href="shop/survival.html">
       <div class="image-box">
-        <img src="images/categories/survival.jpg" alt="Survival">
-        <div class="coming-soon-overlay">Coming Soon</div>
+        <img src="images/categories/survival.jpg" alt="Prep & Survival">
       </div>
       <span>Prep & Survival</span>
-    </div>
-    <div class="tile">
+    </a>
+    <a class="tile" href="shop/brands.html">
       <div class="image-box">
-        <img src="images/categories/brands.jpg" alt="Brands">
-        <div class="coming-soon-overlay">Coming Soon</div>
+        <img src="images/categories/brands.jpg" alt="Shop by Brand">
       </div>
       <span>Shop by Brand</span>
-    </div>
-
-    <div class="tile">
+    </a>
+    <a class="tile" href="shop/sale.html">
       <div class="image-box">
-        <img src="images/categories/sale.jpg" alt="Sale">
-        <div class="coming-soon-overlay">Coming Soon</div>
+        <img src="images/categories/sale.jpg" alt="On Sale">
       </div>
       <span>On Sale</span>
-    </div>
-
-    <a class="tile demo-tile" href="demo-product.html">
-      <div class="image-box">
-        <img src="images/categories/Demo.jpg" alt="Cart Demo">
-      </div>
-      <span>Demo</span>
     </a>
+
+
 
   </div>
 </section>
 
   <!-- FOOTER -->
   <footer class="site-footer">
-    <div class="footer-columns">
-      <div>
-        <h4>Company</h4>
-        <ul>
-          <li><a href="about.html">About Modular Gunworks</a></li>
-          <li><a href="blog.html">Blog</a></li>
-          <li><a href="contact.html">Contact Us</a></li>
+    <div class="footer-columns" style="display:flex; justify-content:center; gap:4rem; background:#181a1b; color:#fff; padding:2.5rem 1rem 1.5rem 1rem;">
+      <div style="min-width:160px;">
+        <h4 style="color:#fff; text-align:center;">Shop</h4>
+        <ul style="list-style:none; padding:0; text-align:center;">
+          <li><a href="shop/ammunition.html" style="color:#fff; text-decoration:none;">Ammunition</a></li>
+          <li><a href="shop/magazines.html" style="color:#fff; text-decoration:none;">Magazines</a></li>
+          <li><a href="shop/gun-parts.html" style="color:#fff; text-decoration:none;">Gun Parts</a></li>
+          <li><a href="shop/gear.html" style="color:#fff; text-decoration:none;">Gear</a></li>
+          <li><a href="shop/optics.html" style="color:#fff; text-decoration:none;">Optics & Sights</a></li>
+          <li><a href="shop/reloading.html" style="color:#fff; text-decoration:none;">Reloading</a></li>
+          <li><a href="shop/survival.html" style="color:#fff; text-decoration:none;">Prep & Survival</a></li>
+          <li><a href="shop/brands.html" style="color:#fff; text-decoration:none;">Brands</a></li>
+          <li><a href="shop/sale.html" style="color:#fff; text-decoration:none;">ON SALE</a></li>
         </ul>
       </div>
-
-      <div>
-        <h4>Info</h4>
-        <ul>
-          <li><a href="faq.html">FAQ</a></li>
-          <li><a href="ffl.html">FFL Transfers</a></li>
-          <li><a href="order-status.html">Order Status</a></li>
-          <li><a href="shipping.html">Shipping Info</a></li>
+      <div style="min-width:160px;">
+        <h4 style="color:#fff; text-align:center;">Company</h4>
+        <ul style="list-style:none; padding:0; text-align:center;">
+          <li><a href="about.html" style="color:#fff; text-decoration:none;">About</a></li>
+          <li><a href="contact.html" style="color:#fff; text-decoration:none;">Contact</a></li>
+          <li><a href="faq.html" style="color:#fff; text-decoration:none;">FAQ</a></li>
+          <li><a href="blog.html" style="color:#fff; text-decoration:none;">Blog</a></li>
         </ul>
       </div>
-
-      <div>
-        <h4>Legal</h4>
-        <ul>
-          <li><a href="terms.html">Terms & Conditions</a></li>
-          <li><a href="privacy.html">Privacy Policy</a></li>
-          <li><a href="returns.html">Return Policy</a></li>
+      <div style="min-width:160px;">
+        <h4 style="color:#fff; text-align:center;">Legal</h4>
+        <ul style="list-style:none; padding:0; text-align:center;">
+          <li><a href="terms.html" style="color:#fff; text-decoration:none;">Terms & Conditions</a></li>
+          <li><a href="privacy.html" style="color:#fff; text-decoration:none;">Privacy Policy</a></li>
+          <li><a href="returns.html" style="color:#fff; text-decoration:none;">Return Policy</a></li>
+          <li><a href="order-status.html" style="color:#fff; text-decoration:none;">Order Status</a></li>
+          <li><a href="shipping.html" style="color:#fff; text-decoration:none;">Shipping Info</a></li>
         </ul>
       </div>
     </div>
-
-    <div class="footer-bottom">
-      <p>© 2025 Modular Gunworks LLC. All rights reserved.</p>
-      <p><a href="mailto:modulargunworks@gmail.com">modulargunworks@gmail.com</a></p>
+    <div style="text-align:center; color:#fff; background:#181a1b; padding:1rem 0 0.5rem 0; font-size:1rem;">
+      <p>All firearm sales comply with federal, state, and local laws. FFL required for applicable items. Not all products available in all states.</p>
+      <p>© 2026 Modular Gunworks LLC. All rights reserved. <a href="mailto:modulargunworks@gmail.com" style="color:#fff; text-decoration:underline;">modulargunworks@gmail.com</a></p>
     </div>
   </footer>
   <!-- AGE VERIFICATION POPUP -->
