@@ -26,25 +26,18 @@ function showLoadingSkeleton(container, count = 6) {
 // ======================================================
 // LOAD JSON - WITH RSR GROUP INTEGRATION
 // ======================================================
-async function loadGuns() {
-  try {
-    // Try to load from RSR Group URLs
-    const rsrData = await loadFromRSRGroup();
-    if (rsrData && rsrData.length > 0) {
-      return rsrData;
-    }
-  } catch (error) {
-    console.log("RSR Group data not available, falling back to static data:", error);
-  }
+// Initialize the universal product loader for guns category
+let productLoader;
 
-  // Fallback to static JSON
-  const response = await fetch("../Data/guns-data.json");
-  const data = await response.json();
-  return data;
-}
+document.addEventListener('DOMContentLoaded', function() {
+  productLoader = new ProductLoader({
+    category: 'guns',
+    pageSize: 24
+  });
+});
 
 // ======================================================
-// LOAD FROM RSR GROUP (PLACEHOLDER FOR FUTURE INTEGRATION)
+
 // ======================================================
 async function loadFromRSRGroup() {
   // RSR Group URLs for firearms:
@@ -76,7 +69,7 @@ async function loadFromRSRGroup() {
 }
 
 // ======================================================
-// TRANSFORM RSR GROUP DATA TO OUR FORMAT (PLACEHOLDER)
+
 // ======================================================
 function transformRSRData(rsrItems, category) {
   // Transform RSR Group product format to our internal format
@@ -497,107 +490,8 @@ function applySorting(items) {
   return sorted;
 }
 
+
 // ======================================================
 // MAIN INITIALIZER
 // ======================================================
-loadGuns().then(allItems => {
-  // Store globally for showMoreGunsCategory function
-  window.allGunsData = allItems;
-
-  populateFilterLists(allItems);
-
-  let currentPage = 1;
-  let currentView = 'grid';
-
-  function updatePage() {
-    let filtered = applyFilters(allItems);
-    filtered = applySorting(filtered);
-
-    const totalResults = filtered.length;
-    const totalPages = Math.max(1, Math.ceil(totalResults / PAGE_SIZE));
-
-    if (currentPage > totalPages) currentPage = totalPages;
-
-    const startIndex = (currentPage - 1) * PAGE_SIZE;
-    const pageItems = filtered.slice(startIndex, startIndex + PAGE_SIZE);
-
-    document.getElementById("guns-result-count").textContent =
-      `Showing ${pageItems.length} of ${totalResults} firearms`;
-
-    buildCategorySections(filtered);      // sections show all filtered
-    buildProductsGrid(pageItems, currentPage, totalPages, currentView); // unified grid paginated
-  }
-
-  // Initial render
-  updatePage();
-
-  // View toggle
-  document.getElementById("grid-view").addEventListener("click", () => {
-    currentView = 'grid';
-    document.getElementById("grid-view").classList.add("active");
-    document.getElementById("list-view").classList.remove("active");
-    updatePage();
-  });
-
-  document.getElementById("list-view").addEventListener("click", () => {
-    currentView = 'list';
-    document.getElementById("list-view").classList.add("active");
-    document.getElementById("grid-view").classList.remove("active");
-    updatePage();
-  });
-
-  // Filter sidebar toggle
-  document.getElementById("filter-toggle").addEventListener("click", () => {
-    document.getElementById("guns-sidebar").classList.toggle("open");
-  });
-
-  document.getElementById("sidebar-close").addEventListener("click", () => {
-    document.getElementById("guns-sidebar").classList.remove("open");
-  });
-
-  // Clear filters
-  document.getElementById("clear-filters").addEventListener("click", () => {
-    document.querySelectorAll("#guns-sidebar input[type='checkbox']").forEach(cb => {
-      cb.checked = false;
-    });
-    currentPage = 1;
-    updatePage();
-  });
-
-  // Filter checkboxes
-  document.addEventListener("change", (e) => {
-    if (e.target.matches("#guns-sidebar input[type='checkbox']")) {
-      currentPage = 1;
-      updatePage();
-    }
-  });
-
-  // Sorting
-  document.getElementById("sort-by").addEventListener("change", () => {
-    currentPage = 1;
-    updatePage();
-  });
-
-  // Pagination
-  const prevBtn = document.querySelector('.prev-btn');
-  const nextBtn = document.querySelector('.next-btn');
-
-  prevBtn.addEventListener("click", () => {
-    if (currentPage > 1) {
-      currentPage -= 1;
-      updatePage();
-    }
-  });
-
-  nextBtn.addEventListener("click", () => {
-    currentPage += 1;
-    updatePage();
-  });
-});
-
-// ======================================================
-// ADD TO CART FUNCTION
-// ======================================================
-function addToCart(productId) {
-  alert(`Added ${productId} to cart! (Demo - not functional yet)`);
-}
+// Removed: all initialization is now handled by universal-product-loader.js

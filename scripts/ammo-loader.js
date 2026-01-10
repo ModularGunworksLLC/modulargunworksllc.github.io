@@ -1,16 +1,12 @@
-// ======================================================
-// CONFIG
-// ======================================================
-const PAGE_SIZE = 24; // industry-standard default for grid pages
+// Initialize the universal product loader for ammunition category
+let productLoader;
 
-// ======================================================
-// LOAD JSON
-// ======================================================
-async function loadAmmo() {
-  const response = await fetch("../Data/ammo-data.json");
-  const data = await response.json();
-  return data;
-}
+document.addEventListener('DOMContentLoaded', function() {
+  productLoader = new ProductLoader({
+    category: 'ammunition',
+    pageSize: 24
+  });
+});
 
 // ======================================================
 // BUILD LOADING SKELETON
@@ -85,8 +81,8 @@ function buildCard(item) {
   const stockLabel = inStock ? "In Stock" : "Out of Stock";
 
   // Add sample rating (in real app, this would come from data)
-  const rating = item.rating || Math.floor(Math.random() * 2) + 4; // 4-5 stars randomly
-  const reviewCount = item.reviews || Math.floor(Math.random() * 50) + 10;
+  const rating = item.rating;
+  const reviewCount = item.reviews;
 
   const stars = '★'.repeat(rating) + '☆'.repeat(5 - rating);
 
@@ -350,5 +346,5 @@ loadAmmo().then(data => {
 // ======================================================
 function addToCart(productId) {
   // Simple cart simulation - in real app, this would integrate with backend
-  alert(`Added ${productId} to cart! (Demo - not functional yet)`);
+
 }

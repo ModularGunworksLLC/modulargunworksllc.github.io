@@ -1,0 +1,73 @@
+[
+	{
+		"sku": "CVNC2907-36",
+		"name": "VISM by NcSTAR GUN CASE (36\"L X 13\"H)/GREEN",
+		"category": "Gun Cases",
+		"price": 26.99,
+		"image": "images/NcStar Images/CVNC2907-36.jpg"
+	},
+	{
+		"sku": "CVNC2907-42",
+		"name": "VISM by NcSTAR GUN CASE (42\"L X 13\"H)/GREEN",
+		"category": "Gun Cases",
+		"price": 30.99,
+		"image": "images/NcStar Images/CVNC2907-42.jpg"
+	},
+	{
+		"sku": "CVND2907-36",
+		"name": "VISM by NcSTAR GUN CASE (36\"L X 13\"H)/GREEN",
+		"category": "Gun Cases",
+		"price": 26.99,
+		"image": "images/NcStar Images/CVND2907-36.jpg"
+	},
+	{
+		"sku": "CVND2907-42",
+		"name": "VISM by NcSTAR GUN CASE (42\"L X 13\"H)/GREEN",
+		"category": "Gun Cases",
+		"price": 30.99,
+		"image": "images/NcStar Images/CVND2907-42.jpg"
+	},
+	{
+		"sku": "CVPK2907-36",
+		"name": "VISM by NcSTAR GUN CASE (36\"L X 13\"H) /BLACK W/PINK TRIM",
+		"category": "Gun Cases",
+		"price": 26.99,
+		"image": "images/NcStar Images/CVPK2907-36.jpg"
+	},
+	{
+		"sku": "CVT2906-36",
+		"name": "VISM by NcSTAR GUN CASE (36\"L X 9\"H) /TAN",
+		"category": "Gun Cases",
+		"price": 23.99,
+		"image": "images/NcStar Images/CVT2906-36.jpg"
+	},
+	{
+		"sku": "CVT2906-38",
+		"name": "VISM by NcSTAR GUN CASE (38\"L X 9\"H) /TAN",
+		"category": "Gun Cases",
+		"price": 23.99,
+		"image": "images/NcStar Images/CVT2906-38.jpg"
+	},
+	{
+		"sku": "CVT2906-40",
+		"name": "VISM by NcSTAR GUN CASE (40\"L X 9\"H) /TAN",
+		"category": "Gun Cases",
+		"price": 26.99,
+		"image": "images/NcStar Images/CVT2906-40.jpg"
+	},
+	{
+		"sku": "CVT2906-42",
+		"name": "VISM by NcSTAR GUN CASE (42\"L X 9\"H) /TAN",
+		"category": "Gun Cases",
+		"price": 26.99,
+		"image": "images/NcStar Images/CVT2906-42.jpg"
+	},
+	{
+		"sku": "CVT2907-36",
+		"name": "VISM by NcSTAR GUN CASE (36\"L X 13\"H)/TAN",
+		"category": "Gun Cases",
+		"price": 26.99,
+		"image": "images/NcStar Images/CVT2907-36.jpg"
+	}
+	// ...more products parsed and matched...
+]

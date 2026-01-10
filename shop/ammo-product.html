@@ -2,151 +2,164 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Ammo Detail | Modular Gunworks LLC</title>
-  <link rel="stylesheet" href="/style.css">
+  <title>Product Details | Modular Gunworks LLC</title>
+  <meta name="description" content="View detailed product information, images, specs, and reviews. Shop with confidence at Modular Gunworks LLC.">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../styles/design-system.css">
+  <link rel="stylesheet" href="../styles/components.css">
+  <link rel="stylesheet" href="../styles/layout.css">
+  <link rel="stylesheet" href="../styles/product-card.css">
   <link rel="icon" type="image/png" href="../favicon.png">
 </head>
-
 <body>
 
-  <header class="site-header">
-    <div class="header-left">
-      <img src="../images/modular-gunworks-llc.png" alt="Modular Gunworks LLC Logo" class="logo site-logo">
+  <!-- TOP HEADER BAR -->
+  <header id="site-header" style="background:linear-gradient(90deg, rgba(24,26,27,0.45) 0%, rgba(24,26,27,0.18) 100%), url('../images/header-flag.png') center 35%/cover no-repeat; background-attachment:fixed; filter:brightness(1.25) contrast(1.15) saturate(1.2); position:sticky; top:0; z-index:100; box-shadow:0 4px 12px rgba(0,0,0,0.15);">
+    
+    <!-- Company Name (Top) -->
+    <div style="padding:0.6rem 2rem 0.5rem 2rem; text-align:center; position:relative; z-index:1;">
+      <h1 style="font-size:2.2rem !important; color:#fff !important; margin:0 !important; font-weight:800 !important; letter-spacing:4px !important; text-shadow:0 2px 8px rgba(0,0,0,0.5) !important;">MODULAR GUNWORKS LLC</h1>
     </div>
 
-    <div class="header-center">
-      <form class="search-form" action="/search">
-        <input type="text" class="search-bar" name="q" placeholder="Search ammo, gear, or answers...">
-        <button type="submit" class="search-button">
-          <img src="../images/search-icon.svg" alt="Search">
-        </button>
+    <!-- Headline & Subtext (Below) -->
+    <div style="padding:0.7rem 2rem 0.7rem 2rem; text-align:center; position:relative; z-index:1;">
+      <h2 style="font-size:1.25rem !important; color:#fff !important; margin:0 0 0.5rem 0 !important; font-weight:600 !important; text-shadow:0 2px 8px rgba(0,0,0,0.5) !important; letter-spacing:0.5px !important;">HUNTSVILLE'S TRUSTED GUN SHOP</h2>
+      <p style="font-size:0.95rem !important; color:#e0e0e0 !important; margin:0 !important; text-shadow:0 1px 4px rgba(0,0,0,0.4) !important; letter-spacing:0.5px !important;">Wide Selection • Competitive Prices • Expert Service</p>
+    </div>
+
+    <!-- Navigation Row (Logo | Search | Account) -->
+    <nav class="header-nav" style="display:flex !important; flex-direction:row !important; align-items:center !important; justify-content:center !important; padding:1rem 2rem !important; gap:2rem !important; position:relative !important;">
+      
+      <!-- Logo -->
+      <div style="flex-shrink:0 !important; position:absolute !important; left:2rem !important; z-index:1 !important;">
+        <a href="../index.html" style="display:flex !important; align-items:center !important; text-decoration:none !important;">
+          <img src="../images/modular-gunworks-llc.png" alt="Modular Gunworks LLC Logo" style="height:60px !important; width:auto !important; background:transparent !important; border-radius:6px !important; padding:2px !important; box-shadow:0 2px 8px rgba(0,0,0,0.15) !important; cursor:pointer !important;">
+        </a>
+      </div>
+
+      <!-- Search Bar -->
+      <form class="search-bar" style="flex:0 1 auto !important; max-width:350px !important; display:flex !important; position:relative !important; z-index:1 !important;">
+        <input type="text" placeholder="Search ammo, gear, or answers..." style="flex:1 !important; padding:0.7rem 1rem !important; border-radius:4px 0 0 4px !important; font-size:0.9rem !important; border:none !important;">
+        <button type="submit" class="button" style="border-radius:0 4px 4px 0 !important; background:#c00 !important; color:#fff !important; border:none !important; padding:0.7rem 1.5rem !important; font-weight:600 !important; cursor:pointer !important; white-space:nowrap !important;">Search</button>
       </form>
-    </div>
 
-    <div class="header-right">
-      <a href="#">Account Login</a>
-      <a href="#">Help Center</a>
-      <a href="#">View Cart</a>
+      <!-- Account Links -->
+      <div style="display:flex !important; gap:2rem !important; align-items:center !important; position:absolute !important; right:2rem !important; z-index:1 !important; flex-shrink:0 !important;">
+        <a href="#" style="color:#fff !important; text-decoration:none !important; font-weight:600 !important; font-size:0.95rem !important; text-shadow:0 1px 4px rgba(0,0,0,0.3) !important;">Account</a>
+        <a href="#" style="color:#fff !important; text-decoration:none !important; font-weight:600 !important; font-size:0.95rem !important; text-shadow:0 1px 4px rgba(0,0,0,0.3) !important;">Help</a>
+        <a href="cart.html" style="color:#fff !important; text-decoration:none !important; font-weight:600 !important; font-size:0.95rem !important; text-shadow:0 1px 4px rgba(0,0,0,0.3) !important;">Cart</a>
+      </div>
+    </nav>
+
+    <!-- Main Categories Nav -->
+    <nav class="main-categories" style="background:var(--color-accent); padding:0.5rem 2rem; box-shadow:0 2px 8px rgba(0,0,0,0.04);">
+      <div class="flex" style="gap:2.5rem; justify-content:center;">
+        <a href="ammunition.html" class="main-cat-link">Ammunition</a>
+        <a href="magazines.html" class="main-cat-link">Magazines</a>
+        <a href="gun-parts.html" class="main-cat-link">Gun Parts</a>
+        <a href="gear.html" class="main-cat-link">Gear</a>
+        <a href="optics.html" class="main-cat-link">Optics & Sights</a>
+        <a href="reloading.html" class="main-cat-link">Reloading</a>
+        <a href="survival.html" class="main-cat-link">Prep & Survival</a>
+        <a href="brands.html" class="main-cat-link">Brands</a>
+        <a href="sale.html" class="main-cat-link">ON SALE</a>
+      </div>
+    </nav>
+
+    <!-- Promo Banner -->
+    <div style="background:linear-gradient(90deg, var(--color-primary) 0%, var(--color-accent) 100%); color:#fff; text-align:center; font-size:1.15rem; font-weight:600; padding:0.75rem 0; letter-spacing:1px;">
+      <span>Veteran-Owned • Free Shipping on Firearms • FFL Transfers - $25-$50</span>
     </div>
   </header>
 
-  <nav class="category-nav">
-    <a href="ammunition.html" class="active-category">Ammunition</a>
-    <a href="guns.html">Guns</a>
-    <a href="magazines.html">Magazines</a>
-    <a href="gun-parts.html">Gun Parts</a>
-    <a href="gear.html">Gear</a>
-    <a href="optics.html">Optics & Sights</a>
-    <a href="reloading.html">Reloading</a>
-    <a href="survival.html">Prep & Survival</a>
-    <a href="brands.html">Brands</a>
-    <a href="sale.html">ON SALE</a>
-  </nav>
-
-  <main class="ammo-product-layout">
-    <section class="ammo-product-main">
-      <div class="ammo-product-gallery">
-        <img src="../images/ammo/9mm-generic.jpg" alt="9mm 115gr FMJ - 50 Rounds">
-      </div>
-
-      <div class="ammo-product-info">
-        <h1>9mm 115gr FMJ — 50 Rounds</h1>
-        <p class="ammo-product-brand">Federal • Stocked via RSR Group</p>
-
-        <div class="ammo-product-price-block">
-          <span class="ammo-product-price">$17.99</span>
-          <span class="ammo-product-price-sub">$0.36 / round</span>
+  <main>
+        <h1 id="product-title">Product Name</h1>
+        <div class="product-brand" id="product-brand">Brand</div>
+        <div class="product-price-block">
+          <span class="product-price" id="product-price">$0.00</span>
         </div>
-
-        <ul class="ammo-product-key-specs">
-          <li><strong>Caliber:</strong> 9mm Luger</li>
-          <li><strong>Grain Weight:</strong> 115 gr</li>
-          <li><strong>Bullet Type:</strong> FMJ</li>
-          <li><strong>Rounds per Box:</strong> 50</li>
-          <li><strong>Case Material:</strong> Brass</li>
-        </ul>
-
-        <div class="ammo-product-actions">
-          <button class="ammo-add-to-cart">Add to Cart</button>
-          <p class="ammo-product-stock in-stock">In Stock • Ships from RSR distribution</p>
+        <div class="product-actions">
+          <button id="add-to-cart">Add to Cart</button>
+          <button id="buy-now">Buy Now</button>
         </div>
-
-        <div class="ammo-product-meta">
-          <p><strong>RSR SKU:</strong> RSR-PLACEHOLDER</p>
-          <p><strong>UPC:</strong> 000000000000</p>
-          <p><strong>Manufacturer Part #:</strong> MPN-PLACEHOLDER</p>
+        <div class="product-stock" id="product-stock">In Stock</div>
+        <div class="product-sharing">
+          <span>Share:</span>
+          <a href="#" id="share-facebook" aria-label="Share on Facebook">FB</a>
+          <a href="#" id="share-twitter" aria-label="Share on Twitter">TW</a>
+          <a href="#" id="share-email" aria-label="Share by Email">Email</a>
         </div>
       </div>
     </section>
-
-    <section class="ammo-product-details">
-      <h2>Description</h2>
-      <p>
-        This is placeholder copy for your ammunition description. Once your RSR feed is integrated,
-        this section will pull in the manufacturer description and any Modular Gunworks‑specific notes
-        you want to add for customers.
-      </p>
-
-      <h2>Specifications</h2>
-      <table class="ammo-spec-table">
-        <tbody>
-          <tr><th>Caliber</th><td>9mm Luger</td></tr>
-          <tr><th>Grain Weight</th><td>115 gr</td></tr>
-          <tr><th>Bullet Type</th><td>FMJ</td></tr>
-          <tr><th>Case Material</th><td>Brass</td></tr>
-          <tr><th>Muzzle Velocity</th><td>~1180 fps</td></tr>
-          <tr><th>Muzzle Energy</th><td>~356 ft‑lbs</td></tr>
-          <tr><th>Rounds per Box</th><td>50</td></tr>
-          <tr><th>Boxes per Case</th><td>20</td></tr>
-        </tbody>
-      </table>
-    </section>
-
-    <section class="ammo-related">
-      <h2>Related Ammunition</h2>
-      <div class="ammo-grid">
-        <!-- Reuse ammo-card from ammunition.html -->
+    <section class="product-details-tabs">
+      <nav class="tabs-nav">
+        <button class="tab-btn active" data-tab="description">Description</button>
+        <button class="tab-btn" data-tab="specs">Specifications</button>
+        <button class="tab-btn" data-tab="reviews">Reviews</button>
+      </nav>
+      <div class="tab-content" id="tab-description">
+        <h2>Description</h2>
+        <div id="product-description">Product description will appear here.</div>
       </div>
+      <div class="tab-content" id="tab-specs" style="display:none;">
+        <h2>Specifications</h2>
+        <table class="product-spec-table" id="product-specs-table">
+          <!-- Specs will be loaded here -->
+        </table>
+      </div>
+      <div class="tab-content" id="tab-reviews" style="display:none;">
+        <h2>Customer Reviews</h2>
+        <div id="product-reviews">No reviews yet.</div>
+      </div>
+    </section>
+    <section class="related-products">
+      <h2>Related Products</h2>
+      <div class="product-grid" id="related-products-grid"></div>
     </section>
   </main>
-
   <footer class="site-footer">
-    <div class="footer-columns">
-      <div>
-        <h4>Company</h4>
-        <ul>
-          <li><a href="../about.html">About Modular Gunworks</a></li>
-          <li><a href="#">Careers</a></li>
-          <li><a href="#">Blog</a></li>
-          <li><a href="../contact.html">Contact Us</a></li>
+    <div class="footer-columns" style="display:flex; justify-content:center; gap:4rem; background:#181a1b; color:#fff; padding:2.5rem 1rem 1.5rem 1rem;">
+      <div style="min-width:160px;">
+        <h4 style="color:#fff; text-align:center;">Shop</h4>
+        <ul style="list-style:none; padding:0; text-align:center;">
+          <li><a href="ammunition.html" style="color:#fff; text-decoration:none;">Ammunition</a></li>
+          <li><a href="magazines.html" style="color:#fff; text-decoration:none;">Magazines</a></li>
+          <li><a href="gun-parts.html" style="color:#fff; text-decoration:none;">Gun Parts</a></li>
+          <li><a href="gear.html" style="color:#fff; text-decoration:none;">Gear</a></li>
+          <li><a href="optics.html" style="color:#fff; text-decoration:none;">Optics & Sights</a></li>
+          <li><a href="reloading.html" style="color:#fff; text-decoration:none;">Reloading</a></li>
+          <li><a href="survival.html" style="color:#fff; text-decoration:none;">Prep & Survival</a></li>
+          <li><a href="brands.html" style="color:#fff; text-decoration:none;">Brands</a></li>
+          <li><a href="sale.html" style="color:#fff; text-decoration:none;">ON SALE</a></li>
         </ul>
       </div>
-
-      <div>
-        <h4>Info</h4>
-        <ul>
-          <li><a href="#">FAQ</a></li>
-          <li><a href="#">FFL Transfers</a></li>
-          <li><a href="#">Order Status</a></li>
-          <li><a href="#">Shipping Info</a></li>
+      <div style="min-width:160px;">
+        <h4 style="color:#fff; text-align:center;">Company</h4>
+        <ul style="list-style:none; padding:0; text-align:center;">
+          <li><a href="../about.html" style="color:#fff; text-decoration:none;">About</a></li>
+          <li><a href="../contact.html" style="color:#fff; text-decoration:none;">Contact</a></li>
+          <li><a href="../faq.html" style="color:#fff; text-decoration:none;">FAQ</a></li>
+          <li><a href="../blog.html" style="color:#fff; text-decoration:none;">Blog</a></li>
         </ul>
       </div>
-
-      <div>
-        <h4>Legal</h4>
-        <ul>
-          <li><a href="#">Terms & Conditions</a></li>
-          <li><a href="#">Privacy Policy</a></li>
-          <li><a href="#">Return Policy</a></li>
+      <div style="min-width:160px;">
+        <h4 style="color:#fff; text-align:center;">Legal</h4>
+        <ul style="list-style:none; padding:0; text-align:center;">
+          <li><a href="../terms.html" style="color:#fff; text-decoration:none;">Terms & Conditions</a></li>
+          <li><a href="../privacy.html" style="color:#fff; text-decoration:none;">Privacy Policy</a></li>
+          <li><a href="../returns.html" style="color:#fff; text-decoration:none;">Return Policy</a></li>
+          <li><a href="../order-status.html" style="color:#fff; text-decoration:none;">Order Status</a></li>
+          <li><a href="../shipping.html" style="color:#fff; text-decoration:none;">Shipping Info</a></li>
         </ul>
       </div>
     </div>
-
-    <div class="footer-bottom">
-      <p>© 2025 Modular Gunworks LLC. All rights reserved.</p>
-      <p><a href="mailto:modulargunworks@gmail.com">modulargunworks@gmail.com</a></p>
+    <div style="text-align:center; color:#fff; background:#181a1b; padding:1rem 0 0.5rem 0; font-size:1rem;">
+      <p>All firearm sales comply with federal, state, and local laws. FFL required for applicable items. Not all products available in all states.</p>
+      <p>© 2026 Modular Gunworks LLC. All rights reserved. <a href="mailto:modulargunworks@gmail.com" style="color:#fff; text-decoration:underline;">modulargunworks@gmail.com</a></p>
     </div>
   </footer>
 
+  <script type="module" src="../scripts/product-details.js"></script>
+  <script src="../scripts/theme-toggle.js"></script>
 </body>
 </html>
