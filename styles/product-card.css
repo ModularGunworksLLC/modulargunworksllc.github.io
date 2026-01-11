@@ -1,6 +1,90 @@
 /* ============================================
-   AMMUNITION PAGE LAYOUT
+   COLLAPSIBLE FILTERS
    ============================================ */
+
+.filter-header {
+  width: 100%;
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.2s;
+}
+
+.filter-header:hover {
+  color: #c00;
+}
+
+.filter-header h3 {
+  margin: 0 0 0.75rem 0;
+  font-size: 0.95rem;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: #181a1b;
+  letter-spacing: 0.5px;
+}
+
+.filter-toggle {
+  display: inline-block;
+  transition: transform 0.3s ease;
+  font-size: 0.75rem;
+  color: #999;
+}
+
+.ammo-filter-group.collapsed .filter-toggle {
+  transform: rotate(-90deg);
+}
+
+.filter-content {
+  display: block !important;
+  animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+  }
+  to {
+    opacity: 1;
+    max-height: 500px;
+  }
+}
+
+/* ============================================
+   SEARCH IN FILTERS
+   ============================================ */
+
+.filter-search {
+  width: 100%;
+  padding: 0.6rem 0.75rem;
+  margin-bottom: 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  transition: border-color 0.2s;
+}
+
+.filter-search:focus {
+  outline: none;
+  border-color: #c00;
+  box-shadow: 0 0 0 2px rgba(192, 0, 0, 0.1);
+}
+
+.filter-search::placeholder {
+  color: #999;
+}
+
+/* Hide items that don't match search */
+.filter-list li.hidden {
+  display: none;
+}
+
+/* ============================================
 
 .ammo-layout,
 .optics-layout,

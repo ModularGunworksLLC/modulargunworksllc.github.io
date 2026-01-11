@@ -101,20 +101,28 @@ class ProductLoader {
 
   getActiveFilters() {
     const brands = Array.from(document.querySelectorAll('input[data-brand]:checked')).map(cb => cb.getAttribute('data-brand'));
+    const ammoTypes = Array.from(document.querySelectorAll('input[data-ammo-type]:checked')).map(cb => cb.getAttribute('data-ammo-type'));
     const types = Array.from(document.querySelectorAll('input[data-type]:checked')).map(cb => cb.getAttribute('data-type'));
     const prices = Array.from(document.querySelectorAll('input[data-price]:checked')).map(cb => cb.getAttribute('data-price'));
     const calibers = Array.from(document.querySelectorAll('input[data-caliber]:checked')).map(cb => cb.getAttribute('data-caliber'));
+    const rounds = Array.from(document.querySelectorAll('input[data-rounds]:checked')).map(cb => cb.getAttribute('data-rounds'));
     const mags = Array.from(document.querySelectorAll('input[data-magnification]:checked')).map(cb => cb.getAttribute('data-magnification'));
     const inStock = document.getElementById('filter-in-stock')?.checked;
     const keywords = Array.from(document.querySelectorAll('input[data-keyword]:checked')).map(cb => cb.getAttribute('data-keyword'));
     
-    return { brands, types, prices, calibers, mags, inStock, keywords };
+    return { brands, ammoTypes, types, prices, calibers, rounds, mags, inStock, keywords };
   }
 
   applyFilters() {
-    const { brands, types, prices, calibers, mags, inStock, keywords } = this.getActiveFilters();
+    const { brands, ammoTypes, types, prices, calibers, rounds, mags, inStock, keywords } = this.getActiveFilters();
     
     this.filteredProducts = this.allProducts.filter(item => {
+      // Ammunition type filter (for ammunition category)
+      if (ammoTypes.length) {
+        const itemType = item.category || item.type || '';
+        if (!ammoTypes.some(t => itemType.toLowerCase().includes(t.toLowerCase()))) return false;
+      }
+      
       // Brand filter
       if (brands.length && !brands.includes(item.brand || item.manufacturer)) return false;
       
@@ -123,6 +131,21 @@ class ProductLoader {
       
       // Caliber filter (match in name/category)
       if (calibers.length && !calibers.some(c => (item.name || '').toLowerCase().includes(c.toLowerCase()))) return false;
+      
+      // Rounds filter (match in data if available)
+      if (rounds.length) {
+        const itemRounds = item.rounds || 0;
+        let match = false;
+        for (const roundStr of rounds) {
+          const roundNum = parseInt(roundStr);
+          // Exact match or approximate (within 20% for variations)
+          if (itemRounds === roundNum || (itemRounds > roundNum * 0.8 && itemRounds < roundNum * 1.2)) {
+            match = true;
+            break;
+          }
+        }
+        if (!match) return false;
+      }
       
       // Magnification filter (match in name)
       if (mags.length && !mags.some(m => (item.name || '').toLowerCase().includes(m.toLowerCase()))) return false;
