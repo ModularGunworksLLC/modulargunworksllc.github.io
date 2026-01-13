@@ -1,0 +1,45 @@
+{
+  "category": "ammunition",
+  "lastUpdated": "2026-01-13T10:30:00Z",
+  "totalProducts": 2,
+  "products": [
+    {
+      "id": "CC9MM001",
+      "brand": "Federal",
+      "name": "Federal 9mm 115gr FMJ",
+      "description": "Full metal jacket rounds, perfect for target practice and training",
+      "price": 12.99,
+      "originalPrice": 14.99,
+      "retail_price": 14.99,
+      "inventory": 450,
+      "inStock": true,
+      "image": "../images/products/federal-9mm.jpg",
+      "specs": {
+        "caliber": "9mm",
+        "grains": "115",
+        "type": "FMJ",
+        "rounds": 50
+      },
+      "tags": ["9mm", "fmj", "target", "federal"]
+    },
+    {
+      "id": "CC45ACP001",
+      "brand": "Speer",
+      "name": "Speer 45 ACP 230gr",
+      "description": "Premium .45 ACP ammunition for self-defense",
+      "price": 18.50,
+      "originalPrice": 21.50,
+      "retail_price": 21.50,
+      "inventory": 0,
+      "inStock": false,
+      "image": "../images/products/speer-45.jpg",
+      "specs": {
+        "caliber": ".45 ACP",
+        "grains": "230",
+        "type": "JHP",
+        "rounds": 50
+      },
+      "tags": ["45acp", "jhp", "defense", "speer"]
+    }
+  ]
+}

@@ -1,0 +1,233 @@
+/* Modular Gunworks - Product Card Styles (RTB Inspired) */
+
+/* Product Grid Container */
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1.5rem;
+  margin: 2rem 0;
+}
+
+@media (max-width: 768px) {
+  .products-grid {
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .products-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+}
+
+/* Individual Product Card */
+.product-card {
+  background: var(--color-bg-light);
+  border: 1px solid #e0e0e0;
+  border-radius: var(--radius);
+  overflow: hidden;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.product-card:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px);
+}
+
+/* Product Image Container */
+.product-image {
+  width: 100%;
+  height: 200px;
+  background: var(--color-card);
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.product-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.product-card:hover .product-image img {
+  transform: scale(1.05);
+}
+
+/* Stock Badge */
+.stock-badge {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  padding: 4px 8px;
+  border-radius: 3px;
+  font-size: 0.75rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  z-index: 10;
+}
+
+.stock-badge.in-stock {
+  background: var(--color-success);
+  color: white;
+}
+
+.stock-badge.out-of-stock {
+  background: #ccc;
+  color: #666;
+}
+
+/* Product Info Container */
+.product-info {
+  padding: 1rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Brand Name */
+.product-brand {
+  font-size: 0.75rem;
+  color: #999;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 0.25rem;
+  font-weight: 600;
+}
+
+/* Product Name */
+.product-name {
+  font-family: var(--font-heading);
+  font-size: 0.95rem;
+  font-weight: bold;
+  color: var(--color-text);
+  margin-bottom: 0.75rem;
+  line-height: 1.3;
+  flex-grow: 1;
+}
+
+/* Price Container */
+.product-pricing {
+  margin-bottom: 1rem;
+}
+
+.price-current {
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: var(--color-primary);
+  margin-bottom: 0.25rem;
+}
+
+.price-original {
+  font-size: 0.85rem;
+  color: #999;
+  text-decoration: line-through;
+  margin-right: 0.5rem;
+}
+
+.price-savings {
+  font-size: 0.85rem;
+  color: var(--color-primary);
+  font-weight: bold;
+}
+
+/* Inventory Info */
+.inventory-info {
+  font-size: 0.85rem;
+  margin-bottom: 1rem;
+}
+
+.inventory-info.in-stock {
+  color: var(--color-success);
+}
+
+.inventory-info.out-of-stock {
+  color: #999;
+}
+
+/* Action Button */
+.product-button {
+  padding: 0.75rem 1rem;
+  border: none;
+  border-radius: var(--radius);
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 100%;
+}
+
+.product-button.add-to-cart {
+  background: var(--color-primary);
+  color: white;
+}
+
+.product-button.add-to-cart:hover {
+  background: #8b1a1a;
+}
+
+.product-button.add-to-cart:active {
+  transform: scale(0.98);
+}
+
+.product-button.notify {
+  background: #e0e0e0;
+  color: #666;
+  cursor: not-allowed;
+}
+
+.product-button.notify:hover {
+  background: #d0d0d0;
+}
+
+/* Empty State */
+.no-products {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 3rem;
+  color: #999;
+}
+
+.no-products h3 {
+  margin-bottom: 1rem;
+}
+
+/* Loading State */
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 300px;
+  font-size: 1.1rem;
+  color: #999;
+}
+
+.loading::after {
+  content: '';
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  margin-left: 10px;
+  border: 3px solid #e0e0e0;
+  border-top: 3px solid var(--color-primary);
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
