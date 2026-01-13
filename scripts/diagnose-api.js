@@ -84,6 +84,16 @@ async function testEndpoint(path, description) {
           } catch (e) {
             console.log(`Response: ${data.substring(0, 100)}`);
           }
+        } else if (res.statusCode === 401) {
+          console.log('❌ FAILED - 401 Unauthorized (Error 4001)');
+          console.log('   This means:');
+          console.log('   • SID or Token is incorrect');
+          console.log('   • API access not enabled on account');
+          console.log('   • Account lacks necessary permissions');
+          try {
+            const err = JSON.parse(data);
+            console.log(`   Error: ${err.message}`);
+          } catch (e) {}
         } else {
           console.log('❌ FAILED');
           try {

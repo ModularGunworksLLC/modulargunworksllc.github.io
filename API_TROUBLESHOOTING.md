@@ -15,6 +15,27 @@ MD5:    8d709ba0684934e3d7fc18a38d763fbd ✅
 
 The header generation is working perfectly. The issue is that the credentials themselves are being rejected.
 
+## Official Chattanooga Shooting API Error Codes
+
+| HTTP Code | Error Code | Error Message | Meaning |
+|-----------|-----------|----------------|---------|
+| **401** | **4001** | **Bad Authorization** | **Invalid authorization details - SID/Token wrong or API access not enabled** |
+| 403 | 4003 | Forbidden | Authenticated but lacking necessary permissions |
+| 500 | 5000 | Internal Server Error | Server error on Chattanooga's side |
+| 404 | 8000 | Record Not Found | The requested resource does not exist |
+| 422 | 9000 | Invalid Data | Submitted data is invalid |
+
+**What Error 4001 DOES mean:**
+- SID or Token is incorrect
+- API access not enabled on your account
+- Account lacks required permissions for this action
+
+**What Error 4001 DOES NOT mean:**
+- Your MD5 hashing is wrong (we verified it's correct)
+- Your Base64 encoding is wrong (we verified it's correct)
+- Your header format is wrong (we verified it matches Chattanooga's spec)
+- Your HTTPS connection is wrong (connection is successful, just rejecting auth)
+
 ## Troubleshooting Steps
 
 ### Step 1: Verify Credentials in Dashboard ⚠️ CRITICAL
@@ -101,14 +122,42 @@ Ask them to:
 
 ---
 
-## Error Code Reference
+## Official Chattanooga Error Codes
 
-| Code | Meaning | Solution |
-|------|---------|----------|
-| 4001 | Invalid authorization details | Verify SID/Token, check IP whitelist, contact support |
-| 4002 | Missing authorization header | Verify header is being sent |
-| 4003 | Invalid API version | Check /rest/v5/ vs /rest/v4/ |
-| 4004 | Rate limit exceeded | Wait before next request |
+### Authentication Errors (We're Getting 4001)
+
+| Code | HTTP Status | Short Name | Message | Solution |
+|------|-------------|-----------|---------|----------|
+| **4001** | **401** | **Bad Authorization** | **Invalid authorization details provided.** | Verify SID/Token are correct, enable API access, check IP whitelist |
+| 4003 | 403 | Forbidden | Permission denied. | Contact Chattanooga support to enable API access |
+| 5000 | 500 | Internal Server Error | There was an internal server error. | Try again later, contact support if persists |
+
+### Data/Validation Errors
+
+| Code | HTTP Status | Short Name | Message | Solution |
+|------|-------------|-----------|---------|----------|
+| 8000 | 404 | Record Not Found | The record specified could not be found. | Verify item ID is correct |
+| 9000 | 422 | Invalid Data | Data validation failed. | Check request data format |
+| 60001 | 404 | No Records Found | There were no items found. Try modifying your filters. | Adjust API parameters |
+
+---
+
+## Why We're Getting 4001
+
+**Error 4001 = "Invalid authorization details provided"**
+
+This means the API server received your request but rejected it because:
+
+1. ❌ **SID is incorrect** - Not the real SID from your account
+2. ❌ **Token is incorrect** - Not the real Token from your account  
+3. ❌ **API access not enabled** - Account exists but API not activated
+4. ❌ **Account permissions** - Account needs special permission
+5. ⚠️ **IP whitelist** - (Less likely, but possible) Your IP is blocked
+
+**It does NOT mean:**
+- ✅ Authentication format is wrong (we've verified it's correct)
+- ✅ MD5 hashing is wrong (verified working)
+- ✅ Base64 encoding is wrong (verified working)
 
 ---
 
