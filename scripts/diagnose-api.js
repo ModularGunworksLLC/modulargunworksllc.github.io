@@ -8,8 +8,8 @@
 const https = require('https');
 const crypto = require('crypto');
 
-const SID = '2C50AEB30FFDCC9078F0C8F3172C8111';
-const TOKEN = '2C50AEB4AFBC56113AC9CA1C78A875C2';
+const SID = '3E5B1B51AB84E327E32E0CE4478B84AD';
+const TOKEN = '3E5B1B52C8F5F75446E38A1BBA9706B3';
 
 console.log('🔍 Chattanooga API Authentication Diagnostic\n');
 console.log('=' .repeat(60));
