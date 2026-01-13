@@ -2,49 +2,51 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Contact Us | Modular Gunworks LLC</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="icon" type="image/png" href="favicon.png">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Us - Modular Gunworks LLC</title>
+  <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="stylesheet" href="styles/design-system.css">
+  <link rel="stylesheet" href="styles/components.css">
+  <link rel="stylesheet" href="styles/layout.css">
+  <link rel="stylesheet" href="styles/age-gate.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    main { max-width: 900px; margin: 0 auto; padding: 3rem 2rem; }
+    .page-title { font-size: 2.5rem; color: #181a1b; margin-bottom: 2rem; text-align: center; }
+    .contact-form { background: #f9f9f9; padding: 2rem; border-radius: 8px; }
+    .form-group { margin-bottom: 1.5rem; }
+    .form-group label { display: block; margin-bottom: 0.5rem; font-weight: 600; color: #181a1b; }
+    .form-group input, .form-group textarea { width: 100%; padding: 0.8rem; border: 1px solid #ddd; border-radius: 4px; font-size: 1rem; }
+    .form-group textarea { resize: vertical; min-height: 150px; }
+    .form-btn { background: #b22222; color: #fff; padding: 0.8rem 2rem; border: none; border-radius: 4px; cursor: pointer; font-weight: 600; font-size: 1rem; }
+    .form-btn:hover { background: #8b1a1a; }
+  </style>
 </head>
-
 <body>
-
-  <!-- TOP HEADER BAR (LOGO + SEARCH + ACCOUNT LINKS) -->
+  <!-- HEADER -->
   <header class="site-header">
-    <div class="header-left">
-      <a href="index.html" title="Return to Homepage">
-        <img src="images/modular-gunworks-llc.png" alt="Modular Gunworks LLC Logo" class="logo" id="site-logo">
-      </a>
-    </div>
-
-    <div class="header-center">
-      <form class="search-form" action="/search">
-        <input type="text" class="search-bar" name="q" placeholder="Search ammo, gear, or answers...">
-        <button type="submit" class="search-button">
-          <img src="images/search-icon.svg" alt="Search">
-        </button>
-      </form>
-    </div>
-
-    <div class="header-right">
-      <a href="#">Account Login</a>
-      <a href="#">Help Center</a>
-      <a href="#">View Cart</a>
-
-      <button id="theme-toggle" class="theme-toggle-icon" aria-label="Toggle Theme">
-        <span id="theme-icon">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
-               stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-          </svg>
-        </span>
-      </button>
+    <div class="header-container">
+      <div class="header-left">
+        <a href="index.html" class="logo-link">
+          <img src="images/modular-gunworks-llc.png" alt="Modular Gunworks LLC Logo" class="logo">
+        </a>
+      </div>
+      <div class="header-center">
+        <form class="search-form" action="#search">
+          <input type="text" class="search-input" placeholder="Search...">
+          <button type="submit" class="search-btn">Search</button>
+        </form>
+      </div>
+      <div class="header-right">
+        <a href="#account" class="header-link">Account</a>
+        <a href="#help" class="header-link">Help</a>
+        <a href="#cart" class="header-link">Cart</a>
+      </div>
     </div>
   </header>
 
-  <!-- CATEGORY NAVIGATION -->
-  <nav class="category-nav">
+  <!-- NAVIGATION -->
+  <nav class="main-nav">
     <a href="shop/ammunition.html">Ammunition</a>
     <a href="shop/guns.html">Guns</a>
     <a href="shop/magazines.html">Magazines</a>
@@ -53,34 +55,85 @@
     <a href="shop/optics.html">Optics & Sights</a>
     <a href="shop/reloading.html">Reloading</a>
     <a href="shop/survival.html">Prep & Survival</a>
-    <a href="shop/brands.html">Brands</a>
-    <a href="shop/sale.html">ON SALE</a>
+    <a href="gunsmithing.html">Gunsmithing</a>
+    <a href="ffl-transfers.html">FFL Transfers</a>
   </nav>
 
-  <!-- HERO HEADER -->
-  <div class="hero-header">
-    <div class="hero-home-title">Contact Us</div>
+  <!-- PAGE HERO -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Contact Us</h1>
+      <p>Get in touch with Modular Gunworks LLC</p>
+    </div>
+  </section>
+
+  <!-- CONTENT -->
+  <div style="max-width: 1000px; margin: 40px auto; padding: 0 20px;">
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-bottom: 40px;">
+      <div>
+        <h2 style="color: var(--primary-color); margin-bottom: 20px;">Get In Touch</h2>
+        <p style="margin-bottom: 20px;">Have questions? We'd love to hear from you. Send us a message and we'll respond as soon as possible.</p>
+        
+        <div style="margin-bottom: 30px;">
+          <h4 style="color: var(--dark-text); margin-bottom: 10px;">Address</h4>
+          <p style="color: var(--light-text);">Huntsville, Alabama</p>
+        </div>
+
+        <div style="margin-bottom: 30px;">
+          <h4 style="color: var(--dark-text); margin-bottom: 10px;">Email</h4>
+          <p style="color: var(--light-text);"><a href="mailto:info@modulargunworks.com" style="color: var(--primary-color);">info@modulargunworks.com</a></p>
+        </div>
+
+        <div>
+          <h4 style="color: var(--dark-text); margin-bottom: 10px;">Hours</h4>
+          <p style="color: var(--light-text);">Monday - Friday: 9am - 6pm</p>
+          <p style="color: var(--light-text);">Saturday: 10am - 4pm</p>
+          <p style="color: var(--light-text);">Sunday: Closed</p>
+        </div>
+      </div>
+
+      <div>
+        <h2 style="color: var(--primary-color); margin-bottom: 20px;">Send us a Message</h2>
+        <form style="display: flex; flex-direction: column; gap: 15px;">
+          <input type="text" placeholder="Your Name" style="padding: 10px; border: 1px solid var(--border-color); border-radius: 4px;">
+          <input type="email" placeholder="Your Email" style="padding: 10px; border: 1px solid var(--border-color); border-radius: 4px;">
+          <input type="text" placeholder="Subject" style="padding: 10px; border: 1px solid var(--border-color); border-radius: 4px;">
+          <textarea placeholder="Message" rows="5" style="padding: 10px; border: 1px solid var(--border-color); border-radius: 4px; font-family: Arial, sans-serif;"></textarea>
+          <button type="submit" class="cta-btn" style="align-self: flex-start;">Send Message</button>
+        </form>
+      </div>
+    </div>
   </div>
 
-  <!-- MAIN CONTENT -->
-  <main class="contact-content">
-    <section class="contact-section">
-      <h1>Get in Touch</h1>
-      <p>We'd love to hear from you. Please use the button below to send us a message through our secure contact form.</p>
-
-      <a href="https://docs.google.com/forms/d/e/1FAIpQLSelwNZfvAtB8rgseZgOgomLgP_fXYG50XDPwpjFhEUBuWcMZQ/viewform?usp=publish-editor" target="_blank" class="google-form-button">Contact Us via Google Form</a>
-
-      <div class="contact-info">
-        <h2>Other Ways to Reach Us</h2>
-        <p><strong>Email:</strong> modulargunworks@gmail.com</p>
-        <p><strong>Phone:</strong> (256) 384-3852</p>
-        <p><strong>Address:</strong> Huntsville, Alabama</p>
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="footer-content">
+      <div class="footer-section">
+        <h4>About Us</h4>
+        <p>Modular Gunworks LLC - Your trusted source for quality firearms and tactical gear.</p>
       </div>
-    </section>
-  </main>
-
-  <!-- SCRIPTS -->
-  <script src="scripts/theme-toggle.js"></script>
-
+      <div class="footer-section">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="about.html">About</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="faq.html">FAQ</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="terms.html">Terms of Service</a></li>
+          <li><a href="privacy.html">Privacy Policy</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 Modular Gunworks LLC. All rights reserved.</p>
+    </div>
+  <!-- Age Gate Script -->
+  <script src="scripts/age-gate.js"></script>
+  <!-- Layout Loader -->
+  <script src="scripts/load-layout.js"></script>
 </body>
 </html>

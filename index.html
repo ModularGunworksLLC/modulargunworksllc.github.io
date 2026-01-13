@@ -1,315 +1,698 @@
 <!DOCTYPE html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Modular Gunworks LLC</title>
-  <link rel="stylesheet" href="style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Modular Gunworks LLC - Huntsville, AL's premier gun shop. 81,000+ products, competitive prices, professional service.">
+  <meta name="keywords" content="gun shop Huntsville AL, ammunition, firearms, optics, tactical gear, local dealer">
+  <meta name="author" content="Modular Gunworks LLC">
+  <meta name="theme-color" content="#181a1b">
+  
+  <title>Modular Gunworks LLC - Professional Gun Shop in Huntsville, AL</title>
+  
+  <!-- Modular CSS -->
+  <link rel="stylesheet" href="styles/design-system.css">
+  <link rel="stylesheet" href="styles/components.css">
+  <link rel="stylesheet" href="styles/layout.css">
+  <link rel="stylesheet" href="styles/age-gate.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="icon" type="image/png" href="favicon.png">
+  
+  <!-- Professional Header & Page Styles -->
+  <style>
+    :root {
+      --color-primary: #b22222;
+      --color-accent: #1a2c4b;
+      --color-bg-dark: #181a1b;
+      --color-text: #333;
+      --color-light: #f5f5f5;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+      background-color: #fff;
+    }
+
+    /* HEADER STYLES */
+    #site-header {
+      background: linear-gradient(135deg, rgba(24,26,27,0.15) 0%, rgba(24,26,27,0.05) 100%), 
+                  url('images/Header-flagV2.png') center top/cover no-repeat;
+      background-attachment: fixed;
+      color: #fff;
+      padding: 2rem 0 0 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      max-height: 450px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+
+    .header-top-row {
+      text-align: center;
+      padding: 1.5rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .header-top-row h1 {
+      font-size: 2rem;
+      font-weight: 900;
+      letter-spacing: 2px;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+      margin: 0;
+      color: #fff;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      flex: 1;
+    }
+
+    .header-logo {
+      position: absolute;
+      right: 2rem;
+      margin: 0;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      text-decoration: none;
+      gap: 0.3rem;
+    }
+
+    .header-logo:hover {
+      transform: scale(1.08);
+    }
+
+    .logo-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      color: #fff;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+    }
+
+    .header-logo img {
+      height: 90px;
+      width: auto;
+      background: rgba(255,255,255,0.98);
+      padding: 6px;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+      border: none;
+    }
+
+    .header-middle-row {
+      padding: 1.5rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 2rem;
+      position: relative;
+    }
+
+    .header-left-links {
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+      position: absolute;
+      right: 2rem;
+    }
+
+    .header-left-links a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: color 0.3s;
+      text-shadow: 0 1px 4px rgba(0,0,0,0.3);
+    }
+
+    .header-left-links a:hover {
+      color: #ffeb3b;
+    }
+
+    .search-bar {
+      display: flex;
+      gap: 0;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .search-bar input {
+      flex: 1;
+      padding: 0.8rem 1.2rem;
+      border: none;
+      font-size: 0.95rem;
+    }
+
+    .search-bar button {
+      padding: 0.8rem 1.5rem;
+      background: var(--color-primary);
+      color: #fff;
+      border: none;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .header-links {
+      display: flex;
+      gap: 1.5rem;
+      align-items: center;
+    }
+
+    .header-links a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: color 0.3s;
+      text-shadow: 0 1px 4px rgba(0,0,0,0.3);
+    }
+
+    .header-links a:hover {
+      color: #ffeb3b;
+    }
+
+    /* CATEGORY NAV */
+    .category-nav {
+      background: var(--color-accent);
+      display: flex;
+      justify-content: center;
+      gap: 2.5rem;
+      padding: 0.8rem 2rem;
+      flex-wrap: wrap;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+    .category-nav a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: color 0.3s;
+      white-space: nowrap;
+    }
+
+    .category-nav a:hover {
+      color: var(--color-primary);
+    }
+
+    /* PROMO BAR */
+    .promo-bar {
+      background: linear-gradient(90deg, var(--color-primary) 0%, var(--color-accent) 100%);
+      color: #fff;
+      text-align: center;
+      padding: 0.8rem 2rem;
+      font-weight: 600;
+      font-size: 1rem;
+      letter-spacing: 1px;
+    }
+
+    /* MAIN CONTENT */
+    main {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 3rem 2rem;
+    }
+
+    /* CAROUSEL SECTION */
+    .carousel-section {
+      margin-bottom: 4rem;
+    }
+
+    .section-title {
+      font-size: 2.2rem;
+      color: var(--color-bg-dark);
+      margin-bottom: 2rem;
+      text-align: center;
+      font-weight: 700;
+    }
+
+    .carousel-container {
+      position: relative;
+      background: #fff;
+      border-radius: 8px;
+      padding: 2rem;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+      border-bottom: none;
+    }
+
+    .carousel {
+      display: flex;
+      gap: 1.5rem;
+      overflow-x: auto;
+      scroll-behavior: smooth;
+      padding: 1rem 0;
+      scroll-snap-type: x mandatory;
+    }
+
+    .carousel-item {
+      flex: 0 0 calc(25% - 1.125rem);
+      min-width: 200px;
+      scroll-snap-align: start;
+    }
+
+    .category-card {
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      padding: 1.5rem;
+      text-align: center;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      min-height: 280px;
+    }
+
+    .category-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      border-color: #999;
+    }
+
+    .category-card img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 6px;
+    }
+
+    .category-card h3 {
+      font-size: 1.3rem;
+      color: var(--color-bg-dark);
+      margin: 0;
+    }
+
+    .category-card p {
+      color: #666;
+      font-size: 0.95rem;
+      margin: 0;
+    }
+
+    .carousel-controls {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .carousel-btn {
+      width: 44px;
+      height: 44px;
+      border: 1px solid #ddd;
+      background: #f5f5f5;
+      color: #333;
+      font-size: 1.2rem;
+      cursor: pointer;
+      border-radius: 4px;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .carousel-btn:hover {
+      background: #e0e0e0;
+      border-color: #999;
+    }
+
+    /* SERVICES SECTIONS */
+    .services-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2rem;
+      margin-bottom: 3rem;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .service-card {
+      background: #fafafa;
+      border-left: 3px solid #999;
+      padding: 2rem;
+      border-radius: 4px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+
+    .service-card h2 {
+      font-size: 1.8rem;
+      color: var(--color-bg-dark);
+      margin-bottom: 1rem;
+      font-weight: 600;
+    }
+
+    .service-card h2 i {
+      margin-right: 0.5rem;
+      color: #666;
+    }
+
+    .service-card p {
+      color: #666;
+      font-size: 1rem;
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+    }
+
+    .coming-soon-badge {
+      display: inline-block;
+      background: var(--color-primary);
+      color: #fff;
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* FOOTER */
+    footer {
+      background: var(--color-bg-dark);
+      color: #fff;
+      padding: 3rem 2rem 1rem;
+      margin-top: 4rem;
+      border-top: 4px solid var(--color-primary);
+    }
+
+    .footer-content {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .footer-section h3 {
+      font-size: 1.1rem;
+      margin-bottom: 1rem;
+      color: var(--color-primary);
+    }
+
+    .footer-section ul {
+      list-style: none;
+    }
+
+    .footer-section a {
+      color: #ccc;
+      text-decoration: none;
+      font-size: 0.9rem;
+      line-height: 1.8;
+      transition: color 0.3s;
+    }
+
+    .footer-section a:hover {
+      color: var(--color-primary);
+    }
+
+    .footer-bottom {
+      text-align: center;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      padding-top: 1.5rem;
+      color: #999;
+      font-size: 0.85rem;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      .header-top-row {
+        flex-direction: column;
+      }
+
+      .header-top-row h1 {
+        position: static;
+        transform: none;
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+      }
+
+      .header-middle-row {
+        flex-direction: column;
+      }
+
+      .header-left-links {
+        width: 100%;
+        justify-content: center;
+      }
+      .header-middle {
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .header-search {
+        width: 100%;
+      }
+
+      .carousel-item {
+        flex: 0 0 calc(50% - 0.75rem);
+      }
+
+      .category-nav {
+        gap: 1rem;
+      }
+
+      .category-nav a {
+        font-size: 0.8rem;
+      }
+
+      .services-grid {
+        grid-template-columns: 1fr;
+      }
+
+      #site-header {
+        max-height: 380px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .header-top h1 {
+        font-size: 1.8rem;
+        letter-spacing: 1px;
+      }
+
+      .carousel-item {
+        flex: 0 0 100%;
+      }
+
+      .section-title {
+        font-size: 1.6rem;
+      }
+
+      main {
+        padding: 2rem 1rem;
+      }
+    }
+  </style>
+
+  <script src="scripts/age-gate.js"></script>
 </head>
 
 <body>
 
-  <!-- TOP HEADER BAR (LOGO + SEARCH + ACCOUNT LINKS) -->
- <header class="site-header">
-  <div class="header-left">
-    <a href="index.html" title="Return to Homepage">
-      <img src="images/modular-gunworks-llc.png" alt="Modular Gunworks LLC Logo" class="logo site-logo" id="site-logo">
-    </a>
-  </div>
-
-  <div class="header-center">
-    <form class="search-form" action="/search">
-      <input type="text" class="search-bar" name="q" placeholder="Search ammo, gear, or answers...">
-      <button type="submit" class="search-button">
-        <img src="images/search-icon.svg" alt="Search">
-      </button>
-    </form>
-  </div>
-
- <div class="header-right">
-  <a href="#">Account Login</a>
-  <a href="#">Help Center</a>
-  <div class="cart-header-icon" id="cart-header-icon" style="position:relative;display:inline-block;cursor:pointer;margin-left:12px;">
-      <a href="cart.html" id="view-cart-link" style="color:#0033aa;font-size:1.05rem;font-weight:600;text-decoration:none;vertical-align:middle;padding:0 2px;transition:text-decoration 0.2s;">View Cart</a>
-      <span id="cart-badge" style="position:absolute;top:-8px;right:-8px;background:#e74c3c;color:#fff;font-size:0.95rem;padding:2px 7px;border-radius:50%;display:none;min-width:20px;text-align:center;">0</span>
-      <style>
-        .header-right a#view-cart-link:hover {
-          text-decoration: underline;
-        }
-      </style>
-  </div>
-  <button id="theme-toggle" class="theme-toggle-icon" aria-label="Toggle Theme">
-    <span id="theme-icon">
-      <!-- Default icon: Moon (light mode) -->
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
-           stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M21 12.79A9 9 0 1 1 11.21 3
-                 7 7 0 0 0 21 12.79z"></path>
-      </svg>
-    </span>
-  </button>
-</div>
-</body>
-<!-- Side Cart Drawer -->
-<div id="side-cart" style="position:fixed;top:0;right:-400px;width:360px;height:100vh;background:#fff;box-shadow:-2px 0 16px rgba(0,0,0,0.18);z-index:9999;transition:right 0.35s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;">
-  <div style="display:flex;align-items:center;justify-content:space-between;padding:20px 20px 10px 20px;border-bottom:1px solid #eee;">
-    <h2 style="margin:0;font-size:1.2rem;">My Cart</h2>
-    <button id="close-side-cart" style="background:none;border:none;font-size:1.7rem;cursor:pointer;">&times;</button>
-  </div>
-  <div id="side-cart-items" style="flex:1;overflow-y:auto;padding:18px 20px 0 20px;"></div>
-  <div id="side-cart-footer" style="padding:18px 20px 20px 20px;border-top:1px solid #eee;background:#fafbfc;"></div>
-</div>
-<div id="side-cart-backdrop" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.18);z-index:9998;"></div>
-<script src="scripts/side-cart.js"></script>
-
-</header>
-
-  <!-- CATEGORY NAVIGATION (STICKY) -->
-  <nav class="category-nav">
-    <a class="nav-link paused" href="#" tabindex="-1" title="Coming Soon">Ammunition</a>
-    <!-- <a class="nav-link paused" href="#" tabindex="-1" title="Coming Soon">Guns</a> -->
-    <a class="nav-link paused" href="#" tabindex="-1" title="Coming Soon">Magazines</a>
-    <a class="nav-link paused" href="#" tabindex="-1" title="Coming Soon">Gun Parts</a>
-    <a class="nav-link paused" href="#" tabindex="-1" title="Coming Soon">Gear</a>
-    <a class="nav-link paused" href="#" tabindex="-1" title="Coming Soon">Optics & Sights</a>
-    <a class="nav-link paused" href="#" tabindex="-1" title="Coming Soon">Reloading</a>
-    <a class="nav-link paused" href="#" tabindex="-1" title="Coming Soon">Prep & Survival</a>
-    <a class="nav-link paused" href="#" tabindex="-1" title="Coming Soon">Brands</a>
-    <a class="nav-link paused" href="#" tabindex="-1" title="Coming Soon">ON SALE</a>
-  </nav>
- 
-  <!-- PROMO BANNER -
-  <section class="promo-banner">
-    <h2>Under Construction</h2>
-    <p>Use Code: <strong>Build</strong> • Free Shipping Over $249</p>
-  </section> -->
-
-  <!-- HERO FLAG HEADER (FULL WIDTH) -->
-  <div class="hero-header">
-    <div class="hero-home-title">WELCOME TO MODULAR GUNWORKS LLC</div>
-  </div>
-
- <!-- CATEGORY GRID -->
-<section class="category-grid">
-  <h2>Shop by Category</h2>
-
-  <div class="grid">
-
-    <div class="tile">
-      <div class="image-box">
-        <img src="images/categories/ammunition.jpg" alt="Ammunition">
-        <div class="coming-soon-overlay">Coming Soon</div>
-      </div>
-      <span>Ammunition</span>
-    </div>
-    <!--
-    <div class="tile">
-      <div class="image-box">
-        <img src="images/categories/guns.jpg" alt="Guns">
-        <div class="coming-soon-overlay">Coming Soon</div>
-      </div>
-      <span>Guns</span>
-    </div>
-    -->
-    <div class="tile">
-      <div class="image-box">
-        <img src="images/categories/magazines.jpg" alt="Magazines">
-        <div class="coming-soon-overlay">Coming Soon</div>
-      </div>
-      <span>Magazines</span>
-    </div>
-    <div class="tile">
-      <div class="image-box">
-        <img src="images/categories/gun-parts.jpg" alt="Gun Parts">
-        <div class="coming-soon-overlay">Coming Soon</div>
-      </div>
-      <span>Gun Parts</span>
-    </div>
-    <div class="tile">
-      <div class="image-box">
-        <img src="images/categories/gear.jpg" alt="Gear">
-        <div class="coming-soon-overlay">Coming Soon</div>
-      </div>
-      <span>Gear</span>
-    </div>
-    <div class="tile">
-      <div class="image-box">
-        <img src="images/categories/optics.jpg" alt="Optics">
-        <div class="coming-soon-overlay">Coming Soon</div>
-      </div>
-      <span>Optics & Sights</span>
-    </div>
-    <div class="tile">
-      <div class="image-box">
-        <img src="images/categories/reloading.jpg" alt="Reloading">
-        <div class="coming-soon-overlay">Coming Soon</div>
-      </div>
-      <span>Reloading</span>
-    </div>
-    <div class="tile">
-      <div class="image-box">
-        <img src="images/categories/survival.jpg" alt="Survival">
-        <div class="coming-soon-overlay">Coming Soon</div>
-      </div>
-      <span>Prep & Survival</span>
-    </div>
-    <div class="tile">
-      <div class="image-box">
-        <img src="images/categories/brands.jpg" alt="Brands">
-        <div class="coming-soon-overlay">Coming Soon</div>
-      </div>
-      <span>Shop by Brand</span>
+  <!-- HEADER -->
+  <header id="site-header">
+    <!-- Top Row: Company Name (Center) + Logo (Right) -->
+    <div class="header-top-row">
+      <h1>MODULAR GUNWORKS LLC</h1>
+      <a href="index.html" class="header-logo" title="Home">
+        <img src="images/modular-gunworks-llc.png" alt="Modular Gunworks Logo">
+        <span class="logo-label">HOME</span>
+      </a>
     </div>
 
-    <div class="tile">
-      <div class="image-box">
-        <img src="images/categories/sale.jpg" alt="Sale">
-        <div class="coming-soon-overlay">Coming Soon</div>
+    <!-- Middle Row: Account Links (Left) + Search (Center) -->
+    <div class="header-middle-row">
+      <div class="header-left-links">
+        <a href="#account">Account</a>
+        <a href="#help">Help</a>
+        <a href="shop/cart.html">Cart</a>
       </div>
-      <span>On Sale</span>
+
+      <form class="search-bar" action="#" method="get">
+        <input type="text" placeholder="Search ammo, gear, optics...">
+        <button type="submit">Search</button>
+      </form>
     </div>
 
-    <a class="tile demo-tile" href="demo-product.html">
-      <div class="image-box">
-        <img src="images/categories/Demo.jpg" alt="Cart Demo">
-      </div>
-      <span>Demo</span>
-    </a>
+    <!-- Category Navigation -->
+    <nav class="category-nav">
+      <a href="shop/ammunition.html">Ammunition</a>
+      <a href="shop/magazines.html">Magazines</a>
+      <a href="shop/gun-parts.html">Gun Parts</a>
+      <a href="shop/gear.html">Gear</a>
+      <a href="shop/optics.html">Optics</a>
+      <a href="shop/reloading.html">Reloading</a>
+      <a href="shop/survival.html">Survival</a>
+      <a href="shop/brands.html">Brands</a>
+      <a href="shop/sale.html">ON SALE</a>
+      <a href="services.html">Services</a>
+    </nav>
 
-  </div>
-</section>
+    <!-- Promo Bar -->
+    <div class="promo-bar">
+      ⭐ Veteran Owned • Huntsville, AL • Professional Service
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT -->
+  <main>
+    <!-- Featured Categories Carousel -->
+    <section class="carousel-section">
+      <h2 class="section-title">Shop by Category</h2>
+      
+      <div class="carousel-container">
+        <div class="carousel" id="featured-carousel">
+          <div class="carousel-item">
+            <a href="shop/ammunition.html" class="category-card">
+              <img src="images/categories/ammunition.jpg" alt="Ammunition">
+              <h3>Ammunition</h3>
+              <p>7,446+ Items</p>
+            </a>
+          </div>
+          <div class="carousel-item">
+            <a href="shop/magazines.html" class="category-card">
+              <img src="images/categories/magazines.jpg" alt="Magazines">
+              <h3>Magazines</h3>
+              <p>1,200+ Items</p>
+            </a>
+          </div>
+          <div class="carousel-item">
+            <a href="shop/gun-parts.html" class="category-card">
+              <img src="images/categories/gun-parts.jpg" alt="Gun Parts">
+              <h3>Gun Parts</h3>
+              <p>2,300+ Items</p>
+            </a>
+          </div>
+          <div class="carousel-item">
+            <a href="shop/gear.html" class="category-card">
+              <img src="images/categories/gear.jpg" alt="Tactical Gear">
+              <h3>Tactical Gear</h3>
+              <p>1,800+ Items</p>
+            </a>
+          </div>
+          <div class="carousel-item">
+            <a href="shop/optics.html" class="category-card">
+              <img src="images/categories/optics.jpg" alt="Optics">
+              <h3>Optics & Sights</h3>
+              <p>2,100+ Items</p>
+            </a>
+          </div>
+          <div class="carousel-item">
+            <a href="shop/reloading.html" class="category-card">
+              <img src="images/categories/reloading.jpg" alt="Reloading">
+              <h3>Reloading</h3>
+              <p>950+ Items</p>
+            </a>
+          </div>
+          <div class="carousel-item">
+            <a href="shop/survival.html" class="category-card">
+              <img src="images/categories/survival.jpg" alt="Survival">
+              <h3>Prep & Survival</h3>
+              <p>1,200+ Items</p>
+            </a>
+          </div>
+          <div class="carousel-item">
+            <a href="shop/brands.html" class="category-card">
+              <img src="images/categories/brands.jpg" alt="Brands">
+              <h3>Shop by Brand</h3>
+              <p>80+ Brands</p>
+            </a>
+          </div>
+        </div>
+
+        <div class="carousel-controls">
+          <button class="carousel-btn" onclick="scrollCarousel(-1)">❮</button>
+          <button class="carousel-btn" onclick="scrollCarousel(1)">❯</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Services Sections -->
+    <section class="services-grid">
+      <div class="service-card">
+        <h2><i class="fas fa-wrench"></i> Gunsmithing Services</h2>
+        <p>Expert gunsmithing services coming soon. From basic maintenance to custom builds, our skilled gunsmiths will handle your firearm with precision and care.</p>
+        <span class="coming-soon-badge">Coming Soon</span>
+      </div>
+
+      <div class="service-card">
+        <h2><i class="fas fa-clipboard-list"></i> FFL Transfers</h2>
+        <p>Professional FFL transfer services available. We handle all compliance paperwork with speed and expertise to get your firearms to you legally and safely.</p>
+        <span class="coming-soon-badge">Coming Soon</span>
+      </div>
+    </section>
+  </main>
 
   <!-- FOOTER -->
-  <footer class="site-footer">
-    <div class="footer-columns">
-      <div>
-        <h4>Company</h4>
+  <footer>
+    <div class="footer-content">
+      <div class="footer-section">
+        <h3>Shop</h3>
         <ul>
-          <li><a href="about.html">About Modular Gunworks</a></li>
-          <li><a href="blog.html">Blog</a></li>
-          <li><a href="contact.html">Contact Us</a></li>
+          <li><a href="shop/ammunition.html">Ammunition</a></li>
+          <li><a href="shop/magazines.html">Magazines</a></li>
+          <li><a href="shop/gun-parts.html">Gun Parts</a></li>
+          <li><a href="shop/gear.html">Gear</a></li>
+          <li><a href="shop/optics.html">Optics</a></li>
+          <li><a href="shop/reloading.html">Reloading</a></li>
+          <li><a href="shop/survival.html">Survival</a></li>
+          <li><a href="shop/brands.html">Brands</a></li>
         </ul>
       </div>
 
-      <div>
-        <h4>Info</h4>
+      <div class="footer-section">
+        <h3>Company</h3>
         <ul>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="contact.html">Contact</a></li>
           <li><a href="faq.html">FAQ</a></li>
-          <!-- <li><a href="ffl.html">FFL Transfers</a></li> --> <!-- Not currently FFL licensed -->
-          <li><a href="order-status.html">Order Status</a></li>
-          <li><a href="shipping.html">Shipping Info</a></li>
+          <li><a href="blog.html">Blog</a></li>
         </ul>
       </div>
 
-      <div>
-        <h4>Legal</h4>
+      <div class="footer-section">
+        <h3>Legal</h3>
         <ul>
           <li><a href="terms.html">Terms & Conditions</a></li>
           <li><a href="privacy.html">Privacy Policy</a></li>
-          <li><a href="returns.html">Return Policy</a></li>
+          <li><a href="returns.html">Returns</a></li>
+          <li><a href="order-status.html">Order Status</a></li>
         </ul>
       </div>
     </div>
 
     <div class="footer-bottom">
-      <p>© 2025 Modular Gunworks LLC. All rights reserved.</p>
-      <p><a href="mailto:modulargunworks@gmail.com">modulargunworks@gmail.com</a></p>
+      <p>© 2026 Modular Gunworks LLC. All rights reserved. | Veteran-Owned Business in Huntsville, Alabama</p>
+      <p>All firearm sales comply with federal, state, and local laws. FFL required for applicable items.</p>
     </div>
   </footer>
-  <!-- AGE VERIFICATION POPUP -->
-<div id="age-verification" class="popup">
-  <div class="popup-content">
-    <img src="images/modular-gunworks-llc.png" alt="Modular Gunworks LLC" class="popup-logo">
 
-    <h2>Are you at least 18 years old?</h2>
-    <p>By entering this site, you agree to our 
-      <a href="privacy.html">Privacy Policy</a> and 
-      <a href="terms.html">Terms & Conditions</a>.
-    </p>
-
-    <label class="remember">
-      <input type="checkbox" id="remember-me">
-      Remember me temporarily while I shop
-    </label>
-
-    <div class="popup-buttons">
-      <button id="yes-button">YES</button>
-      <button id="no-button">NO</button>
-    </div>
-  </div>
-</div>
-<script>
-  const popup = document.getElementById('age-verification');
-  const yesBtn = document.getElementById('yes-button');
-  const noBtn = document.getElementById('no-button');
-  const rememberMe = document.getElementById('remember-me');
-
-  // Check if user has previously confirmed
-  const confirmed = localStorage.getItem('ageConfirmed');
-
-  // Always show popup on first visit
-  if (!confirmed) {
-    popup.style.display = 'flex';
-    document.body.style.overflow = 'hidden'; // Prevent scrolling behind popup
-  }
-
-  yesBtn.onclick = () => {
-    if (rememberMe.checked) {
-      localStorage.setItem('ageConfirmed', 'true');
+  <!-- Carousel Script -->
+  <script>
+    function scrollCarousel(direction) {
+      const carousel = document.getElementById('featured-carousel');
+      const scrollAmount = 320;
+      carousel.scrollLeft += direction * scrollAmount;
     }
-    popup.style.display = 'none';
-    document.body.style.overflow = 'auto';
-  };
-
-  noBtn.onclick = () => {
-    window.location.href = 'https://www.google.com';
-  };
-</script>
-<script>
-  const toggleBtn = document.getElementById("theme-toggle");
-  const themeIcon = document.getElementById("theme-icon");
-  const savedTheme = localStorage.getItem("theme");
-
-  const moonSVG = `
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
-         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M21 12.79A9 9 0 1 1 11.21 3
-               7 7 0 0 0 21 12.79z"></path>
-    </svg>
-  `;
-
-  const sunSVG = `
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
-         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <circle cx="12" cy="12" r="5"></circle>
-      <line x1="12" y1="1" x2="12" y2="3"></line>
-      <line x1="12" y1="21" x2="12" y2="23"></line>
-      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-      <line x1="1" y1="12" x2="3" y2="12"></line>
-      <line x1="21" y1="12" x2="23" y2="12"></line>
-      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-    </svg>
-  `;
-
-  function applyTheme(theme) {
-    const isDark = theme === "dark";
-    document.body.classList.toggle("dark-theme", isDark);
-    themeIcon.innerHTML = isDark ? sunSVG : moonSVG;
-    localStorage.setItem("theme", theme);
-  }
-
-  // Load saved theme
-  applyTheme(savedTheme === "dark" ? "dark" : "light");
-
-  // Toggle on click
-  toggleBtn.onclick = () => {
-    const newTheme = document.body.classList.contains("dark-theme")
-      ? "light"
-      : "dark";
-    applyTheme(newTheme);
-  };
-</script>
+  </script>
 
 </body>
 </html>

@@ -2,157 +2,193 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Shop by Brand | Modular Gunworks LLC</title>
-  <link rel="stylesheet" href="/style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Shop by brand at Modular Gunworks LLC - Glock, Sig Sauer, Ruger, HK, and more.">
+  <meta name="keywords" content="gun brands, glock, sig sauer, ruger, smith & wesson, springfield">
+  <meta name="author" content="Modular Gunworks LLC">
+  <meta name="theme-color" content="#181a1b">
+  
+  <title>Brands - Modular Gunworks LLC</title>
+  
+  <!-- Modular CSS -->
+  <link rel="stylesheet" href="../styles/design-system.css">
+  <link rel="stylesheet" href="../styles/components.css">
+  <link rel="stylesheet" href="../styles/layout.css">
+  <link rel="stylesheet" href="../styles/age-gate.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="icon" type="image/png" href="../favicon.png">
+  
+  <style>
+    :root { --color-primary: #b22222; --color-accent: #1a2c4b; --color-bg-dark: #181a1b; --color-text: #333; --color-light: #f5f5f5; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { height: 100%; background-color: #fff; }
+    #site-header { background: linear-gradient(135deg, rgba(24,26,27,0.15) 0%, rgba(24,26,27,0.05) 100%), url('../images/Header-flagV2.png') center top/cover no-repeat; background-attachment: fixed; color: #fff; padding: 2rem 0 0 0; position: sticky; top: 0; z-index: 100; max-height: 450px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+    .header-top-row { text-align: center; padding: 1.5rem 2rem; display: flex; align-items: center; justify-content: center; position: relative; }
+    .header-top-row h1 { font-size: 2rem; font-weight: 900; letter-spacing: 2px; text-shadow: 0 2px 8px rgba(0,0,0,0.5); margin: 0; color: #fff; position: absolute; left: 50%; transform: translateX(-50%); flex: 1; }
+    .header-logo { position: absolute; right: 2rem; margin: 0; cursor: pointer; display: flex; flex-direction: column; align-items: center; transition: transform 0.3s ease; text-decoration: none; gap: 0.3rem; }
+    .header-logo:hover { transform: scale(1.08); }
+    .logo-label { font-size: 0.7rem; font-weight: 700; letter-spacing: 1px; color: #fff; text-shadow: 0 1px 3px rgba(0,0,0,0.3); }
+    .header-logo img { height: 90px; width: auto; background: rgba(255,255,255,0.98); padding: 6px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.25); border: none; }
+    .header-middle-row { padding: 1.5rem 2rem; display: flex; align-items: center; justify-content: center; gap: 2rem; position: relative; }
+    .header-left-links { display: flex; gap: 2rem; align-items: center; position: absolute; right: 2rem; }
+    .header-left-links a { color: #fff; text-decoration: none; font-weight: 600; font-size: 0.95rem; transition: color 0.3s; text-shadow: 0 1px 4px rgba(0,0,0,0.3); }
+    .header-left-links a:hover { color: #ffeb3b; }
+    .search-bar { display: flex; gap: 0; box-shadow: 0 2px 8px rgba(0,0,0,0.1); border-radius: 4px; overflow: hidden; }
+    .search-bar input { flex: 1; padding: 0.8rem 1.2rem; border: none; font-size: 0.95rem; }
+    .search-bar button { padding: 0.8rem 1.5rem; background: var(--color-primary); color: #fff; border: none; font-weight: 600; cursor: pointer; }
+    .category-nav { background: var(--color-accent); display: flex; justify-content: center; gap: 2.5rem; padding: 0.8rem 2rem; flex-wrap: wrap; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
+    .category-nav a { color: #fff; text-decoration: none; font-weight: 600; font-size: 0.9rem; transition: color 0.3s; white-space: nowrap; }
+    .category-nav a:hover { color: var(--color-primary); }
+    .promo-bar { background: linear-gradient(90deg, var(--color-primary) 0%, var(--color-accent) 100%); color: #fff; text-align: center; padding: 0.8rem 2rem; font-weight: 600; font-size: 1rem; letter-spacing: 1px; }
+    main { max-width: 1400px; margin: 0 auto; padding: 3rem 2rem; }
+    .page-title { font-size: 2rem; color: var(--color-bg-dark); margin-bottom: 2rem; }
+    .brands-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-bottom: 4rem; }
+    .brand-card { background: #fff; border: 1px solid #e0e0e0; border-radius: 8px; padding: 2rem; text-align: center; transition: all 0.3s ease; cursor: pointer; box-shadow: 0 1px 3px rgba(0,0,0,0.05); text-decoration: none; color: inherit; }
+    .brand-card:hover { transform: translateY(-4px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); border-color: var(--color-primary); }
+    .brand-card h3 { font-size: 1.3rem; color: var(--color-bg-dark); margin-bottom: 0.5rem; }
+    footer { background: var(--color-bg-dark); color: #fff; padding: 3rem 2rem 1rem; margin-top: 4rem; border-top: 4px solid var(--color-primary); }
+    .footer-content { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; margin-bottom: 2rem; }
+    .footer-section h3 { font-size: 1.1rem; margin-bottom: 1rem; color: var(--color-primary); }
+    .footer-section ul { list-style: none; }
+    .footer-section a { color: #ccc; text-decoration: none; font-size: 0.9rem; line-height: 1.8; transition: color 0.3s; }
+    .footer-section a:hover { color: var(--color-primary); }
+    .footer-bottom { text-align: center; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 1.5rem; color: #999; font-size: 0.85rem; }
+  </style>
+
+  <script src="../scripts/age-gate.js"></script>
 </head>
+
 <body>
-  <!-- TOP HEADER BAR (LOGO + SEARCH + ACCOUNT LINKS) -->
-  <header class="site-header">
-    <div class="header-left">
-      <a href="../index.html" title="Return to Homepage">
-        <img src="../images/modular-gunworks-llc.png" alt="Modular Gunworks LLC Logo" class="logo site-logo" id="site-logo">
+
+  <header id="site-header">
+    <div class="header-top-row">
+      <h1>MODULAR GUNWORKS LLC</h1>
+      <a href="../index.html" class="header-logo" title="Home">
+        <img src="../images/modular-gunworks-llc.png" alt="Modular Gunworks Logo">
+        <span class="logo-label">HOME</span>
       </a>
     </div>
-    <div class="header-center">
-      <form class="search-form" action="/search">
-        <input type="text" class="search-bar" name="q" placeholder="Search brands, gear, or answers...">
-        <button type="submit" class="search-button">
-          <img src="../images/search-icon.svg" alt="Search">
-        </button>
+
+    <div class="header-middle-row">
+      <div class="header-left-links">
+        <a href="#account">Account</a>
+        <a href="#help">Help</a>
+        <a href="../shop/cart.html">Cart</a>
+      </div>
+
+      <form class="search-bar" action="#" method="get">
+        <input type="text" placeholder="Search ammo, gear, optics...">
+        <button type="submit"><i class="fas fa-search"></i></button>
       </form>
     </div>
-    <div class="header-right">
-      <a href="#">Account Login</a>
-      <a href="#">Help Center</a>
-      <a href="#">View Cart</a>
-      <button id="theme-toggle" class="theme-toggle-icon" aria-label="Toggle Theme">
-        <span id="theme-icon"></span>
-      </button>
+
+    <nav class="category-nav">
+      <a href="../shop/ammunition.html">Ammunition</a>
+      <a href="../shop/magazines.html">Magazines</a>
+      <a href="../shop/gun-parts.html">Gun Parts</a>
+      <a href="../shop/gear.html">Gear</a>
+      <a href="../shop/optics.html">Optics</a>
+      <a href="../shop/reloading.html">Reloading</a>
+      <a href="../shop/survival.html">Survival</a>
+      <a href="../shop/brands.html">Brands</a>
+      <a href="../shop/sale.html">ON SALE</a>
+      <a href="../services.html">Services</a>
+    </nav>
+
+    <div class="promo-bar">
+      Veteran-Owned Business | Fast Shipping | Professional Service
     </div>
   </header>
 
-  <!-- CATEGORY NAVIGATION (STICKY) -->
-  <nav class="category-nav">
-    <a href="ammunition.html">Ammunition</a>
-    <a href="guns.html">Guns</a>
-    <a href="magazines.html">Magazines</a>
-    <a href="gun-parts.html">Gun Parts</a>
-    <a href="gear.html">Gear</a>
-    <a href="optics.html">Optics & Sights</a>
-    <a href="reloading.html">Reloading</a>
-    <a href="survival.html">Prep & Survival</a>
-    <a href="brands.html" class="active">Brands</a>
-    <a href="sale.html">ON SALE</a>
-  </nav>
+  <main>
+    <h1 class="page-title">Shop by Brand</h1>
 
-  <!-- HERO BANNER WITH TITLE -->
-  <div class="hero-header">
-    <div class="hero-home-title">Brands</div>
-  </div>
-
-  <!-- BRANDS GRID (CENTERED) -->
-  <section class="category-grid">
-    <h2>Browse All Brands</h2>
-    <div class="grid">
-      <a class="tile" href="../brands/a/aero-precision.md">
-        <div class="image-box">
-          <img src="../images/brands/aero-precision.png" alt="Aero Precision">
-        </div>
-        <span>Aero Precision</span>
+    <div class="brands-grid">
+      <a href="#" class="brand-card">
+        <h3>Glock</h3>
+        <p>Premium Handguns</p>
       </a>
-      <a class="tile" href="../brands/f/fn-america.md">
-        <div class="image-box">
-          <img src="../images/brands/fn-america.png" alt="FN America">
-        </div>
-        <span>FN America</span>
+      <a href="#" class="brand-card">
+        <h3>Sig Sauer</h3>
+        <p>Quality Firearms</p>
       </a>
-      <a class="tile" href="../brands/g/glock.md">
-        <div class="image-box">
-          <img src="../images/brands/glock.png" alt="Glock">
-        </div>
-        <span>Glock</span>
+      <a href="#" class="brand-card">
+        <h3>Ruger</h3>
+        <p>Reliable Weapons</p>
       </a>
-      <a class="tile" href="../brands/h/hk.md">
-        <div class="image-box">
-          <img src="../images/brands/hk.png" alt="Heckler & Koch">
-        </div>
-        <span>Heckler & Koch</span>
+      <a href="#" class="brand-card">
+        <h3>Smith & Wesson</h3>
+        <p>Classic Firearms</p>
       </a>
-      <a class="tile" href="../brands/h/holosun.md">
-        <div class="image-box">
-          <img src="../images/brands/holosun.png" alt="Holosun">
-        </div>
-        <span>Holosun</span>
+      <a href="#" class="brand-card">
+        <h3>Springfield Armory</h3>
+        <p>Quality Pistols</p>
       </a>
-      <a class="tile" href="../brands/m/magpul.md">
-        <div class="image-box">
-          <img src="../images/brands/magpul.png" alt="Magpul">
-        </div>
-        <span>Magpul</span>
+      <a href="#" class="brand-card">
+        <h3>FN America</h3>
+        <p>Professional Grade</p>
       </a>
-      <a class="tile" href="../brands/r/ruger.md">
-        <div class="image-box">
-          <img src="../images/brands/ruger.png" alt="Ruger">
-        </div>
-        <span>Ruger</span>
+      <a href="#" class="brand-card">
+        <h3>HK (Heckler & Koch)</h3>
+        <p>Premium Quality</p>
       </a>
-      <a class="tile" href="../brands/s/sig-sauer.md">
-        <div class="image-box">
-          <img src="../images/brands/sig-sauer.png" alt="SIG Sauer">
-        </div>
-        <span>SIG Sauer</span>
+      <a href="#" class="brand-card">
+        <h3>Aero Precision</h3>
+        <p>AR Parts & Builds</p>
       </a>
-      <a class="tile" href="../brands/s/smith-and-wesson.md">
-        <div class="image-box">
-          <img src="../images/brands/smith-and-wesson.png" alt="Smith & Wesson">
-        </div>
-        <span>Smith & Wesson</span>
+      <a href="#" class="brand-card">
+        <h3>Magpul</h3>
+        <p>Tactical Accessories</p>
       </a>
-      <a class="tile" href="../brands/s/springfield-armory.md">
-        <div class="image-box">
-          <img src="../images/brands/springfield-armory.png" alt="Springfield Armory">
-        </div>
-        <span>Springfield Armory</span>
+      <a href="#" class="brand-card">
+        <h3>Holosun</h3>
+        <p>Advanced Optics</p>
       </a>
     </div>
-  </section>
+  </main>
 
-  <!-- FOOTER -->
-  <footer class="site-footer">
-    <div class="footer-columns">
-      <div>
-        <h4>Company</h4>
+  <footer>
+    <div class="footer-content">
+      <div class="footer-section">
+        <h3>Shop</h3>
         <ul>
-          <li><a href="../about.html">About Modular Gunworks</a></li>
-          <li><a href="../blog.html">Blog</a></li>
-          <li><a href="../contact.html">Contact Us</a></li>
+          <li><a href="../shop/ammunition.html">Ammunition</a></li>
+          <li><a href="../shop/magazines.html">Magazines</a></li>
+          <li><a href="../shop/gun-parts.html">Gun Parts</a></li>
+          <li><a href="../shop/gear.html">Gear</a></li>
+          <li><a href="../shop/optics.html">Optics</a></li>
+          <li><a href="../shop/reloading.html">Reloading</a></li>
+          <li><a href="../shop/survival.html">Survival</a></li>
+          <li><a href="../shop/brands.html">Brands</a></li>
         </ul>
       </div>
-      <div>
-        <h4>Info</h4>
+
+      <div class="footer-section">
+        <h3>Company</h3>
         <ul>
+          <li><a href="../about.html">About Us</a></li>
+          <li><a href="../contact.html">Contact</a></li>
           <li><a href="../faq.html">FAQ</a></li>
-          <li><a href="../ffl.html">FFL Transfers</a></li>
-          <li><a href="../order-status.html">Order Status</a></li>
-          <li><a href="../shipping.html">Shipping Info</a></li>
+          <li><a href="../blog.html">Blog</a></li>
         </ul>
       </div>
-      <div>
-        <h4>Legal</h4>
+
+      <div class="footer-section">
+        <h3>Legal</h3>
         <ul>
           <li><a href="../terms.html">Terms & Conditions</a></li>
           <li><a href="../privacy.html">Privacy Policy</a></li>
-          <li><a href="../returns.html">Return Policy</a></li>
+          <li><a href="../returns.html">Returns</a></li>
+          <li><a href="../order-status.html">Order Status</a></li>
         </ul>
       </div>
     </div>
+
     <div class="footer-bottom">
-      <p>© 2025 Modular Gunworks LLC. All rights reserved.</p>
-      <p><a href="mailto:modulargunworks@gmail.com">modulargunworks@gmail.com</a></p>
+      <p>© 2026 Modular Gunworks LLC. All rights reserved. | Veteran-Owned Business in Huntsville, Alabama</p>
+      <p>All firearm sales comply with federal, state, and local laws. FFL required for applicable items.</p>
     </div>
   </footer>
 
-  <!-- THEME TOGGLE SCRIPT -->
-  <script src="../scripts/theme-toggle.js"></script>
 </body>
 </html>

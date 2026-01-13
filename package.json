@@ -1,19 +1,19 @@
 {
-  "name": "modular-gunworks-admin",
+  "name": "modular-gunworks-site",
   "version": "1.0.0",
-  "description": "Admin backend for Modular Gunworks LLC",
-  "main": "admin.js",
+  "description": "Modular Gunworks LLC Website",
+  "main": "serve.js",
   "scripts": {
-    "start": "node admin.js",
-    "dev": "node admin.js"
+    "start": "node serve.js"
   },
+  "keywords": [
+    "firearms",
+    "tactical",
+    "gear"
+  ],
+  "author": "Modular Gunworks LLC",
+  "license": "MIT",
   "dependencies": {
-    "csv-parser": "^3.2.0",
-    "express": "^5.2.1",
-    "multer": "^1.4.4-lts.1",
-    "express-session": "^1.17.3",
-    "adm-zip": "^0.5.10",
-    "googleapis": "^118.0.0",
-    "google-auth-library": "^9.0.0"
+    "express": "^4.22.1"
   }
 }

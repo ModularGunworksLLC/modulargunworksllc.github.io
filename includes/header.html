@@ -1,0 +1,233 @@
+<!-- HEADER STYLES -->
+<style>
+  :root {
+    --color-primary: #b22222;
+    --color-accent: #1a2c4b;
+    --color-bg-dark: #181a1b;
+    --color-text: #333;
+    --color-light: #f5f5f5;
+  }
+
+  #site-header {
+    background: linear-gradient(135deg, rgba(24,26,27,0.15) 0%, rgba(24,26,27,0.05) 100%), 
+                url('/images/Header-flagV2.png') center top/cover no-repeat;
+    background-attachment: fixed;
+    color: #fff;
+    padding: 2rem 0 0 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    max-height: 450px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  }
+
+  .header-top-row {
+    text-align: center;
+    padding: 1.5rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+
+  .header-top-row h1 {
+    font-size: 2rem;
+    font-weight: 900;
+    letter-spacing: 2px;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+    margin: 0;
+    color: #fff;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    flex: 1;
+  }
+
+  .header-logo {
+    position: absolute;
+    right: 2rem;
+    margin: 0;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-decoration: none;
+    gap: 0.3rem;
+  }
+
+  .header-logo:hover {
+    transform: scale(1.08);
+  }
+
+  .logo-label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: #fff;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+  }
+
+  .header-logo img {
+    height: 90px;
+    width: auto;
+    background: rgba(255,255,255,0.98);
+    padding: 6px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+    border: none;
+  }
+
+  .header-middle-row {
+    padding: 1.5rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    position: relative;
+  }
+
+  .header-left-links {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+    position: absolute;
+    right: 2rem;
+  }
+
+  .header-left-links a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: color 0.3s;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.3);
+  }
+
+  .header-left-links a:hover {
+    color: #ffeb3b;
+  }
+
+  .search-bar {
+    display: flex;
+    gap: 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .search-bar input {
+    flex: 1;
+    padding: 0.8rem 1.2rem;
+    border: none;
+    font-size: 0.95rem;
+  }
+
+  .search-bar button {
+    padding: 0.8rem 1.5rem;
+    background: var(--color-primary);
+    color: #fff;
+    border: none;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+
+  .header-links {
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+  }
+
+  .header-links a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: color 0.3s;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.3);
+  }
+
+  .header-links a:hover {
+    color: #ffeb3b;
+  }
+
+  /* CATEGORY NAV */
+  .category-nav {
+    background: var(--color-accent);
+    display: flex;
+    justify-content: center;
+    gap: 2.5rem;
+    padding: 0.8rem 2rem;
+    flex-wrap: wrap;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  }
+
+  .category-nav a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: color 0.3s;
+    white-space: nowrap;
+  }
+
+  .category-nav a:hover {
+    color: var(--color-primary);
+  }
+
+  /* PROMO BAR */
+  .promo-bar {
+    background: linear-gradient(90deg, var(--color-primary) 0%, var(--color-accent) 100%);
+    color: #fff;
+    text-align: center;
+    padding: 0.8rem 2rem;
+    font-weight: 600;
+    font-size: 1rem;
+    letter-spacing: 1px;
+  }
+</style>
+
+<!-- HEADER HTML -->
+<header id="site-header">
+  <div class="header-top-row">
+    <h1>Modular Gunworks LLC</h1>
+    <a href="/" class="header-logo" title="Home">
+      <img src="/images/header-logo.png" alt="Modular Gunworks Logo">
+      <span class="logo-label">HOME</span>
+    </a>
+  </div>
+
+  <div class="header-middle-row">
+    <div class="header-left-links">
+      <a href="shop/cart.html">Account</a>
+      <a href="faq.html">Help</a>
+      <a href="shop/cart.html">Cart</a>
+    </div>
+
+    <div class="search-bar">
+      <input type="text" placeholder="Search products..." id="search-input">
+      <button onclick="performSearch()">
+        <i class="fas fa-search"></i>
+      </button>
+    </div>
+  </div>
+
+  <nav class="category-nav">
+    <a href="/shop/ammunition.html">Ammunition</a>
+    <a href="/shop/magazines.html">Magazines</a>
+    <a href="/shop/gun-parts.html">Gun Parts</a>
+    <a href="/shop/gear.html">Gear</a>
+    <a href="/shop/optics.html">Optics</a>
+    <a href="/shop/reloading.html">Reloading</a>
+    <a href="/shop/survival.html">Survival</a>
+    <a href="/shop/brands.html">Brands</a>
+    <a href="/shop/sale.html">ON SALE</a>
+    <a href="/services.html">Services</a>
+  </nav>
+
+  <div class="promo-bar">
+    🇺🇸 Veteran-Owned Business | Fast Shipping | Professional Service
+  </div>
+</header>

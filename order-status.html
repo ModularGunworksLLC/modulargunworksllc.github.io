@@ -2,45 +2,123 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Order Status | Modular Gunworks LLC</title>
-  <link rel="stylesheet" href="style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Order Status - Modular Gunworks LLC</title>
+  <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="stylesheet" href="styles/design-system.css">
+  <link rel="stylesheet" href="styles/components.css">
+  <link rel="stylesheet" href="styles/layout.css">
+  <link rel="stylesheet" href="styles/age-gate.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    main {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 3rem 2rem;
+    }
+    .page-title {
+      font-size: 2.5rem;
+      color: #181a1b;
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+    .order-lookup {
+      background: #f9f9f9;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+    .order-lookup h2 {
+      font-size: 1.5rem;
+      color: #181a1b;
+      margin-bottom: 1rem;
+    }
+    .search-form {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+    .search-form input {
+      flex: 1;
+      padding: 0.8rem;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 1rem;
+    }
+    .search-form button {
+      padding: 0.8rem 1.5rem;
+      background: #b22222;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background 0.3s;
+    }
+    .search-form button:hover {
+      background: #8b1a1a;
+    }
+    .info-box {
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      padding: 2rem;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+    .info-box h3 {
+      color: #181a1b;
+      margin-bottom: 0.5rem;
+    }
+    .info-box p {
+      color: #666;
+      line-height: 1.6;
+    }
+  </style>
 </head>
 <body>
-  <!-- TOP HEADER BAR (LOGO + SEARCH + ACCOUNT LINKS) -->
-  <header class="site-header">
-    <div class="header-left">
-      <a href="index.html" title="Return to Homepage">
-        <img src="images/modular-gunworks-llc.png" alt="Modular Gunworks LLC Logo" class="logo site-logo" id="site-logo">
-      </a>
-    </div>
-    <div class="header-center">
-      <form class="search-form" action="/search" autocomplete="off">
-        <div class="search-bar-wrapper search-bar-flex">
-          <input type="text" class="search-bar" name="q" placeholder="Search ammo, gear, or answers...">
-        </div>
-        <button type="submit" class="search-button search-icon-outside" aria-label="Search">
-          <img src="images/search-icon.svg" alt="Search">
-        </button>
-      </form>
-    </div>
-    <div class="header-right">
-      <a href="#">Account Login</a>
-      <a href="#">Help Center</a>
-      <a href="cart.html" id="view-cart-link">View Cart</a>
-      <button id="theme-toggle" class="theme-toggle-icon" aria-label="Toggle Theme">
-        <span id="theme-icon">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
-               stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M21 12.79A9 9 0 1 1 11.21 3
-                     7 7 0 0 0 21 12.79z"></path>
-          </svg>
-        </span>
-      </button>
-    </div>
-  </header>
+
+  <!-- Main content goes here -->
   <main>
-    <h1>Order Status</h1>
-    <p>Check your order status here. Feature coming soon.</p>
+    <h1 class="page-title">Order Status</h1>
+    
+    <div class="order-lookup">
+      <h2>Track Your Order</h2>
+      <p style="color: #666; margin-bottom: 1.5rem;">Enter your order number to check the status of your purchase.</p>
+      <div class="search-form">
+        <input type="text" placeholder="Enter order number..." id="order-input">
+        <button onclick="searchOrder()">Search</button>
+      </div>
+      <p style="color: #999; font-size: 0.9rem;">You can find your order number in your confirmation email.</p>
+    </div>
+
+    <div class="info-box">
+      <h3>Order Tracking Information</h3>
+      <p>Once your order is shipped, you'll receive a tracking number via email. You can use this number to track your package with the carrier.</p>
+      <p style="margin-top: 1rem;"><strong>Typical Processing Times:</strong></p>
+      <ul style="color: #666; margin: 1rem 0 0 2rem;">
+        <li>Orders placed before 2 PM are shipped same business day</li>
+        <li>Firearms orders may require additional processing (24-48 hours)</li>
+        <li>Standard shipping takes 3-5 business days</li>
+        <li>Expedited shipping available for additional fee</li>
+      </ul>
+    </div>
   </main>
+
+  <script>
+    function searchOrder() {
+      const orderNumber = document.getElementById('order-input').value.trim();
+      if (orderNumber) {
+        alert('Order search functionality coming soon. Order: ' + orderNumber);
+        // In the future, implement actual order lookup
+      }
+    }
+  </script>
+
+  <!-- Age Gate Script -->
+  <script src="scripts/age-gate.js"></script>
+  <!-- Layout Loader -->
+  <script src="scripts/load-layout.js"></script>
 </body>
 </html>
