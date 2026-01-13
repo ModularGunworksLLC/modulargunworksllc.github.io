@@ -201,9 +201,20 @@ function extractAmmoType(product) {
 }
 
 /**
- * Transform API product to our schema
+ * Transform API product to our schema for display only
+ * Only includes products suitable for web listing
  */
 function transformProduct(apiProduct, category) {
+  // Skip serialized items and FFL-required items for now
+  if (apiProduct.serialized_flag === 1 || apiProduct.ffl_flag === 1) {
+    return null;
+  }
+
+  // Skip items with no inventory or not in stock
+  if (!apiProduct.in_stock_flag || apiProduct.inventory === 0) {
+    return null;
+  }
+
   const caliber = extractCaliber(apiProduct);
   const bulletType = extractBulletType(apiProduct);
   const casingType = extractCasingType(apiProduct);
@@ -211,17 +222,14 @@ function transformProduct(apiProduct, category) {
   const ammoType = extractAmmoType(apiProduct);
 
   return {
-    id: apiProduct.id || `API-${apiProduct.itemNumber}`,
-    itemNumber: apiProduct.itemNumber,
-    brand: apiProduct.brand || 'Unknown',
+    id: apiProduct.cssi_id,
+    itemNumber: apiProduct.cssi_id,
     name: apiProduct.name,
-    description: apiProduct.description || '',
-    price: parseFloat(apiProduct.sellingPrice || 0),
-    mapPrice: parseFloat(apiProduct.mapPrice || 0),
-    retailPrice: parseFloat(apiProduct.retailPrice || 0),
-    inventory: parseInt(apiProduct.quantity || 0),
-    inStock: parseInt(apiProduct.quantity || 0) > 0,
-    imageUrl: apiProduct.image || '',
+    price: parseFloat(apiProduct.custom_price || apiProduct.retail_price || 0),
+    mapPrice: parseFloat(apiProduct.map_price || 0),
+    retailPrice: parseFloat(apiProduct.retail_price || 0),
+    inventory: parseInt(apiProduct.inventory || 0),
+    inStock: apiProduct.in_stock_flag === 1,
     category: category,
     caliber,
     bulletType,
@@ -242,6 +250,8 @@ async function fetchProductsByCategory(category, categoryConfig) {
   let page = 1;
   const pageSize = 100;
   let hasMore = true;
+  let displayItems = 0;
+  let skippedItems = 0;
 
   try {
     while (hasMore) {
@@ -252,9 +262,19 @@ async function fetchProductsByCategory(category, categoryConfig) {
       const response = await apiRequest(endpoint);
 
       if (response.items && response.items.length > 0) {
-        const transformed = response.items.map(item => transformProduct(item, category));
+        const transformed = response.items
+          .map(item => transformProduct(item, category))
+          .filter(item => {
+            if (item === null) {
+              skippedItems++;
+              return false;
+            }
+            displayItems++;
+            return true;
+          });
+        
         allProducts = allProducts.concat(transformed);
-        log.success(`  Loaded ${response.items.length} items (total: ${allProducts.length})`);
+        log.success(`  Loaded ${transformed.length} displayable items (${response.items.length} total, ${skippedItems} skipped)`);
 
         // Check if we have more pages
         if (response.pagination && response.pagination.page < response.pagination.page_count) {
@@ -271,6 +291,7 @@ async function fetchProductsByCategory(category, categoryConfig) {
       await new Promise(resolve => setTimeout(resolve, 500));
     }
 
+    log.info(`Summary: ${displayItems} displayable products, ${skippedItems} items filtered (FFL/serialized/out-of-stock)`);
     return allProducts;
   } catch (error) {
     log.error(`Failed to fetch ${category}: ${error.message}`);
