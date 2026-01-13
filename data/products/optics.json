@@ -1,0 +1,32 @@
+{
+  "category": "optics",
+  "lastUpdated": "2026-01-13T00:00:00Z",
+  "totalProducts": 0,
+  "filters": {
+    "enabled": ["brand", "type", "price"],
+    "definitions": {
+      "brand": {
+        "label": "Brand",
+        "type": "checkbox",
+        "searchable": true,
+        "showCount": 5,
+        "collapsible": true
+      },
+      "type": {
+        "label": "Type",
+        "type": "checkbox",
+        "searchable": false,
+        "showCount": 6,
+        "collapsible": true
+      },
+      "price": {
+        "label": "Price",
+        "type": "range",
+        "min": 0,
+        "max": 20000,
+        "collapsible": true
+      }
+    }
+  },
+  "products": []
+}

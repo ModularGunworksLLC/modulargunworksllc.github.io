@@ -20,8 +20,8 @@ const { execSync } = require('child_process');
 const API_CONFIG = {
   baseUrl: 'api.chattanoogashooting.com',
   version: 'v5',
-  sid: process.env.CHATTANOOGA_API_SID || '0C0A177ED88A66B73F45A0038E8BCD2F',
-  token: process.env.CHATTANOOGA_API_TOKEN || '0C0A177FD33DFC39A88DDDE319A55C92',
+  sid: process.env.CHATTANOOGA_API_SID || '2C50AEB30FFDCC9078F0C8F3172C8111',
+  token: process.env.CHATTANOOGA_API_TOKEN || '2C50AEB4AFBC56113AC9CA1C78A875C2',
 };
 
 // Category to API filter mappings
