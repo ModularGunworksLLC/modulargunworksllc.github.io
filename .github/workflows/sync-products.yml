@@ -1,0 +1,68 @@
+name: Sync Products from Chattanooga API
+
+on:
+  schedule:
+    # Run every 4 hours
+    - cron: '0 */4 * * *'
+  
+  # Allow manual trigger from Actions tab
+  workflow_dispatch:
+
+jobs:
+  sync-products:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          ref: api-integration
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+      
+      - name: Run API sync script
+        env:
+          # Note: These are securely stored as repository secrets
+          API_SID: ${{ secrets.CHATTANOOGA_API_SID }}
+          API_TOKEN: ${{ secrets.CHATTANOOGA_API_TOKEN }}
+        run: |
+          # Create a temporary config file with credentials
+          cat > scripts/api-config.js << EOF
+          module.exports = {
+            sid: process.env.API_SID,
+            token: process.env.API_TOKEN,
+          };
+          EOF
+          
+          # Run sync for all categories
+          node scripts/api-sync.js all
+      
+      - name: Configure git
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+      
+      - name: Push changes
+        run: |
+          git push origin api-integration
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Create Pull Request (if changes exist)
+        uses: peter-evans/create-pull-request@v4
+        with:
+          branch: api-integration
+          commit-message: 'chore: Sync products from Chattanooga API'
+          title: 'chore: Sync products from Chattanooga API'
+          body: |
+            Automated product sync from Chattanooga Shooting API.
+            
+            - Updated product inventory
+            - Updated pricing information
+            - Synced with latest catalog
+            
+            Please review changes and merge if everything looks correct.
+          token: ${{ secrets.GITHUB_TOKEN }}
