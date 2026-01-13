@@ -1,0 +1,30 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Product",
+  "type": "object",
+  "properties": {
+    "id": { "type": "string" },
+    "sku": { "type": "string" },
+    "upc": { "type": "string" },
+    "mpn": { "type": ["string", "null"] },
+    "title": { "type": "string" },
+    "brand": { "type": "string" },
+    "category": { "type": "string" },
+    "subcategory": { "type": "string" },
+    "description": { "type": "string" },
+    "images": { "type": "array", "items": { "type": "string" } },
+    "price": { "type": "number" },
+    "map_price": { "type": ["number", "null"] },
+    "in_stock": { "type": "boolean" },
+    "stock_quantity": { "type": "integer" },
+    "supplier": { "type": "string" },
+    "supplier_sku": { "type": "string" },
+    "attributes": { "type": "object" },
+    "tags": { "type": "array", "items": { "type": "string" } },
+    "ffl_required": { "type": "boolean" },
+    "restricted_states": { "type": "array", "items": { "type": "string" } }
+  },
+  "required": [
+    "id", "sku", "upc", "title", "brand", "category", "description", "images", "price", "in_stock", "stock_quantity", "supplier", "supplier_sku", "attributes", "tags", "ffl_required", "restricted_states"
+  ]
+}

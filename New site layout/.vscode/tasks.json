@@ -1,0 +1,11 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Open index.html in default browser",
+			"type": "shell",
+			"command": "start src\\index.html",
+			"group": "build"
+		}
+	]
+}
