@@ -15,6 +15,7 @@
   <link rel="stylesheet" href="../styles/components.css">
   <link rel="stylesheet" href="../styles/layout.css">
   <link rel="stylesheet" href="../styles/product-cards.css">
+  <link rel="stylesheet" href="../styles/filters.css">
   <link rel="stylesheet" href="../styles/age-gate.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="icon" type="image/png" href="../favicon.png">
@@ -353,26 +354,39 @@
       <p>Live inventory directly from our wholesaler. Prices and availability update automatically.</p>
     </div>
 
-    <!-- PRODUCT CONTROLS -->
-    <div class="product-controls">
-      <div class="product-count">
-        <span id="product-count">Loading products...</span>
-      </div>
-      <div class="sort-controls">
-        <label for="sort-select">Sort by:</label>
-        <select id="sort-select">
-          <option value="default">Featured</option>
-          <option value="price-low">Price: Low to High</option>
-          <option value="price-high">Price: High to Low</option>
-          <option value="name">Name (A-Z)</option>
-          <option value="newest">Newest First</option>
-        </select>
-      </div>
-    </div>
+    <!-- PRODUCTS SECTION WITH FILTERS -->
+    <div class="products-section">
+      
+      <!-- FILTERS SIDEBAR -->
+      <aside class="filters-sidebar" id="filters-container">
+        <div class="loading">Loading filters...</div>
+      </aside>
 
-    <!-- PRODUCTS GRID -->
-    <div id="products-container" class="products-grid loading">
-      <div class="loading">Loading products...</div>
+      <!-- PRODUCTS AREA -->
+      <div>
+        <!-- PRODUCT CONTROLS -->
+        <div class="product-controls">
+          <div class="product-count">
+            <span id="product-count">Loading products...</span>
+          </div>
+          <div class="sort-controls">
+            <label for="sort-select">Sort by:</label>
+            <select id="sort-select">
+              <option value="default">Featured</option>
+              <option value="price-low">Price: Low to High</option>
+              <option value="price-high">Price: High to Low</option>
+              <option value="name">Name (A-Z)</option>
+              <option value="newest">Newest First</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- PRODUCTS GRID -->
+        <div id="products-container" class="products-grid loading">
+          <div class="loading">Loading products...</div>
+        </div>
+      </div>
+
     </div>
   </main>
 
@@ -586,5 +600,7 @@
     });
   </script>
 
+  <!-- FILTER ENGINE -->
+  <script src="../scripts/filter-engine.js"></script>
 </body>
 </html>

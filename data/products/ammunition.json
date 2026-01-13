@@ -2,6 +2,68 @@
   "category": "ammunition",
   "lastUpdated": "2026-01-13T10:30:00Z",
   "totalProducts": 2,
+  "filters": {
+    "enabled": ["ammoType", "caliber", "brand", "bulletType", "casingType", "roundCount", "price", "stock"],
+    "definitions": {
+      "ammoType": {
+        "label": "Ammunition Type",
+        "type": "checkbox",
+        "searchable": false,
+        "showCount": 5,
+        "options": []
+      },
+      "caliber": {
+        "label": "Caliber",
+        "type": "checkbox",
+        "searchable": true,
+        "showCount": 5,
+        "options": []
+      },
+      "brand": {
+        "label": "Brand",
+        "type": "checkbox",
+        "searchable": true,
+        "showCount": 8,
+        "options": []
+      },
+      "bulletType": {
+        "label": "Bullet Type",
+        "type": "checkbox",
+        "searchable": true,
+        "showCount": 5,
+        "options": []
+      },
+      "casingType": {
+        "label": "Casing Type",
+        "type": "checkbox",
+        "searchable": true,
+        "showCount": 5,
+        "options": []
+      },
+      "roundCount": {
+        "label": "Round Count",
+        "type": "checkbox",
+        "searchable": false,
+        "showCount": 5,
+        "options": []
+      },
+      "price": {
+        "label": "Price",
+        "type": "range",
+        "min": 0,
+        "max": 1000,
+        "searchable": false
+      },
+      "stock": {
+        "label": "Stock",
+        "type": "checkbox",
+        "searchable": false,
+        "options": [
+          { "value": "in-stock", "label": "Show Only In Stock" }
+        ]
+      }
+    }
+  },
   "products": [
     {
       "id": "CC9MM001",
