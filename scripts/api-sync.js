@@ -19,7 +19,7 @@ const { execSync } = require('child_process');
 // Can be overridden with environment variables: CHATTANOOGA_API_SID, CHATTANOOGA_API_TOKEN
 const API_CONFIG = {
   baseUrl: 'api.chattanoogashooting.com',
-  version: 'v5',
+  version: 'v4',
   sid: process.env.CHATTANOOGA_API_SID || '3E5B1B51AB84E327E32E0CE4478B84AD',
   token: process.env.CHATTANOOGA_API_TOKEN || '3E5B1B52C8F5F75446E38A1BBA9706B3',
 };
@@ -45,12 +45,11 @@ const log = {
 
 /**
  * Generate HTTP Basic Auth header
+ * Format: Basic SID:MD5(token) - NO Base64 encoding
  */
 function getAuthHeader() {
   const md5Token = crypto.createHash('md5').update(API_CONFIG.token).digest('hex');
-  const credentials = `${API_CONFIG.sid}:${md5Token}`;
-  const encoded = Buffer.from(credentials).toString('base64');
-  return `Basic ${encoded}`;
+  return `Basic ${API_CONFIG.sid}:${md5Token}`;
 }
 
 /**
@@ -248,7 +247,8 @@ async function fetchProductsByCategory(category, categoryConfig) {
     while (hasMore) {
       log.info(`  Loading page ${page}...`);
 
-      const endpoint = `/items?skip=${(page - 1) * pageSize}&limit=${pageSize}&category=${encodeURIComponent(categoryConfig.apiFilter)}`;
+      // API accepts page and per_page parameters
+      const endpoint = `/items?page=${page}&per_page=${pageSize}`;
       const response = await apiRequest(endpoint);
 
       if (response.items && response.items.length > 0) {
@@ -256,8 +256,13 @@ async function fetchProductsByCategory(category, categoryConfig) {
         allProducts = allProducts.concat(transformed);
         log.success(`  Loaded ${response.items.length} items (total: ${allProducts.length})`);
 
-        hasMore = response.items.length === pageSize;
-        page++;
+        // Check if we have more pages
+        if (response.pagination && response.pagination.page < response.pagination.page_count) {
+          hasMore = true;
+          page++;
+        } else {
+          hasMore = false;
+        }
       } else {
         hasMore = false;
       }
