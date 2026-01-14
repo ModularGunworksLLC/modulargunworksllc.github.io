@@ -11,15 +11,41 @@
   <link rel="stylesheet" href="styles/age-gate.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    main { max-width: 900px; margin: 0 auto; padding: 3rem 2rem; }
-    .page-title { font-size: 2.5rem; color: #181a1b; margin-bottom: 2rem; text-align: center; }
-    .contact-form { background: #f9f9f9; padding: 2rem; border-radius: 8px; }
+    main { max-width: 1200px; margin: 0 auto; padding: 3rem 2rem; }
+    .page-title { font-size: 2.5rem; color: #181a1b; margin-bottom: 3rem; text-align: center; font-weight: 700; }
+    
+    .contact-wrapper { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; margin-bottom: 4rem; }
+    
+    .contact-info { display: flex; flex-direction: column; gap: 2.5rem; }
+    .contact-info h2 { font-size: 1.8rem; color: #181a1b; margin-bottom: 1rem; font-weight: 600; }
+    .contact-info p { color: #666; line-height: 1.6; margin-bottom: 0; }
+    
+    .info-item { display: flex; gap: 1.5rem; align-items: flex-start; }
+    .info-icon { font-size: 1.5rem; color: var(--color-primary); width: 30px; flex-shrink: 0; }
+    .info-content h3 { font-size: 1rem; color: #181a1b; margin: 0 0 0.5rem 0; font-weight: 600; }
+    .info-content p { color: #666; margin: 0; font-size: 0.95rem; }
+    .info-content a { color: var(--color-primary); text-decoration: none; font-weight: 500; }
+    .info-content a:hover { text-decoration: underline; }
+    
+    .contact-form-section h2 { font-size: 1.8rem; color: #181a1b; margin-bottom: 1.5rem; font-weight: 600; }
+    .contact-form { background: #f9f9f9; padding: 2rem; border-radius: 8px; border: 1px solid #e0e0e0; }
+    
     .form-group { margin-bottom: 1.5rem; }
-    .form-group label { display: block; margin-bottom: 0.5rem; font-weight: 600; color: #181a1b; }
-    .form-group input, .form-group textarea { width: 100%; padding: 0.8rem; border: 1px solid #ddd; border-radius: 4px; font-size: 1rem; }
+    .form-group label { display: block; margin-bottom: 0.5rem; font-weight: 600; color: #181a1b; font-size: 0.95rem; }
+    .form-group input, .form-group textarea { width: 100%; padding: 0.8rem; border: 1px solid #ddd; border-radius: 4px; font-size: 1rem; font-family: Arial, sans-serif; transition: border-color 0.3s; }
+    .form-group input:focus, .form-group textarea:focus { outline: none; border-color: var(--color-primary); box-shadow: 0 0 0 3px rgba(178, 34, 34, 0.1); }
     .form-group textarea { resize: vertical; min-height: 150px; }
-    .form-btn { background: #b22222; color: #fff; padding: 0.8rem 2rem; border: none; border-radius: 4px; cursor: pointer; font-weight: 600; font-size: 1rem; }
+    
+    .form-btn { background: var(--color-primary); color: #fff; padding: 0.8rem 2rem; border: none; border-radius: 4px; cursor: pointer; font-weight: 600; font-size: 1rem; transition: background 0.3s; width: 100%; }
     .form-btn:hover { background: #8b1a1a; }
+    
+    .success-message { display: none; background: #d4edda; border: 1px solid #c3e6cb; color: #155724; padding: 1rem; border-radius: 4px; margin-bottom: 1.5rem; text-align: center; font-weight: 500; }
+    .success-message.show { display: block; }
+    
+    @media (max-width: 768px) {
+      .contact-wrapper { grid-template-columns: 1fr; }
+      .page-title { font-size: 2rem; }
+    }
   </style>
 </head>
 <body>
@@ -68,81 +94,170 @@
     </div>
   </header>
 
-  <!-- PAGE HERO -->
-  <section class="hero">
-    <div class="hero-content">
-      <h1>Contact Us</h1>
-      <p>Get in touch with Modular Gunworks LLC</p>
-    </div>
-  </section>
-
   <!-- CONTENT -->
-  <div style="max-width: 1000px; margin: 40px auto; padding: 0 20px;">
-    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-bottom: 40px;">
-      <div>
-        <h2 style="color: var(--primary-color); margin-bottom: 20px;">Get In Touch</h2>
-        <p style="margin-bottom: 20px;">Have questions? We'd love to hear from you. Send us a message and we'll respond as soon as possible.</p>
-        
-        <div style="margin-bottom: 30px;">
-          <h4 style="color: var(--dark-text); margin-bottom: 10px;">Address</h4>
-          <p style="color: var(--light-text);">Huntsville, Alabama</p>
-        </div>
-
-        <div style="margin-bottom: 30px;">
-          <h4 style="color: var(--dark-text); margin-bottom: 10px;">Email</h4>
-          <p style="color: var(--light-text);"><a href="mailto:info@modulargunworks.com" style="color: var(--primary-color);">info@modulargunworks.com</a></p>
-        </div>
-
+  <main>
+    <h1 class="page-title">Contact Us</h1>
+    
+    <div class="contact-wrapper">
+      <!-- Contact Information -->
+      <div class="contact-info">
         <div>
-          <h4 style="color: var(--dark-text); margin-bottom: 10px;">Hours</h4>
-          <p style="color: var(--light-text);">Monday - Friday: 9am - 6pm</p>
-          <p style="color: var(--light-text);">Saturday: 10am - 4pm</p>
-          <p style="color: var(--light-text);">Sunday: Closed</p>
+          <h2>Get In Touch</h2>
+          <p>Have a question? Need a service? We'd love to hear from you. Reach out to us using any of the methods below.</p>
+        </div>
+        
+        <div class="info-item">
+          <div class="info-icon"><i class="fas fa-phone"></i></div>
+          <div class="info-content">
+            <h3>Phone</h3>
+            <p><a href="tel:+12563843852">(256) 384-3852</a></p>
+          </div>
+        </div>
+        
+        <div class="info-item">
+          <div class="info-icon"><i class="fas fa-envelope"></i></div>
+          <div class="info-content">
+            <h3>Email</h3>
+            <p><a href="mailto:modulargunworks@gmail.com">modulargunworks@gmail.com</a></p>
+          </div>
+        </div>
+        
+        <div class="info-item">
+          <div class="info-icon"><i class="fas fa-map-marker-alt"></i></div>
+          <div class="info-content">
+            <h3>Location</h3>
+            <p>Huntsville, Alabama</p>
+          </div>
+        </div>
+        
+        <div class="info-item">
+          <div class="info-icon"><i class="fas fa-clock"></i></div>
+          <div class="info-content">
+            <h3>Hours</h3>
+            <p>Monday - Friday: 9:00 AM - 6:00 PM<br>Saturday: 10:00 AM - 4:00 PM<br>Sunday: Closed</p>
+          </div>
         </div>
       </div>
-
-      <div>
-        <h2 style="color: var(--primary-color); margin-bottom: 20px;">Send us a Message</h2>
-        <form style="display: flex; flex-direction: column; gap: 15px;">
-          <input type="text" placeholder="Your Name" style="padding: 10px; border: 1px solid var(--border-color); border-radius: 4px;">
-          <input type="email" placeholder="Your Email" style="padding: 10px; border: 1px solid var(--border-color); border-radius: 4px;">
-          <input type="text" placeholder="Subject" style="padding: 10px; border: 1px solid var(--border-color); border-radius: 4px;">
-          <textarea placeholder="Message" rows="5" style="padding: 10px; border: 1px solid var(--border-color); border-radius: 4px; font-family: Arial, sans-serif;"></textarea>
-          <button type="submit" class="cta-btn" style="align-self: flex-start;">Send Message</button>
+      
+      <!-- Contact Form -->
+      <div class="contact-form-section">
+        <h2>Send us a Message</h2>
+        <div id="successMessage" class="success-message">Thank you! Your message has been sent. We'll get back to you soon.</div>
+        
+        <form id="contactForm" class="contact-form">
+          <div class="form-group">
+            <label for="name">Full Name *</label>
+            <input type="text" id="name" name="name" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="email">Email Address *</label>
+            <input type="email" id="email" name="email" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="phone">Phone Number</label>
+            <input type="tel" id="phone" name="phone">
+          </div>
+          
+          <div class="form-group">
+            <label for="subject">Subject *</label>
+            <input type="text" id="subject" name="subject" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="message">Message *</label>
+            <textarea id="message" name="message" required></textarea>
+          </div>
+          
+          <button type="submit" class="form-btn">Send Message</button>
         </form>
       </div>
     </div>
-  </div>
+  </main>
 
   <!-- FOOTER -->
-  <footer class="site-footer">
+  <footer>
     <div class="footer-content">
       <div class="footer-section">
-        <h4>About Us</h4>
-        <p>Modular Gunworks LLC - Your trusted source for quality firearms and tactical gear.</p>
-      </div>
-      <div class="footer-section">
-        <h4>Quick Links</h4>
+        <h3>Shop</h3>
         <ul>
-          <li><a href="about.html">About</a></li>
+          <li><a href="shop/ammunition.html">Ammunition</a></li>
+          <li><a href="shop/magazines.html">Magazines</a></li>
+          <li><a href="shop/gun-parts.html">Gun Parts</a></li>
+          <li><a href="shop/gear.html">Gear</a></li>
+          <li><a href="shop/optics.html">Optics</a></li>
+          <li><a href="shop/reloading.html">Reloading</a></li>
+          <li><a href="shop/survival.html">Survival</a></li>
+          <li><a href="shop/brands.html">Brands</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-section">
+        <h3>Company</h3>
+        <ul>
+          <li><a href="about.html">About Us</a></li>
           <li><a href="contact.html">Contact</a></li>
           <li><a href="faq.html">FAQ</a></li>
+          <li><a href="blog.html">Blog</a></li>
         </ul>
       </div>
+
       <div class="footer-section">
-        <h4>Legal</h4>
+        <h3>Legal</h3>
         <ul>
-          <li><a href="terms.html">Terms of Service</a></li>
+          <li><a href="terms.html">Terms & Conditions</a></li>
           <li><a href="privacy.html">Privacy Policy</a></li>
+          <li><a href="returns.html">Returns</a></li>
+          <li><a href="order-status.html">Order Status</a></li>
         </ul>
       </div>
     </div>
+
     <div class="footer-bottom">
-      <p>&copy; 2026 Modular Gunworks LLC. All rights reserved.</p>
+      <p>© 2026 Modular Gunworks LLC. All rights reserved. | Veteran-Owned Business in Huntsville, Alabama</p>
+      <p>All firearm sales comply with federal, state, and local laws. FFL required for applicable items.</p>
     </div>
+  </footer>
+
   <!-- Age Gate Script -->
   <script src="scripts/age-gate.js"></script>
-  <!-- Layout Loader -->
-  <script src="scripts/load-layout.js"></script>
+  
+  <!-- Google Form Integration Script -->
+  <script>
+    document.getElementById('contactForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const formData = new FormData(this);
+      const googleFormURL = 'https://docs.google.com/forms/d/e/1FAIpQLSelwNZfvAtB8rgseZgOgomLgP_fXYG50XDPwpjFhEUBuWcMZQ/formResponse';
+      
+      // Map form fields to Google Form entry IDs
+      const data = {
+        'entry.211322115': formData.get('name'),      // Name
+        'entry.23895783': formData.get('email'),      // Email
+        'entry.76844747': formData.get('phone'),      // Phone/Number
+        'entry.350375154': formData.get('subject'),   // Subject
+        'entry.2389575830': formData.get('message')   // Message (adjust if needed)
+      };
+      
+      fetch(googleFormURL, {
+        method: 'POST',
+        body: new URLSearchParams(data),
+        mode: 'no-cors'
+      }).then(() => {
+        // Show success message
+        document.getElementById('successMessage').classList.add('show');
+        // Reset form
+        document.getElementById('contactForm').reset();
+        // Hide success message after 5 seconds
+        setTimeout(() => {
+          document.getElementById('successMessage').classList.remove('show');
+        }, 5000);
+      }).catch(error => {
+        console.error('Error:', error);
+        alert('There was an error sending your message. Please try again.');
+      });
+    });
+  </script>
 </body>
 </html>
