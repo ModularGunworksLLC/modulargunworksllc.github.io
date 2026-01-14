@@ -43,7 +43,6 @@ body {
   margin: 0;
   padding: 0;
   line-height: 1.6;
-  border: 8px solid var(--color-bg-dark); /* bold border for logo style */
 }
 
 h1, h2, h3, h4, h5, h6 {
