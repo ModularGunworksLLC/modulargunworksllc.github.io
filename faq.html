@@ -78,47 +78,658 @@
   <section class="hero">
     <div class="hero-content">
       <h1>Frequently Asked Questions</h1>
-      <p>Find answers to common questions about our products and services</p>
+      <p>Find answers to common questions about our gunsmithing services, FFL transfers, and products</p>
     </div>
   </section>
 
   <!-- CONTENT -->
-  <div style="max-width: 800px; margin: 40px auto; padding: 0 20px;">
-    <div style="background: var(--light-bg); padding: 20px; border-radius: 8px; margin-bottom: 20px;">
-      <h3 style="color: var(--primary-color); margin-bottom: 10px;">Do you ship nationwide?</h3>
-      <p style="color: var(--light-text);">Yes, we ship to most states. Please note that firearms, ammunition, and certain items are subject to state and local restrictions. We comply with all applicable laws and regulations.</p>
+  <main style="max-width: 950px; margin: 0 auto; padding: 3rem 2rem;">
+    
+    <!-- Search Bar -->
+    <div style="margin-bottom: 3rem; text-align: center;">
+      <input 
+        type="text" 
+        id="faq-search" 
+        placeholder="Search FAQs..." 
+        style="width: 100%; max-width: 400px; padding: 12px 16px; font-size: 1rem; border: 2px solid #e0e0e0; border-radius: 6px; font-family: inherit;"
+      >
     </div>
 
-    <div style="background: var(--light-bg); padding: 20px; border-radius: 8px; margin-bottom: 20px;">
-      <h3 style="color: var(--primary-color); margin-bottom: 10px;">What is your return policy?</h3>
-      <p style="color: var(--light-text);">We offer a 30-day return policy on most items in original condition. Firearms and ammunition may have additional restrictions. Contact us for specific details.</p>
+    <!-- GUNSMITHING SERVICES -->
+    <div class="faq-category">
+      <h2 class="faq-category-title">Gunsmithing Services</h2>
+      
+      <div class="faq-item">
+        <button class="faq-question">
+          <span>What gunsmithing services do you offer?</span>
+          <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="faq-answer">
+          <p>We provide a full range of professional gunsmithing services including:</p>
+          <ul style="margin: 1rem 0 0 1.5rem;">
+            <li>AR-15 and rifle customization</li>
+            <li>Bore sighting and scope mounting</li>
+            <li>Trigger work and performance tuning</li>
+            <li>Barrel installation and headspacing</li>
+            <li>Stock and handguard fitting</li>
+            <li>Maintenance and repairs</li>
+            <li>Custom builds to specification</li>
+            <li>Optics alignment and zeroing</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">
+          <span>What is your typical turnaround time?</span>
+          <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="faq-answer">
+          <p>Turnaround times vary based on the complexity of work:</p>
+          <ul style="margin: 1rem 0 0 1.5rem;">
+            <li><strong>Simple repairs/maintenance:</strong> 1-2 weeks</li>
+            <li><strong>Standard gunsmithing:</strong> 2-4 weeks</li>
+            <li><strong>Custom builds:</strong> 4-8 weeks</li>
+          </ul>
+          <p style="margin-top: 1rem;">We'll provide you with a specific timeline when you drop off your firearm. During peak seasons, times may be slightly longer.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">
+          <span>Do you warranty gunsmithing work?</span>
+          <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="faq-answer">
+          <p>Yes! We stand behind our work. All gunsmithing services are covered by our warranty. If you experience any issues with our work within a reasonable timeframe, we'll make it right at no additional cost. Warranty does not cover damage from misuse or accidents.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">
+          <span>Can you work on my specific firearm?</span>
+          <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="faq-answer">
+          <p>We specialize in AR-15 platforms and modern rifles. We also work on pistols, shotguns, and other firearms. Contact us to discuss your specific needs - we'll let you know if we can help or recommend someone who can.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">
+          <span>How much do your gunsmithing services cost?</span>
+          <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="faq-answer">
+          <p>Pricing depends on the specific work required. We charge hourly labor rates plus any parts needed. For an accurate quote, bring your firearm in or contact us with details about the work you need done. We'll provide a written estimate before proceeding.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">
+          <span>Do you do bore sighting and scope mounting?</span>
+          <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="faq-answer">
+          <p>Yes! We provide professional bore sighting and scope mounting services. We use precision equipment to ensure your optics are properly installed and aligned. This is essential for accurate shooting and can be done while you wait on many setups.</p>
+        </div>
+      </div>
     </div>
 
-    <div style="background: var(--light-bg); padding: 20px; border-radius: 8px; margin-bottom: 20px;">
-      <h3 style="color: var(--primary-color); margin-bottom: 10px;">How long does gunsmithing take?</h3>
-      <p style="color: var(--light-text);">Turnaround time depends on the complexity of the work. Simple repairs typically take 1-2 weeks, while custom builds may take 4-8 weeks. We'll provide an estimate when you drop off your firearm.</p>
+    <!-- FFL TRANSFERS -->
+    <div class="faq-category">
+      <h2 class="faq-category-title">FFL Transfers</h2>
+      
+      <div class="faq-item">
+        <button class="faq-question">
+          <span>What is an FFL transfer?</span>
+          <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="faq-answer">
+          <p>An FFL (Federal Firearms License) transfer is the legal process for transferring firearm ownership through a licensed dealer. We are an FFL dealer in Alabama and can receive firearms from other dealers or private sellers and legally transfer them to you after background checks and compliance with all federal and state laws.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">
+          <span>What is your FFL transfer process?</span>
+          <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="faq-answer">
+          <p>Here's how our FFL transfer process works:</p>
+          <ol style="margin: 1rem 0 0 1.5rem;">
+            <li>Contact us with the firearm details you want to transfer</li>
+            <li>Provide the information of where the firearm will ship from</li>
+            <li>We receive the firearm at our location</li>
+            <li>You visit us with a valid government ID</li>
+            <li>We complete the required ATF Form 4473</li>
+            <li>You undergo a background check (NICS)</li>
+            <li>After approval (typically 0-3 business days), you take possession</li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">
+          <span>What states can you transfer firearms to?</span>
+          <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="faq-answer">
+          <p>We can transfer firearms to Alabama residents. For transfers to out-of-state residents, we can coordinate with FFL dealers in their state. Contact us to discuss your location and we'll let you know our options.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">
+          <span>How long does an FFL transfer take?</span>
+          <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="faq-answer">
+          <p>Once we receive the firearm, the transfer typically takes 5-7 business days. This includes the background check processing time. Most NICS checks are approved immediately, but some may take up to 3 business days.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">
+          <span>What documents do I need for an FFL transfer?</span>
+          <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="faq-answer">
+          <p>You'll need:</p>
+          <ul style="margin: 1rem 0 0 1.5rem;">
+            <li>Valid government-issued photo ID (driver's license, passport, etc.)</li>
+            <li>Proof of Alabama residency (utility bill, lease, or bank statement)</li>
+            <li>Information about where the firearm is being shipped from</li>
+          </ul>
+          <p style="margin-top: 1rem;">We'll handle all ATF paperwork and documentation.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">
+          <span>What is the transfer fee?</span>
+          <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="faq-answer">
+          <p>Our FFL transfer fee is competitive and clearly communicated upfront. Contact us at <strong>(256) 384-3852</strong> or email <strong>modulargunworks@gmail.com</strong> for current pricing.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">
+          <span>Can I transfer a firearm if I have a record?</span>
+          <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="faq-answer">
+          <p>Federal law prohibits firearm possession for certain individuals, including those with felony convictions or certain misdemeanors. The NICS background check will determine eligibility. We comply with all federal and state laws and cannot transfer to prohibited persons.</p>
+        </div>
+      </div>
     </div>
 
-    <div style="background: var(--light-bg); padding: 20px; border-radius: 8px; margin-bottom: 20px;">
-      <h3 style="color: var(--primary-color); margin-bottom: 10px;">What is your FFL transfer process?</h3>
-      <p style="color: var(--light-text);">Contact us with the firearm details, complete required paperwork, undergo background check, and pick up after the waiting period. We handle all compliance and documentation.</p>
+    <!-- SHIPPING & RETURNS -->
+    <div class="faq-category">
+      <h2 class="faq-category-title">Shipping & Returns</h2>
+      
+      <div class="faq-item">
+        <button class="faq-question">
+          <span>Do you ship nationwide?</span>
+          <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="faq-answer">
+          <p>Yes, we ship to most states. Please note that firearms, ammunition, and certain regulated items are subject to state and local restrictions. We comply with all applicable laws and will inform you of any restrictions for your area during checkout.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">
+          <span>What is your return policy?</span>
+          <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="faq-answer">
+          <p>We offer a 30-day return policy on most items in original, unused condition. Firearms and ammunition may have additional restrictions or cannot be returned per federal law. Contact us for specific details on any item you wish to return.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">
+          <span>What are your shipping costs?</span>
+          <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="faq-answer">
+          <p>Shipping costs depend on the weight, size, and destination of your order. We offer competitive shipping rates through major carriers. Costs will be calculated and displayed before you complete your purchase.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">
+          <span>How do I track my order?</span>
+          <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="faq-answer">
+          <p>You'll receive a tracking number via email when your order ships. Use this number to track your package through the carrier's website. If you don't receive a tracking number, contact us immediately.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">
+          <span>What if my order arrives damaged?</span>
+          <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="faq-answer">
+          <p>If your order arrives damaged, contact us immediately with photos of the damage and packaging. We'll work with you to either replace the item or issue a full refund. Please don't discard the packaging - we may need to file a claim with the carrier.</p>
+        </div>
+      </div>
     </div>
 
-    <div style="background: var(--light-bg); padding: 20px; border-radius: 8px; margin-bottom: 20px;">
-      <h3 style="color: var(--primary-color); margin-bottom: 10px;">Do you offer price matching?</h3>
-      <p style="color: var(--light-text);">We offer competitive pricing on all our products. Contact us if you find a better price on an identical item from an authorized retailer.</p>
+    <!-- PRODUCTS & INVENTORY -->
+    <div class="faq-category">
+      <h2 class="faq-category-title">Products & Inventory</h2>
+      
+      <div class="faq-item">
+        <button class="faq-question">
+          <span>What brands do you carry?</span>
+          <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="faq-answer">
+          <p>We carry a carefully curated selection of high-quality brands including ammunition manufacturers, optics makers, tactical gear companies, and firearms brands. We focus on quality and reliability over quantity. Contact us to inquire about a specific brand.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">
+          <span>Can I special order items?</span>
+          <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="faq-answer">
+          <p>Yes! If we don't have an item in stock, we can often special order it for you. Contact us with the specific product details and we'll check availability and pricing with our distributors.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">
+          <span>Do you offer price matching?</span>
+          <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="faq-answer">
+          <p>We offer competitive pricing on all our products. If you find a better price on an identical item from an authorized retailer, contact us to discuss. We may be able to match or beat it.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">
+          <span>Are your prices competitive?</span>
+          <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="faq-answer">
+          <p>Absolutely. We believe in fair pricing that reflects the quality of our products and services. As a veteran-owned business, we're committed to providing value to our customers. Compare our prices with others - we think you'll find we're competitive!</p>
+        </div>
+      </div>
     </div>
 
-    <div style="background: var(--light-bg); padding: 20px; border-radius: 8px; margin-bottom: 20px;">
-      <h3 style="color: var(--primary-color); margin-bottom: 10px;">Are your products covered by warranty?</h3>
-      <p style="color: var(--light-text);">Most firearms come with manufacturer warranties. Accessories and gear have varying warranties depending on the brand. We're happy to explain warranty details for specific products.</p>
+    <!-- WARRANTY & SERVICE -->
+    <div class="faq-category">
+      <h2 class="faq-category-title">Warranty & Service</h2>
+      
+      <div class="faq-item">
+        <button class="faq-question">
+          <span>Are your products covered by warranty?</span>
+          <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="faq-answer">
+          <p>Most firearms come with manufacturer warranties. Accessories, ammunition, and gear have varying warranties depending on the brand. We're happy to explain specific warranty details for any product you're interested in.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">
+          <span>Do you repair firearms?</span>
+          <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="faq-answer">
+          <p>Yes, we provide professional repair services for most firearms. Whether it's a simple fix or a more complex repair, bring your firearm in or contact us to discuss what needs to be done. We'll provide an estimate before proceeding.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">
+          <span>Can you maintain my firearms?</span>
+          <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="faq-answer">
+          <p>Yes! Regular maintenance is essential for firearm reliability and longevity. We offer professional cleaning, lubrication, inspection, and maintenance services. We can set up a maintenance schedule if you prefer regular check-ups.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">
+          <span>How do I contact you about a defective product?</span>
+          <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="faq-answer">
+          <p>If you experience an issue with a product, contact us immediately at <strong>(256) 384-3852</strong> or <strong>modulargunworks@gmail.com</strong>. We'll work with you to troubleshoot, repair, replace, or refund the item as appropriate under warranty.</p>
+        </div>
+      </div>
     </div>
 
-    <div style="text-align: center; margin-top: 40px;">
-      <p style="color: var(--light-text); margin-bottom: 15px;">Didn't find your answer?</p>
-      <a href="contact.html" class="cta-btn">Contact Us</a>
+    <!-- ORDERS & ACCOUNTS -->
+    <div class="faq-category">
+      <h2 class="faq-category-title">Orders & Accounts</h2>
+      
+      <div class="faq-item">
+        <button class="faq-question">
+          <span>How do I place an order?</span>
+          <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="faq-answer">
+          <p>You can place an order through our website by browsing our product categories and adding items to your cart. We accept all major credit cards. You can also call us at <strong>(256) 384-3852</strong> to place an order by phone.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">
+          <span>Can I cancel or modify my order?</span>
+          <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="faq-answer">
+          <p>If your order hasn't shipped yet, we may be able to cancel or modify it. Contact us immediately with your order number. If it has already shipped, you'll need to refuse delivery or process a return.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">
+          <span>What payment methods do you accept?</span>
+          <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="faq-answer">
+          <p>We accept all major credit cards including Visa, Mastercard, American Express, and Discover. We also accept PayPal. All transactions are secure and encrypted.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">
+          <span>Is your website secure?</span>
+          <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="faq-answer">
+          <p>Yes, our website uses SSL encryption to protect your personal and payment information. Look for the padlock icon in your browser's address bar to verify the connection is secure before entering any sensitive information.</p>
+        </div>
+      </div>
     </div>
-  </div>
+
+    <!-- STORE INFORMATION -->
+    <div class="faq-category">
+      <h2 class="faq-category-title">Store Information</h2>
+      
+      <div class="faq-item">
+        <button class="faq-question">
+          <span>Can I visit you in person?</span>
+          <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="faq-answer">
+          <p>Yes! We welcome customers to visit our location in Huntsville, Alabama. You can drop off firearms for gunsmithing, pick up transfers, browse our products, or discuss custom work in person. Call ahead to make sure someone is available.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">
+          <span>What are your hours?</span>
+          <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="faq-answer">
+          <p><strong>Monday - Friday:</strong> 9:00 AM - 6:00 PM<br><strong>Saturday:</strong> 10:00 AM - 4:00 PM<br><strong>Sunday:</strong> Closed</p>
+          <p style="margin-top: 1rem;">Call ahead at <strong>(256) 384-3852</strong> to confirm hours or schedule an appointment.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">
+          <span>Where are you located?</span>
+          <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="faq-answer">
+          <p>We're located in <strong>Huntsville, Alabama</strong>. For our exact address and directions, visit our <a href="contact.html">Contact page</a> or call us at <strong>(256) 384-3852</strong>.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">
+          <span>Can I schedule an appointment?</span>
+          <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="faq-answer">
+          <p>Yes! For gunsmithing work or consultations, we recommend calling ahead to schedule an appointment. This ensures you get dedicated time with one of our experienced gunsmiths. Call us at <strong>(256) 384-3852</strong>.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">
+          <span>Are you veteran-owned?</span>
+          <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="faq-answer">
+          <p>Yes! Modular Gunworks LLC is proudly veteran-owned. We serve the firearms and tactical community with respect, professionalism, and quality service. We're committed to supporting our veterans and military community.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- CONTACT CTA -->
+    <div style="background: linear-gradient(135deg, #b22222 0%, #8a1a1a 100%); color: white; padding: 3rem 2rem; border-radius: 12px; text-align: center; margin-top: 4rem;">
+      <h3 style="font-size: 1.8rem; margin-bottom: 1rem;">Still have questions?</h3>
+      <p style="font-size: 1.1rem; margin-bottom: 2rem;">Our team is here to help. Reach out anytime.</p>
+      <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+        <a href="contact.html" style="background: white; color: #b22222; padding: 12px 32px; border-radius: 6px; text-decoration: none; font-weight: 600; transition: all 0.3s ease;">Send us a Message</a>
+        <a href="tel:+1256384385" style="background: rgba(255,255,255,0.2); color: white; padding: 12px 32px; border-radius: 6px; text-decoration: none; font-weight: 600; border: 2px solid white; transition: all 0.3s ease;">Call (256) 384-3852</a>
+      </div>
+    </div>
+
+  </main>
+
+  <style>
+    .faq-category {
+      margin-bottom: 4rem;
+    }
+
+    .faq-category-title {
+      font-size: 1.8rem;
+      color: #b22222;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 3px solid #b22222;
+      font-weight: 700;
+    }
+
+    .faq-item {
+      background: white;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+      overflow: hidden;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+      transition: box-shadow 0.3s ease;
+    }
+
+    .faq-item:hover {
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .faq-question {
+      width: 100%;
+      padding: 1.5rem;
+      background: #f9f9f9;
+      border: none;
+      cursor: pointer;
+      font-weight: 600;
+      color: #181a1b;
+      font-size: 1rem;
+      text-align: left;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      transition: background-color 0.3s ease;
+      font-family: inherit;
+    }
+
+    .faq-question:hover {
+      background-color: #f0f0f0;
+    }
+
+    .faq-question.active {
+      background-color: #e8e8e8;
+    }
+
+    .faq-question i {
+      flex-shrink: 0;
+      transition: transform 0.3s ease;
+      color: #b22222;
+    }
+
+    .faq-question.active i {
+      transform: rotate(180deg);
+    }
+
+    .faq-answer {
+      padding: 1.5rem;
+      color: #555;
+      line-height: 1.7;
+      background: #fafafa;
+      display: none;
+      border-top: 1px solid #e0e0e0;
+    }
+
+    .faq-answer.active {
+      display: block;
+      animation: slideDown 0.3s ease;
+    }
+
+    .faq-answer ul, .faq-answer ol {
+      padding: 0;
+      margin: 0;
+      color: #555;
+    }
+
+    .faq-answer li {
+      margin-bottom: 0.5rem;
+    }
+
+    .faq-answer a {
+      color: #b22222;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .faq-answer a:hover {
+      text-decoration: underline;
+    }
+
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    #faq-search {
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      transition: all 0.3s ease;
+    }
+
+    #faq-search:focus {
+      outline: none;
+      border-color: #b22222;
+      box-shadow: 0 4px 12px rgba(178, 34, 34, 0.15);
+    }
+
+    .faq-hidden {
+      display: none;
+    }
+
+    @media (max-width: 768px) {
+      .faq-category-title {
+        font-size: 1.4rem;
+      }
+
+      .faq-question {
+        padding: 1.2rem;
+        font-size: 0.95rem;
+      }
+
+      .faq-answer {
+        padding: 1.2rem;
+      }
+    }
+  </style>
+
+  <script>
+    // FAQ Accordion Functionality
+    document.addEventListener('DOMContentLoaded', function() {
+      const faqQuestions = document.querySelectorAll('.faq-question');
+      const searchInput = document.getElementById('faq-search');
+
+      // Accordion toggle
+      faqQuestions.forEach(question => {
+        question.addEventListener('click', function() {
+          const answer = this.nextElementSibling;
+          const isActive = answer.classList.contains('active');
+
+          // Close all other accordions
+          document.querySelectorAll('.faq-answer').forEach(a => {
+            a.classList.remove('active');
+          });
+          document.querySelectorAll('.faq-question').forEach(q => {
+            q.classList.remove('active');
+          });
+
+          // Open clicked accordion if it wasn't open
+          if (!isActive) {
+            answer.classList.add('active');
+            this.classList.add('active');
+          }
+        });
+      });
+
+      // Search functionality
+      searchInput.addEventListener('input', function() {
+        const searchTerm = this.value.toLowerCase();
+        const faqItems = document.querySelectorAll('.faq-item');
+        const faqCategories = document.querySelectorAll('.faq-category');
+
+        let visibleCategories = 0;
+
+        faqCategories.forEach(category => {
+          let visibleItems = 0;
+
+          category.querySelectorAll('.faq-item').forEach(item => {
+            const question = item.querySelector('.faq-question span').textContent.toLowerCase();
+            const answer = item.querySelector('.faq-answer').textContent.toLowerCase();
+
+            if (question.includes(searchTerm) || answer.includes(searchTerm)) {
+              item.classList.remove('faq-hidden');
+              visibleItems++;
+            } else {
+              item.classList.add('faq-hidden');
+            }
+          });
+
+          if (visibleItems > 0) {
+            category.style.display = 'block';
+            visibleCategories++;
+          } else {
+            category.style.display = 'none';
+          }
+        });
+
+        // Show "no results" message if needed
+        if (visibleCategories === 0 && searchTerm !== '') {
+          // You can add a "no results" message here if desired
+        }
+      });
+    });
+  </script>
 
   <!-- FOOTER -->
   <footer class="site-footer">
