@@ -173,6 +173,17 @@
       color: var(--color-primary);
     }
 
+    /* PAGE BANNER */
+    .page-banner {
+      background: linear-gradient(90deg, var(--color-primary) 0%, var(--color-accent) 100%);
+      color: #fff;
+      padding: 0.8rem 2rem;
+      text-align: center;
+      font-weight: 600;
+      font-size: 1rem;
+      letter-spacing: 1px;
+    }
+
     /* MAIN CONTENT */
     main {
       max-width: 1300px;
@@ -182,19 +193,15 @@
 
     .page-header {
       margin-bottom: 2rem;
-    }
-
-    .page-header h1 {
-      font-size: 2.2rem;
-      color: var(--color-bg-dark);
-      margin-bottom: 0.5rem;
       border-left: 5px solid var(--color-primary);
       padding-left: 1rem;
     }
 
-    .page-header p {
-      color: #666;
-      font-size: 1rem;
+    .page-tagline {
+      color: var(--color-primary);
+      font-size: 1.1rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
     }
 
     /* FILTERS/SORTING */
@@ -350,11 +357,14 @@
       <a href="services.html">Services</a>
     </nav>
 
+  <!-- PAGE BANNER -->
+  <div class="page-banner">
+    In Stock • Ships Fast • Best Prices
+  </div>
+
   <!-- MAIN CONTENT -->
   <main>
     <div class="page-header">
-      <h1>Ammunition</h1>
-      <p>Live inventory directly from our wholesaler. Prices and availability update automatically.</p>
     </div>
 
     <!-- PRODUCTS SECTION WITH FILTERS -->
