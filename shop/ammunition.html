@@ -17,6 +17,7 @@
   <link rel="stylesheet" href="../styles/product-cards.css">
   <link rel="stylesheet" href="../styles/filters.css">
   <link rel="stylesheet" href="../styles/age-gate.css">
+  <link rel="stylesheet" href="../styles/products.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="icon" type="image/png" href="../favicon.png">
   
@@ -395,8 +396,10 @@
         </div>
 
         <!-- PRODUCTS GRID -->
-        <div id="products-container" class="products-grid loading">
-          <div class="loading">Loading products...</div>
+        <div id="products-container" class="products-grid">
+          <div class="products-loading">
+            <i class="fas fa-spinner fa-spin"></i> Loading products from inventory...
+          </div>
         </div>
       </div>
 
@@ -623,5 +626,85 @@
 
   <!-- FILTER ENGINE -->
   <script src="../scripts/filter-engine.js"></script>
+
+  <!-- PRODUCT LOADER -->
+  <script src="../scripts/product-loader.js"></script>
+  <script>
+    // Initialize product loader for ammunition category
+    const loader = new ProductLoader();
+    
+    document.addEventListener('DOMContentLoaded', async () => {
+      try {
+        // Load products from Chattanooga API (stored in JSON)
+        const products = await loader.loadProducts('ammunition');
+        
+        if (products.length === 0) {
+          document.getElementById('products-container').innerHTML = `
+            <div class="products-empty">
+              <i class="fas fa-exclamation-circle"></i>
+              <p>No ammunition products available at this time.</p>
+              <p>Please check back soon or contact us at (256) 384-3852</p>
+            </div>
+          `;
+          return;
+        }
+
+        // Update product count
+        const stats = loader.getStats();
+        document.getElementById('product-count').textContent = 
+          `${stats.inStock} in stock • ${stats.total} total products`;
+
+        // Render products
+        loader.renderProducts('products-container', {
+          sortBy: 'name',
+          inStockOnly: false
+        });
+
+        // Handle sorting
+        document.getElementById('sort-select').addEventListener('change', (e) => {
+          const sortBy = e.target.value === 'price-low' || e.target.value === 'price-high' ? 'price' : 'name';
+          const filtered = [...loader.products];
+          
+          if (e.target.value === 'price-high') {
+            filtered.sort((a, b) => (b.customPrice || b.retailPrice) - (a.customPrice || a.retailPrice));
+          } else if (e.target.value === 'price-low') {
+            filtered.sort((a, b) => (a.customPrice || a.retailPrice) - (b.customPrice || b.retailPrice));
+          } else {
+            filtered.sort((a, b) => a.name.localeCompare(b.name));
+          }
+          
+          // Render sorted products
+          document.getElementById('products-container').innerHTML = filtered
+            .map(p => loader.defaultTemplate(p))
+            .join('');
+          loader.attachEventListeners(document.getElementById('products-container'));
+        });
+
+        // Handle search
+        document.getElementById('search-btn').addEventListener('click', () => {
+          const results = loader.search(document.getElementById('search-input').value);
+          document.getElementById('products-container').innerHTML = results.length > 0
+            ? results.map(p => loader.defaultTemplate(p)).join('')
+            : '<div class="products-empty"><p>No products match your search.</p></div>';
+          loader.attachEventListeners(document.getElementById('products-container'));
+        });
+
+        document.getElementById('search-input').addEventListener('keypress', (e) => {
+          if (e.key === 'Enter') {
+            document.getElementById('search-btn').click();
+          }
+        });
+
+      } catch (error) {
+        console.error('Error loading products:', error);
+        document.getElementById('products-container').innerHTML = `
+          <div class="products-empty">
+            <i class="fas fa-exclamation-triangle"></i>
+            <p>Error loading products. Please try again later.</p>
+          </div>
+        `;
+      }
+    });
+  </script>
 </body>
 </html>
