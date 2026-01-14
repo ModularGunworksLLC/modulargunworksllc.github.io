@@ -237,15 +237,15 @@
       e.preventDefault();
       
       const formData = new FormData(this);
-      const googleFormURL = 'https://docs.google.com/forms/d/e/1FAIpQLSelwNZfvAtB8rgseZgOgomLgP_fXYG50XDPwpjFhEUBuWcMZQ/formResponse';
+      const googleFormURL = 'https://docs.google.com/forms/d/e/1KOtMjVoxL_iKmDV5bjiEyJHOEyluonehLZS39c5_icI/formResponse';
       
       // Map form fields to Google Form entry IDs
       const data = {
-        'entry.211322115': formData.get('name'),      // Name
-        'entry.23895783': formData.get('email'),      // Email
-        'entry.76844747': formData.get('phone'),      // Phone/Number
+        'entry.851312554': formData.get('name'),      // Name
+        'entry.211322115': formData.get('email'),     // Email
+        'entry.768844474': formData.get('phone'),     // Phone/Number
         'entry.350375154': formData.get('subject'),   // Subject
-        'entry.2389575830': formData.get('message')   // Message (adjust if needed)
+        'entry.23895830': formData.get('message')     // Message
       };
       
       fetch(googleFormURL, {

@@ -12,10 +12,146 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     main { max-width: 1200px; margin: 0 auto; padding: 3rem 2rem; }
-    .page-title { font-size: 2.5rem; color: #181a1b; margin-bottom: 2rem; }
+    .page-title { font-size: 2.8rem; color: #181a1b; margin-bottom: 0.5rem; font-weight: 700; }
+    .page-subtitle { font-size: 1.1rem; color: #b22222; margin-bottom: 2rem; font-weight: 500; letter-spacing: 0.5px; }
     .content-section { background: #fff; border: 1px solid #e0e0e0; border-radius: 8px; padding: 2rem; margin-bottom: 2rem; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
     .content-section h2 { font-size: 1.5rem; color: #181a1b; margin-bottom: 1rem; font-weight: 600; }
     .content-section p { color: #666; line-height: 1.6; margin-bottom: 1rem; }
+    
+    /* Enhanced Hero */
+    .hero-section {
+      background: linear-gradient(135deg, #b22222 0%, #1a2c4b 100%);
+      color: white;
+      padding: 50px;
+      border-radius: 8px;
+      margin-bottom: 60px;
+      box-shadow: 0 4px 12px rgba(178, 34, 34, 0.2);
+      text-align: center;
+    }
+    .hero-section p {
+      font-size: 1.4rem;
+      font-weight: 400;
+      line-height: 1.8;
+      margin: 0;
+      color: #fff;
+    }
+    
+    /* Section Headers */
+    .section-header {
+      display: flex;
+      align-items: center;
+      margin-top: 50px;
+      margin-bottom: 25px;
+      padding-bottom: 15px;
+      border-bottom: 2px solid #b22222;
+    }
+    .section-header i {
+      font-size: 2rem;
+      color: #b22222;
+      margin-right: 15px;
+      width: 45px;
+    }
+    .section-header h2 {
+      color: #181a1b;
+      margin: 0;
+      font-size: 2rem;
+    }
+    
+    /* Values Grid Enhanced */
+    .values-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 25px;
+      margin-bottom: 50px;
+    }
+    .value-card {
+      padding: 30px;
+      background: linear-gradient(135deg, #f9f9f9 0%, #f5f5f5 100%);
+      border-radius: 8px;
+      border-left: 5px solid #b22222;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      position: relative;
+    }
+    .value-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(178, 34, 34, 0.15);
+      border-left-color: #1a2c4b;
+    }
+    .value-card-icon {
+      font-size: 2.5rem;
+      color: #b22222;
+      margin-bottom: 15px;
+    }
+    .value-card h3 {
+      color: #181a1b;
+      margin: 0 0 10px 0;
+      font-size: 1.3rem;
+      font-weight: 700;
+    }
+    .value-card p {
+      color: #555;
+      line-height: 1.7;
+      margin: 0;
+      font-size: 0.95rem;
+    }
+    
+    /* Why Shop List */
+    .why-shop-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      margin-bottom: 40px;
+    }
+    .why-shop-item {
+      display: flex;
+      padding: 20px;
+      background: #f9f9f9;
+      border-radius: 6px;
+      border-left: 4px solid #b22222;
+      transition: all 0.3s ease;
+    }
+    .why-shop-item:hover {
+      background: #fff;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      border-left-color: #1a2c4b;
+    }
+    .why-shop-icon {
+      font-size: 1.8rem;
+      color: #b22222;
+      margin-right: 15px;
+      min-width: 40px;
+      text-align: center;
+    }
+    .why-shop-content {
+      color: #333;
+      line-height: 1.6;
+      font-size: 0.95rem;
+    }
+    .why-shop-content strong {
+      color: #181a1b;
+      font-weight: 600;
+    }
+    
+    /* Divider */
+    .section-divider {
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #b22222 20%, #b22222 80%, transparent);
+      margin: 50px 0;
+    }
+    
+    /* Emphasis Box */
+    .emphasis-box {
+      background: #f5f6f7;
+      border-left: 5px solid #b22222;
+      padding: 25px;
+      border-radius: 4px;
+      margin: 30px 0;
+      font-size: 1.05rem;
+      color: #333;
+      line-height: 1.8;
+      font-style: italic;
+    }
   </style>
 </head>
 <body>
@@ -66,27 +202,118 @@
 
   <main>
     <h1 class="page-title">About Modular Gunworks LLC</h1>
+    <p class="page-subtitle">Veteran-Owned Retail Excellence</p>
 
   <!-- CONTENT -->
-  <div style="max-width: 1000px; margin: 40px auto; padding: 0 20px;">
-    <h2 style="color: var(--primary-color); margin-bottom: 20px;">Our Story</h2>
-    <p style="line-height: 1.8; margin-bottom: 20px;">Modular Gunworks LLC was founded on the principles of quality, integrity, and service. As a veteran-owned business, we bring a commitment to excellence and understanding of firearm enthusiasts to everything we do.</p>
+  <div style="max-width: 1000px; margin: 0 auto; padding: 0 20px;">
     
-    <p style="line-height: 1.8; margin-bottom: 20px;">We believe in providing customers with the highest quality firearms, ammunition, tactical gear, and professional services. Whether you're a competitive shooter, hunter, or firearms enthusiast, we're here to support your needs with expert knowledge and competitive pricing.</p>
+    <!-- Hero Section -->
+    <div class="hero-section">
+      <p>We exist because the firearms retail industry needed less noise and more integrity. We cut through the clutter, deliver quality products, and treat every customer like they actually matter.</p>
+    </div>
 
-    <h3 style="color: var(--primary-color); margin-top: 30px; margin-bottom: 15px;">Why Choose Us?</h3>
-    <ul style="margin-left: 20px; color: var(--light-text); line-height: 1.8;">
-      <li>Veteran-owned and operated</li>
-      <li>Extensive selection of quality firearms and gear</li>
-      <li>Professional gunsmithing services</li>
-      <li>Licensed FFL transfer services</li>
-      <li>Knowledgeable and passionate staff</li>
-      <li>Competitive pricing</li>
-      <li>Commitment to compliance and safety</li>
-    </ul>
+    <!-- Founder & Philosophy -->
+    <div class="section-header">
+      <i class="fas fa-shield-alt"></i>
+      <h2>Built on Discipline</h2>
+    </div>
+    <p style="line-height: 1.8; margin-bottom: 15px;">Michael Reams founded Modular Gunworks with the same mindset that defined his military service: build clean systems, operate with integrity, and never cut corners.</p>
+    
+    <p style="line-height: 1.8; margin-bottom: 15px;">That philosophy shapes everything we do. We don't stock inventory just to move it. We source products we'd actually use ourselves. We communicate transparently about what works, what doesn't, and why it matters. We handle your orders with the same precision we'd want for our own.</p>
+    
+    <div class="emphasis-box">
+      This isn't a sales pitch. It's how we operate. You're not buying from a faceless vendor. You're buying from someone who understands the mission and refuses to compromise on standards.
+    </div>
 
-    <h3 style="color: var(--primary-color); margin-top: 30px; margin-bottom: 15px;">Our Commitment</h3>
-    <p style="line-height: 1.8;">We are committed to serving our customers with integrity, providing quality products, and maintaining the highest standards of firearm safety and legal compliance. Your satisfaction is our priority.</p>
+    <div class="section-divider"></div>
+
+    <!-- Current Focus -->
+    <div class="section-header">
+      <i class="fas fa-cubes"></i>
+      <h2>What We Do Right Now</h2>
+    </div>
+    <p style="line-height: 1.8; margin-bottom: 15px;">We focus on what we do best: curating and delivering quality ammunition, tactical gear, optics, and firearm components from trusted distributors and manufacturers.</p>
+    
+    <p style="line-height: 1.8; margin-bottom: 20px;">Our selection is intentional, not bloated. Our pricing is competitive. Our support is real. When you order from us, you're getting products that have been vetted, from a retailer who actually cares about your satisfaction.</p>
+
+    <div class="section-divider"></div>
+
+    <!-- Core Values -->
+    <div class="section-header">
+      <i class="fas fa-star"></i>
+      <h2>Our Operating Principles</h2>
+    </div>
+    <div class="values-grid">
+      <div class="value-card">
+        <div class="value-card-icon"><i class="fas fa-handshake"></i></div>
+        <h3>Integrity</h3>
+        <p>No shortcuts. No misrepresentation. You get honest information about products, pricing, and what to expect. That's non-negotiable.</p>
+      </div>
+      
+      <div class="value-card">
+        <div class="value-card-icon"><i class="fas fa-crosshairs"></i></div>
+        <h3>Precision</h3>
+        <p>Every product is selected with purpose. Every order is processed with care. We believe in doing things right the first time.</p>
+      </div>
+      
+      <div class="value-card">
+        <div class="value-card-icon"><i class="fas fa-check-circle"></i></div>
+        <h3>Reliability</h3>
+        <p>You can depend on us. From product quality to shipping timelines to customer support—we show up and deliver.</p>
+      </div>
+    </div>
+
+    <div class="section-divider"></div>
+
+    <!-- Why Shop With Us -->
+    <div class="section-header">
+      <i class="fas fa-thumbs-up"></i>
+      <h2>Why Buy From Us</h2>
+    </div>
+    <div class="why-shop-list">
+      <div class="why-shop-item">
+        <div class="why-shop-icon"><i class="fas fa-medal"></i></div>
+        <div class="why-shop-content"><strong>Veteran-Owned Perspective:</strong> We understand discipline, standards, and doing things right.</div>
+      </div>
+
+      <div class="why-shop-item">
+        <div class="why-shop-icon"><i class="fas fa-hand-holding-heart"></i></div>
+        <div class="why-shop-content"><strong>Curated Inventory:</strong> Quality over quantity. We stock what we'd recommend to friends.</div>
+      </div>
+
+      <div class="why-shop-item">
+        <div class="why-shop-icon"><i class="fas fa-dollar-sign"></i></div>
+        <div class="why-shop-content"><strong>Transparent Pricing:</strong> Fair prices with no hidden agendas.</div>
+      </div>
+
+      <div class="why-shop-item">
+        <div class="why-shop-icon"><i class="fas fa-headset"></i></div>
+        <div class="why-shop-content"><strong>Real Support:</strong> Questions answered by people who actually know the products.</div>
+      </div>
+
+      <div class="why-shop-item">
+        <div class="why-shop-icon"><i class="fas fa-gavel"></i></div>
+        <div class="why-shop-content"><strong>Compliance First:</strong> We handle every transaction with legal and safety standards as non-negotiable.</div>
+      </div>
+
+      <div class="why-shop-item">
+        <div class="why-shop-icon"><i class="fas fa-rocket"></i></div>
+        <div class="why-shop-content"><strong>Built for Growth:</strong> Future services (gunsmithing, FFL transfers) are coming as we scale.</div>
+      </div>
+    </div>
+
+    <div class="section-divider"></div>
+
+    <!-- Future Vision -->
+    <div class="section-header">
+      <i class="fas fa-binoculars"></i>
+      <h2>Looking Ahead</h2>
+    </div>
+    <p style="line-height: 1.8; margin-bottom: 15px;">Right now, we're perfecting retail. Down the road, as we grow, we'll expand into gunsmithing and professional services. But we won't rush it. Everything we add will meet the same standards that define us today.</p>
+    
+    <div class="emphasis-box">
+      Our goal isn't to be the biggest. It's to be the most reliable, most honest, most professional option for shooters and enthusiasts in Huntsville and beyond.
+    </div>
   </div>
 
   </main>
