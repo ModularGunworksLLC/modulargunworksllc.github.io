@@ -404,54 +404,56 @@
       alert(`Added "${name}" ($${price.toFixed(2)}) to cart!\n\n(Cart functionality coming soon)`);
     }
 
-    // VIEW TOGGLE
-    document.getElementById('view-grid').addEventListener('click', function() {
-      currentView = 'grid';
-      document.getElementById('grid-view').style.display = 'grid';
-      document.getElementById('list-view').style.display = 'none';
-      this.style.background = 'var(--color-primary)';
-      this.style.color = '#fff';
-      document.getElementById('view-list').style.background = '#ddd';
-      document.getElementById('view-list').style.color = '#333';
-    });
-
-    document.getElementById('view-list').addEventListener('click', function() {
-      currentView = 'list';
-      document.getElementById('grid-view').style.display = 'none';
-      document.getElementById('list-view').style.display = 'block';
-      this.style.background = 'var(--color-primary)';
-      this.style.color = '#fff';
-      document.getElementById('view-grid').style.background = '#ddd';
-      document.getElementById('view-grid').style.color = '#333';
-    });
-
-    // FILTER CHANGE EVENTS
-    document.getElementById('brand-filter').addEventListener('change', applyFilters);
-    document.getElementById('price-min').addEventListener('input', applyFilters);
-    document.getElementById('price-max').addEventListener('input', applyFilters);
-    document.getElementById('in-stock-filter').addEventListener('change', applyFilters);
-    document.getElementById('sort-filter').addEventListener('change', applyFilters);
-
-    // CLEAR FILTERS
-    document.getElementById('clear-filters').addEventListener('click', function() {
-      document.getElementById('brand-filter').value = '';
-      document.getElementById('price-min').value = '';
-      document.getElementById('price-max').value = '';
-      document.getElementById('in-stock-filter').checked = false;
-      document.getElementById('sort-filter').value = 'newest';
-      applyFilters();
-    });
-
-    // HOVER EFFECT FOR CLEAR BUTTON
-    document.getElementById('clear-filters').addEventListener('mouseover', function() {
-      this.style.background = '#bbb';
-    });
-    document.getElementById('clear-filters').addEventListener('mouseout', function() {
-      this.style.background = '#ddd';
-    });
-
     // LOAD ON PAGE READY
-    document.addEventListener('DOMContentLoaded', loadProducts);
+    document.addEventListener('DOMContentLoaded', function() {
+      loadProducts();
+
+      // VIEW TOGGLE
+      document.getElementById('view-grid').addEventListener('click', function() {
+        currentView = 'grid';
+        document.getElementById('grid-view').style.display = 'grid';
+        document.getElementById('list-view').style.display = 'none';
+        this.style.background = 'var(--color-primary)';
+        this.style.color = '#fff';
+        document.getElementById('view-list').style.background = '#ddd';
+        document.getElementById('view-list').style.color = '#333';
+      });
+
+      document.getElementById('view-list').addEventListener('click', function() {
+        currentView = 'list';
+        document.getElementById('grid-view').style.display = 'none';
+        document.getElementById('list-view').style.display = 'block';
+        this.style.background = 'var(--color-primary)';
+        this.style.color = '#fff';
+        document.getElementById('view-grid').style.background = '#ddd';
+        document.getElementById('view-grid').style.color = '#333';
+      });
+
+      // FILTER CHANGE EVENTS
+      document.getElementById('brand-filter').addEventListener('change', applyFilters);
+      document.getElementById('price-min').addEventListener('input', applyFilters);
+      document.getElementById('price-max').addEventListener('input', applyFilters);
+      document.getElementById('in-stock-filter').addEventListener('change', applyFilters);
+      document.getElementById('sort-filter').addEventListener('change', applyFilters);
+
+      // CLEAR FILTERS
+      document.getElementById('clear-filters').addEventListener('click', function() {
+        document.getElementById('brand-filter').value = '';
+        document.getElementById('price-min').value = '';
+        document.getElementById('price-max').value = '';
+        document.getElementById('in-stock-filter').checked = false;
+        document.getElementById('sort-filter').value = 'newest';
+        applyFilters();
+      });
+
+      // HOVER EFFECT FOR CLEAR BUTTON
+      document.getElementById('clear-filters').addEventListener('mouseover', function() {
+        this.style.background = '#bbb';
+      });
+      document.getElementById('clear-filters').addEventListener('mouseout', function() {
+        this.style.background = '#ddd';
+      });
+    });
   </script>
 
 <body>
