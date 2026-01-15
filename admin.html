@@ -453,6 +453,70 @@
         ::-webkit-scrollbar-thumb:hover {
             background: #505050;
         }
+
+        /* Status Messages */
+        .status-message {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 600;
+            z-index: 2000;
+            animation: slideIn 0.3s ease;
+            max-width: 300px;
+        }
+
+        .status-message.fade-out {
+            animation: slideOut 0.3s ease;
+        }
+
+        .status-success {
+            background: #22aa22;
+            color: white;
+            border: 1px solid #00aa00;
+        }
+
+        .status-error {
+            background: #ff4444;
+            color: white;
+            border: 1px solid #ff0000;
+        }
+
+        .status-info {
+            background: #4488ff;
+            color: white;
+            border: 1px solid #0066ff;
+        }
+
+        .status-warning {
+            background: #ffaa00;
+            color: white;
+            border: 1px solid #ff8800;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideOut {
+            from {
+                transform: translateX(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+        }
     </style>
 </head>
 <body>
@@ -741,11 +805,36 @@
                     closeModal();
                     await loadActiveProducts();
                     displayProducts();
+                    
+                    // Trigger sync in background
+                    showStatus('Syncing products...', 'info');
+                    triggerSync();
                 } else {
                     alert('Failed to activate product');
                 }
             } catch (error) {
                 console.error('Error activating product:', error);
+            }
+        }
+
+        // Trigger sync
+        async function triggerSync() {
+            try {
+                const response = await fetch(`${API_BASE}/sync`, {
+                    method: 'POST',
+                    headers: { 'Authorization': `Bearer ${authToken}` }
+                });
+
+                const data = await response.json();
+                
+                if (response.ok) {
+                    showStatus('✓ Products synced successfully!', 'success');
+                } else {
+                    showStatus('⚠️ Sync already running or error occurred', 'warning');
+                }
+            } catch (error) {
+                console.error('Error triggering sync:', error);
+                showStatus('❌ Sync failed - check console', 'error');
             }
         }
 
@@ -793,6 +882,10 @@
 
                 await loadActiveProducts();
                 displayProducts();
+                
+                // Trigger sync in background
+                showStatus('Syncing products...', 'info');
+                triggerSync();
             } catch (error) {
                 console.error('Error removing product:', error);
             }
@@ -811,6 +904,19 @@
                 <span class="stats-item">Filtered: <span class="stats-value">${filteredProducts.length}</span></span>
                 <span class="stats-item">Active: <span class="stats-value">${Object.keys(activeProducts).length}</span></span>
             `;
+        }
+
+        // Show status message
+        function showStatus(message, type = 'info') {
+            const status = document.createElement('div');
+            status.className = `status-message status-${type}`;
+            status.textContent = message;
+            document.body.appendChild(status);
+
+            setTimeout(() => {
+                status.classList.add('fade-out');
+                setTimeout(() => status.remove(), 500);
+            }, 3000);
         }
 
         // Check Auth on Load

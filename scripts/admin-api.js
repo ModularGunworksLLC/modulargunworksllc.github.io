@@ -3,11 +3,19 @@ const fs = require('fs');
 const path = require('path');
 const cors = require('cors');
 const crypto = require('crypto');
+const { execSync } = require('child_process');
 
 // Configuration
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'gunworks2024'; // Change this!
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'gunworks2025'; // Change this!
 const ADMIN_PORT = process.env.ADMIN_PORT || 3001;
 const ACTIVE_FILE = path.join(__dirname, '../data/products/active.json');
+const API_SID = process.env.API_SID || '';
+const API_TOKEN = process.env.API_TOKEN || '';
+
+// Sync status tracking
+let isSyncing = false;
+let lastSyncTime = null;
+let lastSyncStatus = 'pending';
 
 // Initialize Express
 const app = express();
@@ -88,6 +96,53 @@ function loadAllProducts() {
     });
 
     return products;
+}
+
+/**
+ * Trigger product sync from Chattanooga API
+ * Respects active.json selections
+ */
+function triggerSync() {
+    if (isSyncing) {
+        return { status: 'already-syncing', message: 'Sync already in progress' };
+    }
+
+    if (!API_SID || !API_TOKEN) {
+        return { status: 'error', message: 'API credentials not configured' };
+    }
+
+    isSyncing = true;
+    lastSyncStatus = 'running';
+
+    try {
+        const syncScript = path.join(__dirname, 'sync-chattanooga-api.js');
+        const env = { ...process.env, API_SID, API_TOKEN };
+
+        execSync(`node ${syncScript}`, {
+            env,
+            stdio: 'pipe',
+            cwd: path.dirname(syncScript)
+        });
+
+        lastSyncTime = new Date().toISOString();
+        lastSyncStatus = 'success';
+        isSyncing = false;
+
+        return { 
+            status: 'success', 
+            message: 'Products synced successfully',
+            timestamp: lastSyncTime
+        };
+    } catch (error) {
+        lastSyncStatus = 'error';
+        isSyncing = false;
+        console.error('Sync error:', error.message);
+
+        return { 
+            status: 'error', 
+            message: 'Sync failed: ' + error.message
+        };
+    }
 }
 
 // Routes
@@ -307,6 +362,34 @@ app.get('/api/admin/stats', verifyAuth, (req, res) => {
     }
 });
 
+/**
+ * POST /api/admin/sync
+ * Trigger immediate product sync from Chattanooga API
+ */
+app.post('/api/admin/sync', verifyAuth, (req, res) => {
+    const result = triggerSync();
+    
+    if (result.status === 'success') {
+        res.json(result);
+    } else if (result.status === 'already-syncing') {
+        res.status(409).json(result);
+    } else {
+        res.status(500).json(result);
+    }
+});
+
+/**
+ * GET /api/admin/sync-status
+ * Get current sync status
+ */
+app.get('/api/admin/sync-status', verifyAuth, (req, res) => {
+    res.json({
+        isSyncing,
+        lastSyncTime,
+        lastSyncStatus
+    });
+});
+
 // Health check
 app.get('/api/admin/health', (req, res) => {
     res.json({ status: 'ok' });
@@ -317,6 +400,20 @@ const server = app.listen(ADMIN_PORT, () => {
     console.log(`✓ Admin API running on http://localhost:${ADMIN_PORT}`);
     console.log(`✓ Open admin panel: http://localhost:${ADMIN_PORT}/../admin.html`);
     console.log(`⚠️  Change ADMIN_PASSWORD for production!`);
+
+    // Start auto-sync scheduler (every 15 minutes)
+    if (API_SID && API_TOKEN) {
+        console.log(`⏰ Auto-sync scheduled: Every 15 minutes`);
+        
+        setInterval(() => {
+            console.log(`\n⏱️  Running scheduled sync at ${new Date().toLocaleTimeString()}...`);
+            const result = triggerSync();
+            console.log(`✓ ${result.message}`);
+        }, 15 * 60 * 1000); // 15 minutes
+    } else {
+        console.log(`⚠️  Auto-sync disabled: API credentials not configured`);
+        console.log(`   Set API_SID and API_TOKEN environment variables to enable`);
+    }
 });
 
 // Graceful shutdown
