@@ -337,6 +337,32 @@ app.post('/api/admin/batch-activate', verifyAuth, (req, res) => {
 });
 
 /**
+ * GET /api/admin/filter-options
+ * Get unique filter values from all products
+ */
+app.get('/api/admin/filter-options', verifyAuth, (req, res) => {
+    try {
+        const products = loadAllProducts();
+        
+        const brands = new Set();
+        const categories = new Set();
+
+        products.forEach(p => {
+            if (p.brand) brands.add(p.brand);
+            if (p.category) categories.add(p.category);
+        });
+
+        res.json({
+            brands: Array.from(brands).sort(),
+            categories: Array.from(categories).sort(),
+            stockStatus: ['in-stock', 'out-of-stock']
+        });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+/**
  * GET /api/admin/stats
  * Get system statistics
  */

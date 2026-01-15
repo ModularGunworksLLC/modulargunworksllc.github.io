@@ -10,12 +10,21 @@ const API_BASE = 'https://api.chattanoogashooting.com/rest/v4';
 /**
  * Load active products selection
  * Returns map of productId -> { page, addedAt, updatedAt }
+ * Filters out metadata/comment fields (starting with _)
  */
 function loadActiveProducts() {
     try {
         const activePath = path.join(__dirname, '../data/products/active.json');
         if (fs.existsSync(activePath)) {
-            return JSON.parse(fs.readFileSync(activePath, 'utf8'));
+            const data = JSON.parse(fs.readFileSync(activePath, 'utf8'));
+            // Filter out metadata fields (starting with _)
+            const active = {};
+            Object.entries(data).forEach(([key, value]) => {
+                if (!key.startsWith('_') && value && typeof value === 'object' && value.page) {
+                    active[key] = value;
+                }
+            });
+            return active;
         }
     } catch (error) {
         console.warn('No active.json found, syncing all products');
@@ -156,6 +165,28 @@ async function fetchAllProducts(page = 1) {
 }
 
 /**
+ * Extract brand from product name
+ * Looks for known brand patterns at the start of product names
+ */
+function extractBrand(productName) {
+    const brandPatterns = [
+        /^(Federal|Remington|Hornady|Winchester|Blazer|Wolf|Tulammo|Fiocchi|PMC|Aguila|American|Armscor|Magtech|Norma|Perfecta|PPU|Rocky|Vista|Sellier|Speer|Sierra|Nosler|CCI|Cci|Lyman|RCBS|Lee|Frankford|Dillon|Redding|Sinclair|Accurate|Hodgdon|IMR|Alliant|Vihtavuori|Unique|Blackhorn|Scot|Powder|Corbon|Browning|Savage|Ruger|Colt|Smith|Wesson|S&W|Taurus|Glock|Sig|Sauer|HK|Beretta|Walther|FN|Mossberg|Remington|Benelli|Weatherby|Tikka|Marlin|Winchester|Ruger|Savage|Bushmaster|Daniel|Defense|DPMS|AR15|AR-15|Seekins|Mega|Aero|Anderson|Ballistic|Advantage|Criterion|Faxon|Lothar|Walther|POF|Proof|Research|Criterion|Core|Rifle|Systems|Hodgdon|Alliant|Vihtavuori|Unique|IMR|Accurate|Blackhorn|H110|H4895|WIN)/i,
+        /^(FEDERAL|REMINGTON|HORNADY|WINCHESTER|BLAZER|WOLF|TULAMMO|FIOCCHI|PMC|AGUILA)/i
+    ];
+
+    const name = productName || '';
+    
+    for (const pattern of brandPatterns) {
+        const match = name.match(pattern);
+        if (match) {
+            return match[1].trim();
+        }
+    }
+
+    return 'Generic';
+}
+
+/**
  * Transform API product to local format
  */
 function transformProduct(apiProduct) {
@@ -163,17 +194,20 @@ function transformProduct(apiProduct) {
         ? `https://images.chattanoogashooting.com/products/${apiProduct.cssi_id.toLowerCase()}.jpg`
         : '/images/products/placeholder.jpg';
 
+    const productName = apiProduct.name || 'Unknown Product';
+
     return {
         id: apiProduct.cssi_id || '',
-        name: apiProduct.name || 'Unknown Product',
-        brand: apiProduct.brand || 'Generic',
+        name: productName,
+        brand: extractBrand(productName),
         category: '',  // Will be set later
         image: imageUrl,
         retailPrice: parseFloat(apiProduct.retail_price || 0),
         salePrice: parseFloat(apiProduct.custom_price || apiProduct.retail_price || 0),
         inventory: parseInt(apiProduct.inventory || 0),
         inStock: apiProduct.in_stock_flag === 1,
-        requiresFFL: apiProduct.ffl_flag === 1
+        requiresFFL: apiProduct.ffl_flag === 1,
+        description: apiProduct.description || ''
     };
 }
 
