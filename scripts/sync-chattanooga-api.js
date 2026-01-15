@@ -7,15 +7,15 @@ const API_SID = process.env.API_SID;
 const API_TOKEN = process.env.API_TOKEN;
 const API_BASE = 'https://api.chattanoogashooting.com/rest/v4';
 
-// Category to Manufacturer ID mapping
-const CATEGORY_MAPPING = {
-  ammunition: 1,        // Ammunition
-  magazines: 2,         // Magazines
-  'gun-parts': 3,       // Gun Parts
-  gear: 4,              // Tactical Gear
-  optics: 5,            // Optics & Sights
-  reloading: 6,         // Reloading
-  survival: 7           // Survival Gear
+// Category keywords for intelligent product categorization
+const CATEGORY_KEYWORDS = {
+  ammunition: ['AMMO', 'AETI', 'FEDERAL', '9MM', '.40', '.45', '12GA', '20GA', '10MM', '308', '223', 'GR JHP', 'GR FMJ', 'ROUNDS'],
+  magazines: ['MAGAZINE', 'MAG ', 'DRUM', 'CLIPAZINE'],
+  'gun-parts': ['BARREL', 'BCGROUP', 'BOLT', 'BUFFER', 'CHARGING HANDLE', 'HANDGUARD', 'RAIL', 'STOCK', 'TRIGGER', 'SAFETY', 'SELECTOR', 'MUZZLE'],
+  gear: ['HOLSTER', 'SLING', 'CASE', 'BAG', 'POUCH', 'VEST', 'PLATE', 'CARRIER', 'CHEST RIG', 'BANDOLIER', 'CLEANING', 'OIL', 'LUBRICANT', 'MAINTENANCE'],
+  optics: ['SIGHT', 'SCOPE', 'RED DOT', 'ACOG', 'EOTECH', 'LASER', 'ILLUMINATED', 'RETICLE'],
+  reloading: ['POWDER', 'PRIMER', 'CASE', 'BULLET', 'ROUND', 'LOADING', 'RELOADING', 'PRESS', 'SCALE', 'CALIPERS', 'DIE', 'SHELL HOLDER', 'BENCH', 'GR WCBNBB', 'GR TCBB', 'GR SWCBB', 'GR RNFPBB', 'GR JHP', 'CT'],
+  survival: ['SURVIVAL', 'KNIFE', 'FIRE', 'FLASHLIGHT', 'COMPASS', 'PARACORD', 'DUCT TAPE', 'ROPE', 'EMERGENCY', 'KIT']
 };
 
 /**
@@ -29,6 +29,26 @@ function getAuthHeader(token) {
   // Format: Basic SID:MD5HASH (no base64 encoding as per API v4 requirements)
   const authValue = `${API_SID}:${tokenHash}`;
   return `Basic ${authValue}`;
+}
+
+/**
+ * Determine product category based on product name
+ */
+function categorizeProduct(product) {
+  const name = (product.name || '').toUpperCase();
+  const brand = (product.brand || '').toUpperCase();
+  
+  // Check each category's keywords
+  for (const [category, keywords] of Object.entries(CATEGORY_KEYWORDS)) {
+    for (const keyword of keywords) {
+      if (name.includes(keyword)) {
+        return category;
+      }
+    }
+  }
+  
+  // Default fallback - try to guess from brand or return 'gear' as catch-all
+  return 'gear';
 }
 
 /**
@@ -155,14 +175,35 @@ async function syncAllProducts() {
     
     if (allProducts.length === 0) {
       console.log('⚠️  No products found in API. Saving empty files.');
-      for (const category of Object.keys(CATEGORY_MAPPING)) {
+      for (const category of Object.keys(CATEGORY_KEYWORDS)) {
         saveProducts(category, []);
       }
     } else {
-      // For now, save all products to each category file for testing
-      // In production, you'd distribute by category/manufacturer
-      for (const category of Object.keys(CATEGORY_MAPPING)) {
-        saveProducts(category, allProducts);
+      // Distribute products by category based on name
+      const productsByCategory = {};
+      for (const category of Object.keys(CATEGORY_KEYWORDS)) {
+        productsByCategory[category] = [];
+      }
+      
+      // Categorize each product
+      allProducts.forEach(product => {
+        const category = categorizeProduct(product);
+        productsByCategory[category].push(product);
+      });
+      
+      // Save each category
+      let totalSaved = 0;
+      for (const category of Object.keys(CATEGORY_KEYWORDS)) {
+        const count = productsByCategory[category].length;
+        saveProducts(category, productsByCategory[category]);
+        totalSaved += count;
+      }
+      
+      console.log(`\nTotal products saved: ${totalSaved}`);
+      console.log('\nCategory breakdown:');
+      for (const category of Object.keys(CATEGORY_KEYWORDS)) {
+        const count = productsByCategory[category].length;
+        console.log(`  ${category.padEnd(15)}: ${count} products`);
       }
     }
     
