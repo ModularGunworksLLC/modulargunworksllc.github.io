@@ -157,54 +157,159 @@
       border-color: #999;
     }
 
-    /* SERVICES SECTIONS */
-    .services-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 2rem;
-      margin-bottom: 3rem;
+    /* HERO SECTION */
+    .hero-section {
+      background: linear-gradient(135deg, var(--color-bg-dark) 0%, #2a3f5f 100%);
+      color: white;
+      padding: 4rem 2rem;
+      margin-bottom: 4rem;
+      border-radius: 8px;
+      text-align: center;
+    }
+
+    .hero-section h2 {
+      font-size: 2.8rem;
+      margin-bottom: 1rem;
+      font-weight: 700;
+      line-height: 1.2;
+      color: white;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    }
+
+    .hero-section p {
+      font-size: 1.3rem;
+      margin-bottom: 2rem;
+      opacity: 0.95;
       max-width: 700px;
       margin-left: auto;
       margin-right: auto;
+      line-height: 1.6;
     }
 
-    .service-card {
-      background: #fafafa;
-      border-left: 3px solid #999;
-      padding: 2rem;
+    .hero-cta-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .hero-cta-btn {
+      padding: 1rem 2.5rem;
+      font-size: 1.1rem;
+      border: none;
       border-radius: 4px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .hero-cta-btn.primary {
+      background: var(--color-primary);
+      color: white;
+    }
+
+    .hero-cta-btn.primary:hover {
+      background: #9d1a1a;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+
+    .hero-cta-btn.secondary {
+      background: white;
+      color: var(--color-bg-dark);
+    }
+
+    .hero-cta-btn.secondary:hover {
+      background: #f5f5f5;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+
+    /* WHY SHOP WITH US */
+    .why-shop-section {
+      max-width: 1000px;
+      margin: 4rem auto;
+      padding: 3rem 2rem;
+      background: #f9f9f9;
+      border-radius: 8px;
+      border-top: 3px solid var(--color-primary);
+    }
+
+    .why-shop-section h2 {
+      font-size: 2.2rem;
+      color: var(--color-bg-dark);
+      margin-bottom: 2rem;
+      text-align: center;
+      font-weight: 700;
+    }
+
+    .why-shop-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+      gap: 2rem;
+    }
+
+    .why-shop-item {
+      text-align: center;
+    }
+
+    .why-shop-item i {
+      font-size: 2.5rem;
+      color: var(--color-primary);
+      margin-bottom: 1rem;
+    }
+
+    .why-shop-item h3 {
+      font-size: 1.1rem;
+      color: var(--color-bg-dark);
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+    }
+
+    .why-shop-item p {
+      font-size: 0.95rem;
+      color: #666;
+      line-height: 1.5;
+    }
+
+    /* ABOUT SECTION */
+    .about-section {
+      max-width: 1000px;
+      margin: 4rem auto;
+      padding: 3rem 2rem;
+      background: white;
+      border-radius: 8px;
+      border: 1px solid #e0e0e0;
       box-shadow: 0 1px 3px rgba(0,0,0,0.05);
     }
 
-    .service-card h2 {
-      font-size: 1.8rem;
+    .about-section h2 {
+      font-size: 2.2rem;
       color: var(--color-bg-dark);
-      margin-bottom: 1rem;
-      font-weight: 600;
-    }
-
-    .service-card h2 i {
-      margin-right: 0.5rem;
-      color: #666;
-    }
-
-    .service-card p {
-      color: #666;
-      font-size: 1rem;
-      line-height: 1.6;
       margin-bottom: 1.5rem;
+      font-weight: 700;
     }
 
-    .coming-soon-badge {
+    .about-section p {
+      color: #666;
+      line-height: 1.8;
+      margin-bottom: 1.5rem;
+      font-size: 1rem;
+    }
+
+    .about-cta-link {
       display: inline-block;
-      background: var(--color-primary);
-      color: #fff;
-      padding: 0.5rem 1rem;
-      border-radius: 20px;
-      font-size: 0.85rem;
+      color: var(--color-primary);
       font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 1px;
+      text-decoration: none;
+      margin-top: 1rem;
+      transition: all 0.3s ease;
+    }
+
+    .about-cta-link:hover {
+      color: #9d1a1a;
     }
 
     /* RESPONSIVE */
@@ -213,8 +318,25 @@
         flex: 0 0 calc(50% - 0.75rem);
       }
 
-      .services-grid {
-        grid-template-columns: 1fr;
+      .hero-section h2 {
+        font-size: 2rem;
+      }
+
+      .hero-section p {
+        font-size: 1.1rem;
+      }
+
+      .hero-cta-buttons {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .hero-cta-btn {
+        width: 100%;
+      }
+
+      .why-shop-grid {
+        grid-template-columns: 1fr 1fr;
       }
     }
 
@@ -225,6 +347,34 @@
 
       .section-title {
         font-size: 1.6rem;
+      }
+
+      .hero-section {
+        padding: 2.5rem 1rem;
+        margin-bottom: 2rem;
+      }
+
+      .hero-section h2 {
+        font-size: 1.6rem;
+      }
+
+      .hero-section p {
+        font-size: 1rem;
+      }
+
+      .why-shop-section h2,
+      .about-section h2 {
+        font-size: 1.6rem;
+      }
+
+      .why-shop-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+
+      .why-shop-section,
+      .about-section {
+        padding: 2rem 1rem;
       }
 
       main {
@@ -285,6 +435,16 @@
 
   <!-- MAIN CONTENT -->
   <main>
+    <!-- HERO SECTION -->
+    <section class="hero-section">
+      <h2>Lower Prices. Same Quality. Huntsville-Based.</h2>
+      <p>Why pay national prices when we ship fast from Alabama? Quality firearms, ammunition, and gear at prices you'll love.</p>
+      <div class="hero-cta-buttons">
+        <a href="shop/ammunition.html" class="hero-cta-btn primary">Shop Ammunition</a>
+        <a href="shop/gear.html" class="hero-cta-btn secondary">Browse Gear & Parts</a>
+      </div>
+    </section>
+
     <!-- Featured Categories Carousel -->
     <section class="carousel-section">
       <h2 class="section-title">Shop by Category</h2>
@@ -356,19 +516,39 @@
       </div>
     </section>
 
-    <!-- Services Sections -->
-    <section class="services-grid">
-      <div class="service-card">
-        <h2><i class="fas fa-wrench"></i> Gunsmithing Services</h2>
-        <p>Expert gunsmithing services coming soon. From basic maintenance to custom builds, our skilled gunsmiths will handle your firearm with precision and care.</p>
-        <span class="coming-soon-badge">Coming Soon</span>
+    <!-- WHY SHOP WITH US -->
+    <section class="why-shop-section">
+      <h2>Why Shop With Us</h2>
+      <div class="why-shop-grid">
+        <div class="why-shop-item">
+          <i class="fas fa-medal"></i>
+          <h3>Veteran-Owned</h3>
+          <p>Built on integrity, service, and respect. A business by veterans, for everyone.</p>
+        </div>
+        <div class="why-shop-item">
+          <i class="fas fa-dollar-sign"></i>
+          <h3>Competitive Pricing</h3>
+          <p>Quality gear at fair prices. We undercut the market so you save money.</p>
+        </div>
+        <div class="why-shop-item">
+          <i class="fas fa-truck"></i>
+          <h3>Fast Shipping</h3>
+          <p>Based in Huntsville, AL. Quick processing and reliable delivery.</p>
+        </div>
+        <div class="why-shop-item">
+          <i class="fas fa-check-circle"></i>
+          <h3>Quality Selection</h3>
+          <p>Trusted brands and products you can rely on. 17,000+ items in stock.</p>
+        </div>
       </div>
+    </section>
 
-      <div class="service-card">
-        <h2><i class="fas fa-clipboard-list"></i> FFL Transfers</h2>
-        <p>Professional FFL transfer services available. We handle all compliance paperwork with speed and expertise to get your firearms to you legally and safely.</p>
-        <span class="coming-soon-badge">Coming Soon</span>
-      </div>
+    <!-- ABOUT SECTION -->
+    <section class="about-section">
+      <h2>About Modular Gunworks</h2>
+      <p>Veteran-owned gun shop in Huntsville serving customers locally and nationwide. We believe in providing quality products at competitive prices with straightforward, honest service.</p>
+      <p>Whether you're looking for ammunition, tactical gear, firearms, or parts, we've got what you need—and at prices you'll appreciate.</p>
+      <a href="about.html" class="about-cta-link">Learn More About Us →</a>
     </section>
   </main>
 
