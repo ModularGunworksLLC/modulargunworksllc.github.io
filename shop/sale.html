@@ -22,18 +22,212 @@
     :root { --color-primary: #b22222; --color-accent: #1a2c4b; --color-bg-dark: #181a1b; --color-text: #333; --color-light: #f5f5f5; }
     * { margin: 0; padding: 0; box-sizing: border-box; }
     html, body { height: 100%; background-color: #fff; }
-    main { max-width: 1400px; margin: 0 auto; padding: 3rem 2rem; }
-    .page-title { font-size: 2rem; color: var(--color-bg-dark); margin-bottom: 2rem; }
-    .products-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 2rem; margin-bottom: 4rem; }
-    .product-card { background: #fff; border: 1px solid #e0e0e0; border-radius: 8px; overflow: hidden; transition: all 0.3s ease; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
-    .product-card:hover { transform: translateY(-4px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
-    .product-image { width: 100%; height: 200px; background: #f5f5f5; overflow: hidden; }
-    .product-image img { width: 100%; height: 100%; object-fit: cover; }
-    .product-info { padding: 1rem; }
-    .product-name { font-size: 1rem; color: var(--color-bg-dark); margin-bottom: 0.5rem; font-weight: 600; }
-    .product-price { font-size: 1.2rem; font-weight: 700; color: var(--color-primary); margin-bottom: 1rem; }
-    .product-btn { width: 100%; padding: 0.7rem; background: var(--color-primary); color: #fff; border: none; border-radius: 4px; cursor: pointer; font-weight: 600; transition: background 0.3s; }
+    
+    main {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 3rem 2rem;
+    }
+    
+    .page-title { font-size: 2rem; color: var(--color-bg-dark); margin-bottom: 1rem; }
+    
+    .controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    
+    .product-count {
+      color: #666;
+      font-weight: 500;
+    }
+    
+    .view-toggle {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+    }
+    
+    .view-toggle button {
+      padding: 0.6rem 1rem;
+      background: #ddd;
+      color: #333;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background 0.3s;
+    }
+    
+    #view-grid { background: var(--color-primary); color: #fff; border-radius: 4px 0 0 4px; }
+    #view-list { border-radius: 0 4px 4px 0; }
+    
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 2rem;
+      margin-bottom: 4rem;
+    }
+    
+    .product-card {
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+      cursor: pointer;
+    }
+    
+    .product-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 16px rgba(0,0,0,0.12);
+      border-color: var(--color-primary);
+    }
+    
+    .product-image {
+      width: 100%;
+      height: 200px;
+      background: #f5f5f5;
+      overflow: hidden;
+      position: relative;
+    }
+    
+    .product-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    
+    .sale-badge {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: #ff4444;
+      color: #fff;
+      padding: 0.4rem 0.8rem;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+    
+    .product-info {
+      padding: 1rem;
+    }
+    
+    .product-brand {
+      font-size: 0.75rem;
+      color: #999;
+      text-transform: uppercase;
+      margin-bottom: 0.3rem;
+      font-weight: 600;
+    }
+    
+    .product-name {
+      font-size: 0.95rem;
+      color: var(--color-bg-dark);
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+      line-height: 1.3;
+    }
+    
+    .product-pricing {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+    
+    .product-sale-price {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--color-primary);
+    }
+    
+    .product-regular-price {
+      font-size: 0.9rem;
+      color: #999;
+      text-decoration: line-through;
+    }
+    
+    .product-stock {
+      font-size: 0.75rem;
+      padding: 0.3rem 0.6rem;
+      border-radius: 3px;
+      font-weight: 600;
+      display: inline-block;
+    }
+    
+    .stock-in { background: #e8f5e9; color: #2e7d32; }
+    .stock-out { background: #ffebee; color: #c62828; }
+    
+    .product-btn {
+      width: 100%;
+      padding: 0.7rem;
+      background: var(--color-primary);
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background 0.3s;
+    }
+    
     .product-btn:hover { background: #8b1a1a; }
+    .product-btn:active { transform: scale(0.98); }
+    
+    .list-view {
+      display: none;
+      overflow-x: auto;
+      margin-bottom: 4rem;
+    }
+    
+    .list-view table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+    }
+    
+    .list-view thead {
+      background: #f9f9f9;
+      border-bottom: 2px solid #e0e0e0;
+    }
+    
+    .list-view th {
+      padding: 1rem;
+      text-align: left;
+      font-weight: 600;
+      color: #333;
+    }
+    
+    .list-view td {
+      padding: 1rem;
+      border-bottom: 1px solid #e0e0e0;
+    }
+    
+    .list-view tbody tr:hover { background: #f9f9f9; }
+    
+    .empty-state {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 2rem;
+      color: #999;
+    }
+    
+    @media (max-width: 1024px) {
+      .products-grid { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); }
+    }
+    
+    @media (max-width: 768px) {
+      main { padding: 2rem 1rem; }
+      .products-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 1rem; }
+      .page-title { font-size: 1.5rem; }
+    }
   </style>
 
   <script src="../scripts/age-gate.js"></script>
@@ -83,41 +277,49 @@
 
   <main>
     <h1 class="page-title">ON SALE</h1>
-    <p style="color: #666; margin-bottom: 2rem;">Great deals on our entire catalog - save today!</p>
+    <p style="color: #666; margin-bottom: 2rem;">Exclusive deals across all categories - limited time offers!</p>
 
-    <div class="products-grid">
-      <div class="product-card">
-        <div class="product-image"><img src="../images/categories/ammunition.jpg" alt="Product"></div>
-        <div class="product-info">
-          <div class="product-name">9mm Ammunition (50 rounds)</div>
-          <div class="product-price">$19.99</div>
-          <button class="product-btn">Add to Cart</button>
-        </div>
+    <div class="controls">
+      <div class="product-count">
+        Showing <span id="product-count">0</span> products on sale
       </div>
-      <div class="product-card">
-        <div class="product-image"><img src="../images/categories/magazines.jpg" alt="Product"></div>
-        <div class="product-info">
-          <div class="product-name">AR-15 Magazine 30rd</div>
-          <div class="product-price">$12.99</div>
-          <button class="product-btn">Add to Cart</button>
-        </div>
+      <div class="view-toggle">
+        <label style="font-weight: 600; color: #333; font-size: 0.9rem; margin-right: 0.5rem;">VIEW:</label>
+        <button id="view-grid" style="border-radius: 4px 0 0 4px;">
+          <i class="fas fa-th"></i> Grid
+        </button>
+        <button id="view-list">
+          <i class="fas fa-list"></i> List
+        </button>
       </div>
-      <div class="product-card">
-        <div class="product-image"><img src="../images/categories/optics.jpg" alt="Product"></div>
-        <div class="product-info">
-          <div class="product-name">AR-15 Iron Sight Set</div>
-          <div class="product-price">$59.99</div>
-          <button class="product-btn">Add to Cart</button>
-        </div>
+    </div>
+
+    <!-- GRID VIEW -->
+    <div id="grid-view" class="products-grid">
+      <div style="grid-column: 1 / -1; text-align: center; padding: 2rem;">
+        <i class="fas fa-spinner fa-spin" style="font-size: 2rem; color: var(--color-primary);"></i> Loading sale items...
       </div>
-      <div class="product-card">
-        <div class="product-image"><img src="../images/categories/gear.jpg" alt="Product"></div>
-        <div class="product-info">
-          <div class="product-name">Tactical Holster</div>
-          <div class="product-price">$49.99</div>
-          <button class="product-btn">Add to Cart</button>
-        </div>
-      </div>
+    </div>
+
+    <!-- LIST VIEW -->
+    <div id="list-view" class="list-view">
+      <table>
+        <thead>
+          <tr>
+            <th>Product Name</th>
+            <th>Category</th>
+            <th>Regular Price</th>
+            <th>Sale Price</th>
+            <th>Discount</th>
+            <th>Stock</th>
+          </tr>
+        </thead>
+        <tbody id="list-body">
+          <tr>
+            <td colspan="6" style="text-align: center; color: #999;">Loading sale items...</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </main>
 
@@ -172,5 +374,141 @@
     </div>
   </footer>
 
-</body>
-</html>
+  <script>
+    const categories = ['ammunition', 'magazines', 'gun-parts', 'gear', 'optics', 'reloading', 'survival'];
+    let allSaleProducts = [];
+    let currentView = 'grid';
+
+    // Load all products from all categories
+    async function loadAllProducts() {
+      allSaleProducts = [];
+      
+      for (const category of categories) {
+        try {
+          const response = await fetch(`../data/products/${category}.json`);
+          const data = await response.json();
+          
+          if (data.products && Array.isArray(data.products)) {
+            // Filter for products with sale prices
+            const saleProducts = data.products.filter(product => {
+              const regularPrice = product.customPrice || product.retailPrice || parseFloat(product.price) || 0;
+              const salePrice = product.salePrice || 0;
+              return salePrice > 0 && salePrice < regularPrice;
+            });
+            
+            // Add category info to each product
+            saleProducts.forEach(product => {
+              product.category = category;
+              product.categoryDisplay = category.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+              product.regularPrice = product.customPrice || product.retailPrice || parseFloat(product.price) || 0;
+              product.discount = Math.round(((product.regularPrice - product.salePrice) / product.regularPrice) * 100);
+            });
+            
+            allSaleProducts.push(...saleProducts);
+          }
+        } catch (error) {
+          console.error(`Error loading ${category}:`, error);
+        }
+      }
+      
+      // Sort by discount (highest first)
+      allSaleProducts.sort((a, b) => b.discount - a.discount);
+      
+      document.getElementById('product-count').textContent = allSaleProducts.length;
+      renderProducts();
+    }
+
+    // Render products
+    function renderProducts() {
+      if (currentView === 'grid') {
+        renderGridView();
+      } else {
+        renderListView();
+      }
+    }
+
+    // Render grid view
+    function renderGridView() {
+      const container = document.getElementById('grid-view');
+      
+      if (allSaleProducts.length === 0) {
+        container.innerHTML = '<div style="grid-column: 1 / -1; text-align: center; padding: 2rem; color: #999;">No products currently on sale.</div>';
+        return;
+      }
+
+      container.innerHTML = allSaleProducts.map(product => `
+        <div class="product-card">
+          <div class="product-image">
+            <img src="${product.image || '../images/categories/' + product.category + '.jpg'}" alt="${product.name}">
+            <div class="sale-badge">${product.discount}% OFF</div>
+          </div>
+          <div class="product-info">
+            <div class="product-brand">${product.categoryDisplay}</div>
+            <h3 class="product-name">${product.name}</h3>
+            <div class="product-pricing">
+              <span class="product-sale-price">$${product.salePrice.toFixed(2)}</span>
+              <span class="product-regular-price">$${product.regularPrice.toFixed(2)}</span>
+            </div>
+            <div class="product-stock ${product.inventory > 0 ? 'stock-in' : 'stock-out'}">
+              ${product.inventory > 0 ? 'In Stock' : 'Out of Stock'}
+            </div>
+            <button class="product-btn" onclick="addToCart('${product.id}')">Add to Cart</button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // Render list view
+    function renderListView() {
+      const tbody = document.getElementById('list-body');
+      
+      if (allSaleProducts.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; color: #999; padding: 2rem;">No products currently on sale.</td></tr>';
+        document.getElementById('list-view').style.display = 'block';
+        return;
+      }
+
+      tbody.innerHTML = allSaleProducts.map(product => `
+        <tr>
+          <td style="font-weight: 600; color: #333;">${product.name}</td>
+          <td>${product.categoryDisplay}</td>
+          <td style="text-decoration: line-through; color: #999;">$${product.regularPrice.toFixed(2)}</td>
+          <td style="font-weight: 700; color: var(--color-primary); font-size: 1.1rem;">$${product.salePrice.toFixed(2)}</td>
+          <td><strong style="color: #ff4444;">${product.discount}% off</strong></td>
+          <td>${product.inventory > 0 ? '<span style="color: #4caf50; font-weight: 600;">In Stock</span>' : '<span style="color: #f44336; font-weight: 600;">Out of Stock</span>'}</td>
+        </tr>
+      `).join('');
+      
+      document.getElementById('list-view').style.display = 'block';
+    }
+
+    // Toggle views
+    document.getElementById('view-grid').addEventListener('click', () => {
+      currentView = 'grid';
+      document.getElementById('grid-view').style.display = 'grid';
+      document.getElementById('list-view').style.display = 'none';
+      document.getElementById('view-grid').style.background = 'var(--color-primary)';
+      document.getElementById('view-grid').style.color = '#fff';
+      document.getElementById('view-list').style.background = '#ddd';
+      document.getElementById('view-list').style.color = '#333';
+    });
+
+    document.getElementById('view-list').addEventListener('click', () => {
+      currentView = 'list';
+      document.getElementById('grid-view').style.display = 'none';
+      document.getElementById('list-view').style.display = 'block';
+      document.getElementById('view-grid').style.background = '#ddd';
+      document.getElementById('view-grid').style.color = '#333';
+      document.getElementById('view-list').style.background = 'var(--color-primary)';
+      document.getElementById('view-list').style.color = '#fff';
+    });
+
+    // Add to cart placeholder
+    function addToCart(productId) {
+      alert('Added to cart: ' + productId);
+    }
+
+    // Load products on page load
+    document.addEventListener('DOMContentLoaded', loadAllProducts);
+  </script>
+
