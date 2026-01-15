@@ -24,14 +24,108 @@
     html, body { height: 100%; background-color: #fff; }
     main { max-width: 1400px; margin: 0 auto; padding: 3rem 2rem; }
     .page-title { font-size: 2.5rem; color: var(--color-bg-dark); margin-bottom: 3rem; text-align: center; }
+    
+    /* FFL Notice Banner */
+    .ffl-notice {
+      background: linear-gradient(135deg, #fff3cd 0%, #ffe69c 100%);
+      border-left: 5px solid #ff9800;
+      padding: 2rem;
+      border-radius: 8px;
+      margin-bottom: 3rem;
+      box-shadow: 0 2px 8px rgba(255, 152, 0, 0.15);
+    }
+    
+    .ffl-notice h2 {
+      color: #e65100;
+      margin-bottom: 0.8rem;
+      font-size: 1.4rem;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+    
+    .ffl-notice i { font-size: 1.6rem; }
+    
+    .ffl-notice p {
+      color: #bf360c;
+      line-height: 1.7;
+      margin-bottom: 1rem;
+      font-weight: 500;
+    }
+    
+    .ffl-notice a {
+      color: #bf360c;
+      text-decoration: underline;
+      font-weight: 600;
+    }
+    
+    .ffl-notice a:hover { color: #e65100; }
+    
     .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-bottom: 4rem; }
-    .service-card { background: #fafafa; border-left: 4px solid var(--color-primary); padding: 2rem; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); transition: all 0.3s ease; display: flex; flex-direction: column; }
+    
+    .service-card {
+      background: #fafafa;
+      border-left: 4px solid var(--color-primary);
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+      transition: all 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+    
     .service-card:hover { transform: translateY(-4px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
-    .service-card h2 { font-size: 1.8rem; color: var(--color-bg-dark); margin-bottom: 1rem; font-weight: 600; }
+    
+    .service-card.coming-soon {
+      background: #f0f0f0;
+      opacity: 0.75;
+      border-left-color: #ccc;
+    }
+    
+    .coming-soon-badge {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: linear-gradient(135deg, #ff9800 0%, #f57c00 100%);
+      color: #fff;
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      box-shadow: 0 2px 8px rgba(255, 152, 0, 0.3);
+    }
+    
+    .service-card h2 { font-size: 1.8rem; color: var(--color-bg-dark); margin-bottom: 2.5rem; font-weight: 600; }
     .service-card i { margin-right: 0.5rem; color: var(--color-primary); }
+    .service-card.coming-soon h2 { color: #999; }
+    .service-card.coming-soon i { color: #ccc; }
+    
     .service-card p { color: #666; line-height: 1.6; margin-bottom: 1.5rem; flex-grow: 1; }
-    .service-cta { display: inline-block; background: var(--color-primary); color: #fff; padding: 0.7rem 1.5rem; border-radius: 4px; text-decoration: none; font-weight: 600; transition: background 0.3s; }
+    .service-card.coming-soon p { color: #888; }
+    
+    .service-cta { display: inline-block; background: var(--color-primary); color: #fff; padding: 0.7rem 1.5rem; border-radius: 4px; text-decoration: none; font-weight: 600; transition: background 0.3s; cursor: pointer; border: none; }
     .service-cta:hover { background: #8b1a1a; }
+    
+    .service-cta.disabled {
+      background: #ccc;
+      color: #666;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+    
+    .contact-info-notice {
+      display: inline-block;
+      background: #f5f5f5;
+      color: #666;
+      padding: 0.7rem 1.5rem;
+      border-radius: 4px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      border: 2px solid #ddd;
+    }
   </style>
 
   <script src="scripts/age-gate.js"></script>
@@ -81,29 +175,42 @@
 
   <main>
     <h1 class="page-title">Our Services</h1>
+    
+    <!-- FFL Notice Banner -->
+    <div class="ffl-notice">
+      <h2><i class="fas fa-hourglass-half"></i> Services Coming Soon</h2>
+      <p><strong>We're excited to announce that professional gunsmithing, FFL transfers, maintenance & repair, and optics installation services are coming to Modular Gunworks LLC!</strong></p>
+      <p>These specialized services require a Federal Firearms License (FFL). We are currently in the process of obtaining our FFL and expect to launch these services in early 2026. We appreciate your patience as we work to bring you the highest quality service.</p>
+      <p><strong>Want to stay updated?</strong> Contact us at <a href="mailto:modulargunworks@gmail.com">modulargunworks@gmail.com</a> or call <a href="tel:+12563843852">(256) 384-3852</a> to express interest or learn more about our timeline.</p>
+    </div>
+
     <div class="services-grid">
-      <div class="service-card">
+      <div class="service-card coming-soon">
+        <div class="coming-soon-badge">Coming Soon</div>
         <h2><i class="fas fa-wrench"></i> Gunsmithing Services</h2>
-        <p>Expert gunsmithing services for all types of firearms. From basic maintenance and cleaning to custom builds and modifications, our skilled gunsmiths handle every project with precision and care.</p>
-        <a href="#contact" class="service-cta">Request Service</a>
+        <p>Expert gunsmithing services for all types of firearms. From basic maintenance and cleaning to custom builds and modifications, our skilled gunsmiths will handle every project with precision and care.</p>
+        <span class="contact-info-notice"><i class="fas fa-envelope"></i> Contact us to express interest</span>
       </div>
 
-      <div class="service-card">
+      <div class="service-card coming-soon">
+        <div class="coming-soon-badge">Coming Soon</div>
         <h2><i class="fas fa-file-alt"></i> FFL Transfers</h2>
-        <p>Professional FFL transfer services available for firearms purchased elsewhere. We handle all compliance paperwork with speed and expertise to ensure your firearms are transferred legally and safely.</p>
-        <a href="#contact" class="service-cta">Schedule Transfer</a>
+        <p>Professional FFL transfer services available for firearms purchased elsewhere. We will handle all compliance paperwork with speed and expertise to ensure your firearms are transferred legally and safely.</p>
+        <span class="contact-info-notice"><i class="fas fa-envelope"></i> Contact us to express interest</span>
       </div>
 
-      <div class="service-card">
+      <div class="service-card coming-soon">
+        <div class="coming-soon-badge">Coming Soon</div>
         <h2><i class="fas fa-tools"></i> Maintenance & Repair</h2>
-        <p>Keep your firearms in top condition with our professional maintenance and repair services. We use quality parts and proven techniques to ensure your weapons function reliably.</p>
-        <a href="#contact" class="service-cta">Book Appointment</a>
+        <p>Keep your firearms in top condition with our professional maintenance and repair services. We will use quality parts and proven techniques to ensure your weapons function reliably.</p>
+        <span class="contact-info-notice"><i class="fas fa-envelope"></i> Contact us to express interest</span>
       </div>
 
-      <div class="service-card">
+      <div class="service-card coming-soon">
+        <div class="coming-soon-badge">Coming Soon</div>
         <h2><i class="fas fa-search"></i> Optics Installation</h2>
-        <p>Professional optics mounting and sighting-in services. Whether it's a red dot, scope, or iron sights, we ensure perfect alignment and optimal performance.</p>
-        <a href="#contact" class="service-cta">Request Installation</a>
+        <p>Professional optics mounting and sighting-in services. Whether it's a red dot, scope, or iron sights, we will ensure perfect alignment and optimal performance.</p>
+        <span class="contact-info-notice"><i class="fas fa-envelope"></i> Contact us to express interest</span>
       </div>
     </div>
   </main>
