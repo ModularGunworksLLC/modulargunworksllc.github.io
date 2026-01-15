@@ -8,6 +8,9 @@ on:
   # Allow manual trigger from Actions tab
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   sync-products:
     runs-on: ubuntu-latest
@@ -28,8 +31,10 @@ jobs:
         run: node scripts/sync-chattanooga-api.js
       
       - name: Commit and push changes
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git add data/products/
-          git diff --quiet && git diff --staged --quiet || (git commit -m "Auto-sync products from Chattanooga API" && git push origin main || true)
+          git diff --quiet && git diff --staged --quiet || (git commit -m "Auto-sync products from Chattanooga API" && git push origin main)
