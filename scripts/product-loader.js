@@ -80,31 +80,32 @@ class ProductLoader {
   }
 
   /**
-   * Default product card template
+   * Default product card template - uses existing product-card CSS
    */
   defaultTemplate(product) {
     const price = product.customPrice || product.retailPrice;
-    const stock = product.inventory > 0 ? `${product.inventory} in stock` : 'Out of stock';
-    const fflBadge = product.requiresFfl ? '<span class="ffl-badge">Requires FFL</span>' : '';
+    const inStock = product.inventory > 0;
+    const stockBadge = inStock 
+      ? `<span class="stock-badge in-stock">In Stock</span>`
+      : `<span class="stock-badge out-of-stock">Out of Stock</span>`;
     
     return `
-      <div class="product-card" data-product-id="${product.id}">
-        <div class="product-header">
-          <h3 class="product-name">${product.name}</h3>
-          ${fflBadge}
+      <div class="product-card">
+        <div class="product-image">
+          <img src="/images/products/placeholder.jpg" alt="${product.name}">
+          ${stockBadge}
         </div>
-        <div class="product-details">
-          <div class="product-price">
-            <span class="price-label">Price:</span>
-            <span class="price-value">$${price.toFixed(2)}</span>
+        <div class="product-info">
+          <div class="product-brand">${product.requiresFfl ? 'Requires FFL' : 'In Stock'}</div>
+          <div class="product-name">${product.name}</div>
+          <div class="product-pricing">
+            <div class="price-current">$${price.toFixed(2)}</div>
           </div>
-          <div class="product-stock ${product.inStock ? 'in-stock' : 'out-of-stock'}">
-            ${stock}
-          </div>
+          <div class="inventory-info">${product.inventory} units available</div>
+          <button class="product-button" data-product-id="${product.id}">
+            ${inStock ? 'Add to Cart' : 'Notify Me'}
+          </button>
         </div>
-        <button class="product-btn" data-product-id="${product.id}">
-          ${product.inStock ? 'Add to Cart' : 'Notify Me'}
-        </button>
       </div>
     `;
   }
