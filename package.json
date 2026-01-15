@@ -4,7 +4,10 @@
   "description": "Modular Gunworks LLC Website",
   "main": "serve.js",
   "scripts": {
-    "start": "node serve.js"
+    "start": "node serve.js",
+    "admin": "node scripts/admin-api.js",
+    "sync": "node scripts/sync-chattanooga-api.js",
+    "dev": "start cmd /k node serve.js && start cmd /k node scripts/admin-api.js"
   },
   "keywords": [
     "firearms",
@@ -14,6 +17,7 @@
   "author": "Modular Gunworks LLC",
   "license": "MIT",
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.22.1",
     "nodemailer": "^7.0.12"
   }

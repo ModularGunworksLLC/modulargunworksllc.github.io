@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modular Gunworks - Admin Panel</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #1a1a1a;
+            color: #fff;
+        }
+
+        .login-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+        }
+
+        .login-box {
+            background: #252525;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+            width: 100%;
+            max-width: 400px;
+            border: 1px solid #404040;
+        }
+
+        .login-box h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 24px;
+        }
+
+        .login-box input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            background: #333;
+            border: 1px solid #404040;
+            border-radius: 4px;
+            color: #fff;
+            font-size: 14px;
+        }
+
+        .login-box input:focus {
+            outline: none;
+            border-color: #ff6600;
+            background: #3a3a3a;
+        }
+
+        .login-box button {
+            width: 100%;
+            padding: 12px;
+            background: #ff6600;
+            border: none;
+            border-radius: 4px;
+            color: #fff;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.3s;
+        }
+
+        .login-box button:hover {
+            background: #ff8822;
+        }
+
+        .error {
+            color: #ff4444;
+            margin-bottom: 15px;
+            font-size: 14px;
+            text-align: center;
+        }
+
+        /* Admin Panel Layout */
+        .admin-container {
+            display: none;
+            min-height: 100vh;
+            background: #1a1a1a;
+        }
+
+        .admin-header {
+            background: #252525;
+            padding: 20px 30px;
+            border-bottom: 1px solid #404040;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .admin-header h1 {
+            font-size: 20px;
+        }
+
+        .logout-btn {
+            padding: 8px 16px;
+            background: #ff6600;
+            border: none;
+            border-radius: 4px;
+            color: #fff;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+
+        .logout-btn:hover {
+            background: #ff8822;
+        }
+
+        .admin-content {
+            display: flex;
+            height: calc(100vh - 70px);
+        }
+
+        .main-panel {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            border-right: 1px solid #404040;
+            overflow: hidden;
+        }
+
+        .search-filters {
+            background: #252525;
+            padding: 20px;
+            border-bottom: 1px solid #404040;
+        }
+
+        .filter-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .filter-group label {
+            font-size: 12px;
+            color: #aaa;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        .filter-group input,
+        .filter-group select {
+            padding: 10px;
+            background: #333;
+            border: 1px solid #404040;
+            border-radius: 4px;
+            color: #fff;
+            font-size: 14px;
+        }
+
+        .filter-group input:focus,
+        .filter-group select:focus {
+            outline: none;
+            border-color: #ff6600;
+            background: #3a3a3a;
+        }
+
+        .products-list {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        .product-item {
+            background: #252525;
+            border: 1px solid #404040;
+            border-radius: 6px;
+            padding: 15px;
+            margin-bottom: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .product-item:hover {
+            border-color: #ff6600;
+            background: #2a2a2a;
+        }
+
+        .product-info {
+            flex: 1;
+        }
+
+        .product-name {
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: #fff;
+        }
+
+        .product-details {
+            font-size: 13px;
+            color: #999;
+            display: flex;
+            gap: 20px;
+        }
+
+        .product-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .activate-btn {
+            padding: 8px 16px;
+            background: #ff6600;
+            border: none;
+            border-radius: 4px;
+            color: #fff;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 12px;
+            transition: background 0.3s;
+        }
+
+        .activate-btn:hover {
+            background: #ff8822;
+        }
+
+        .activate-btn.active {
+            background: #22aa22;
+        }
+
+        .activate-btn.active:hover {
+            background: #33bb33;
+        }
+
+        /* Right Sidebar */
+        .active-products-panel {
+            width: 350px;
+            background: #252525;
+            border-left: 1px solid #404040;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .panel-header {
+            padding: 20px;
+            background: #2a2a2a;
+            border-bottom: 1px solid #404040;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .active-list {
+            flex: 1;
+            overflow-y: auto;
+            padding: 15px;
+        }
+
+        .active-item {
+            background: #333;
+            padding: 12px;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            border-left: 3px solid #ff6600;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .active-item-info {
+            flex: 1;
+        }
+
+        .active-item-name {
+            font-size: 12px;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 4px;
+        }
+
+        .active-item-page {
+            font-size: 11px;
+            color: #ff6600;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        .remove-btn {
+            padding: 4px 8px;
+            background: #ff4444;
+            border: none;
+            border-radius: 3px;
+            color: #fff;
+            cursor: pointer;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .remove-btn:hover {
+            background: #ff6666;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: #252525;
+            padding: 30px;
+            border-radius: 8px;
+            border: 1px solid #404040;
+            max-width: 500px;
+            width: 90%;
+        }
+
+        .modal-content h2 {
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+
+        .modal-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            font-size: 13px;
+            color: #aaa;
+            margin-bottom: 6px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .form-group select {
+            padding: 10px;
+            background: #333;
+            border: 1px solid #404040;
+            border-radius: 4px;
+            color: #fff;
+            font-size: 14px;
+        }
+
+        .form-group select:focus {
+            outline: none;
+            border-color: #ff6600;
+            background: #3a3a3a;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+            margin-top: 20px;
+        }
+
+        .modal-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+
+        .modal-btn-confirm {
+            background: #ff6600;
+            color: #fff;
+        }
+
+        .modal-btn-confirm:hover {
+            background: #ff8822;
+        }
+
+        .modal-btn-cancel {
+            background: #404040;
+            color: #fff;
+        }
+
+        .modal-btn-cancel:hover {
+            background: #505050;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #999;
+        }
+
+        .stats {
+            padding: 15px 20px;
+            background: #2a2a2a;
+            border-bottom: 1px solid #404040;
+            font-size: 12px;
+            color: #aaa;
+        }
+
+        .stats-item {
+            display: inline-block;
+            margin-right: 20px;
+        }
+
+        .stats-value {
+            color: #ff6600;
+            font-weight: 600;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #252525;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #404040;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #505050;
+        }
+    </style>
+</head>
+<body>
+    <!-- Login Screen -->
+    <div id="loginScreen" class="login-container">
+        <div class="login-box">
+            <h1>🔐 Admin Panel</h1>
+            <div id="loginError" class="error"></div>
+            <input type="password" id="passwordInput" placeholder="Enter admin password" autocomplete="off">
+            <button onclick="login()">Login</button>
+        </div>
+    </div>
+
+    <!-- Admin Panel -->
+    <div id="adminContainer" class="admin-container">
+        <div class="admin-header">
+            <h1>📦 Product Admin Panel</h1>
+            <button class="logout-btn" onclick="logout()">Logout</button>
+        </div>
+
+        <div class="admin-content">
+            <div class="main-panel">
+                <div class="search-filters">
+                    <div class="filter-row">
+                        <div class="filter-group">
+                            <label>Search</label>
+                            <input type="text" id="searchInput" placeholder="Product name..." onkeyup="applyFilters()">
+                        </div>
+                        <div class="filter-group">
+                            <label>Brand</label>
+                            <select id="brandFilter" onchange="applyFilters()">
+                                <option value="">All Brands</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label>Category</label>
+                            <select id="categoryFilter" onchange="applyFilters()">
+                                <option value="">All Categories</option>
+                                <option value="ammunition">Ammunition</option>
+                                <option value="magazines">Magazines</option>
+                                <option value="reloading">Reloading</option>
+                                <option value="gun-parts">Gun Parts</option>
+                                <option value="optics">Optics</option>
+                                <option value="gear">Gear</option>
+                                <option value="survival">Survival</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label>Stock Status</label>
+                            <select id="stockFilter" onchange="applyFilters()">
+                                <option value="">All</option>
+                                <option value="in-stock">In Stock</option>
+                                <option value="out-of-stock">Out of Stock</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="stats" id="statsDiv"></div>
+                </div>
+
+                <div class="products-list" id="productsList">
+                    <div class="loading">Loading products...</div>
+                </div>
+            </div>
+
+            <div class="active-products-panel">
+                <div class="panel-header">✓ Active Products</div>
+                <div class="active-list" id="activeList"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Page Selection Modal -->
+    <div id="pageModal" class="modal">
+        <div class="modal-content">
+            <h2>Select Page for Product</h2>
+            <div class="modal-form">
+                <div id="selectedProductInfo"></div>
+                <div class="form-group">
+                    <label>Add to Page</label>
+                    <select id="pageSelect">
+                        <option value="">-- Select a Page --</option>
+                        <option value="ammunition">Ammunition</option>
+                        <option value="magazines">Magazines</option>
+                        <option value="reloading">Reloading</option>
+                        <option value="gun-parts">Gun Parts</option>
+                        <option value="optics">Optics</option>
+                        <option value="gear">Gear</option>
+                        <option value="survival">Survival</option>
+                        <option value="brands">Brands</option>
+                        <option value="sale">Sale</option>
+                    </select>
+                </div>
+                <div class="modal-buttons">
+                    <button class="modal-btn modal-btn-cancel" onclick="closeModal()">Cancel</button>
+                    <button class="modal-btn modal-btn-confirm" onclick="confirmActivate()">Add to Page</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Admin API endpoint - change if running on different port
+        const API_BASE = window.location.hostname === 'localhost' 
+            ? 'http://localhost:3001/api/admin'
+            : `http://${window.location.hostname}:3001/api/admin`;
+        
+        let allProducts = [];
+        let filteredProducts = [];
+        let activeProducts = {};
+        let selectedProduct = null;
+        let isAuthenticated = false;
+        let authToken = null;
+
+        // Auth
+        async function login() {
+            const password = document.getElementById('passwordInput').value;
+            if (!password) {
+                showLoginError('Please enter a password');
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_BASE}/auth`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ password })
+                });
+
+                const data = await response.json();
+
+                if (response.ok && data.token) {
+                    authToken = data.token;
+                    isAuthenticated = true;
+                    localStorage.setItem('adminAuth', authToken);
+                    document.getElementById('loginScreen').style.display = 'none';
+                    document.getElementById('adminContainer').style.display = 'flex';
+                    loadProducts();
+                    loadActiveProducts();
+                } else {
+                    showLoginError(data.error || 'Invalid password');
+                }
+            } catch (error) {
+                showLoginError('Connection error: ' + error.message);
+            }
+        }
+
+        function logout() {
+            isAuthenticated = false;
+            authToken = null;
+            localStorage.removeItem('adminAuth');
+            document.getElementById('loginScreen').style.display = 'flex';
+            document.getElementById('adminContainer').style.display = 'none';
+            document.getElementById('passwordInput').value = '';
+        }
+
+        function showLoginError(msg) {
+            document.getElementById('loginError').textContent = msg;
+        }
+
+        // Load Products
+        async function loadProducts() {
+            try {
+                const response = await fetch(`${API_BASE}/search?limit=1000`, {
+                    headers: { 'Authorization': `Bearer ${authToken}` }
+                });
+                const data = await response.json();
+                allProducts = data.products || [];
+                
+                // Build brand filter
+                const brands = [...new Set(allProducts.map(p => p.brand))].sort();
+                const brandSelect = document.getElementById('brandFilter');
+                // Clear existing options except first
+                while (brandSelect.options.length > 1) {
+                    brandSelect.remove(1);
+                }
+                brands.forEach(brand => {
+                    const option = document.createElement('option');
+                    option.value = brand;
+                    option.textContent = brand;
+                    brandSelect.appendChild(option);
+                });
+
+                applyFilters();
+            } catch (error) {
+                console.error('Error loading products:', error);
+                showLoginError('Failed to load products. Check your connection.');
+            }
+        }
+
+        // Load Active Products
+        async function loadActiveProducts() {
+            try {
+                const response = await fetch(`${API_BASE}/active`, {
+                    headers: { 'Authorization': `Bearer ${authToken}` }
+                });
+                activeProducts = await response.json();
+                displayActiveProducts();
+            } catch (error) {
+                console.error('Error loading active products:', error);
+                // If no active products yet, that's okay
+                activeProducts = {};
+            }
+        }
+
+        // Apply Filters
+        function applyFilters() {
+            const search = document.getElementById('searchInput').value.toLowerCase();
+            const brand = document.getElementById('brandFilter').value;
+            const category = document.getElementById('categoryFilter').value;
+            const stock = document.getElementById('stockFilter').value;
+
+            filteredProducts = allProducts.filter(p => {
+                const matchSearch = p.name.toLowerCase().includes(search);
+                const matchBrand = !brand || p.brand === brand;
+                const matchCategory = !category || p.category === category;
+                const matchStock = !stock || (stock === 'in-stock' ? p.inStock : !p.inStock);
+                return matchSearch && matchBrand && matchCategory && matchStock;
+            });
+
+            updateStats();
+            displayProducts();
+        }
+
+        // Display Products
+        function displayProducts() {
+            const list = document.getElementById('productsList');
+            list.innerHTML = '';
+
+            if (filteredProducts.length === 0) {
+                list.innerHTML = '<div class="loading">No products found</div>';
+                return;
+            }
+
+            filteredProducts.forEach(product => {
+                const isActive = activeProducts[product.id];
+                const item = document.createElement('div');
+                item.className = 'product-item';
+                item.innerHTML = `
+                    <div class="product-info">
+                        <div class="product-name">${product.name}</div>
+                        <div class="product-details">
+                            <span>💰 $${product.salePrice.toFixed(2)}</span>
+                            <span>📦 ${product.inventory} in stock</span>
+                            <span>🏷️ ${product.brand}</span>
+                            <span>📂 ${product.category}</span>
+                        </div>
+                    </div>
+                    <div class="product-actions">
+                        <button class="activate-btn ${isActive ? 'active' : ''}" 
+                                onclick="selectProduct('${product.id}', '${product.name.replace(/'/g, "\\'")}')">
+                            ${isActive ? '✓ Active' : '+ Activate'}
+                        </button>
+                    </div>
+                `;
+                list.appendChild(item);
+            });
+        }
+
+        // Select Product
+        function selectProduct(id, name) {
+            selectedProduct = id;
+            document.getElementById('selectedProductInfo').textContent = `Product: ${name}`;
+            document.getElementById('pageSelect').value = activeProducts[id]?.page || '';
+            document.getElementById('pageModal').classList.add('active');
+        }
+
+        // Confirm Activate
+        async function confirmActivate() {
+            const page = document.getElementById('pageSelect').value;
+            if (!page) {
+                alert('Please select a page');
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_BASE}/activate`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${authToken}`
+                    },
+                    body: JSON.stringify({ productId: selectedProduct, page })
+                });
+
+                if (response.ok) {
+                    closeModal();
+                    await loadActiveProducts();
+                    displayProducts();
+                } else {
+                    alert('Failed to activate product');
+                }
+            } catch (error) {
+                console.error('Error activating product:', error);
+            }
+        }
+
+        // Display Active Products
+        function displayActiveProducts() {
+            const list = document.getElementById('activeList');
+            const active = Object.entries(activeProducts);
+
+            if (active.length === 0) {
+                list.innerHTML = '<div class="loading">No active products</div>';
+                return;
+            }
+
+            list.innerHTML = '';
+            active.forEach(([id, data]) => {
+                const product = allProducts.find(p => p.id === id);
+                if (product) {
+                    const item = document.createElement('div');
+                    item.className = 'active-item';
+                    item.innerHTML = `
+                        <div class="active-item-info">
+                            <div class="active-item-name">${product.name}</div>
+                            <div class="active-item-page">📄 ${data.page}</div>
+                        </div>
+                        <button class="remove-btn" onclick="removeProduct('${id}')">Remove</button>
+                    `;
+                    list.appendChild(item);
+                }
+            });
+        }
+
+        // Remove Product
+        async function removeProduct(id) {
+            if (!confirm('Remove from active products?')) return;
+
+            try {
+                await fetch(`${API_BASE}/deactivate`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${authToken}`
+                    },
+                    body: JSON.stringify({ productId: id })
+                });
+
+                await loadActiveProducts();
+                displayProducts();
+            } catch (error) {
+                console.error('Error removing product:', error);
+            }
+        }
+
+        // Close Modal
+        function closeModal() {
+            document.getElementById('pageModal').classList.remove('active');
+            selectedProduct = null;
+        }
+
+        // Update Stats
+        function updateStats() {
+            document.getElementById('statsDiv').innerHTML = `
+                <span class="stats-item">Total: <span class="stats-value">${allProducts.length}</span></span>
+                <span class="stats-item">Filtered: <span class="stats-value">${filteredProducts.length}</span></span>
+                <span class="stats-item">Active: <span class="stats-value">${Object.keys(activeProducts).length}</span></span>
+            `;
+        }
+
+        // Check Auth on Load
+        window.addEventListener('load', () => {
+            const token = localStorage.getItem('adminAuth');
+            if (token) {
+                authToken = token;
+                isAuthenticated = true;
+                document.getElementById('loginScreen').style.display = 'none';
+                document.getElementById('adminContainer').style.display = 'flex';
+                loadProducts();
+                loadActiveProducts();
+            }
+        });
+    </script>
+</body>
+</html>
