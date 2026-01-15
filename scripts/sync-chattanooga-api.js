@@ -131,6 +131,126 @@ function categorizeProduct(product) {
 }
 
 /**
+ * Extract caliber from product name
+ * Normalizes formats (9MM, 9mm, 9x19, etc. -> 9MM)
+ */
+function extractCaliber(name) {
+    const caliberPatterns = [
+        // Pistol calibers
+        { pattern: /\b(9MM|9x19|9x19mm|9 ?MM|parabellum)/i, normalized: '9MM' },
+        { pattern: /\b(40\s*S&W|40\s*cal|.40|40sw)/i, normalized: '.40 S&W' },
+        { pattern: /\b(45\s*ACP|45\s*auto|.45|45 ?cal)/i, normalized: '.45 ACP' },
+        { pattern: /\b(380|.380|380 ?auto)/i, normalized: '.380 ACP' },
+        { pattern: /\b(357|.357|357\s*mag|357magnum)/i, normalized: '.357 Mag' },
+        { pattern: /\b(38|.38|38\s*spl|38\s*special)/i, normalized: '.38 SPL' },
+        { pattern: /\b(44|.44|44\s*mag|44magnum)/i, normalized: '.44 Mag' },
+        { pattern: /\b(10MM|10\s*mm)/i, normalized: '10MM' },
+        { pattern: /\b(45\s*GAP)/i, normalized: '.45 GAP' },
+        // Rifle calibers
+        { pattern: /\b(223|5\.56|5\.56\s*NATO|5\.56x45)/i, normalized: '5.56 NATO' },
+        { pattern: /\b(308|7\.62\s*NATO|7\.62x51)/i, normalized: '.308 WIN' },
+        { pattern: /\b(30-06|30\s*06|7\.62x54)/i, normalized: '.30-06' },
+        { pattern: /\b(300\s*BLK|300\s*blackout)/i, normalized: '300 BLK' },
+        { pattern: /\b(6\.5\s*Creed|6\.5\s*creedmoor)/i, normalized: '6.5 Creed' },
+        { pattern: /\b(270|\.270)/i, normalized: '.270 WIN' },
+        { pattern: /\b(30-30|30\s*30)/i, normalized: '.30-30' },
+        { pattern: /\b(338|\.338)/i, normalized: '.338 Lapua' },
+        { pattern: /\b(375|\.375)/i, normalized: '.375 H&H' },
+        { pattern: /\b(7\.62x39)/i, normalized: '7.62x39' },
+        { pattern: /\b(5\.45x39)/i, normalized: '5.45x39' },
+        // Rimfire
+        { pattern: /\b(22\s*LR|22\s*long\s*rifle|\.22|22lr)/i, normalized: '.22 LR' },
+        { pattern: /\b(22\s*WMR|22\s*mag|\.22\s*mag)/i, normalized: '.22 WMR' },
+        // Shotgun
+        { pattern: /\b(12\s*GA|12\s*gauge|12ga)/i, normalized: '12 GA' },
+        { pattern: /\b(20\s*GA|20\s*gauge|20ga)/i, normalized: '20 GA' },
+        { pattern: /\b(16\s*GA|16\s*gauge|16ga)/i, normalized: '16 GA' },
+        { pattern: /\b(10\s*GA|10\s*gauge|10ga)/i, normalized: '10 GA' },
+        { pattern: /\b(\.410|410)/i, normalized: '.410' },
+        // Uncommon/specialty
+        { pattern: /\b(50\s*BMG|\.50\s*BMG)/i, normalized: '.50 BMG' },
+        { pattern: /\b(9\.3x62|9\.3x74)/i, normalized: '9.3x62' },
+        { pattern: /\b(7\.7x58|303\s*British)/i, normalized: '.303 British' },
+    ];
+
+    for (const { pattern, normalized } of caliberPatterns) {
+        if (pattern.test(name)) {
+            return normalized;
+        }
+    }
+    
+    return null;
+}
+
+/**
+ * Extract platform/firearm family from product name
+ * AR-15, Glock, AK, 1911, etc.
+ */
+function extractPlatform(name) {
+    const platformPatterns = [
+        { pattern: /\b(AR-?15|AR15|AR\s*15|M4|M16|AR\s*platform)/i, normalized: 'AR-15' },
+        { pattern: /\b(AR-?10|AR10|DPMS|LR308)/i, normalized: 'AR-10' },
+        { pattern: /\b(AK|AK-?47|AK-?74|AKMS|AKM|Saiga)/i, normalized: 'AK Platform' },
+        { pattern: /\b(Glock|G19|G17|G34)/i, normalized: 'Glock' },
+        { pattern: /\b(1911|45\s*auto\s*pistol)/i, normalized: '1911' },
+        { pattern: /\b(Sig\s*Sauer|P226|P229|P320|P365)/i, normalized: 'Sig Sauer' },
+        { pattern: /\b(HK|Heckler\s*Koch|MP5|HK417)/i, normalized: 'Heckler & Koch' },
+        { pattern: /\b(Ruger|10\/22|Mini\s*14|Precision)/i, normalized: 'Ruger' },
+        { pattern: /\b(Mossberg|500|590|Maverick)/i, normalized: 'Mossberg' },
+        { pattern: /\b(Remington|870|1100|700)/i, normalized: 'Remington' },
+        { pattern: /\b(Benelli|M4|M2)/i, normalized: 'Benelli' },
+        { pattern: /\b(Shotgun|Pump|Semi-?Auto|Over\s*Under)/i, normalized: 'Shotgun' },
+        { pattern: /\b(Rifle|Bolt\s*Action)/i, normalized: 'Rifle' },
+        { pattern: /\b(Pistol|Handgun)/i, normalized: 'Pistol' },
+    ];
+
+    for (const { pattern, normalized } of platformPatterns) {
+        if (pattern.test(name)) {
+            return normalized;
+        }
+    }
+    
+    return null;
+}
+
+/**
+ * Extract magazine capacity from product name
+ * 10, 30, 47, etc.
+ */
+function extractCapacity(name) {
+    // Look for patterns like "30RD", "10 ROUND", "MAGAZINE 20"
+    const capacityMatch = name.match(/(?:MAG|MAGAZINE|CLIP).*?(\d{1,3})(?:\s*RD|ROUND|CAPACITY)?|(\d{1,3})\s*(?:RD|ROUND)/i);
+    if (capacityMatch) {
+        const capacity = capacityMatch[1] || capacityMatch[2];
+        return parseInt(capacity);
+    }
+    return null;
+}
+
+/**
+ * Extract material from product name
+ * Polymer, Steel, Aluminum, etc.
+ */
+function extractMaterial(name) {
+    const materialPatterns = [
+        { pattern: /\bpolymer\b|\bplastic\b/i, normalized: 'Polymer' },
+        { pattern: /\bsteel\b|\bstainless\b|\bstainless\s*steel\b/i, normalized: 'Steel' },
+        { pattern: /\baluminum\b|\baluminium\b|\baluminum\s*alloy\b/i, normalized: 'Aluminum' },
+        { pattern: /\bcarbon\s*fiber\b|\bcarbon\s*composite\b/i, normalized: 'Carbon Fiber' },
+        { pattern: /\bfiberglass\b/i, normalized: 'Fiberglass' },
+        { pattern: /\brubber\b/i, normalized: 'Rubber' },
+    ];
+
+    for (const { pattern, normalized } of materialPatterns) {
+        if (pattern.test(name)) {
+            return normalized;
+        }
+    }
+    
+    return null;
+}
+
+/**
  * Get authentication header for API
  */
 function getAuthHeader(token) {
@@ -207,7 +327,17 @@ function transformProduct(apiProduct) {
         inventory: parseInt(apiProduct.inventory || 0),
         inStock: apiProduct.in_stock_flag === 1,
         requiresFFL: apiProduct.ffl_flag === 1,
-        description: apiProduct.description || ''
+        serialized: apiProduct.serialized_flag === 1,
+        dropShip: apiProduct.drop_ship_flag === 1,
+        allocated: apiProduct.allocated_flag === 1,
+        mapPrice: parseFloat(apiProduct.map_price || 0),
+        lastUpdated: apiProduct.qas_last_updated_at || '',
+        description: apiProduct.description || '',
+        // New extracted fields
+        caliber: extractCaliber(productName),
+        platform: extractPlatform(productName),
+        capacity: extractCapacity(productName),
+        material: extractMaterial(productName)
     };
 }
 

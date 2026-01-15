@@ -666,11 +666,16 @@
         <div class="admin-content">
             <div class="main-panel">
                 <div class="search-filters">
-                    <div class="filter-row">
-                        <div class="filter-group">
-                            <label>Search</label>
-                            <input type="text" id="searchInput" placeholder="Product name..." onkeyup="applyFilters()">
+                    <!-- Primary Search -->
+                    <div class="filter-row" style="border-bottom: 2px solid #ff6600; padding-bottom: 15px;">
+                        <div class="filter-group" style="flex: 2;">
+                            <label>🔍 Search Product</label>
+                            <input type="text" id="searchInput" placeholder="Product name..." onkeyup="applyFilters()" style="padding: 10px;">
                         </div>
+                    </div>
+
+                    <!-- Basic Filters -->
+                    <div class="filter-row" style="gap: 10px;">
                         <div class="filter-group">
                             <label>Brand</label>
                             <select id="brandFilter" onchange="applyFilters()">
@@ -681,13 +686,6 @@
                             <label>Category</label>
                             <select id="categoryFilter" onchange="applyFilters()">
                                 <option value="">All Categories</option>
-                                <option value="ammunition">Ammunition</option>
-                                <option value="magazines">Magazines</option>
-                                <option value="reloading">Reloading</option>
-                                <option value="gun-parts">Gun Parts</option>
-                                <option value="optics">Optics</option>
-                                <option value="gear">Gear</option>
-                                <option value="survival">Survival</option>
                             </select>
                         </div>
                         <div class="filter-group">
@@ -699,6 +697,62 @@
                             </select>
                         </div>
                     </div>
+
+                    <!-- Advanced Filters -->
+                    <details style="margin: 10px 0; padding: 10px; background: #2a2a2a; border-radius: 4px; border: 1px solid #404040;">
+                        <summary style="cursor: pointer; font-weight: 600; color: #ff6600;">⚙️ Advanced Filters</summary>
+                        
+                        <div class="filter-row" style="margin-top: 15px; gap: 10px;">
+                            <div class="filter-group">
+                                <label>Caliber</label>
+                                <select id="caliberFilter" onchange="applyFilters()">
+                                    <option value="">All Calibers</option>
+                                </select>
+                            </div>
+                            <div class="filter-group">
+                                <label>Platform/Family</label>
+                                <select id="platformFilter" onchange="applyFilters()">
+                                    <option value="">All Platforms</option>
+                                </select>
+                            </div>
+                            <div class="filter-group">
+                                <label>Magazine Capacity</label>
+                                <select id="capacityFilter" onchange="applyFilters()">
+                                    <option value="">All Capacities</option>
+                                </select>
+                            </div>
+                            <div class="filter-group">
+                                <label>Material</label>
+                                <select id="materialFilter" onchange="applyFilters()">
+                                    <option value="">All Materials</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="filter-row" style="margin-top: 10px; gap: 10px;">
+                            <div class="filter-group">
+                                <label>Price Range: $<span id="priceRangeDisplay">0-$100</span></label>
+                                <input type="range" id="priceFilter" min="0" max="1000" value="1000" onchange="applyFilters()" style="width: 100%;">
+                            </div>
+                        </div>
+
+                        <div class="filter-row" style="margin-top: 10px; gap: 20px; flex-wrap: wrap;">
+                            <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                                <input type="checkbox" id="serializationFilter" onchange="applyFilters()">
+                                <span>🔫 Serialized/Firearms</span>
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                                <input type="checkbox" id="dropShipFilter" onchange="applyFilters()">
+                                <span>📦 Drop-shipped</span>
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                                <input type="checkbox" id="allocatedFilter" onchange="applyFilters()">
+                                <span>🔒 Show Allocated</span>
+                            </label>
+                        </div>
+                    </details>
+
+                    <!-- Stats and Batch Button -->
                     <div class="stats" id="statsDiv"></div>
                     <div style="padding: 10px 20px; border-bottom: 1px solid #404040;">
                         <button id="batchActivateBtn" class="activate-btn" style="width: 100%; background: #ff6600; margin-top: 5px;" onclick="batchActivate()" disabled>
@@ -854,31 +908,47 @@
                 });
                 const options = await response.json();
                 
-                // Update Brand filter
-                const brandSelect = document.getElementById('brandFilter');
-                while (brandSelect.options.length > 1) {
-                    brandSelect.remove(1);
-                }
-                options.brands.forEach(brand => {
-                    const option = document.createElement('option');
-                    option.value = brand;
-                    option.textContent = brand;
-                    brandSelect.appendChild(option);
-                });
+                // Helper to populate select
+                const populateSelect = (selectId, items, defaultLabel = 'All') => {
+                    const select = document.getElementById(selectId);
+                    if (!select) return;
+                    while (select.options.length > 1) {
+                        select.remove(1);
+                    }
+                    items.forEach(item => {
+                        const option = document.createElement('option');
+                        option.value = item;
+                        option.textContent = item;
+                        select.appendChild(option);
+                    });
+                };
 
-                // Update Category filter  
-                const categorySelect = document.getElementById('categoryFilter');
-                while (categorySelect.options.length > 1) {
-                    categorySelect.remove(1);
+                // Update all filters
+                populateSelect('brandFilter', options.brands);
+                populateSelect('categoryFilter', options.categories);
+                populateSelect('caliberFilter', options.calibers);
+                populateSelect('platformFilter', options.platforms);
+                populateSelect('capacityFilter', options.capacities);
+                populateSelect('materialFilter', options.materials);
+
+                // Set price range max
+                const priceFilter = document.getElementById('priceFilter');
+                if (priceFilter && options.priceRange) {
+                    priceFilter.max = Math.ceil(options.priceRange.max);
+                    priceFilter.value = Math.ceil(options.priceRange.max);
+                    updatePriceRangeDisplay();
                 }
-                options.categories.forEach(category => {
-                    const option = document.createElement('option');
-                    option.value = category;
-                    option.textContent = category.charAt(0).toUpperCase() + category.slice(1);
-                    categorySelect.appendChild(option);
-                });
             } catch (error) {
                 console.error('Error loading filter options:', error);
+            }
+        }
+
+        // Update price range display
+        function updatePriceRangeDisplay() {
+            const priceFilter = document.getElementById('priceFilter');
+            const display = document.getElementById('priceRangeDisplay');
+            if (priceFilter && display) {
+                display.textContent = `0-$${priceFilter.value}`;
             }
         }
 
@@ -903,13 +973,32 @@
             const brand = document.getElementById('brandFilter').value;
             const category = document.getElementById('categoryFilter').value;
             const stock = document.getElementById('stockFilter').value;
+            const caliber = document.getElementById('caliberFilter').value;
+            const platform = document.getElementById('platformFilter').value;
+            const capacity = document.getElementById('capacityFilter').value;
+            const material = document.getElementById('materialFilter').value;
+            const maxPrice = parseFloat(document.getElementById('priceFilter').value);
+            const onlySerialized = document.getElementById('serializationFilter').checked;
+            const onlyDropShip = document.getElementById('dropShipFilter').checked;
+            const showAllocated = document.getElementById('allocatedFilter').checked;
 
             filteredProducts = allProducts.filter(p => {
                 const matchSearch = p.name.toLowerCase().includes(search);
                 const matchBrand = !brand || p.brand === brand;
                 const matchCategory = !category || p.category === category;
                 const matchStock = !stock || (stock === 'in-stock' ? p.inStock : !p.inStock);
-                return matchSearch && matchBrand && matchCategory && matchStock;
+                const matchPrice = !maxPrice || (p.salePrice || p.retailPrice) <= maxPrice;
+                const matchCaliber = !caliber || p.caliber === caliber;
+                const matchPlatform = !platform || p.platform === platform;
+                const matchCapacity = !capacity || (p.capacity && p.capacity.toString() === capacity);
+                const matchMaterial = !material || p.material === material;
+                const matchSerialized = !onlySerialized || p.serialized;
+                const matchDropShip = !onlyDropShip || p.dropShip;
+                const matchAllocated = showAllocated || !p.allocated;
+
+                return matchSearch && matchBrand && matchCategory && matchStock && matchPrice &&
+                       matchCaliber && matchPlatform && matchCapacity && matchMaterial &&
+                       matchSerialized && matchDropShip && matchAllocated;
             });
 
             updateStats();
@@ -1176,6 +1265,22 @@
                         <div class="detail-label">Category</div>
                         <div class="detail-value">${product.category}</div>
                     </div>
+                    ${product.caliber ? `<div class="detail-item">
+                        <div class="detail-label">Caliber</div>
+                        <div class="detail-value">${product.caliber}</div>
+                    </div>` : ''}
+                    ${product.platform ? `<div class="detail-item">
+                        <div class="detail-label">Platform</div>
+                        <div class="detail-value">${product.platform}</div>
+                    </div>` : ''}
+                    ${product.capacity ? `<div class="detail-item">
+                        <div class="detail-label">Capacity</div>
+                        <div class="detail-value">${product.capacity} Rounds</div>
+                    </div>` : ''}
+                    ${product.material ? `<div class="detail-item">
+                        <div class="detail-label">Material</div>
+                        <div class="detail-value">${product.material}</div>
+                    </div>` : ''}
                     <div class="detail-item">
                         <div class="detail-label">Status</div>
                         <div class="detail-value">${product.inStock ? '✓ In Stock' : '✗ Out of Stock'}</div>
@@ -1184,6 +1289,10 @@
                         <div class="detail-label">Retail Price</div>
                         <div class="detail-value">$${product.retailPrice.toFixed(2)}</div>
                     </div>
+                    ${product.serialized ? `<div class="detail-item" style="background: #4a3a1a; border-color: #ff6600;">
+                        <div class="detail-label">🔫 Firearm</div>
+                        <div class="detail-value">Requires FFL</div>
+                    </div>` : ''}
                 </div>
 
                 <div style="padding-top: 15px; border-top: 1px solid #404040; margin-top: 15px;">
