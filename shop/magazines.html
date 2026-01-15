@@ -10,6 +10,7 @@
   
   <title>Magazines - Modular Gunworks LLC</title>
   
+  <!-- Modular CSS -->
   <link rel="stylesheet" href="../styles/design-system.css">
   <link rel="stylesheet" href="../styles/components.css">
   <link rel="stylesheet" href="../styles/layout.css">
@@ -18,21 +19,252 @@
   <link rel="icon" type="image/png" href="../favicon.png">
   
   <style>
-    :root { --color-primary: #b22222; --color-accent: #1a2c4b; --color-bg-dark: #181a1b; --color-text: #333; --color-light: #f5f5f5; }
+    :root {
+      --color-primary: #b22222;
+      --color-accent: #1a2c4b;
+      --color-bg-dark: #181a1b;
+      --color-text: #333;
+      --color-light: #f5f5f5;
+    }
     * { margin: 0; padding: 0; box-sizing: border-box; }
     html, body { height: 100%; background-color: #fff; }
-    main { max-width: 1400px; margin: 0 auto; padding: 3rem 2rem; }
+    main { display: flex; gap: 2rem; max-width: 1400px; margin: 0 auto; padding: 3rem 2rem; }
     .page-title { font-size: 2rem; color: var(--color-bg-dark); margin-bottom: 2rem; }
-    .products-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 2rem; margin-bottom: 4rem; }
-    .product-card { background: #fff; border: 1px solid #e0e0e0; border-radius: 8px; overflow: hidden; transition: all 0.3s ease; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
-    .product-card:hover { transform: translateY(-4px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
-    .product-image { width: 100%; height: 200px; background: #f5f5f5; overflow: hidden; }
-    .product-image img { width: 100%; height: 100%; object-fit: cover; }
+    
+    /* FILTER SIDEBAR */
+    #filters-sidebar {
+      flex: 0 0 300px;
+      position: sticky;
+      top: 180px;
+      height: fit-content;
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      padding: 0;
+      overflow-y: auto;
+      max-height: calc(100vh - 200px);
+      margin-top: 180px;
+    }
+
+    .filter-section { border-bottom: 1px solid #e0e0e0; }
+    .filter-toggle {
+      width: 100%;
+      padding: 1rem 1.2rem;
+      background: #fff;
+      border: none;
+      text-align: left;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: 700;
+      color: #333;
+      font-size: 0.95rem;
+      transition: background 0.2s;
+    }
+    .filter-toggle:hover { background: #f9f9f9; }
+    .filter-content {
+      padding: 1rem 1.2rem;
+      border-bottom: 1px solid #e0e0e0;
+    }
+    .filter-option {
+      display: flex;
+      margin-bottom: 0.7rem;
+    }
+    .filter-checkbox {
+      accent-color: var(--color-primary);
+    }
+    .filter-search {
+      width: 100%;
+      padding: 0.6rem;
+      margin-bottom: 0.8rem;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 0.85rem;
+    }
+    .show-more-btn {
+      width: 100%;
+      padding: 0.6rem;
+      margin-top: 0.8rem;
+      background: transparent;
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      color: var(--color-primary);
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 0.85rem;
+      display: none;
+    }
+    .show-more-btn:hover { background: #f5f5f5; }
+    .hidden-item { display: none; }
+
+    /* PRODUCTS GRID */
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 2rem;
+      margin-bottom: 4rem;
+    }
+    .product-card {
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+    .product-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 16px rgba(0,0,0,0.12);
+      border-color: var(--color-primary);
+    }
+    .product-image {
+      width: 100%;
+      height: 200px;
+      background: #f5f5f5;
+      overflow: hidden;
+    }
+    .product-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .product-image-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #e0e0e0;
+      color: #999;
+      font-size: 2rem;
+    }
     .product-info { padding: 1rem; }
-    .product-name { font-size: 1rem; color: var(--color-bg-dark); margin-bottom: 0.5rem; font-weight: 600; }
-    .product-price { font-size: 1.2rem; font-weight: 700; color: var(--color-primary); margin-bottom: 1rem; }
-    .product-btn { width: 100%; padding: 0.7rem; background: var(--color-primary); color: #fff; border: none; border-radius: 4px; cursor: pointer; font-weight: 600; transition: background 0.3s; }
+    .product-brand {
+      font-size: 0.75rem;
+      color: #999;
+      text-transform: uppercase;
+      margin-bottom: 0.3rem;
+      font-weight: 600;
+    }
+    .product-name {
+      font-size: 0.95rem;
+      color: var(--color-bg-dark);
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+      line-height: 1.3;
+    }
+    .product-pricing {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+    .product-price {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--color-primary);
+    }
+    .product-stock {
+      font-size: 0.75rem;
+      padding: 0.3rem 0.6rem;
+      border-radius: 3px;
+      font-weight: 600;
+    }
+    .stock-in { background: #e8f5e9; color: #2e7d32; }
+    .stock-out { background: #ffebee; color: #c62828; }
+    .product-btn {
+      width: 100%;
+      padding: 0.7rem;
+      background: var(--color-primary);
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background 0.3s;
+    }
     .product-btn:hover { background: #8b1a1a; }
+    .product-btn:active { transform: scale(0.98); }
+
+    /* LIST VIEW */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+    }
+    thead {
+      background: #f9f9f9;
+      border-bottom: 2px solid #e0e0e0;
+    }
+    th {
+      padding: 1rem;
+      text-align: left;
+      font-weight: 600;
+      color: #333;
+    }
+    td {
+      padding: 1rem;
+      border-bottom: 1px solid #e0e0e0;
+    }
+    tbody tr:hover { background: #f9f9f9; }
+    .product-name-list { font-weight: 600; color: #333; }
+    .product-price-list { font-weight: 700; color: var(--color-primary); }
+
+    /* RIGHT CONTENT AREA */
+    main > div:last-child {
+      flex: 1;
+      min-width: 0;
+    }
+
+    /* CONTROLS */
+    .controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .view-toggle {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+    }
+    .view-toggle button {
+      padding: 0.6rem 1rem;
+      background: #ddd;
+      color: #333;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background 0.3s;
+    }
+    #view-grid { background: var(--color-primary); color: #fff; border-radius: 4px 0 0 4px; }
+    #view-list { border-radius: 0 4px 4px 0; }
+
+    /* RESPONSIVE */
+    @media (max-width: 1024px) {
+      main { flex-direction: column; }
+      #filters-sidebar { flex: 1; position: static; margin-top: 0; }
+      .products-grid { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); }
+    }
+    @media (max-width: 768px) {
+      main { padding: 2rem 1rem; }
+      #filters-sidebar { margin-bottom: 2rem; }
+      .products-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 1rem; }
+      .page-title { font-size: 1.5rem; }
+    }
+    @media (max-width: 480px) {
+      main { padding: 1rem; }
+      .products-grid { grid-template-columns: 1fr; }
+      .controls { flex-direction: column; align-items: stretch; }
+      .view-toggle { width: 100%; }
+      .view-toggle button { flex: 1; }
+    }
   </style>
 
   <script src="../scripts/age-gate.js"></script>
@@ -40,6 +272,7 @@
 
 <body>
 
+  <!-- HEADER -->
   <header id="site-header">
     <div class="header-top-row">
       <h1>MODULAR GUNWORKS LLC</h1>
@@ -76,50 +309,181 @@
     </nav>
 
     <div class="promo-bar">
-       Veteran-Owned Business | Fast Shipping | Professional Service
+      Veteran-Owned Business | Fast Shipping | Professional Service
     </div>
   </header>
 
+  <!-- MAIN CONTENT -->
   <main>
-    <h1 class="page-title">Magazines</h1>
-    <p style="color: #666; margin-bottom: 2rem;">High-capacity magazines from top brands</p>
+    
+    <!-- LEFT SIDEBAR - FILTERS (STICKY) -->
+    <aside id="filters-sidebar">
+      
+      <!-- FILTER HEADER -->
+      <div style="display: flex; justify-content: space-between; align-items: center; padding: 1.2rem; border-bottom: 1px solid #e0e0e0; background: #f9f9f9;">
+        <h3 style="font-size: 0.95rem; color: #333; margin: 0; font-weight: 700; text-transform: uppercase;">Filters</h3>
+        <button id="clear-filters" style="padding: 0.3rem 0.6rem; background: transparent; color: var(--color-primary); border: none; cursor: pointer; font-weight: 600; font-size: 0.75rem; text-transform: uppercase; transition: all 0.2s;">
+          Clear All
+        </button>
+      </div>
 
-    <div class="products-grid">
-      <div class="product-card">
-        <div class="product-image"><img src="../images/categories/magazines.jpg" alt="Product"></div>
-        <div class="product-info">
-          <div class="product-name">Glock 9mm Magazine 15rd</div>
-          <div class="product-price">\.99</div>
-          <button class="product-btn">Add to Cart</button>
+      <!-- CALIBER FILTER (COLLAPSIBLE) -->
+      <div class="filter-section">
+        <button class="filter-toggle" data-filter="caliber" style="width: 100%; padding: 1rem 1.2rem; background: #fff; border: none; border-bottom: 1px solid #e0e0e0; text-align: left; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-weight: 700; color: #333; font-size: 0.95rem;">
+          <span>Caliber</span>
+          <i class="fas fa-chevron-down" style="font-size: 0.8rem;"></i>
+        </button>
+        <div class="filter-content" style="display: none; padding: 1rem 1.2rem; border-bottom: 1px solid #e0e0e0;">
+          <input type="text" class="filter-search" placeholder="Search (9mm, .308, ...)" style="width: 100%; padding: 0.6rem; margin-bottom: 0.8rem; border: 1px solid #ddd; border-radius: 4px; font-size: 0.85rem;" data-filter="caliber">
+          <div id="caliber-list" style="display: flex; flex-direction: column; gap: 0.6rem; max-height: 250px; overflow-y: auto;">
+            <!-- Populated by JavaScript -->
+          </div>
+          <button class="show-more-btn" data-filter="caliber" style="width: 100%; padding: 0.6rem; margin-top: 0.8rem; background: transparent; border: 1px solid #e0e0e0; border-radius: 4px; color: var(--color-primary); font-weight: 600; cursor: pointer; font-size: 0.85rem; display: none;">Show More</button>
         </div>
       </div>
-      <div class="product-card">
-        <div class="product-image"><img src="../images/categories/magazines.jpg" alt="Product"></div>
-        <div class="product-info">
-          <div class="product-name">AR-15 Magazine 30rd</div>
-          <div class="product-price">\.99</div>
-          <button class="product-btn">Add to Cart</button>
+
+      <!-- CAPACITY FILTER (COLLAPSIBLE) -->
+      <div class="filter-section">
+        <button class="filter-toggle" data-filter="capacity" style="width: 100%; padding: 1rem 1.2rem; background: #fff; border: none; border-bottom: 1px solid #e0e0e0; text-align: left; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-weight: 700; color: #333; font-size: 0.95rem;">
+          <span>Capacity</span>
+          <i class="fas fa-chevron-down" style="font-size: 0.8rem;"></i>
+        </button>
+        <div class="filter-content" style="display: none; padding: 1rem 1.2rem; border-bottom: 1px solid #e0e0e0;">
+          <input type="text" class="filter-search" placeholder="Search (10rd, 30rd, ...)" style="width: 100%; padding: 0.6rem; margin-bottom: 0.8rem; border: 1px solid #ddd; border-radius: 4px; font-size: 0.85rem;" data-filter="capacity">
+          <div id="capacity-list" style="display: flex; flex-direction: column; gap: 0.6rem; max-height: 250px; overflow-y: auto;">
+            <!-- Populated by JavaScript -->
+          </div>
+          <button class="show-more-btn" data-filter="capacity" style="width: 100%; padding: 0.6rem; margin-top: 0.8rem; background: transparent; border: 1px solid #e0e0e0; border-radius: 4px; color: var(--color-primary); font-weight: 600; cursor: pointer; font-size: 0.85rem; display: none;">Show More</button>
         </div>
       </div>
-      <div class="product-card">
-        <div class="product-image"><img src="../images/categories/magazines.jpg" alt="Product"></div>
-        <div class="product-info">
-          <div class="product-name">1911 Magazine 8rd</div>
-          <div class="product-price">\.99</div>
-          <button class="product-btn">Add to Cart</button>
+
+      <!-- PRICE RANGE FILTER (COLLAPSIBLE) -->
+      <div class="filter-section">
+        <button class="filter-toggle" data-filter="price" style="width: 100%; padding: 1rem 1.2rem; background: #fff; border: none; border-bottom: 1px solid #e0e0e0; text-align: left; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-weight: 700; color: #333; font-size: 0.95rem;">
+          <span>Price</span>
+          <i class="fas fa-chevron-down" style="font-size: 0.8rem;"></i>
+        </button>
+        <div class="filter-content" style="display: none; padding: 1rem 1.2rem; border-bottom: 1px solid #e0e0e0;">
+          <div style="display: flex; gap: 0.4rem;">
+            <input type="number" id="price-min" placeholder="$0" min="0" style="flex: 1; padding: 0.6rem; border: 1px solid #ddd; border-radius: 4px; font-size: 0.85rem;">
+            <input type="number" id="price-max" placeholder="$999" min="0" style="flex: 1; padding: 0.6rem; border: 1px solid #ddd; border-radius: 4px; font-size: 0.85rem;">
+          </div>
         </div>
       </div>
-      <div class="product-card">
-        <div class="product-image"><img src="../images/categories/magazines.jpg" alt="Product"></div>
-        <div class="product-info">
-          <div class="product-name">AK-47 Magazine 30rd</div>
-          <div class="product-price">\.99</div>
-          <button class="product-btn">Add to Cart</button>
+
+      <!-- BRAND FILTER (COLLAPSIBLE) -->
+      <div class="filter-section">
+        <button class="filter-toggle" data-filter="brand" style="width: 100%; padding: 1rem 1.2rem; background: #fff; border: none; border-bottom: 1px solid #e0e0e0; text-align: left; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-weight: 700; color: #333; font-size: 0.95rem;">
+          <span>Brand</span>
+          <i class="fas fa-chevron-down" style="font-size: 0.8rem;"></i>
+        </button>
+        <div class="filter-content" style="display: none; padding: 1rem 1.2rem; border-bottom: 1px solid #e0e0e0;">
+          <input type="text" class="filter-search" placeholder="Search (Glock, Magpul, ...)" style="width: 100%; padding: 0.6rem; margin-bottom: 0.8rem; border: 1px solid #ddd; border-radius: 4px; font-size: 0.85rem;" data-filter="brand">
+          <div id="brand-list" style="display: flex; flex-direction: column; gap: 0.6rem; max-height: 250px; overflow-y: auto;">
+            <!-- Populated by JavaScript -->
+          </div>
+          <button class="show-more-btn" data-filter="brand" style="width: 100%; padding: 0.6rem; margin-top: 0.8rem; background: transparent; border: 1px solid #e0e0e0; border-radius: 4px; color: var(--color-primary); font-weight: 600; cursor: pointer; font-size: 0.85rem; display: none;">Show More</button>
         </div>
       </div>
+      <!-- ON SALE FILTER (COLLAPSIBLE) -->
+      <div class="filter-section">
+        <button class="filter-toggle" data-filter="sale" style="width: 100%; padding: 1rem 1.2rem; background: #fff; border: none; border-bottom: 1px solid #e0e0e0; text-align: left; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-weight: 700; color: #333; font-size: 0.95rem;">
+          <span>On Sale</span>
+          <i class="fas fa-chevron-down" style="font-size: 0.8rem;"></i>
+        </button>
+        <div class="filter-content" style="display: none; padding: 1rem 1.2rem; border-bottom: 1px solid #e0e0e0;">
+          <label style="display: flex; align-items: center; cursor: pointer; font-weight: 500; color: #333; gap: 0.6rem;">
+            <input type="checkbox" id="on-sale-filter" style="width: 18px; height: 18px; cursor: pointer;">
+            Show Only Sale Items
+          </label>
+        </div>
+      </div>
+      <!-- STOCK FILTER (COLLAPSIBLE) -->
+      <div class="filter-section">
+        <button class="filter-toggle" data-filter="stock" style="width: 100%; padding: 1rem 1.2rem; background: #fff; border: none; border-bottom: 1px solid #e0e0e0; text-align: left; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-weight: 700; color: #333; font-size: 0.95rem;">
+          <span>Stock</span>
+          <i class="fas fa-chevron-down" style="font-size: 0.8rem;"></i>
+        </button>
+        <div class="filter-content" style="display: none; padding: 1rem 1.2rem; border-bottom: 1px solid #e0e0e0;">
+          <label style="display: flex; align-items: center; cursor: pointer; font-weight: 500; color: #333; gap: 0.6rem;">
+            <input type="checkbox" id="in-stock-filter" style="width: 18px; height: 18px; cursor: pointer;">
+            Show Only In Stock
+          </label>
+        </div>
+      </div>
+
+      <!-- SORT BY FILTER (COLLAPSIBLE) -->
+      <div class="filter-section">
+        <button class="filter-toggle" data-filter="sort" style="width: 100%; padding: 1rem 1.2rem; background: #fff; border: none; text-align: left; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-weight: 700; color: #333; font-size: 0.95rem;">
+          <span>Sort By</span>
+          <i class="fas fa-chevron-down" style="font-size: 0.8rem;"></i>
+        </button>
+        <div class="filter-content" style="display: none; padding: 1rem 1.2rem;">
+          <select id="sort-filter" style="width: 100%; padding: 0.6rem; border: 1px solid #ddd; border-radius: 4px; font-size: 0.85rem; background: #fff;">
+            <option value="newest">Newest First</option>
+            <option value="price-low">Price: Low to High</option>
+            <option value="price-high">Price: High to Low</option>
+            <option value="name">Product Name (A-Z)</option>
+          </select>
+        </div>
+      </div>
+
+    </aside>
+
+    <!-- RIGHT CONTENT AREA -->
+    <div style="flex: 1; min-width: 0;">
+      <h1 class="page-title">Magazines</h1>
+      <p style="color: #666; margin-bottom: 2rem;">High-capacity magazines from top brands with competitive pricing</p>
+
+      <!-- PRODUCT CONTROLS & COUNT -->
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
+        <div style="color: #666; font-weight: 500;">
+          Showing <span id="product-count">0</span> of <span id="total-count">0</span> products
+        </div>
+        
+        <div style="display: flex; gap: 0.5rem; align-items: center;">
+          <label style="font-weight: 600; color: #333; font-size: 0.9rem; margin-right: 0.5rem;">VIEW:</label>
+          <button id="view-grid" style="padding: 0.6rem 1rem; background: var(--color-primary); color: #fff; border: none; border-radius: 4px 0 0 4px; cursor: pointer; font-weight: 600; transition: background 0.3s;">
+            <i class="fas fa-th"></i> Grid
+          </button>
+          <button id="view-list" style="padding: 0.6rem 1rem; background: #ddd; color: #333; border: none; border-radius: 0 4px 4px 0; cursor: pointer; font-weight: 600; transition: background 0.3s;">
+            <i class="fas fa-list"></i> List
+          </button>
+        </div>
+      </div>
+
+      <!-- GRID VIEW (Default) -->
+      <div id="grid-view" class="products-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 2rem; margin-bottom: 4rem;">
+        <div style="grid-column: 1 / -1; text-align: center; padding: 2rem;">
+          <i class="fas fa-spinner fa-spin" style="font-size: 2rem; color: var(--color-primary);"></i> Loading products...
+        </div>
+      </div>
+
+      <!-- LIST VIEW (Hidden by default) -->
+      <div id="list-view" style="display: none; margin-bottom: 4rem; overflow-x: auto;">
+        <table style="width: 100%; border-collapse: collapse; background: #fff; border: 1px solid #e0e0e0; border-radius: 8px;">
+          <thead style="background: #f9f9f9; border-bottom: 2px solid #e0e0e0;">
+            <tr>
+              <th style="padding: 1rem; text-align: left; font-weight: 600; color: #333;">Product Name</th>
+              <th style="padding: 1rem; text-align: left; font-weight: 600; color: #333;">Brand</th>
+              <th style="padding: 1rem; text-align: center; font-weight: 600; color: #333;">Price</th>
+              <th style="padding: 1rem; text-align: center; font-weight: 600; color: #333;">Stock</th>
+              <th style="padding: 1rem; text-align: center; font-weight: 600; color: #333;">Action</th>
+            </tr>
+          </thead>
+          <tbody id="list-body">
+            <tr>
+              <td colspan="5" style="padding: 2rem; text-align: center; color: #999;">Loading products...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
     </div>
+
   </main>
 
+  <!-- FOOTER -->
   <footer>
     <div class="footer-content">
       <div class="footer-section">
@@ -166,10 +530,317 @@
     </div>
 
     <div class="footer-bottom">
-      <p> 2026 Modular Gunworks LLC. All rights reserved. | Veteran-Owned Business in Huntsville, Alabama</p>
+      <p>© 2026 Modular Gunworks LLC. All rights reserved. | Veteran-Owned Business in Huntsville, Alabama</p>
       <p>All firearm sales comply with federal, state, and local laws. FFL required for applicable items.</p>
     </div>
   </footer>
+
+  <script>
+    // GLOBAL STATE
+    let allProducts = [];
+    let filteredProducts = [];
+    let currentView = 'grid';
+    let selectedCalibers = [];
+    let selectedCapacities = [];
+    let selectedBrands = [];
+    const INITIAL_ITEMS_SHOWN = 5;
+
+    // EXTRACT FUNCTIONS FOR MAGAZINES
+    function extractCaliber(name) {
+      const calibers = ['9mm', '.40', '.45', '10mm', '5.56', '.308', '7.62', '12ga', '.22'];
+      for (let cal of calibers) {
+        if (name.toLowerCase().includes(cal.toLowerCase())) {
+          return cal;
+        }
+      }
+      return null;
+    }
+
+    function extractCapacity(name) {
+      const match = name.match(/(\d+)\s*(?:rd|round|capacity)/i);
+      return match ? match[1] + 'rd' : null;
+    }
+
+    // LOAD PRODUCTS FROM JSON
+    async function loadProducts() {
+      try {
+        const response = await fetch('../data/products/magazines.json');
+        const data = await response.json();
+        
+        allProducts = data.products.map(p => ({
+          ...p,
+          calibre: extractCaliber(p.name),
+          capacity: extractCapacity(p.name)
+        }));
+
+        // Initialize filters and render
+        initializeFilters();
+        setupFilterToggle();
+        applyFilters();
+      } catch (error) {
+        console.error('Error loading products:', error);
+        document.getElementById('grid-view').innerHTML = 
+          '<div style="grid-column: 1 / -1; text-align: center; padding: 2rem; color: #c62828;">Error loading products. Please refresh the page.</div>';
+      }
+    }
+
+    // INITIALIZE FILTERS
+    function initializeFilters() {
+      // CALIBER FILTER
+      const calibers = [...new Set(allProducts.map(p => p.calibre).filter(Boolean))].sort();
+      populateCheckboxFilter('caliber-list', calibers, 'caliber-checkbox');
+
+      // CAPACITY FILTER
+      const capacities = [...new Set(allProducts.map(p => p.capacity).filter(Boolean))].sort();
+      populateCheckboxFilter('capacity-list', capacities, 'capacity-checkbox');
+
+      // BRAND FILTER
+      const brands = [...new Set(allProducts.map(p => p.brand).filter(Boolean))].sort();
+      populateCheckboxFilter('brand-list', brands, 'brand-checkbox');
+
+      // Set price defaults
+      const prices = allProducts.map(p => p.customPrice || p.retailPrice).filter(Boolean);
+      if (prices.length > 0) {
+        const minPrice = Math.min(...prices);
+        const maxPrice = Math.max(...prices);
+        document.getElementById('price-min').placeholder = `$${minPrice.toFixed(2)}`;
+        document.getElementById('price-max').placeholder = `$${maxPrice.toFixed(2)}`;
+      }
+    }
+
+    // POPULATE CHECKBOX FILTER
+    function populateCheckboxFilter(containerId, items, className) {
+      const container = document.getElementById(containerId);
+      container.innerHTML = '';
+      items.forEach((item, index) => {
+        const div = document.createElement('div');
+        div.className = `filter-option ${index >= INITIAL_ITEMS_SHOWN ? 'hidden-item' : ''}`;
+        div.innerHTML = `
+          <label style="display: flex; align-items: center; cursor: pointer; gap: 0.5rem; color: #555; font-weight: 500;">
+            <input type="checkbox" class="filter-checkbox ${className}" value="${item}" />
+            ${item}
+          </label>
+        `;
+        container.appendChild(div);
+      });
+
+      if (items.length > INITIAL_ITEMS_SHOWN) {
+        const showMoreBtn = container.parentElement.querySelector('.show-more-btn');
+        if (showMoreBtn) showMoreBtn.style.display = 'block';
+      }
+    }
+
+    // SETUP FILTER TOGGLE FUNCTIONALITY
+    function setupFilterToggle() {
+      const firstToggle = document.querySelector('.filter-toggle');
+      if (firstToggle) {
+        firstToggle.click();
+      }
+
+      document.querySelectorAll('.filter-toggle').forEach(btn => {
+        btn.addEventListener('click', function() {
+          const content = this.nextElementSibling;
+          const icon = this.querySelector('i');
+          const isVisible = content.style.display !== 'none';
+          
+          content.style.display = isVisible ? 'none' : 'block';
+          icon.style.transform = isVisible ? 'rotate(0deg)' : 'rotate(180deg)';
+          icon.style.transition = 'transform 0.2s';
+        });
+      });
+
+      document.querySelectorAll('.filter-search').forEach(searchInput => {
+        searchInput.addEventListener('input', function() {
+          const filterType = this.dataset.filter;
+          const searchTerm = this.value.toLowerCase();
+          const container = this.nextElementSibling;
+          
+          container.querySelectorAll('.filter-option').forEach(option => {
+            const text = option.textContent.toLowerCase();
+            option.style.display = text.includes(searchTerm) ? 'block' : 'none';
+          });
+        });
+      });
+
+      document.querySelectorAll('.show-more-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+          const container = this.parentElement.querySelector('div[id$="-list"]');
+          const isExpanded = this.dataset.expanded === 'true';
+          
+          container.querySelectorAll('.hidden-item').forEach(item => {
+            item.style.display = isExpanded ? 'none' : 'block';
+            item.classList.toggle('hidden-item');
+          });
+          
+          this.textContent = isExpanded ? 'Show More' : 'Show Less';
+          this.dataset.expanded = !isExpanded;
+        });
+      });
+
+      document.querySelectorAll('.filter-checkbox').forEach(checkbox => {
+        checkbox.addEventListener('change', applyFilters);
+      });
+
+      document.getElementById('price-min').addEventListener('input', applyFilters);
+      document.getElementById('price-max').addEventListener('input', applyFilters);
+      document.getElementById('in-stock-filter').addEventListener('change', applyFilters);
+      document.getElementById('sort-filter').addEventListener('change', applyFilters);
+    }
+
+    // APPLY FILTERS AND SORT
+    function applyFilters() {
+      const priceMin = parseFloat(document.getElementById('price-min').value) || 0;
+      const priceMax = parseFloat(document.getElementById('price-max').value) || Infinity;
+      const inStockOnly = document.getElementById('in-stock-filter').checked;
+      const onSaleOnly = document.getElementById('on-sale-filter').checked;
+      const sortBy = document.getElementById('sort-filter').value;
+
+      selectedCalibers = Array.from(document.querySelectorAll('.caliber-checkbox:checked')).map(cb => cb.value);
+      selectedCapacities = Array.from(document.querySelectorAll('.capacity-checkbox:checked')).map(cb => cb.value);
+      selectedBrands = Array.from(document.querySelectorAll('.brand-checkbox:checked')).map(cb => cb.value);
+
+      filteredProducts = allProducts.filter(product => {
+        const price = product.customPrice || product.retailPrice;
+        const isOnSale = product.salePrice && product.salePrice < price;
+        const matchesPrice = price >= priceMin && price <= priceMax;
+        const matchesStock = !inStockOnly || (product.inventory > 0);
+        const matchesSale = !onSaleOnly || isOnSale;
+        const matchesCaliber = selectedCalibers.length === 0 || selectedCalibers.includes(product.calibre);
+        const matchesCapacity = selectedCapacities.length === 0 || selectedCapacities.includes(product.capacity);
+        const matchesBrand = selectedBrands.length === 0 || selectedBrands.includes(product.brand);
+        
+        return matchesPrice && matchesStock && matchesSale && matchesCaliber && matchesCapacity && matchesBrand;
+      });
+
+      if (sortBy === 'price-low') {
+        filteredProducts.sort((a, b) => (a.customPrice || a.retailPrice) - (b.customPrice || b.retailPrice));
+      } else if (sortBy === 'price-high') {
+        filteredProducts.sort((a, b) => (b.customPrice || b.retailPrice) - (a.customPrice || a.retailPrice));
+      } else if (sortBy === 'name') {
+        filteredProducts.sort((a, b) => a.name.localeCompare(b.name));
+      }
+
+      document.getElementById('product-count').textContent = filteredProducts.length;
+      document.getElementById('total-count').textContent = allProducts.length;
+
+      renderProducts();
+    }
+
+    // RENDER PRODUCTS
+    function renderProducts() {
+      if (currentView === 'grid') {
+        renderGridView();
+      } else {
+        renderListView();
+      }
+    }
+
+    // RENDER GRID VIEW
+    function renderGridView() {
+      const container = document.getElementById('grid-view');
+      
+      if (filteredProducts.length === 0) {
+        container.innerHTML = '<div style="grid-column: 1 / -1; text-align: center; padding: 2rem; color: #999;">No products found matching your filters.</div>';
+        return;
+      }
+
+      container.innerHTML = filteredProducts.map(product => `
+        <div class="product-card" onclick="location.href='../product-detail.html?id=${product.id}&category=magazines';" style="cursor: pointer;">
+          <div class="product-image">
+            ${product.image 
+              ? `<img src="${product.image}" alt="${product.name}" onerror="this.parentElement.innerHTML='<div class=&quot;product-image-placeholder&quot;><i class=&quot;fas fa-box&quot;></i></div>'">` 
+              : `<div class="product-image-placeholder"><i class="fas fa-box"></i></div>`
+            }
+          </div>
+          <div class="product-info">
+            <div class="product-brand">${product.brand || 'Unknown'}</div>
+            <div class="product-name">${product.name}</div>
+            <div class="product-pricing">
+              <div class="product-price">$${(product.customPrice || product.retailPrice).toFixed(2)}</div>
+              <div class="product-stock ${product.inventory > 0 ? 'stock-in' : 'stock-out'}">
+                ${product.inventory > 0 ? 'In Stock' : 'Out of Stock'}
+              </div>
+            </div>
+            <button class="product-btn" onclick="event.stopPropagation(); addToCart('${product.id}', '${product.name.replace(/'/g, "\\'")}', ${product.customPrice || product.retailPrice})">
+              <i class="fas fa-cart-plus"></i> Add to Cart
+            </button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // RENDER LIST VIEW
+    function renderListView() {
+      const tbody = document.getElementById('list-body');
+      
+      if (filteredProducts.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="5" style="padding: 2rem; text-align: center; color: #999;">No products found matching your filters.</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = filteredProducts.map(product => `
+        <tr style="cursor: pointer;" onclick="location.href='../product-detail.html?id=${product.id}&category=magazines';">
+          <td>
+            <div class="product-name-list">${product.name}</div>
+            <div style="font-size: 0.85rem; color: #999; margin-top: 0.3rem;">${product.brand || 'Unknown'}</div>
+          </td>
+          <td>${product.brand || '-'}</td>
+          <td style="text-align: center;">
+            <div class="product-price-list">$${(product.customPrice || product.retailPrice).toFixed(2)}</div>
+          </td>
+          <td style="text-align: center;">
+            <span style="padding: 0.3rem 0.6rem; border-radius: 3px; ${product.inventory > 0 ? 'background: #e8f5e9; color: #2e7d32;' : 'background: #ffebee; color: #c62828;'} font-weight: 600; font-size: 0.85rem;">
+              ${product.inventory > 0 ? 'In Stock' : 'Out'}
+            </span>
+          </td>
+          <td style="text-align: center;">
+            <button class="product-btn" style="width: auto; padding: 0.6rem 1rem; font-size: 0.85rem;" onclick="event.stopPropagation(); addToCart('${product.id}', '${product.name.replace(/'/g, "\\'")}', ${product.customPrice || product.retailPrice})">
+              <i class="fas fa-cart-plus"></i> Add
+            </button>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    // ADD TO CART (placeholder)
+    function addToCart(id, name, price) {
+      alert(`Added "${name}" ($${price.toFixed(2)}) to cart!\n\n(Cart functionality coming soon)`);
+    }
+
+    // LOAD ON PAGE READY
+    document.addEventListener('DOMContentLoaded', function() {
+      loadProducts();
+
+      document.getElementById('view-grid').addEventListener('click', function() {
+        currentView = 'grid';
+        document.getElementById('grid-view').style.display = 'grid';
+        document.getElementById('list-view').style.display = 'none';
+        this.style.background = 'var(--color-primary)';
+        this.style.color = '#fff';
+        document.getElementById('view-list').style.background = '#ddd';
+        document.getElementById('view-list').style.color = '#333';
+      });
+
+      document.getElementById('view-list').addEventListener('click', function() {
+        currentView = 'list';
+        document.getElementById('grid-view').style.display = 'none';
+        document.getElementById('list-view').style.display = 'block';
+        this.style.background = 'var(--color-primary)';
+        this.style.color = '#fff';
+        document.getElementById('view-grid').style.background = '#ddd';
+        document.getElementById('view-grid').style.color = '#333';
+      });
+
+      document.getElementById('clear-filters').addEventListener('click', function() {
+        document.querySelectorAll('.filter-checkbox').forEach(cb => cb.checked = false);
+        document.getElementById('price-min').value = '';
+        document.getElementById('price-max').value = '';
+        document.getElementById('in-stock-filter').checked = false;
+        document.getElementById('sort-filter').value = 'newest';
+        applyFilters();
+      });
+    });
+  </script>
 
 </body>
 </html>
