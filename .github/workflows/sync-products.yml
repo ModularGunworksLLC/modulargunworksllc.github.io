@@ -23,8 +23,8 @@ jobs:
       
       - name: Run API sync script
         env:
-          API_SID: ${{ secrets.CHATTANOOGA_API_SID }}
-          API_TOKEN: ${{ secrets.CHATTANOOGA_API_TOKEN }}
+          API_SID: ${{ secrets.CHATTANOOGA_SID }}
+          API_TOKEN: ${{ secrets.CHATTANOOGA_TOKEN }}
         run: node scripts/sync-chattanooga-api.js
       
       - name: Commit and push changes
