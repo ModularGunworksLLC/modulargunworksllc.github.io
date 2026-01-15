@@ -574,6 +574,11 @@
                         </div>
                     </div>
                     <div class="stats" id="statsDiv"></div>
+                    <div style="padding: 10px 20px; border-bottom: 1px solid #404040;">
+                        <button id="batchActivateBtn" class="activate-btn" style="width: 100%; background: #ff6600; margin-top: 5px;" onclick="batchActivate()" disabled>
+                            Activate Selected (0)
+                        </button>
+                    </div>
                 </div>
 
                 <div class="products-list" id="productsList">
@@ -594,6 +599,7 @@
             <h2>Select Page for Product</h2>
             <div class="modal-form">
                 <div id="selectedProductInfo"></div>
+                <input type="hidden" id="isBatchActivate" value="false">
                 <div class="form-group">
                     <label>Add to Page</label>
                     <select id="pageSelect">
@@ -679,11 +685,20 @@
         // Load Products
         async function loadProducts() {
             try {
-                const response = await fetch(`${API_BASE}/search?limit=1000`, {
+                console.log('Loading products from:', `${API_BASE}/search?limit=5000`);
+                const response = await fetch(`${API_BASE}/search?limit=5000&offset=0`, {
                     headers: { 'Authorization': `Bearer ${authToken}` }
                 });
+                
+                if (!response.ok) {
+                    throw new Error(`API responded with status ${response.status}`);
+                }
+                
                 const data = await response.json();
+                console.log('API Response:', data);
+                
                 allProducts = data.products || [];
+                console.log(`Loaded ${allProducts.length} products`);
                 
                 // Build brand filter
                 const brands = [...new Set(allProducts.map(p => p.brand))].sort();
@@ -702,7 +717,7 @@
                 applyFilters();
             } catch (error) {
                 console.error('Error loading products:', error);
-                showLoginError('Failed to load products. Check your connection.');
+                showLoginError('Failed to load products: ' + error.message);
             }
         }
 
@@ -755,13 +770,16 @@
                 const item = document.createElement('div');
                 item.className = 'product-item';
                 item.innerHTML = `
-                    <div class="product-info">
-                        <div class="product-name">${product.name}</div>
-                        <div class="product-details">
-                            <span>💰 $${product.salePrice.toFixed(2)}</span>
-                            <span>📦 ${product.inventory} in stock</span>
-                            <span>🏷️ ${product.brand}</span>
-                            <span>📂 ${product.category}</span>
+                    <div style="display: flex; align-items: center; gap: 10px; flex: 1;">
+                        <input type="checkbox" class="product-checkbox" value="${product.id}" data-name="${product.name.replace(/"/g, '&quot;')}">
+                        <div class="product-info">
+                            <div class="product-name">${product.name}</div>
+                            <div class="product-details">
+                                <span>💰 $${product.salePrice.toFixed(2)}</span>
+                                <span>📦 ${product.inventory} in stock</span>
+                                <span>🏷️ ${product.brand}</span>
+                                <span>📂 ${product.category}</span>
+                            </div>
                         </div>
                     </div>
                     <div class="product-actions">
@@ -773,6 +791,36 @@
                 `;
                 list.appendChild(item);
             });
+
+            // Update batch button state
+            updateBatchButtonState();
+            
+            // Add checkbox listeners
+            document.querySelectorAll('.product-checkbox').forEach(cb => {
+                cb.addEventListener('change', updateBatchButtonState);
+            });
+        }
+
+        function updateBatchButtonState() {
+            const checked = document.querySelectorAll('.product-checkbox:checked').length;
+            const batchBtn = document.getElementById('batchActivateBtn');
+            if (batchBtn) {
+                batchBtn.disabled = checked === 0;
+                batchBtn.textContent = `Activate Selected (${checked})`;
+            }
+        }
+
+        // Batch Activate
+        function batchActivate() {
+            const checkboxes = document.querySelectorAll('.product-checkbox:checked');
+            if (checkboxes.length === 0) {
+                alert('Please select products to activate');
+                return;
+            }
+            document.getElementById('selectedProductInfo').textContent = `Activating ${checkboxes.length} products...`;
+            document.getElementById('pageSelect').value = '';
+            document.getElementById('isBatchActivate').value = 'true';
+            document.getElementById('pageModal').classList.add('active');
         }
 
         // Select Product
@@ -791,29 +839,64 @@
                 return;
             }
 
+            const isBatchActivate = document.getElementById('isBatchActivate') && document.getElementById('isBatchActivate').value === 'true';
+            
             try {
-                const response = await fetch(`${API_BASE}/activate`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${authToken}`
-                    },
-                    body: JSON.stringify({ productId: selectedProduct, page })
-                });
-
-                if (response.ok) {
-                    closeModal();
-                    await loadActiveProducts();
-                    displayProducts();
+                if (isBatchActivate) {
+                    // Batch activate
+                    const checkboxes = document.querySelectorAll('.product-checkbox:checked');
+                    const productIds = Array.from(checkboxes).map(cb => cb.value);
                     
-                    // Trigger sync in background
-                    showStatus('Syncing products...', 'info');
-                    triggerSync();
+                    const response = await fetch(`${API_BASE}/batch-activate`, {
+                        method: 'POST',
+                        headers: { 
+                            'Authorization': `Bearer ${authToken}`,
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ productIds, page })
+                    });
+                    
+                    if (response.ok) {
+                        const data = await response.json();
+                        document.querySelectorAll('.product-checkbox').forEach(cb => cb.checked = false);
+                        updateBatchButtonState();
+                        closeModal();
+                        await loadActiveProducts();
+                        displayProducts();
+                        showStatus(`✓ ${data.count} products activated!`, 'success');
+                        triggerSync();
+                    } else {
+                        alert('Failed to activate products');
+                    }
                 } else {
-                    alert('Failed to activate product');
+                    // Single activate
+                    const response = await fetch(`${API_BASE}/activate`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${authToken}`
+                        },
+                        body: JSON.stringify({ productId: selectedProduct, page })
+                    });
+
+                    if (response.ok) {
+                        closeModal();
+                        await loadActiveProducts();
+                        displayProducts();
+                        
+                        // Trigger sync in background
+                        showStatus('Syncing products...', 'info');
+                        triggerSync();
+                    } else {
+                        alert('Failed to activate product');
+                    }
                 }
             } catch (error) {
                 console.error('Error activating product:', error);
+            }
+            
+            if (document.getElementById('isBatchActivate')) {
+                document.getElementById('isBatchActivate').value = 'false';
             }
         }
 

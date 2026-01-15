@@ -22,6 +22,16 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
+// Serve static files (admin.html and other assets)
+const staticDir = path.join(__dirname, '..');
+app.use(express.static(staticDir, {
+    setHeaders: (res, filePath) => {
+        // Allow API requests from the admin panel
+        res.set('Access-Control-Allow-Origin', '*');
+        res.set('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+    }
+}));
+
 // Middleware: Auth token verification
 function verifyAuth(req, res, next) {
     const token = req.headers.authorization?.split(' ')[1];
@@ -174,7 +184,7 @@ app.post('/api/admin/auth', (req, res) => {
  */
 app.get('/api/admin/search', verifyAuth, (req, res) => {
     try {
-        const { q = '', brand = '', category = '', stock = '', limit = 100, offset = 0 } = req.query;
+        const { q = '', brand = '', category = '', stock = '', limit = 1000, offset = 0 } = req.query;
         
         let products = loadAllProducts();
 
