@@ -1,6 +1,6 @@
 {
   "category": "survival",
-  "lastUpdated": "2026-01-15T15:39:37.403Z",
+  "lastUpdated": "2026-01-15T16:31:33.358Z",
   "products": [
     {
       "id": "AG081003002",
@@ -877,7 +877,7 @@
       "salePrice": 140.49,
       "retailPrice": 140.49,
       "customPrice": 140.49,
-      "inventory": 16,
+      "inventory": 15,
       "sku": "",
       "requiresFFL": false,
       "specs": {},
@@ -22423,7 +22423,7 @@
       "salePrice": 1256,
       "retailPrice": 1256,
       "customPrice": 1256,
-      "inventory": 3,
+      "inventory": 4,
       "sku": "",
       "requiresFFL": false,
       "specs": {},
