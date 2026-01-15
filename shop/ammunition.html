@@ -542,6 +542,9 @@
 
     // APPLY FILTERS AND SORT
     function applyFilters() {
+      // Reset pagination when filters change
+      currentPage = 1;
+
       const priceMin = parseFloat(document.getElementById('price-min').value) || 0;
       const priceMax = parseFloat(document.getElementById('price-max').value) || Infinity;
       const inStockOnly = document.getElementById('in-stock-filter').checked;
@@ -590,6 +593,10 @@
       }
     }
 
+    // PAGINATION CONSTANTS
+    const PRODUCTS_PER_PAGE = 20;
+    let currentPage = 1;
+
     // RENDER GRID VIEW
     function renderGridView() {
       const container = document.getElementById('grid-view');
@@ -599,11 +606,18 @@
         return;
       }
 
-      container.innerHTML = filteredProducts.map(product => `
+      // Calculate pagination
+      const startIndex = (currentPage - 1) * PRODUCTS_PER_PAGE;
+      const endIndex = startIndex + PRODUCTS_PER_PAGE;
+      const productsToShow = filteredProducts.slice(0, endIndex);
+      const hasMore = endIndex < filteredProducts.length;
+
+      // Generate HTML for visible products
+      const productsHTML = productsToShow.slice(startIndex).map(product => `
         <div class="product-card" onclick="location.href='../product-detail.html?id=${product.id}&category=ammunition';" style="cursor: pointer;">
           <div class="product-image">
             ${product.image 
-              ? `<img src="${product.image}" alt="${product.name}" onerror="this.parentElement.innerHTML='<div class=&quot;product-image-placeholder&quot;><i class=&quot;fas fa-box&quot;></i></div>'">` 
+              ? `<img src="${product.image}" alt="${product.name}" loading="lazy" onerror="this.parentElement.innerHTML='<div class=&quot;product-image-placeholder&quot;><i class=&quot;fas fa-box&quot;></i></div>'">` 
               : `<div class="product-image-placeholder"><i class="fas fa-box"></i></div>`
             }
           </div>
@@ -622,6 +636,30 @@
           </div>
         </div>
       `).join('');
+
+      // Add load more button if needed
+      let html = productsHTML;
+      if (hasMore) {
+        html += `
+          <div style="grid-column: 1 / -1; text-align: center; padding: 2rem;">
+            <button id="load-more-btn" onclick="loadMoreProducts()" style="padding: 0.8rem 2rem; background: var(--color-primary); color: #fff; border: none; border-radius: 4px; font-weight: 600; font-size: 1rem; cursor: pointer; transition: background 0.3s;">
+              Load More Products
+            </button>
+          </div>
+        `;
+      }
+
+      container.innerHTML = html;
+    }
+
+    // LOAD MORE PRODUCTS
+    function loadMoreProducts() {
+      currentPage++;
+      renderGridView();
+      // Scroll to load more button
+      setTimeout(() => {
+        document.getElementById('load-more-btn')?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }, 100);
     }
 
     // RENDER LIST VIEW
@@ -633,7 +671,14 @@
         return;
       }
 
-      tbody.innerHTML = filteredProducts.map(product => `
+      // Calculate pagination
+      const startIndex = (currentPage - 1) * PRODUCTS_PER_PAGE;
+      const endIndex = startIndex + PRODUCTS_PER_PAGE;
+      const productsToShow = filteredProducts.slice(0, endIndex);
+      const hasMore = endIndex < filteredProducts.length;
+
+      // Generate table rows for visible products
+      const rowsHTML = productsToShow.slice(startIndex).map(product => `
         <tr style="cursor: pointer;" onclick="location.href='../product-detail.html?id=${product.id}&category=ammunition';">
           <td>
             <div class="product-name-list">${product.name}</div>
@@ -655,6 +700,22 @@
           </td>
         </tr>
       `).join('');
+
+      // Add load more row if needed
+      let html = rowsHTML;
+      if (hasMore) {
+        html += `
+          <tr>
+            <td colspan="5" style="padding: 1.5rem; text-align: center;">
+              <button id="load-more-btn" onclick="loadMoreProducts()" style="padding: 0.8rem 2rem; background: var(--color-primary); color: #fff; border: none; border-radius: 4px; font-weight: 600; font-size: 1rem; cursor: pointer; transition: background 0.3s;">
+                Load More Products
+              </button>
+            </td>
+          </tr>
+        `;
+      }
+
+      tbody.innerHTML = html;
     }
 
     // ADD TO CART (placeholder)

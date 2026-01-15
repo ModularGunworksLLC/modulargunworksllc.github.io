@@ -584,6 +584,10 @@
       }
     }
 
+    // PAGINATION CONSTANTS
+    const PRODUCTS_PER_PAGE = 20;
+    let currentPage = 1;
+
     // INITIALIZE FILTERS
     function initializeFilters() {
       // CALIBER FILTER
@@ -689,6 +693,9 @@
 
     // APPLY FILTERS AND SORT
     function applyFilters() {
+      // Reset pagination when filters change
+      currentPage = 1;
+
       const priceMin = parseFloat(document.getElementById('price-min').value) || 0;
       const priceMax = parseFloat(document.getElementById('price-max').value) || Infinity;
       const inStockOnly = document.getElementById('in-stock-filter').checked;
