@@ -1,11 +1,11 @@
-name: Sync Products from Chattanooga API
+name: Sync Chattanooga Products Every 4 Hours
 
 on:
   schedule:
-    # Run every 4 hours
-    - cron: '0 */4 * * *'
+    # Runs at 12 AM, 4 AM, 8 AM, 12 PM, 4 PM, 8 PM UTC (every 4 hours)
+    - cron: '0 0,4,8,12,16,20 * * *'
   
-  # Allow manual trigger from Actions tab
+  # Allow manual trigger from GitHub Actions tab
   workflow_dispatch:
 
 permissions:
@@ -16,25 +16,51 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-      - name: Checkout code
+      - name: Checkout repository
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
       
-      - name: Setup Node.js
+      - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '18'
       
-      - name: Run API sync script
+      - name: Install dependencies
+        run: npm install
+      
+      - name: Sync products from Chattanooga API
         env:
           API_SID: ${{ secrets.CHATTANOOGA_SID }}
           API_TOKEN: ${{ secrets.CHATTANOOGA_TOKEN }}
         run: node scripts/sync-chattanooga-api.js
       
-      - name: Commit and push changes
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Configure Git
         run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-          git add data/products/
-          git diff --quiet && git diff --staged --quiet || (git commit -m "Auto-sync products from Chattanooga API" && git push origin main)
+          git config --global user.name "Modular Gunworks Bot"
+          git config --global user.email "bot@modulargunworks.com"
+      
+      - name: Check for changes
+        id: check_changes
+        run: |
+          if git diff --quiet; then
+            echo "has_changes=false" >> $GITHUB_OUTPUT
+          else
+            echo "has_changes=true" >> $GITHUB_OUTPUT
+          fi
+      
+      - name: Commit and push changes
+        if: steps.check_changes.outputs.has_changes == 'true'
+        run: |
+          git add data/products/*.json
+          git commit -m "Auto-sync: Update product data from Chattanooga API
+
+- Synced at $(date -u +'%Y-%m-%d %H:%M:%S UTC')
+- Applied 3-layer filtering (brands → compliance → categorization)
+- Updated all category JSON files with current stock and pricing"
+          git push origin main
+      
+      - name: Log sync status
+        run: |
+          echo "✅ Product sync completed successfully"
+          echo "📊 Updated categories: Ammunition, Magazines, Reloading, Gun-Parts, Optics, Gear, Survival"
