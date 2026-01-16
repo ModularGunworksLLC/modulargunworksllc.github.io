@@ -454,7 +454,7 @@
       populateCheckboxFilter('brand-list', brands, 'brand-checkbox');
 
       // Set price defaults
-      const prices = allProducts.map(p => p.customPrice || p.retailPrice).filter(Boolean);
+      const prices = allProducts.map(p => p.retailPrice || p.salePrice).filter(Boolean);
       if (prices.length > 0) {
         const minPrice = Math.min(...prices);
         const maxPrice = Math.max(...prices);
@@ -565,7 +565,7 @@
       selectedBrands = Array.from(document.querySelectorAll('.brand-checkbox:checked')).map(cb => cb.value);
 
       filteredProducts = allProducts.filter(product => {
-        const price = product.customPrice || product.retailPrice;
+        const price = product.retailPrice || product.salePrice;
         const matchesPrice = price >= priceMin && price <= priceMax;
         const matchesStock = !inStockOnly || (product.inventory > 0);
         const matchesCategory = selectedCategories.length === 0 || selectedCategories.includes(product.category);
@@ -578,9 +578,9 @@
 
       // Sort products
       if (sortBy === 'price-low') {
-        filteredProducts.sort((a, b) => (a.customPrice || a.retailPrice) - (b.customPrice || b.retailPrice));
+        filteredProducts.sort((a, b) => (a.retailPrice || a.salePrice) - (b.retailPrice || b.salePrice));
       } else if (sortBy === 'price-high') {
-        filteredProducts.sort((a, b) => (b.customPrice || b.retailPrice) - (a.customPrice || a.retailPrice));
+        filteredProducts.sort((a, b) => (b.retailPrice || b.salePrice) - (a.retailPrice || a.salePrice));
       } else if (sortBy === 'name') {
         filteredProducts.sort((a, b) => a.name.localeCompare(b.name));
       }
@@ -634,12 +634,12 @@
             <div class="product-brand">${product.brand || 'Unknown'}</div>
             <div class="product-name">${product.name}</div>
             <div class="product-pricing">
-              <div class="product-price">$${(product.customPrice || product.retailPrice).toFixed(2)}</div>
+              <div class="product-price">$${(product.retailPrice || product.salePrice).toFixed(2)}</div>
               <div class="product-stock ${product.inventory > 0 ? 'stock-in' : 'stock-out'}">
                 ${product.inventory > 0 ? 'In Stock' : 'Out of Stock'}
               </div>
             </div>
-            <button class="product-btn" onclick="event.stopPropagation(); addToCart('${product.id}', '${product.name.replace(/'/g, "\\'")}', ${product.customPrice || product.retailPrice})">
+            <button class="product-btn" onclick="event.stopPropagation(); addToCart('${product.id}', '${product.name.replace(/'/g, "\\'")}', ${product.retailPrice || product.salePrice})">
               <i class="fas fa-cart-plus"></i> Add to Cart
             </button>
           </div>
@@ -695,7 +695,7 @@
           </td>
           <td>${product.brand || '-'}</td>
           <td style="text-align: center;">
-            <div class="product-price-list">$${(product.customPrice || product.retailPrice).toFixed(2)}</div>
+            <div class="product-price-list">$${(product.retailPrice || product.salePrice).toFixed(2)}</div>
           </td>
           <td style="text-align: center;">
             <span style="padding: 0.3rem 0.6rem; border-radius: 3px; ${product.inventory > 0 ? 'background: #e8f5e9; color: #2e7d32;' : 'background: #ffebee; color: #c62828;'} font-weight: 600; font-size: 0.85rem;">
@@ -703,7 +703,7 @@
             </span>
           </td>
           <td style="text-align: center;">
-            <button class="product-btn" style="width: auto; padding: 0.6rem 1rem; font-size: 0.85rem;" onclick="event.stopPropagation(); addToCart('${product.id}', '${product.name.replace(/'/g, "\\'")}', ${product.customPrice || product.retailPrice})">
+            <button class="product-btn" style="width: auto; padding: 0.6rem 1rem; font-size: 0.85rem;" onclick="event.stopPropagation(); addToCart('${product.id}', '${product.name.replace(/'/g, "\\'")}', ${product.retailPrice || product.salePrice})">
               <i class="fas fa-cart-plus"></i> Add
             </button>
           </td>

@@ -410,7 +410,9 @@
 
         allProducts = data.map(product => ({
           ...product,
-          type: extractType(product.name)
+          type: extractType(product.name),
+          price: product.retailPrice || product.salePrice || 0,
+          stock: product.inventory || 0
         }));
 
         filteredProducts = [...allProducts];
@@ -640,14 +642,14 @@
         if (selectedFilters.type.length > 0 && !selectedFilters.type.includes(product.type)) return false;
         
         // Price filter
-        const price = parseFloat(product.price) || 0;
+        const price = product.price || 0;
         if (price < selectedFilters.price[0] || price > selectedFilters.price[1]) return false;
         
         // Brand filter
         if (selectedFilters.brand.length > 0 && !selectedFilters.brand.includes(product.brand)) return false;
         
         // Stock filter
-        if (selectedFilters.stock && product.stock === 0) return false;
+        if (selectedFilters.stock && (product.inventory || 0) === 0) return false;
         
         // Sale filter
         if (selectedFilters.sale && (!product.salePrice || product.salePrice >= price)) return false;
