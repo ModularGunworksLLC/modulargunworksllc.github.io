@@ -7,6 +7,77 @@ const API_SID = process.env.API_SID;
 const API_TOKEN = process.env.API_TOKEN;
 const API_BASE = 'https://api.chattanoogashooting.com/rest/v4';
 
+// ============================================================
+// LAYER 1: TOP BRANDS ONLY (PREMIUM BRAND FILTER)
+// ============================================================
+
+const TOP_BRANDS = [
+    // Firearms (pistols, rifles, shotguns)
+    'GLOCK', 'SMITH & WESSON', 'S&W', 'SIG SAUER', 'RUGER', 'FN', 'HK', 'CZ', 'WALTHER', 'SPRINGFIELD ARMORY',
+    'DANIEL DEFENSE', 'BCM', 'AERO PRECISION', 'GEISSELE', 'NOVESKE', 'LWRC', 'PSA',
+    
+    // Optics
+    'TRIJICON', 'EOTECH', 'AIMPOINT', 'HOLOSUN', 'VORTEX', 'LEUPOLD', 'PRIMARY ARMS', 'NIGHTFORCE', 'SIG OPTICS',
+    
+    // Magazines
+    'MAGPUL', 'PMAG', 'LANCER', 'HEXMAG', 'ETS', 'KCI',
+    
+    // Ammunition
+    'FEDERAL', 'HORNADY', 'WINCHESTER', 'REMINGTON', 'PMC', 'FIOCCHI', 'SPEER', 'CCI', 'BLAZER', 'NORMA',
+    
+    // Parts & Accessories
+    'MAGPUL', 'BCM', 'GEISSELE', 'MIDWEST INDUSTRIES', 'RADIAN', 'REPTILIA', 'CLOUD DEFENSIVE',
+    'SUREFIRE', 'STREAMLIGHT', 'SAFARILAND', 'BLUE FORCE GEAR', 'HOGUE', 'TIMNEY', 'TRIGGERTECH',
+    
+    // Reloading
+    'HORNADY', 'RCBS', 'LYMAN', 'LEE', 'DILLON', 'HODGDON', 'ALLIANT', 'ACCURATE', 'VIHTAVUORI', 'IMR',
+    
+    // Survival / Gear
+    'GERBER', 'SOG', 'BENCHMADE', 'KERSHAW', 'CRKT', 'STREAMLIGHT', 'SUREFIRE'
+];
+
+const BAD_BRANDS = [
+    'NCSTAR', 'UTG', 'LEAPERS', 'ALLEN', 'GENERIC', 'UNBRANDED', 'UNKNOWN',
+    'AIRSOFT', 'PAINTBALL', 'CROSMAN', 'DAISY',
+    'GAME WINNER', 'HUNTER\'S SPECIALTIES',
+    'MISC', 'IMPORTS'
+];
+
+/**
+ * LAYER 1: Check if product brand is in TOP_BRANDS (premium only)
+ * Returns false if brand is bad or not in top brands
+ */
+function shouldIncludeBrand(product) {
+    const brand = (product.brand || 'GENERIC').toUpperCase().trim();
+    
+    // Exclude bad/generic brands
+    if (BAD_BRANDS.some(b => brand.includes(b))) {
+        return false;
+    }
+    
+    // Only include if in TOP_BRANDS
+    return TOP_BRANDS.some(b => brand.includes(b));
+}
+
+/**
+ * LAYER 2: Check compliance - FFL, serialized, allocated, stock
+ */
+function shouldIncludeProduct(product) {
+    // Normalize boolean fields
+    const fflRequired = product.ffl_flag === 1 || product.ffl_flag === true || product.ffl_flag === 'Y';
+    const serialized = product.serialized_flag === 1 || product.serialized_flag === true || product.serialized_flag === 'Y';
+    const allocated = product.allocated_flag === 1 || product.allocated_flag === true || product.allocated_flag === 'Y' || product.allocated === true;
+    const inventory = parseInt(product.inventory || 0);
+    
+    // EXCLUDE if: FFL required, serialized, allocated, or out of stock
+    if (fflRequired) return false;
+    if (serialized) return false;
+    if (allocated) return false;
+    if (inventory <= 0) return false;
+    
+    return true;
+}
+
 /**
  * Load active products selection
  * Returns map of productId -> { page, addedAt, updatedAt }
@@ -33,100 +104,99 @@ function loadActiveProducts() {
 }
 
 /**
- * Smart category detection with exclusion logic
- * Prioritizes most specific categories first to prevent misclassification
+ * LAYER 3: EXCLUSION-FIRST CATEGORIZATION (4-PASS SYSTEM)
+ * 
+ * PASS 1: Global exclusions
+ * PASS 2: Positive identification
+ * PASS 3: Brand fallback
+ * PASS 4: Default to Gear
  */
 function categorizeProduct(product) {
     const name = (product.name || '').toUpperCase();
     
-    // ===== RELOADING (highest priority) =====
+    // ===== PASS 1: GLOBAL EXCLUSIONS =====
+    // These items can NEVER be in any category
     
-    // Reloading powder brands
-    if (/^(BLACKHORN|ACCURATE|SCOT POWDER|HODGDON|IMR|ALLIANT|VIHTAVUORI|UNIQUE|2400|BLUE DOT|CFE|H110|H4895|3031|4064|4350|WIN RELOADING|LYMAN|RCBS|LEE|FRANKFORD|DILLON|REDDING|SINCLAIR|CORBON DPX|LOAD MASTER)/i.test(name)) {
+    const globalExclusions = [
+        /GIFT\s*CARD|CREDIT|VOUCHER|SERVICE FEE|ENGRAVING|GUNSMITHING|LABOR|INSTALLATION|LICENSE|PERMIT|TRAINING|CLASS|COURSE/i
+    ];
+    
+    for (const pattern of globalExclusions) {
+        if (pattern.test(name)) return 'gear';
+    }
+    
+    // ===== PASS 2: POSITIVE IDENTIFICATION WITH CATEGORY-SPECIFIC EXCLUSIONS =====
+    
+    // === MAGAZINES FIRST (most specific - prevent false positives) ===
+    const magExclusions = [
+        /POUCH|HOLSTER|CARRIER|CASE|STORAGE|POWDER|PRIMER|BRASS|BULLET|RELOAD|COMPONENT|AMMO|CARTRIDGE|ROUND/i
+    ];
+    
+    const magMatch = !magExclusions.some(p => p.test(name)) && 
+        /MAGAZINE|MAG(?!NET)|CLIP|PMAG|DRUM|LOADER|(\d+RD|RD\s+MAG)/i.test(name);
+    
+    if (magMatch) return 'magazines';
+    
+    // === RELOADING (components: powder, primers, brass, bullets, equipment) ===
+    const reloadingMatch = /BULLET|BULLETS|BRASS|PRIMER|PRIMERS|POWDER|DIE|PRESS|SCALE|CASE\s*TRIMMER|TUMBLER|CALIPERS|RELOADER|PROJECTILE|\.DIA|CT\s*BULLET/i.test(name);
+    
+    if (reloadingMatch) return 'reloading';
+    
+    // === AMMUNITION (finished cartridges ONLY) ===
+    const ammoExclusions = [
+        /BULLET|BRASS|PRIMER|POWDER|CASING|COMPONENT|DIE|PRESS|SCALE|TUMBLER|BOX|CASE|POUCH|HOLSTER|CLEANER|BRUSH|TARGET|MAGAZINE|MAG|CLIP|DRUM|LOADER/i
+    ];
+    
+    const ammoMatch = !ammoExclusions.some(p => p.test(name)) && 
+        /AMMO|ROUNDS|CARTRIDGE|SHOTSHELL|9MM|9X19|5\.56|223|308|7\.62|45\s*ACP|40\s*S&W|12GA|20GA|\.22|FMJ|JHP|DEFENSE|MATCH/i.test(name);
+    
+    if (ammoMatch) return 'ammunition';
+    
+    // === OPTICS (scope, red dot, sight, etc.) ===
+    const opticsExclusions = [
+        /COVER|CAP|MOUNT|BASE|RING|RAIL|TARGET|BAG|CASE|SLING|STRAP|CLEAN|TOOL|KIT|POUCH|BATTERY|ADAPTER|CONNECTOR|EXTENSION|CLAMP/i
+    ];
+    
+    const opticsMatch = !opticsExclusions.some(p => p.test(name)) && 
+        /SCOPE|RED\s*DOT|HOLOGRAPHIC|MAGNIFIER|RIFLESCOPE|REFLEX|LASER\s*SIGHT|OPTIC|BINOCULAR|MONOCULAR|RANGEFINDER/i.test(name);
+    
+    if (opticsMatch) return 'optics';
+    
+    // === GUN PARTS (triggers, uppers, lowers, barrels, etc.) ===
+    const partsExclusions = [
+        /CLEANER|BRUSH|BORE|SCRUBBER|DEGREASER|PUNCH|HAMMER|WRENCH|VISE|TOOL|KIT|ROD|PATCH|LUBRIC|SOLVENT|CASE|BOX|BAG|POUCH|HOLSTER|STORAGE|CARRIER|PACK|VEST|CHEST|SLING|STRAP|POWDER|PRIMER|BRASS|BULLET|RELOAD|COMPONENT|AMMUNITION|AMMO/i
+    ];
+    
+    const partsMatch = !partsExclusions.some(p => p.test(name)) && 
+        /TRIGGER|BCG|BARREL|UPPER|LOWER|BUFFER|GAS\s*BLOCK|HANDGUARD|STOCK|GRIP|RECEIVER|CHARGING\s*HANDLE|SAFETY|SELECTOR|SPRING|PIN|MOUNT|BASE|RING|RAIL/i.test(name);
+    
+    if (partsMatch) return 'gun-parts';
+    
+    // === SURVIVAL/GEAR ===
+    const survivalMatch = /KNIFE|MULTI\s*TOOL|FLASHLIGHT|FIRST\s*AID|MEDICAL|WATER|FIRE\s*STARTER|PARACORD|EMERGENCY|TACTICAL|OUTDOOR|CAMPING|GEAR/i.test(name);
+    
+    if (survivalMatch) return 'survival';
+    
+    // ===== PASS 3: BRAND FALLBACK =====
+    // If no positive match, use brand to determine category
+    
+    // Reloading brands
+    if (/RCBS|LEE|LYMAN|HORNADY|DILLON|REDDING|FRANKFORD|HODGDON|ALLIANT|ACCURATE|VIHTAVUORI|IMR|LAPUA|STARLINE/i.test(name)) {
         return 'reloading';
     }
     
-    // Reloading powder keywords
-    if (/(RELOADING POWDER|SMOKELESS POWDER|BLACKPOWDER|MUZZLELOADING POWDER|HANDLOAD POWDER)/i.test(name)) {
-        return 'reloading';
-    }
-    
-    // Reloading PRIMERS - has priority over magazine "MAG" pattern
-    if (/(PRIMER|PRIMERS).*(?:SMALL|LARGE|RIFLE|PISTOL|MAGNUM|SHOTGUN)/i.test(name) || 
-        /CCI\s*#\d+.*PRIMER/i.test(name) ||
-        /FEDERAL\s*\d+.*PRIMER/i.test(name)) {
-        return 'reloading';
-    }
-    
-    // Reloading bullets with .XXX DIA format (component bullets, not ammunition)
-    if (/\.(?:224|243|257|264|277|284|308|311|323|338|355|357|375|401|429|452|458|474|510).*DIA.*(?:GR|GRAIN)/i.test(name) ||
-        /JACKETED.*BULLET/i.test(name) ||
-        /^(?:SPEER|HORNADY|SIERRA|NOSLER).*(?:BULLET|PROJECTILE)/i.test(name)) {
-        return 'reloading';
-    }
-    
-    // Brass - new or fired
-    if (/(BRASS|UNPRIMED|FIRED BRASS|NEW BRASS|ONCE FIRED|RELOADER)/i.test(name)) {
-        return 'reloading';
-    }
-    
-    // Reloading equipment
-    if (/(CASE PREP|CASE TRIMMER|TRIMMER|CALIPER|CALIPERS|SCALE|BALANCE|TUMBLER|MEDIA|POLISH|RELOADING PRESS|PROGRESSIVE|TURRET|SINGLE STAGE)/i.test(name)) {
-        return 'reloading';
-    }
-    
-    // ===== AMMUNITION (finished cartridges only) =====
-    // Must NOT match .XXX DIA or component patterns
-    if (!/\.(?:224|243|257|264|277|284|308|311|323|338|355|357|375|401|429|452|458|474|510).*DIA|JACKETED.*BULLET/i.test(name)) {
-        
-        // Specific finished ammo caliber patterns
-        if (/(?:9MM|9X19|40\s*S&W|45\s*ACP|380|357|38\s*SPL|44\s*MAG|10MM|45\s*GAP|22\s*LR|22\s*WMR|5\.56|223|308|30-06|300|7\.62|338|375|7\.7|303|7\.5|9\.3|6\.5|270|30-30|3006).*(?:GRAIN|GR|AMMO|ROUND|LOAD|BOX|CASE|SHOT|SHELL|FMJ|JHP|POINT|HOLLOW|DEFENSE|HOLLOW POINT)/i.test(name)) {
-            return 'ammunition';
-        }
-        
-        // Shotgun ammunition
-        if (/(?:12GA|20GA|16GA|10GA|.410|3IN|3\.5IN|2\.75IN).*(?:SHOT|SHELL|AMMO|SLUG|BUCKSHOT|OZ|GRAIN)/i.test(name)) {
-            return 'ammunition';
-        }
-        
-        // Major ammo brands with clear ammo keywords (exclude PRIMERS)
-        if (!(/ PRIMER/i.test(name))) {
-            if (/(FEDERAL|REMINGTON|HORNADY|WINCHESTER|BLAZER|WOLF|TULAMMO|FIOCCHI|PMC|AGUILA|AMERICAN|ARMSCOR|MAGTECH|NORMA|PERFECTA|PPU|ROCKY|VISTA|SELLIER|MATCH GRADE|CRITICAL|HYDROSHOCK|EXPANSION|HYDRA-SHOK|AMERICAN EAGLE)/i.test(name) &&
-                /(?:AMMO|AMMUNITION|ROUND|ROUNDS|BOX|LOAD|CARTRIDGE|SHELL|SHELLS|9MM|40|45|308|223|556|380|357|38|44|50BMG|12GA|20GA|16GA|10GA)/i.test(name)) {
-                return 'ammunition';
-            }
-        }
-    }
-    
-    // ===== MAGAZINES (exclude items with PRIMER in name) =====
-    if (!/PRIMER/i.test(name)) {
-        // Magazine with round capacity
-        if (/MAGAZINE.*\d+(?:RD|ROUND)/i.test(name) || /(?:^|\s)MAG\s*\d+/i.test(name)) {
-            return 'magazines';
-        }
-        
-        // Magazine brands
-        if (/(MAGPUL|PMAG|OKAY|ETS|KCI|GLOCK|SIG|SMITH|RUGER|COLT|TAURUS|SPRINGFIELD|CHECKMATE|US PALM|LANCER|TROY|SURFIRE|BERETTA|WALTHER|CZ).*(?:MAGAZINE|MAG|CLIP)/i.test(name)) {
-            return 'magazines';
-        }
-    }
-    
-    // ===== OPTICS =====
-    if (/(SCOPE|SIGHT|OPTIC|RED DOT|LASER|HOLOGRAPHIC|THERMAL|NIGHT VISION|NV|ACOG|EOTECH|TRIJICON|VORTEX|LEUPOLD|BUSHNELL|ZEISS|SWAMPFOX|HOLOSUN|PRIMARY ARMS|VISIONKING|SIGHTMARK)/i.test(name)) {
+    // Optics brands
+    if (/TRIJICON|EOTECH|AIMPOINT|HOLOSUN|VORTEX|LEUPOLD|PRIMARY\s*ARMS|NIGHTFORCE|BUSHNELL|ZEISS|NIKON|STEINER/i.test(name)) {
         return 'optics';
     }
     
-    // ===== GUN PARTS =====
-    if (/(SLIDE|RECEIVER|BARREL|CHARGING HANDLE|HANDGUARD|TRIGGER|SAFETY|SELECTOR|MUZZLE BRAKE|SUPPRESSOR|FLASH HIDER|BUFFER|BCG|BOLT CARRIER|LOWER|UPPER|FRAME|HAMMER|SEAR|RECOIL SPRING|EXTRACTOR|EJECTOR)/i.test(name)) {
-        return 'gun-parts';
+    // Magazine brands
+    if (/MAGPUL|PMAG|LANCER|HEXMAG|ETS|KCI|GLOCK|RUGER/i.test(name)) {
+        return 'magazines';
     }
     
-    // ===== SURVIVAL =====
-    if (/(KNIFE|BLADE|PARACORD|ROPE|FLASHLIGHT|FIRE|STARTER|COMPASS|EMERGENCY|SURVIVAL|CAMPING|MULTI.?TOOL|AXE|HATCHET|SAW)/i.test(name)) {
-        return 'survival';
-    }
-    
-    // GEAR - everything else by default
+    // ===== PASS 4: DEFAULT TO GEAR =====
+    // Everything else that passed compliance goes to Gear
     return 'gear';
 }
 
@@ -398,21 +468,39 @@ async function syncAllProducts() {
         
         console.log(`✓ Fetched ${allProducts.length} products from API\n`);
         
-        // Transform and categorize products
-        const transformedProducts = allProducts.map(apiProduct => {
-            const product = transformProduct(apiProduct);
-            product.category = categorizeProduct(apiProduct);
-            return product;
-        });
+        // ===== 3-LAYER FILTERING PIPELINE =====
+        // Layer 1: Brand filtering (TOP_BRANDS only)
+        // Layer 2: Compliance filtering (FFL, inventory, allocation)
+        // Layer 3: Categorization (exclusion-first)
         
-        // Filter by active products if configured
-        let productsToSync = transformedProducts;
-        if (Object.keys(activeProducts).length > 0) {
-            productsToSync = transformedProducts.filter(p => activeProducts[p.id]);
-            console.log(`✓ Filtered to ${productsToSync.length} active products\n`);
-        }
+        const transformedProducts = allProducts
+            .map((apiProduct, index) => ({
+                apiProduct,
+                transformed: transformProduct(apiProduct),
+                index
+            }))
+            .filter(({ apiProduct, transformed }) => {
+                // LAYER 1: Top brands only
+                if (!shouldIncludeBrand(transformed)) {
+                    return false;
+                }
+                
+                // LAYER 2: Compliance checks
+                if (!shouldIncludeProduct(apiProduct)) {
+                    return false;
+                }
+                
+                return true;
+            })
+            .map(({ transformed }) => {
+                // LAYER 3: Categorization
+                transformed.category = categorizeProduct(transformed);
+                return transformed;
+            });
         
-        // Group by category and page assignment
+        console.log(`✓ Transformed & filtered to ${transformedProducts.length} premium, compliant products\n`);
+        
+        // Group by category
         const categorizedProducts = {
             ammunition: [],
             magazines: [],
@@ -425,15 +513,13 @@ async function syncAllProducts() {
             sale: []
         };
         
-        productsToSync.forEach(product => {
-            const active = activeProducts[product.id];
-            // Use the assigned page from active.json if available, otherwise use auto-categorized category
-            const targetPage = active?.page || product.category;
+        transformedProducts.forEach(product => {
+            const targetCategory = product.category;
             
-            if (categorizedProducts[targetPage]) {
-                categorizedProducts[targetPage].push(product);
+            if (categorizedProducts[targetCategory]) {
+                categorizedProducts[targetCategory].push(product);
             } else {
-                // Fallback to gear if page doesn't exist
+                // Fallback to gear if category doesn't exist
                 categorizedProducts['gear'].push(product);
             }
         });
@@ -441,19 +527,24 @@ async function syncAllProducts() {
         // Save each category
         let totalSaved = 0;
         for (const [category, products] of Object.entries(categorizedProducts)) {
-            saveProducts(category, products);
-            totalSaved += products.length;
-        }
-        
-        console.log(`\n📊 Category breakdown:`);
-        for (const [category, products] of Object.entries(categorizedProducts)) {
             if (products.length > 0) {
-                console.log(`  ${category.padEnd(15)}: ${products.length} products`);
+                saveProducts(category, products);
+                totalSaved += products.length;
             }
         }
         
-        console.log(`\n✓ Sync completed! Total: ${totalSaved} products`);
-        console.log(`💾 Next sync will maintain active.json selections`);
+        console.log(`\n📊 FINAL PRODUCT CATALOG BY CATEGORY:`);
+        for (const [category, products] of Object.entries(categorizedProducts)) {
+            if (products.length > 0) {
+                console.log(`  ✓ ${category.padEnd(15)}: ${products.length.toString().padEnd(6)} products`);
+            }
+        }
+        
+        console.log(`\n════════════════════════════════════════`);
+        console.log(`✓ SYNC COMPLETED SUCCESSFULLY`);
+        console.log(`  Total products: ${totalSaved}`);
+        console.log(`  Filtering: TOP BRANDS + COMPLIANCE + EXCLUSION-FIRST CATEGORIZATION`);
+        console.log(`════════════════════════════════════════\n`);
     } catch (error) {
         console.error('❌ Sync failed:', error);
         process.exit(1);
