@@ -346,16 +346,40 @@ app.get('/api/admin/filter-options', verifyAuth, (req, res) => {
         
         const brands = new Set();
         const categories = new Set();
+        const calibers = new Set();
+        const platforms = new Set();
+        const capacities = new Set();
+        const materials = new Set();
+        let minPrice = Infinity;
+        let maxPrice = 0;
 
         products.forEach(p => {
             if (p.brand) brands.add(p.brand);
             if (p.category) categories.add(p.category);
+            if (p.caliber) calibers.add(p.caliber);
+            if (p.platform) platforms.add(p.platform);
+            if (p.capacity !== null && p.capacity !== undefined) capacities.add(p.capacity.toString());
+            if (p.material) materials.add(p.material);
+            
+            const price = p.salePrice || p.retailPrice || 0;
+            if (price > 0) {
+                minPrice = Math.min(minPrice, price);
+                maxPrice = Math.max(maxPrice, price);
+            }
         });
 
         res.json({
             brands: Array.from(brands).sort(),
             categories: Array.from(categories).sort(),
-            stockStatus: ['in-stock', 'out-of-stock']
+            calibers: Array.from(calibers).sort(),
+            platforms: Array.from(platforms).sort(),
+            capacities: Array.from(capacities).sort((a, b) => parseInt(a) - parseInt(b)),
+            materials: Array.from(materials).sort(),
+            stockStatus: ['in-stock', 'out-of-stock'],
+            priceRange: {
+                min: minPrice === Infinity ? 0 : minPrice,
+                max: maxPrice || 9999
+            }
         });
     } catch (error) {
         res.status(500).json({ error: error.message });
