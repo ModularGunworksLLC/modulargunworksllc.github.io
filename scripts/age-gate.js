@@ -13,6 +13,10 @@ class AgeGate {
   }
 
   init() {
+    // TEMPORARY: Skip age gate for testing/debugging - REMOVE AFTER AUDIT
+    this.hideAgeGate();
+    return;
+    
     // Check if user already verified
     if (this.isVerified()) {
       this.hideAgeGate();
