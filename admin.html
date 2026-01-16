@@ -731,8 +731,8 @@
 
                         <div class="filter-row" style="margin-top: 10px; gap: 10px;">
                             <div class="filter-group">
-                                <label>Price Range: $<span id="priceRangeDisplay">0-$100</span></label>
-                                <input type="range" id="priceFilter" min="0" max="1000" value="1000" onchange="applyFilters()" style="width: 100%;">
+                                <label>Price Range: $<span id="priceRangeDisplay">0-$1000</span></label>
+                                <input type="range" id="priceFilter" min="0" max="1000" value="1000" onchange="updatePriceRangeDisplay(); applyFilters();" style="width: 100%;">
                             </div>
                         </div>
 
@@ -969,38 +969,51 @@
 
         // Apply Filters
         function applyFilters() {
-            const search = document.getElementById('searchInput').value.toLowerCase();
-            const brand = document.getElementById('brandFilter').value;
-            const category = document.getElementById('categoryFilter').value;
-            const stock = document.getElementById('stockFilter').value;
-            const caliber = document.getElementById('caliberFilter').value;
-            const platform = document.getElementById('platformFilter').value;
-            const capacity = document.getElementById('capacityFilter').value;
-            const material = document.getElementById('materialFilter').value;
-            const maxPrice = parseFloat(document.getElementById('priceFilter').value);
-            const onlySerialized = document.getElementById('serializationFilter').checked;
-            const onlyDropShip = document.getElementById('dropShipFilter').checked;
-            const showAllocated = document.getElementById('allocatedFilter').checked;
+            // Get all filter values safely
+            const search = (document.getElementById('searchInput')?.value || '').toLowerCase();
+            const brand = document.getElementById('brandFilter')?.value || '';
+            const category = document.getElementById('categoryFilter')?.value || '';
+            const stock = document.getElementById('stockFilter')?.value || '';
+            const caliber = document.getElementById('caliberFilter')?.value || '';
+            const platform = document.getElementById('platformFilter')?.value || '';
+            const capacity = document.getElementById('capacityFilter')?.value || '';
+            const material = document.getElementById('materialFilter')?.value || '';
+            const maxPrice = parseFloat(document.getElementById('priceFilter')?.value || '9999999');
+            const onlySerialized = document.getElementById('serializationFilter')?.checked || false;
+            const onlyDropShip = document.getElementById('dropShipFilter')?.checked || false;
+            const showAllocated = document.getElementById('allocatedFilter')?.checked || false;
+
+            // Debug log
+            console.log('Applying filters:', { search, brand, category, stock, caliber, platform, capacity, material, maxPrice });
 
             filteredProducts = allProducts.filter(p => {
-                const matchSearch = p.name.toLowerCase().includes(search);
+                // Basic filters
+                const matchSearch = !search || p.name.toLowerCase().includes(search);
                 const matchBrand = !brand || p.brand === brand;
                 const matchCategory = !category || p.category === category;
                 const matchStock = !stock || (stock === 'in-stock' ? p.inStock : !p.inStock);
-                const matchPrice = !maxPrice || (p.salePrice || p.retailPrice) <= maxPrice;
+                
+                // Price filter
+                const productPrice = p.salePrice || p.retailPrice || 0;
+                const matchPrice = !maxPrice || productPrice <= maxPrice;
+                
+                // Advanced filters
                 const matchCaliber = !caliber || p.caliber === caliber;
                 const matchPlatform = !platform || p.platform === platform;
-                const matchCapacity = !capacity || (p.capacity && p.capacity.toString() === capacity);
+                const matchCapacity = !capacity || (p.capacity !== null && p.capacity !== undefined && p.capacity.toString() === capacity);
                 const matchMaterial = !material || p.material === material;
-                const matchSerialized = !onlySerialized || p.serialized;
-                const matchDropShip = !onlyDropShip || p.dropShip;
-                const matchAllocated = showAllocated || !p.allocated;
+                
+                // Flag filters
+                const matchSerialized = !onlySerialized || p.serialized === true;
+                const matchDropShip = !onlyDropShip || p.dropShip === true;
+                const matchAllocated = showAllocated || p.allocated !== true;
 
                 return matchSearch && matchBrand && matchCategory && matchStock && matchPrice &&
                        matchCaliber && matchPlatform && matchCapacity && matchMaterial &&
                        matchSerialized && matchDropShip && matchAllocated;
             });
 
+            console.log('Filtered to', filteredProducts.length, 'products');
             updateStats();
             displayProducts();
         }
