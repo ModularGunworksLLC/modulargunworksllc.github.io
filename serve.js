@@ -50,7 +50,7 @@ app.use((req, res, next) => {
     "style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; " +
     "img-src 'self' data: https:; " +
     "font-src 'self' https://cdnjs.cloudflare.com https://fonts.googleapis.com https://fonts.gstatic.com; " +
-    "connect-src 'self' https://www.paypal.com https://www.sandbox.paypal.com; " +
+    "connect-src 'self' http://localhost:3001 https://www.paypal.com https://www.sandbox.paypal.com; " +
     "frame-src https://www.paypal.com https://www.sandbox.paypal.com; " +
     "frame-ancestors 'none'"
   );
