@@ -1,6 +1,6 @@
 {
   "category": "reloading",
-  "lastUpdated": "2026-01-16T05:52:02.597Z",
+  "lastUpdated": "2026-01-16T08:22:39.400Z",
   "products": [
     {
       "id": "AA16801",
@@ -703,14 +703,14 @@
       "image": "https://images.chattanoogashooting.com/products/cc5200.jpg",
       "retailPrice": 11.99,
       "salePrice": 11.99,
-      "inventory": 4247,
+      "inventory": 4237,
       "inStock": true,
       "requiresFFL": false,
       "serialized": false,
       "dropShip": true,
       "allocated": false,
       "mapPrice": 0,
-      "lastUpdated": "2026-01-15 16:19:30.19",
+      "lastUpdated": "2026-01-16 02:19:20.57",
       "caliber": "9MM",
       "platform": null,
       "capacity": 50,

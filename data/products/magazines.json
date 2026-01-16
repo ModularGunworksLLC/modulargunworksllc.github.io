@@ -1,6 +1,6 @@
 {
   "category": "magazines",
-  "lastUpdated": "2026-01-16T05:52:02.594Z",
+  "lastUpdated": "2026-01-16T08:22:39.398Z",
   "products": [
     {
       "id": "AAMAGPRO1",
@@ -1249,14 +1249,14 @@
       "image": "https://images.chattanoogashooting.com/products/xn12slug.jpg",
       "retailPrice": 12.29,
       "salePrice": 12.29,
-      "inventory": 113,
+      "inventory": 111,
       "inStock": true,
       "requiresFFL": false,
       "serialized": false,
       "dropShip": true,
       "allocated": false,
       "mapPrice": 0,
-      "lastUpdated": "2026-01-14 11:57:00.39",
+      "lastUpdated": "2026-01-16 02:19:20.57",
       "caliber": "12 GA",
       "platform": null,
       "capacity": 10,
