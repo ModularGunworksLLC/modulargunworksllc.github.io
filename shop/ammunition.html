@@ -385,36 +385,18 @@
     // LOAD PRODUCTS
     async function loadProducts() {
       try {
-        // Load active products list
-        const activeResponse = await fetch('../data/products/active.json');
-        const activeData = activeResponse.ok ? await activeResponse.json() : {};
+        // Load ammunition products directly from JSON (no active filter)
+        const response = await fetch('../data/products/ammunition.json');
+        if (!response.ok) throw new Error('Failed to load products');
         
-        // Get list of activated ammunition product IDs
-        const activatedIds = Object.keys(activeData).filter(id => activeData[id].page === 'ammunition');
+        const data = await response.json();
+        allProducts = (data.products || data || []);
         
-        // If no products activated, show empty message
-        if (activatedIds.length === 0) {
+        // If no products, show empty message
+        if (allProducts.length === 0) {
           document.getElementById('grid-view').innerHTML = 
-            '<div style="grid-column: 1 / -1; text-align: center; padding: 2rem; color: #666;">No products activated yet. Check back soon!</div>';
+            '<div style="grid-column: 1 / -1; text-align: center; padding: 2rem; color: #666;">No products available. Check back soon!</div>';
           return;
-        }
-        
-        // Load all ammunition products from API and filter by activated IDs
-        // Using localhost for development, but will work on GitHub Pages too
-        const apiUrl = window.location.hostname === 'localhost' 
-          ? 'http://localhost:3001/api/admin/search?category=ammunition&limit=5000'
-          : 'https://modulargunworksllc.github.io/api/admin/search?category=ammunition&limit=5000';
-          
-        const productResponse = await fetch(apiUrl);
-        if (!productResponse.ok) {
-          // Fallback: try to load from static JSON
-          const fallbackResponse = await fetch('../data/products/ammunition.json');
-          const fallbackData = await fallbackResponse.json();
-          const products = (fallbackData.products || []).filter(p => activatedIds.includes(p.id));
-          allProducts = products;
-        } else {
-          const apiData = await productResponse.json();
-          allProducts = (apiData.products || []).filter(p => activatedIds.includes(p.id));
         }
         
         // Add extracted properties to products
