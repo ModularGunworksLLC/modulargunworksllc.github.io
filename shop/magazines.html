@@ -567,7 +567,13 @@
         const response = await fetch('../data/products/magazines.json');
         const data = await response.json();
         
-        allProducts = data.products.map(p => ({
+        const activeResponse = await fetch('../data/products/active.json');
+        const activeData = activeResponse.ok ? await activeResponse.json() : {};
+        
+        let products = data.products || [];
+        products = products.filter(p => activeData[p.id] && activeData[p.id].page === 'magazines');
+        
+        allProducts = products.map(p => ({
           ...p,
           calibre: extractCaliber(p.name),
           capacity: extractCapacity(p.name)

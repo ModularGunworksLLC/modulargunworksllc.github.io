@@ -526,7 +526,13 @@
         const response = await fetch('../data/products/gun-parts.json');
         const data = await response.json();
         
-        allProducts = data.products.map(p => ({
+        const activeResponse = await fetch('../data/products/active.json');
+        const activeData = activeResponse.ok ? await activeResponse.json() : {};
+        
+        let products = data.products || [];
+        products = products.filter(p => activeData[p.id] && activeData[p.id].page === 'gun-parts');
+        
+        allProducts = products.map(p => ({
           ...p,
           type: extractPartType(p.name),
           calibre: extractCaliber(p.name)

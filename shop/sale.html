@@ -383,17 +383,27 @@
     async function loadAllProducts() {
       allSaleProducts = [];
       
+      // Load active products once
+      let activeData = {};
+      try {
+        const activeResponse = await fetch('../data/products/active.json');
+        activeData = activeResponse.ok ? await activeResponse.json() : {};
+      } catch (error) {
+        console.error('Error loading active products:', error);
+      }
+      
       for (const category of categories) {
         try {
           const response = await fetch(`../data/products/${category}.json`);
           const data = await response.json();
           
           if (data.products && Array.isArray(data.products)) {
-            // Filter for products with sale prices
+            // Filter for products with sale prices AND are activated
             const saleProducts = data.products.filter(product => {
+              const isActive = activeData[product.id] && activeData[product.id].page === category;
               const regularPrice = product.customPrice || product.retailPrice || parseFloat(product.price) || 0;
               const salePrice = product.salePrice || 0;
-              return salePrice > 0 && salePrice < regularPrice;
+              return isActive && salePrice > 0 && salePrice < regularPrice;
             });
             
             // Add category info to each product

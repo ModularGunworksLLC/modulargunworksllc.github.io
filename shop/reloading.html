@@ -599,9 +599,14 @@
         const response = await fetch('../data/products/reloading.json');
         let data = await response.json();
         
+        const activeResponse = await fetch('../data/products/active.json');
+        const activeData = activeResponse.ok ? await activeResponse.json() : {};
+        
         if (!Array.isArray(data)) {
           data = data.products || [];
         }
+        
+        data = data.filter(p => activeData[p.id] && activeData[p.id].page === 'reloading');
 
         allProducts = data.map(product => ({
           ...product,
