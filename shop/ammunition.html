@@ -6,7 +6,7 @@
   <meta name="description" content="Shop ammunition at Modular Gunworks LLC - 4,500+ rounds of quality ammo from top brands.">
   <meta name="keywords" content="ammunition, ammo, 9mm, .45 ACP, .308, shotgun shells">
   <meta name="author" content="Modular Gunworks LLC">
-  <meta name="theme-color" content="#181a1b">
+  <meta name="theme-color" content="#181a1b" media="(prefers-color-scheme: dark)">
   
   <title>Ammunition - Modular Gunworks LLC</title>
   
@@ -15,6 +15,7 @@
   <link rel="stylesheet" href="../styles/components.css">
   <link rel="stylesheet" href="../styles/layout.css">
   <link rel="stylesheet" href="../styles/age-gate.css">
+  <link rel="stylesheet" href="../styles/ammunition.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="icon" type="image/png" href="../favicon.png">
   
@@ -792,7 +793,7 @@
 
       <form class="search-bar" action="#" method="get">
         <input type="text" placeholder="Search ammo, gear, optics...">
-        <button type="submit"><i class="fas fa-search"></i></button>
+        <button type="submit" title="Search"><i class="fas fa-search"></i></button>
       </form>
     </div>
 
@@ -815,27 +816,27 @@
   </header>
 
   <!-- MAIN CONTENT -->
-  <main style="display: flex; gap: 2rem; max-width: 1400px; margin: 0 auto; padding: 3rem 2rem;">
+  <main class="ammunition-main">
     
     <!-- LEFT SIDEBAR - FILTERS (STICKY) -->
-    <aside id="filters-sidebar" style="flex: 0 0 300px; position: sticky; top: 180px; height: fit-content; background: #fff; border: 1px solid #e0e0e0; border-radius: 8px; padding: 0; overflow-y: auto; max-height: calc(100vh - 200px); margin-top: 180px;">
+    <aside id="filters-sidebar">
       
       <!-- FILTER HEADER -->
-      <div style="display: flex; justify-content: space-between; align-items: center; padding: 1.2rem; border-bottom: 1px solid #e0e0e0; background: #f9f9f9;">
-        <h3 style="font-size: 0.95rem; color: #333; margin: 0; font-weight: 700; text-transform: uppercase;">Filters</h3>
-        <button id="clear-filters" style="padding: 0.3rem 0.6rem; background: transparent; color: var(--color-primary); border: none; cursor: pointer; font-weight: 600; font-size: 0.75rem; text-transform: uppercase; transition: all 0.2s;">
+      <div class="filter-header">
+        <h3>Filters</h3>
+        <button id="clear-filters">
           Clear All
         </button>
       </div>
 
       <!-- CATEGORY FILTER (COLLAPSIBLE) -->
       <div class="filter-section">
-        <button class="filter-toggle" data-filter="category" style="width: 100%; padding: 1rem 1.2rem; background: #fff; border: none; border-bottom: 1px solid #e0e0e0; text-align: left; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-weight: 700; color: #333; font-size: 0.95rem;">
+        <button class="filter-toggle" data-filter="category">
           <span>Category</span>
-          <i class="fas fa-chevron-down" style="font-size: 0.8rem;"></i>
+          <i class="fas fa-chevron-down"></i>
         </button>
-        <div class="filter-content" style="display: none; padding: 1rem 1.2rem; border-bottom: 1px solid #e0e0e0;">
-          <div id="category-list" style="display: flex; flex-direction: column; gap: 0.7rem;">
+        <div class="filter-content">
+          <div id="category-list">
             <!-- Populated by JavaScript -->
           </div>
         </div>
@@ -843,87 +844,87 @@
 
       <!-- CALIBER FILTER (COLLAPSIBLE) -->
       <div class="filter-section">
-        <button class="filter-toggle" data-filter="caliber" style="width: 100%; padding: 1rem 1.2rem; background: #fff; border: none; border-bottom: 1px solid #e0e0e0; text-align: left; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-weight: 700; color: #333; font-size: 0.95rem;">
+        <button class="filter-toggle" data-filter="caliber">
           <span>Caliber</span>
-          <i class="fas fa-chevron-down" style="font-size: 0.8rem;"></i>
+          <i class="fas fa-chevron-down"></i>
         </button>
-        <div class="filter-content" style="display: none; padding: 1rem 1.2rem; border-bottom: 1px solid #e0e0e0;">
-          <input type="text" class="filter-search" placeholder="Search (9mm, .308, ...)" style="width: 100%; padding: 0.6rem; margin-bottom: 0.8rem; border: 1px solid #ddd; border-radius: 4px; font-size: 0.85rem;" data-filter="caliber">
-          <div id="caliber-list" style="display: flex; flex-direction: column; gap: 0.6rem; max-height: 250px; overflow-y: auto;">
+        <div class="filter-content">
+          <input type="text" class="filter-search" placeholder="Search (9mm, .308, ...)" data-filter="caliber">
+          <div id="caliber-list">
             <!-- Populated by JavaScript -->
           </div>
-          <button class="show-more-btn" data-filter="caliber" style="width: 100%; padding: 0.6rem; margin-top: 0.8rem; background: transparent; border: 1px solid #e0e0e0; border-radius: 4px; color: var(--color-primary); font-weight: 600; cursor: pointer; font-size: 0.85rem; display: none;">Show More</button>
+          <button class="show-more-btn" data-filter="caliber">Show More</button>
         </div>
       </div>
 
       <!-- BULLET TYPE FILTER (COLLAPSIBLE) -->
       <div class="filter-section">
-        <button class="filter-toggle" data-filter="bullet-type" style="width: 100%; padding: 1rem 1.2rem; background: #fff; border: none; border-bottom: 1px solid #e0e0e0; text-align: left; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-weight: 700; color: #333; font-size: 0.95rem;">
+        <button class="filter-toggle" data-filter="bullet-type">
           <span>Bullet Type</span>
-          <i class="fas fa-chevron-down" style="font-size: 0.8rem;"></i>
+          <i class="fas fa-chevron-down"></i>
         </button>
-        <div class="filter-content" style="display: none; padding: 1rem 1.2rem; border-bottom: 1px solid #e0e0e0;">
-          <input type="text" class="filter-search" placeholder="Search (FMJ, JHP, ...)" style="width: 100%; padding: 0.6rem; margin-bottom: 0.8rem; border: 1px solid #ddd; border-radius: 4px; font-size: 0.85rem;" data-filter="bullet-type">
-          <div id="bullet-type-list" style="display: flex; flex-direction: column; gap: 0.6rem; max-height: 250px; overflow-y: auto;">
+        <div class="filter-content">
+          <input type="text" class="filter-search" placeholder="Search (FMJ, JHP, ...)" data-filter="bullet-type">
+          <div id="bullet-type-list">
             <!-- Populated by JavaScript -->
           </div>
-          <button class="show-more-btn" data-filter="bullet-type" style="width: 100%; padding: 0.6rem; margin-top: 0.8rem; background: transparent; border: 1px solid #e0e0e0; border-radius: 4px; color: var(--color-primary); font-weight: 600; cursor: pointer; font-size: 0.85rem; display: none;">Show More</button>
+          <button class="show-more-btn" data-filter="bullet-type">Show More</button>
         </div>
       </div>
 
       <!-- GRAIN WEIGHT FILTER (COLLAPSIBLE) -->
       <div class="filter-section">
-        <button class="filter-toggle" data-filter="grain-weight" style="width: 100%; padding: 1rem 1.2rem; background: #fff; border: none; border-bottom: 1px solid #e0e0e0; text-align: left; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-weight: 700; color: #333; font-size: 0.95rem;">
+        <button class="filter-toggle" data-filter="grain-weight">
           <span>Grain Weight</span>
-          <i class="fas fa-chevron-down" style="font-size: 0.8rem;"></i>
+          <i class="fas fa-chevron-down"></i>
         </button>
-        <div class="filter-content" style="display: none; padding: 1rem 1.2rem; border-bottom: 1px solid #e0e0e0;">
-          <input type="text" class="filter-search" placeholder="Search (55gr, 168gr, ...)" style="width: 100%; padding: 0.6rem; margin-bottom: 0.8rem; border: 1px solid #ddd; border-radius: 4px; font-size: 0.85rem;" data-filter="grain-weight">
-          <div id="grain-weight-list" style="display: flex; flex-direction: column; gap: 0.6rem; max-height: 250px; overflow-y: auto;">
+        <div class="filter-content">
+          <input type="text" class="filter-search" placeholder="Search (55gr, 168gr, ...)" data-filter="grain-weight">
+          <div id="grain-weight-list">
             <!-- Populated by JavaScript -->
           </div>
-          <button class="show-more-btn" data-filter="grain-weight" style="width: 100%; padding: 0.6rem; margin-top: 0.8rem; background: transparent; border: 1px solid #e0e0e0; border-radius: 4px; color: var(--color-primary); font-weight: 600; cursor: pointer; font-size: 0.85rem; display: none;">Show More</button>
+          <button class="show-more-btn" data-filter="grain-weight">Show More</button>
         </div>
       </div>
 
       <!-- PRICE RANGE FILTER (COLLAPSIBLE) -->
       <div class="filter-section">
-        <button class="filter-toggle" data-filter="price" style="width: 100%; padding: 1rem 1.2rem; background: #fff; border: none; border-bottom: 1px solid #e0e0e0; text-align: left; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-weight: 700; color: #333; font-size: 0.95rem;">
+        <button class="filter-toggle" data-filter="price">
           <span>Price</span>
-          <i class="fas fa-chevron-down" style="font-size: 0.8rem;"></i>
+          <i class="fas fa-chevron-down"></i>
         </button>
-        <div class="filter-content" style="display: none; padding: 1rem 1.2rem; border-bottom: 1px solid #e0e0e0;">
-          <div style="display: flex; gap: 0.4rem;">
-            <input type="number" id="price-min" placeholder="$0" min="0" style="flex: 1; padding: 0.6rem; border: 1px solid #ddd; border-radius: 4px; font-size: 0.85rem;">
-            <input type="number" id="price-max" placeholder="$999" min="0" style="flex: 1; padding: 0.6rem; border: 1px solid #ddd; border-radius: 4px; font-size: 0.85rem;">
+        <div class="filter-content">
+          <div class="price-filter-inputs">
+            <input type="number" id="price-min" placeholder="$0" min="0">
+            <input type="number" id="price-max" placeholder="$999" min="0">
           </div>
         </div>
       </div>
 
       <!-- BRAND FILTER (COLLAPSIBLE) -->
       <div class="filter-section">
-        <button class="filter-toggle" data-filter="brand" style="width: 100%; padding: 1rem 1.2rem; background: #fff; border: none; border-bottom: 1px solid #e0e0e0; text-align: left; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-weight: 700; color: #333; font-size: 0.95rem;">
+        <button class="filter-toggle" data-filter="brand">
           <span>Brand</span>
-          <i class="fas fa-chevron-down" style="font-size: 0.8rem;"></i>
+          <i class="fas fa-chevron-down"></i>
         </button>
-        <div class="filter-content" style="display: none; padding: 1rem 1.2rem; border-bottom: 1px solid #e0e0e0;">
-          <input type="text" class="filter-search" placeholder="Search (Federal, Winchester, ...)" style="width: 100%; padding: 0.6rem; margin-bottom: 0.8rem; border: 1px solid #ddd; border-radius: 4px; font-size: 0.85rem;" data-filter="brand">
-          <div id="brand-list" style="display: flex; flex-direction: column; gap: 0.6rem; max-height: 250px; overflow-y: auto;">
+        <div class="filter-content">
+          <input type="text" class="filter-search" placeholder="Search (Federal, Winchester, ...)" data-filter="brand">
+          <div id="brand-list">
             <!-- Populated by JavaScript -->
           </div>
-          <button class="show-more-btn" data-filter="brand" style="width: 100%; padding: 0.6rem; margin-top: 0.8rem; background: transparent; border: 1px solid #e0e0e0; border-radius: 4px; color: var(--color-primary); font-weight: 600; cursor: pointer; font-size: 0.85rem; display: none;">Show More</button>
+          <button class="show-more-btn" data-filter="brand">Show More</button>
         </div>
       </div>
 
       <!-- IN STOCK FILTER (COLLAPSIBLE) -->
       <div class="filter-section">
-        <button class="filter-toggle" data-filter="stock" style="width: 100%; padding: 1rem 1.2rem; background: #fff; border: none; border-bottom: 1px solid #e0e0e0; text-align: left; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-weight: 700; color: #333; font-size: 0.95rem;">
+        <button class="filter-toggle" data-filter="stock">
           <span>Stock</span>
-          <i class="fas fa-chevron-down" style="font-size: 0.8rem;"></i>
+          <i class="fas fa-chevron-down"></i>
         </button>
-        <div class="filter-content" style="display: none; padding: 1rem 1.2rem; border-bottom: 1px solid #e0e0e0;">
-          <label style="display: flex; align-items: center; cursor: pointer; font-weight: 500; color: #333; gap: 0.6rem;">
-            <input type="checkbox" id="in-stock-filter" style="width: 18px; height: 18px; cursor: pointer;">
+        <div class="filter-content">
+          <label class="filter-label">
+            <input type="checkbox" id="in-stock-filter">
             Show Only In Stock
           </label>
         </div>
@@ -931,12 +932,12 @@
 
       <!-- SORT BY FILTER (COLLAPSIBLE) -->
       <div class="filter-section">
-        <button class="filter-toggle" data-filter="sort" style="width: 100%; padding: 1rem 1.2rem; background: #fff; border: none; text-align: left; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-weight: 700; color: #333; font-size: 0.95rem;">
+        <button class="filter-toggle" data-filter="sort">
           <span>Sort By</span>
-          <i class="fas fa-chevron-down" style="font-size: 0.8rem;"></i>
+          <i class="fas fa-chevron-down"></i>
         </button>
-        <div class="filter-content" style="display: none; padding: 1rem 1.2rem;">
-          <select id="sort-filter" style="width: 100%; padding: 0.6rem; border: 1px solid #ddd; border-radius: 4px; font-size: 0.85rem; background: #fff;">
+        <div class="filter-content">
+          <select id="sort-filter" title="Sort products by">
             <option value="newest">Newest First</option>
             <option value="price-low">Price: Low to High</option>
             <option value="price-high">Price: High to Low</option>
@@ -948,49 +949,49 @@
     </aside>
 
     <!-- RIGHT CONTENT AREA -->
-    <div style="flex: 1; min-width: 0;">
+    <div class="ammunition-content">
       <h1 class="page-title">Ammunition</h1>
-      <p style="color: #666; margin-bottom: 2rem;">Quality ammunition from top brands with competitive pricing</p>
+      <p class="ammunition-description">Quality ammunition from top brands with competitive pricing</p>
 
       <!-- PRODUCT CONTROLS & COUNT -->
-      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
-        <div style="color: #666; font-weight: 500;">
+      <div class="product-controls">
+        <div class="product-count">
           Showing <span id="product-count">0</span> of <span id="total-count">0</span> products
         </div>
         
-        <div style="display: flex; gap: 0.5rem; align-items: center;">
-          <label style="font-weight: 600; color: #333; font-size: 0.9rem; margin-right: 0.5rem;">VIEW:</label>
-          <button id="view-grid" style="padding: 0.6rem 1rem; background: var(--color-primary); color: #fff; border: none; border-radius: 4px 0 0 4px; cursor: pointer; font-weight: 600; transition: background 0.3s;">
+        <div class="view-toggle">
+          <label class="view-label">VIEW:</label>
+          <button id="view-grid" class="view-btn active">
             <i class="fas fa-th"></i> Grid
           </button>
-          <button id="view-list" style="padding: 0.6rem 1rem; background: #ddd; color: #333; border: none; border-radius: 0 4px 4px 0; cursor: pointer; font-weight: 600; transition: background 0.3s;">
+          <button id="view-list" class="view-btn">
             <i class="fas fa-list"></i> List
           </button>
         </div>
       </div>
 
       <!-- GRID VIEW (Default) -->
-      <div id="grid-view" class="products-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 2rem; margin-bottom: 4rem;">
-        <div style="grid-column: 1 / -1; text-align: center; padding: 2rem;">
-          <i class="fas fa-spinner fa-spin" style="font-size: 2rem; color: var(--color-primary);"></i> Loading products...
+      <div id="grid-view" class="products-grid">
+        <div class="grid-loading">
+          <i class="fas fa-spinner fa-spin"></i> Loading products...
         </div>
       </div>
 
       <!-- LIST VIEW (Hidden by default) -->
-      <div id="list-view" style="display: none; margin-bottom: 4rem; overflow-x: auto;">
-        <table style="width: 100%; border-collapse: collapse; background: #fff; border: 1px solid #e0e0e0; border-radius: 8px;">
-          <thead style="background: #f9f9f9; border-bottom: 2px solid #e0e0e0;">
+      <div id="list-view">
+        <table class="list-table">
+          <thead>
             <tr>
-              <th style="padding: 1rem; text-align: left; font-weight: 600; color: #333;">Product Name</th>
-              <th style="padding: 1rem; text-align: left; font-weight: 600; color: #333;">Brand</th>
-              <th style="padding: 1rem; text-align: center; font-weight: 600; color: #333;">Price</th>
-              <th style="padding: 1rem; text-align: center; font-weight: 600; color: #333;">Stock</th>
-              <th style="padding: 1rem; text-align: center; font-weight: 600; color: #333;">Action</th>
+              <th>Product Name</th>
+              <th>Brand</th>
+              <th>Price</th>
+              <th>Stock</th>
+              <th>Action</th>
             </tr>
           </thead>
           <tbody id="list-body">
             <tr>
-              <td colspan="5" style="padding: 2rem; text-align: center; color: #999;">Loading products...</td>
+              <td colspan="5" class="list-loading">Loading products...</td>
             </tr>
           </tbody>
         </table>
