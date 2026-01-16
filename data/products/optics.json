@@ -1,6 +1,6 @@
 {
   "category": "optics",
-  "lastUpdated": "2026-01-16T16:22:09.296Z",
+  "lastUpdated": "2026-01-16T20:09:30.651Z",
   "products": [
     {
       "id": "XISOSBDX33111",
@@ -108,27 +108,6 @@
       "material": null
     },
     {
-      "id": "DS991977402",
-      "name": "Winchester Model 1977XS Pump 177 Caliber BB and Pellet Air Rifle with Scope",
-      "brand": "Winchester",
-      "category": "optics",
-      "image": "https://images.chattanoogashooting.com/products/ds991977402.jpg",
-      "retailPrice": 77.09,
-      "salePrice": 77.09,
-      "inventory": 7,
-      "inStock": true,
-      "requiresFFL": false,
-      "serialized": false,
-      "dropShip": true,
-      "allocated": false,
-      "mapPrice": 0,
-      "lastUpdated": "2026-01-15 09:06:10.533",
-      "caliber": null,
-      "platform": "Shotgun",
-      "capacity": null,
-      "material": null
-    },
-    {
       "id": "SW3015613",
       "name": "S&W Slide Assembly M&P 9 Shield Pistol Optics Ready White Dot Sights",
       "brand": "S&W",
@@ -167,27 +146,6 @@
       "lastUpdated": "2026-01-12 16:27:20.67",
       "caliber": null,
       "platform": null,
-      "capacity": null,
-      "material": null
-    },
-    {
-      "id": "FAFNSRS48",
-      "name": "FEDERAL NEOPRENE SCOPED RIFLE SLEEVE - 48'' - BLK",
-      "brand": "FEDERAL",
-      "category": "optics",
-      "image": "https://images.chattanoogashooting.com/products/fafnsrs48.jpg",
-      "retailPrice": 21.99,
-      "salePrice": 21.99,
-      "inventory": 24,
-      "inStock": true,
-      "requiresFFL": false,
-      "serialized": false,
-      "dropShip": true,
-      "allocated": false,
-      "mapPrice": 0,
-      "lastUpdated": "2025-09-10 07:07:21.03",
-      "caliber": null,
-      "platform": "Rifle",
       "capacity": null,
       "material": null
     }
