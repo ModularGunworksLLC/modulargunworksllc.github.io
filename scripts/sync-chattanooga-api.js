@@ -410,7 +410,6 @@ function transformProduct(apiProduct) {
         allocated: apiProduct.allocated_flag === 1,
         mapPrice: parseFloat(apiProduct.map_price || 0),
         lastUpdated: apiProduct.qas_last_updated_at || '',
-        description: apiProduct.description || '',
         // New extracted fields
         caliber: extractCaliber(productName),
         platform: extractPlatform(productName),

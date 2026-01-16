@@ -587,11 +587,8 @@
         if (!response.ok) throw new Error('Failed to load products');
         const data = await response.json();
         
-        const activeResponse = await fetch('../data/products/active.json');
-        const activeData = activeResponse.ok ? await activeResponse.json() : {};
-        
-        let products = data.products || [];
-        products = products.filter(p => activeData[p.id] && activeData[p.id].page === 'optics');
+        // Load products directly from JSON (no active filter needed)
+        let products = data.products || data || [];
         
         allProducts = products;
         
