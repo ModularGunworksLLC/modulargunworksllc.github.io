@@ -42,6 +42,7 @@ main { display: flex; gap: 2rem; max-width: 1400px; margin: 0 auto; padding: 3re
 
 /* PRICE RANGE */
 #price-min, #price-max { flex: 1; padding: 0.6rem; border: 1px solid #ddd; border-radius: 4px; font-size: 0.85rem; }
+.price-flex { display: flex; gap: 0.4rem; }
 
 /* CONTENT AREA */
 main > div { flex: 1; min-width: 0; }
@@ -62,6 +63,8 @@ main > div > p { color: #666; margin-bottom: 2rem; }
 
 /* PRODUCT GRID */
 .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 2rem; margin-bottom: 4rem; }
+.products-grid .loading { grid-column: 1 / -1; text-align: center; padding: 2rem; }
+.products-grid .loading i { font-size: 2rem; color: var(--color-primary); }
 
 /* PRODUCT CARDS */
 .product-card { display: flex; flex-direction: column; background: #fff; border: 1px solid #e0e0e0; border-radius: 8px; overflow: hidden; transition: all 0.3s; }
@@ -84,6 +87,7 @@ main > div > p { color: #666; margin-bottom: 2rem; }
 #list-view tbody tr { border-bottom: 1px solid #e0e0e0; transition: background 0.2s; }
 #list-view tbody tr:hover { background: #f9f9f9; }
 #list-view td { padding: 1rem; }
+#list-view .empty { padding: 2rem; text-align: center; color: #999; }
 
 /* RESPONSIVE */
 @media (max-width: 1024px) {
