@@ -385,10 +385,19 @@
     // LOAD PRODUCTS
     async function loadProducts() {
       try {
-        const response = await fetch('../data/products/ammunition.json');
-        if (!response.ok) throw new Error('Failed to load products');
-        const data = await response.json();
-        allProducts = data.products || [];
+        // Load both product data and active products list
+        const productResponse = await fetch('../data/products/ammunition.json');
+        if (!productResponse.ok) throw new Error('Failed to load products');
+        const productData = await productResponse.json();
+        
+        const activeResponse = await fetch('../data/products/active.json');
+        const activeData = activeResponse.ok ? await activeResponse.json() : {};
+        
+        // Filter to only show activated products
+        let products = productData.products || [];
+        products = products.filter(p => activeData[p.id] && activeData[p.id].page === 'ammunition');
+        
+        allProducts = products;
         
         // Add extracted properties to products
         allProducts.forEach(product => {
