@@ -1,6 +1,6 @@
 {
   "category": "gun-parts",
-  "lastUpdated": "2026-01-16T12:30:24.663Z",
+  "lastUpdated": "2026-01-16T16:22:09.295Z",
   "products": [
     {
       "id": "BU410990",
@@ -2747,7 +2747,7 @@
       "dropShip": true,
       "allocated": false,
       "mapPrice": 0,
-      "lastUpdated": "2026-01-15 19:30:20.507",
+      "lastUpdated": "2026-01-16 09:47:21.063",
       "caliber": null,
       "platform": null,
       "capacity": null,
