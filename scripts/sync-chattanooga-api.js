@@ -114,17 +114,20 @@ function loadActiveProducts() {
 /**
  * LAYER 3: EXCLUSION-FIRST CATEGORIZATION (4-PASS SYSTEM)
  * 
- * PASS 1: Global exclusions
- * PASS 2: Positive identification
- * PASS 3: Brand fallback
- * PASS 4: Default to Gear
+ * REORDERED FOR ACCURACY:
+ * PASS 1: Reloading components (most specific: powder, primers, brass, bullets, dies, presses)
+ * PASS 2: Ammunition (finished cartridges - NO magazine keywords in name)
+ * PASS 3: Magazines (highest specificity: MAGAZINE, PMAG, CLIP, DRUM, LOADER)
+ * PASS 4: Optics (scopes, red dots, sights)
+ * PASS 5: Gun Parts (triggers, barrels, uppers, lowers, receivers)
+ * PASS 6: Survival/Gear (knives, flashlights, tactical gear)
+ * PASS 7: Default to Gear
  */
 function categorizeProduct(product) {
     const name = (product.name || '').toUpperCase();
     
-    // ===== PASS 1: GLOBAL EXCLUSIONS =====
+    // ===== GLOBAL EXCLUSIONS =====
     // These items can NEVER be in any category
-    
     const globalExclusions = [
         /GIFT\s*CARD|CREDIT|VOUCHER|SERVICE FEE|ENGRAVING|GUNSMITHING|LABOR|INSTALLATION|LICENSE|PERMIT|TRAINING|CLASS|COURSE/i
     ];
@@ -133,77 +136,97 @@ function categorizeProduct(product) {
         if (pattern.test(name)) return 'gear';
     }
     
-    // ===== PASS 2: POSITIVE IDENTIFICATION WITH CATEGORY-SPECIFIC EXCLUSIONS =====
-    
-    // === MAGAZINES FIRST (most specific - prevent false positives) ===
-    const magExclusions = [
-        /POUCH|HOLSTER|CARRIER|CASE|STORAGE|POWDER|PRIMER|BRASS|BULLET|RELOAD|COMPONENT|AMMO|CARTRIDGE|ROUND/i
-    ];
-    
-    const magMatch = !magExclusions.some(p => p.test(name)) && 
-        /MAGAZINE|MAG(?!NET)|CLIP|PMAG|DRUM|LOADER|(\d+RD|RD\s+MAG)/i.test(name);
-    
-    if (magMatch) return 'magazines';
-    
-    // === RELOADING (components: powder, primers, brass, bullets, equipment) ===
-    const reloadingMatch = /BULLET|BULLETS|BRASS|PRIMER|PRIMERS|POWDER|DIE|PRESS|SCALE|CASE\s*TRIMMER|TUMBLER|CALIPERS|RELOADER|PROJECTILE|\.DIA|CT\s*BULLET/i.test(name);
+    // ===== PASS 1: RELOADING FIRST (Most Specific - Powder, Primers, Brass, Bullets, Components) =====
+    // Components: die, press, scale, tumbler, case trimmer, calipers, etc.
+    const reloadingMatch = /BULLET(?!PROOF)|BULLETS|BRASS|PRIMER(?!Y)|PRIMERS|POWDER|DIE(?!T)|PRESS(?!URE)?|SCALE|CASE\s*TRIMMER|TUMBLER|CALIPERS|RELOADER|PROJECTILE|\.DIA(?!L)|CT\s*BULLET|POWDER\s*CHARGE|LOADING\s*BLOCK|BULLET\s*PULLER/i.test(name);
     
     if (reloadingMatch) return 'reloading';
     
-    // === AMMUNITION (finished cartridges ONLY) ===
+    // ===== PASS 2: AMMUNITION (Finished Cartridges - Exclude Magazine Keywords) =====
+    // Ammunition brands + caliber patterns + round types, BUT NOT if it's a magazine
     const ammoExclusions = [
-        /BULLET|BRASS|PRIMER|POWDER|CASING|COMPONENT|DIE|PRESS|SCALE|TUMBLER|BOX|CASE|POUCH|HOLSTER|CLEANER|BRUSH|TARGET|MAGAZINE|MAG|CLIP|DRUM|LOADER/i
+        /MAGAZINE|MAG(?!NET|AZINE)|CLIP(?!BOARD)|DRUM(?!STICK|FIRE)|POUCH|HOLSTER|CASE\s*ONLY|BOX\s*ONLY|CARRIER|STORAGE|ROUNDS\s*ONLY|EMPTY\s*BOX/i
     ];
     
+    // Comprehensive ammo pattern: calibers + types + brand names known for ammo
     const ammoMatch = !ammoExclusions.some(p => p.test(name)) && 
-        /AMMO|ROUNDS|CARTRIDGE|SHOTSHELL|9MM|9X19|5\.56|223|308|7\.62|45\s*ACP|40\s*S&W|12GA|20GA|\.22|FMJ|JHP|DEFENSE|MATCH/i.test(name);
+        /AMMO|ROUND(?!UP|ER)|CARTRIDGE|SHOTSHELL|9MM|9X19|5\.56|223|308|7\.62|45\s*ACP|40\s*S&W|12GA|20GA|\.22|FMJ|JHP|FEDERAL|HORNADY|WINCHESTER|REMINGTON|BLAZER|CCI|AGUILA|PMC|FIOCCHI|SPEER|NORMA|MAGTECH|ARMSCOR|PPU|RIO|SELLIER|HSM|FRONTIER|AMMO\s*INC|CORBON|UNDERWOOD|LIBERTY|LIBERTY\s*AMMUNITION/i.test(name);
     
     if (ammoMatch) return 'ammunition';
     
-    // === OPTICS (scope, red dot, sight, etc.) ===
+    // ===== PASS 3: MAGAZINES (Most Specific After Ammo/Reloading) =====
+    // Magazine-specific keywords with exclusions for ammo/reloading
+    const magExclusions = [
+        /POWDER|PRIMER|BRASS|BULLET|RELOAD|COMPONENT|AMMO|CARTRIDGE|ROUND(?!UP|ER)|POUCH|HOLSTER|CARRIER|CASE\s*ONLY|BOX\s*ONLY/i
+    ];
+    
+    const magMatch = !magExclusions.some(p => p.test(name)) && 
+        /\bMAGAZINE\b|\bMAG\s|\bPMAG\b|\bCLIP\b|\bDRUM\b|\bLOADER\b|(\d+RD(?:\s+MAG)?)|RD\s+(?:MAGAZINE|MAG|DRUM)|\bMAGAZINE\s*EXTENSION\b/i.test(name);
+    
+    if (magMatch) return 'magazines';
+    
+    // ===== PASS 4: OPTICS (Scopes, Red Dots, Sights) =====
     const opticsExclusions = [
-        /COVER|CAP|MOUNT|BASE|RING|RAIL|TARGET|BAG|CASE|SLING|STRAP|CLEAN|TOOL|KIT|POUCH|BATTERY|ADAPTER|CONNECTOR|EXTENSION|CLAMP/i
+        /COVER|CAP|MOUNT|BASE|RING|RAIL|TARGET|BAG|CASE|SLING|STRAP|CLEAN|TOOL|KIT|POUCH|BATTERY|ADAPTER|CONNECTOR|EXTENSION|CLAMP|RISER|SPACER/i
     ];
     
     const opticsMatch = !opticsExclusions.some(p => p.test(name)) && 
-        /SCOPE|RED\s*DOT|HOLOGRAPHIC|MAGNIFIER|RIFLESCOPE|REFLEX|LASER\s*SIGHT|OPTIC|BINOCULAR|MONOCULAR|RANGEFINDER/i.test(name);
+        /SCOPE|RED\s*DOT|HOLOGRAPHIC|MAGNIFIER|RIFLESCOPE|REFLEX|LASER\s*SIGHT|OPTIC(?!S\s*READY)?|BINOCULAR|MONOCULAR|RANGEFINDER|THERMAL|NIGHT\s*VISION/i.test(name);
     
     if (opticsMatch) return 'optics';
     
-    // === GUN PARTS (triggers, uppers, lowers, barrels, etc.) ===
+    // ===== PASS 5: GUN PARTS (Triggers, Barrels, Uppers, Lowers, Receivers, etc.) =====
     const partsExclusions = [
-        /CLEANER|BRUSH|BORE|SCRUBBER|DEGREASER|PUNCH|HAMMER|WRENCH|VISE|TOOL|KIT|ROD|PATCH|LUBRIC|SOLVENT|CASE|BOX|BAG|POUCH|HOLSTER|STORAGE|CARRIER|PACK|VEST|CHEST|SLING|STRAP|POWDER|PRIMER|BRASS|BULLET|RELOAD|COMPONENT|AMMUNITION|AMMO/i
+        /CLEANER|BRUSH|BORE|SCRUBBER|DEGREASER|PUNCH|HAMMER|WRENCH|VISE|TOOL|KIT|ROD|PATCH|LUBRIC|SOLVENT|POUCH|HOLSTER|STORAGE|CARRIER|PACK|VEST|CHEST|SLING|STRAP|POWDER|PRIMER|BRASS|BULLET|RELOAD|COMPONENT|AMMUNITION|AMMO|CARTRIDGE|ROUND/i
     ];
     
     const partsMatch = !partsExclusions.some(p => p.test(name)) && 
-        /TRIGGER|BCG|BARREL|UPPER|LOWER|BUFFER|GAS\s*BLOCK|HANDGUARD|STOCK|GRIP|RECEIVER|CHARGING\s*HANDLE|SAFETY|SELECTOR|SPRING|PIN|MOUNT|BASE|RING|RAIL/i.test(name);
+        /TRIGGER|BCG|BOLT\s*CARRIER|BARREL|UPPER|LOWER|BUFFER|GAS\s*BLOCK|HANDGUARD|STOCK|GRIP|RECEIVER|CHARGING\s*HANDLE|SAFETY|SELECTOR|SPRING|PIN|MOUNT|BASE|RING|RAIL|FOREGRIP|MUZZLE|BRAKE|FLASH\s*HIDER|SUPPRESSOR|BOLT|CARRIER\s*GROUP|CHARGING\s*HANDLE/i.test(name);
     
     if (partsMatch) return 'gun-parts';
     
-    // === SURVIVAL/GEAR ===
-    const survivalMatch = /KNIFE|MULTI\s*TOOL|FLASHLIGHT|FIRST\s*AID|MEDICAL|WATER|FIRE\s*STARTER|PARACORD|EMERGENCY|TACTICAL|OUTDOOR|CAMPING|GEAR/i.test(name);
+    // ===== PASS 6: SURVIVAL/GEAR (Knives, Flashlights, Tactical Gear) =====
+    const survivalMatch = /KNIFE|MULTI\s*TOOL|MULTI-TOOL|FLASHLIGHT|FIRST\s*AID|MEDICAL|WATER|FIRE\s*STARTER|PARACORD|EMERGENCY|TACTICAL|OUTDOOR|CAMPING|GEAR|BACKPACK|PACK|POUCH|HOLSTER|CHEST\s*RIG|VEST|BELT|SLING|STRAP|CASE|BAG|CASE/i.test(name);
     
     if (survivalMatch) return 'survival';
+    // ===== PASS 7: BRAND FALLBACK (Secondary Check for Mis-matched Names) =====
+    // If no positive match from keywords, use brand name to determine category
+    // NOTE: Check parts brands FIRST to avoid MAGPUL parts being caught as magazines
     
-    // ===== PASS 3: BRAND FALLBACK =====
-    // If no positive match, use brand to determine category
+    // Gun parts brands (secondary check - FIRST before magazine brands)
+    if (/MAGPUL|BCM|GEISSELE|MIDWEST|RADIAN|REPTILIA|CLOUD|SUREFIRE|STREAMLIGHT|SAFARILAND|BLUE\s*FORCE|HOGUE|TIMNEY|TRIGGERTECH|AR15|AR-15|AERO\s*PRECISION|DANIEL\s*DEFENSE|LWRC|NOVESKE|PSA|BALLISTIC/i.test(name)) {
+        // BUT exclude if it's clearly a magazine
+        if (!/MAGAZINE|MAG(?!NET|AZINE)|PMAG|CLIP|DRUM|LOADER/i.test(name)) {
+            return 'gun-parts';
+        }
+    }
     
-    // Reloading brands
-    if (/RCBS|LEE|LYMAN|HORNADY|DILLON|REDDING|FRANKFORD|HODGDON|ALLIANT|ACCURATE|VIHTAVUORI|IMR|LAPUA|STARLINE/i.test(name)) {
+    // Ammunition brands (secondary check)
+    if (/FEDERAL|HORNADY|WINCHESTER|REMINGTON|PMC|FIOCCHI|SPEER|CCI|BLAZER|NORMA|AGUILA|AMMO\s*INC|ARMSCOR|ATLANTA\s*ARMS|BARNES|BARRETT|BERGER|BROWNING|CORBON|DOUBLE\s*TAP|ESTATE|FRONTIER|HEVI-SHOT|HSM|KENT|LIBERTY|MAGTECH|MIGRA|NOBEL|NOSLER|PPU|RIO|SELLIER|SIERRA|SIG\s*SAUER|SK|SWIFT|UNDERWOOD|WEATHERBY|WILSON/i.test(name)) {
+        return 'ammunition';
+    }
+    
+    // Reloading brands (secondary check)
+    if (/RCBS|LEE|LYMAN|HORNADY|DILLON|REDDING|FRANKFORD|HODGDON|ALLIANT|ACCURATE|VIHTAVUORI|IMR|LAPUA|STARLINE|POWDER\s*VALLEY/i.test(name)) {
         return 'reloading';
     }
     
-    // Optics brands
-    if (/TRIJICON|EOTECH|AIMPOINT|HOLOSUN|VORTEX|LEUPOLD|PRIMARY\s*ARMS|NIGHTFORCE|BUSHNELL|ZEISS|NIKON|STEINER/i.test(name)) {
+    // Optics brands (secondary check)
+    if (/TRIJICON|EOTECH|AIMPOINT|HOLOSUN|VORTEX|LEUPOLD|PRIMARY\s*ARMS|NIGHTFORCE|BUSHNELL|ZEISS|NIKON|STEINER|SWAROVSKI|RIFLESCOPE|THERMAL/i.test(name)) {
         return 'optics';
     }
     
-    // Magazine brands
-    if (/MAGPUL|PMAG|LANCER|HEXMAG|ETS|KCI|GLOCK|RUGER/i.test(name)) {
+    // Magazine brands (secondary check)
+    if (/MAGPUL|PMAG|LANCER|HEXMAG|ETS|KCI|GLOCK|RUGER|MAGAZINE/i.test(name)) {
         return 'magazines';
     }
     
-    // ===== PASS 4: DEFAULT TO GEAR =====
+    // Survival/Tactical brands (secondary check)
+    if (/GERBER|SOG|BENCHMADE|KERSHAW|CRKT|STREAMLIGHT|SUREFIRE|BROWNING|SMITH\s*AND\s*WESSON|VICTORINOX|OPINEL|CONDOR|ESEE|COLD\s*STEEL/i.test(name)) {
+        return 'survival';
+    }
+    
+    // ===== PASS 8: DEFAULT TO GEAR =====
     // Everything else that passed compliance goes to Gear
     return 'gear';
 }
