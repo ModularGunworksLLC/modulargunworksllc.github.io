@@ -25,43 +25,7 @@ main.reloading-main {
 }
 
 /* FILTER HEADER */
-.filter-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1.2rem;
-  border-bottom: 1px solid #e0e0e0;
-  background: #f9f9f9;
-}
-
-.filter-header h3 {
-  font-size: 0.95rem;
-  color: #333;
-  margin: 0;
-  font-weight: 700;
-  text-transform: uppercase;
-}
-
-#clear-filters {
-  padding: 0.3rem 0.6rem;
-  background: transparent;
-  color: var(--color-primary);
-  border: none;
-  cursor: pointer;
-  font-weight: 600;
-  font-size: 0.75rem;
-  text-transform: uppercase;
-  transition: all 0.2s;
-}
-
-#clear-filters:hover {
-  opacity: 0.8;
-}
-
-/* FILTER TOGGLE BUTTONS */
-.filter-toggle {
-  width: 100%;
-  padding: 1rem 1.2rem;
+/* Product card styles unified in components.css */
   background: #fff;
   border: none;
   border-bottom: 1px solid #e0e0e0;

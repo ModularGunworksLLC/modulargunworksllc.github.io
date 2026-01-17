@@ -52,43 +52,7 @@ main {
   border-bottom: 1px solid #e0e0e0;
 }
 
-.filter-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1.2rem;
-  border-bottom: 1px solid #e0e0e0;
-  background: #f9f9f9;
-}
-
-.filter-header h3 {
-  font-size: 0.95rem;
-  color: #333;
-  margin: 0;
-  font-weight: 700;
-  text-transform: uppercase;
-}
-
-.filter-header-btn {
-  padding: 0.3rem 0.6rem;
-  background: transparent;
-  color: var(--color-primary);
-  border: none;
-  cursor: pointer;
-  font-weight: 600;
-  font-size: 0.75rem;
-  text-transform: uppercase;
-  transition: all 0.2s;
-}
-
-.filter-toggle {
-  width: 100%;
-  padding: 1rem 1.2rem;
-  background: #fff;
-  border: none;
-  text-align: left;
-  cursor: pointer;
-  display: flex;
+/* Product card styles unified in components.css */
   justify-content: space-between;
   align-items: center;
   font-weight: 700;

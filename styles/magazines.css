@@ -23,45 +23,7 @@ main {
   display: flex;
   gap: 2rem;
   max-width: 1400px;
-  margin: 0 auto;
-  padding: 3rem 2rem;
-}
-
-.page-title {
-  font-size: 2rem;
-  color: var(--color-bg-dark);
-  margin-bottom: 2rem;
-}
-
-/* FILTER SIDEBAR */
-#filters-sidebar {
-  flex: 0 0 300px;
-  position: sticky;
-  top: 180px;
-  height: fit-content;
-  background: #fff;
-  border: 1px solid #e0e0e0;
-  border-radius: 8px;
-  padding: 0;
-  overflow-y: auto;
-  max-height: calc(100vh - 200px);
-  margin-top: 180px;
-}
-
-.filter-section {
-  border-bottom: 1px solid #e0e0e0;
-}
-
-.filter-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1.2rem;
-  border-bottom: 1px solid #e0e0e0;
-  background: #f9f9f9;
-}
-
-.filter-header h3 {
+  /* Product card styles unified in components.css */
   font-size: 0.95rem;
   color: #333;
   margin: 0;

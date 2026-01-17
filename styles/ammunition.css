@@ -277,17 +277,14 @@ main.ammunition-main {
   gap: 2rem;
   margin-bottom: 4rem;
 }
-
 #grid-view.hidden {
   display: none;
 }
-
 .grid-loading {
   grid-column: 1 / -1;
   text-align: center;
   padding: 2rem;
 }
-
 .grid-loading i {
   font-size: 2rem;
   color: var(--color-primary);
