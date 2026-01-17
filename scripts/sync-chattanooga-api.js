@@ -166,9 +166,9 @@ function categorizeProduct(product) {
     
     // ===== PASS 3: MAGAZINES (ACTUAL MAGAZINES ONLY) =====
     // Real magazines: contain words like MAGAZINE, PMAG, or are brand-specific magazines
-    // Exclude: Ammunition, reloading, tools, loaders, holsters
+    // Exclude: Ammunition, reloading, tools, loaders, holsters, CASES, gun parts
     const magExclusions = [
-        /AMMO|CARTRIDGE|ROUND(?!UP|ER)|SHOTSHELL|POWDER|PRIMER|BRASS|BULLET|SLUG|PELLET|LOADER|TOOL|LOADER(?:TOOL)?|POUCH|HOLSTER|CARRIER|BELT|BAG|CASE|STORAGE|CLEANING|BRUSH/i
+        /AMMO|CARTRIDGE|ROUND(?!UP|ER)|SHOTSHELL|POWDER|PRIMER|BRASS|BULLET|SLUG|PELLET|LOADER|TOOL|LOADER(?:TOOL)?|POUCH|HOLSTER|CARRIER|BELT|BAG|(?<!HAND)CASE|STORAGE|CLEANING|BRUSH|GRIPER|DECELE|ADAPTER|BASE|RING|RAIL|SIGHT|SIGHT|SCOPE|OPTIC|TRIGGER|STOCK|GRIP|SAFETY|SCREW|SPRING|BUFFER|BARREL|UPPER|LOWER|RECEIVER|EXTRACTOR|EJECTOR|HAMMER|PIN|WASHER|FASTENER|TOOL/i
     ];
     
     // Only match actual magazine products
@@ -177,12 +177,12 @@ function categorizeProduct(product) {
     if (magMatch) return 'magazines';
     
     // ===== PASS 4: OPTICS (SCOPES, RED DOTS, SIGHTS) =====
-    // Exclude: Ammunition, mounts, bases, rings, rails, cleaning supplies, tools, boresights
+    // Exclude: Ammunition, mounts, bases, rings, rails, cleaning supplies, tools, boresights, laser products that aren't actual optics
     const opticsExclusions = [
-        /MOUNT|BASE|RING|RAIL(?!WAY)|SCOPE\s*RING|SCOPE\s*BASE|PICATINNY|DOVETAIL|COVER|CAP|LENS|BATTERY|LENS\s*CLEANER|BRUSH|CLOTH|CLEANING|TOOL|REPAIR|ADJUSTMENT|SCREW|SPRING|PIN|WASHER|SPACER|RISER|HOLSTER|POUCH|CASE|BAG|STORAGE|SLING|STRAP|AMMUNITION|AMMO|ROUND|CARTRIDGE|POWDER|PRIMER|BORESIGHT|LASER\s*BORESIGHT/i
+        /MOUNT|BASE|RING|RAIL(?!WAY)|SCOPE\s*RING|SCOPE\s*BASE|PICATINNY|DOVETAIL|COVER|CAP|LENS|BATTERY|LENS\s*CLEANER|BRUSH|CLOTH|CLEANING|TOOL|REPAIR|ADJUSTMENT|SCREW|SPRING|PIN|WASHER|SPACER|RISER|HOLSTER|POUCH|CASE|BAG|STORAGE|SLING|STRAP|AMMUNITION|AMMO|ROUND|CARTRIDGE|POWDER|PRIMER|BORESIGHT|BORE\s*SIGHT|LASER\s*SIGHT(?!\s*(?:SCOPE|RED|DOT))|SIGHT\s*(?:TOOL|ADJUSTMENT|ADJ)|CARTRIDGE|BALLISTIC/i
     ];
     
-    const opticsMatch = !opticsExclusions.some(p => p.test(name)) && /\bSCOPE\b|\bRED\s*DOT\b|\bHOLOGRAPHIC\b|\bMAGNIFIER\b|\bRIFLESCOPE\b|\bREFLEX\b|\bOPTIC\b(?!S\s*READY|AL\s*ADAPTER)|\bOPTICS\b(?!\s*READY)|\bBINOCULAR\b|\bMONOCULAR\b|\bRANGEFINDER\b|\bTHERMAL\b(?!\s*IMAGING)|\bNIGHT\s*VISION\b|\bTACTICAL\s*(?:SIGHT|SCOPE)\b|\bIRON\s*SIGHT\b(?!S)|\bTRIJICON\b|\bEOTECH\b|\bAIMPOINT\b|\bHOLOSUN\b|\bVORTEX\b|\bLEUPOLD\b|\bPRIMARY\s*ARMS\b|\bNIGHTFORCE\b|\bBUSHNELL\b|\bZEISS\b|\bNIKON\b|\bSTEINER\b|\bSWAROVSKI\b|\bSIERRA\b(?!\s*LEONE)|\bPULSAR\b|\bATHLON\b|\bBURRIS\b|\bRITON\b|\bSWAMPFOX\b/i.test(name);
+    const opticsMatch = !opticsExclusions.some(p => p.test(name)) && /\bSCOPE\b|\bRED\s*DOT\b|\bHOLOGRAPHIC\b|\bMAGNIFIER\b|\bRIFLESCOPE\b|\bREFLEX\b|\bOPTIC\b(?!S\s*READY|AL\s*ADAPTER)|\bOPTICS\b(?!\s*READY)|\bBINOCULAR\b|\bMONOCULAR\b|\bRANGEFINDER\b|\bTHERMAL\b(?!\s*IMAGING)|\bNIGHT\s*VISION\b|\bTACTICAL\s*(?:SIGHT|SCOPE)\b|\bIRON\s*SIGHT\b(?!S|S\s*TOOL)|\bTRIJICON\b|\bEOTECH\b|\bAIMPOINT\b|\bHOLOSUN\b|\bVORTEX\b|\bLEUPOLD\b|\bPRIMARY\s*ARMS\b|\bNIGHTFORCE\b|\bBUSHNELL\b|\bZEISS\b|\bNIKON\b|\bSTEINER\b|\bSWAROVSKI\b|\bPULSAR\b|\bATHLON\b|\bBURRIS\b|\bRITON\b|\bSWAMPFOX\b/i.test(name);
     
     if (opticsMatch) return 'optics';
     
@@ -230,8 +230,8 @@ function categorizeProduct(product) {
         return 'optics';
     }
     
-    // Magazine brands  
-    if (/LANCER|HEXMAG|ETS|KCI|PMAG|MAGPUL|DURAMAG|ASC|CHECKMATE|D&H|GLOCK|RUGER|BERETTA|REMINGTON|MOSSBERG|SAVAGE|BROWNING|SMITH|WESSON|SIG|SAUER|WALTHER|HECKLER|KOCH|HK|CZ|SPRINGFIELD|TAURUS|COLT|CMMG|STAG|WINDHAM/i.test(brand)) {
+    // Magazine brands - ONLY actual magazine manufacturers, not firearms brands
+    if (/LANCER|HEXMAG|ETS|KCI|DURAMAG|ASC|CHECKMATE|D&H|KRIEGER|DAKIN/i.test(brand)) {
         return 'magazines';
     }
     
