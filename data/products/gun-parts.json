@@ -1,6 +1,6 @@
 {
   "category": "gun-parts",
-  "lastUpdated": "2026-01-18T08:20:22.624Z",
+  "lastUpdated": "2026-01-18T12:28:11.771Z",
   "products": [
     {
       "id": "BU410990",
@@ -2551,14 +2551,14 @@
       "image": "https://images.chattanoogashooting.com/products/pepgmx380.jpg",
       "retailPrice": 5.09,
       "salePrice": 5.09,
-      "inventory": 13,
+      "inventory": 12,
       "inStock": true,
       "requiresFFL": false,
       "serialized": false,
       "dropShip": false,
       "allocated": false,
       "mapPrice": 0,
-      "lastUpdated": "2026-01-13 12:55:01.54",
+      "lastUpdated": "2026-01-18 05:58:01.11",
       "caliber": ".380 ACP",
       "platform": "Ruger",
       "capacity": null,
