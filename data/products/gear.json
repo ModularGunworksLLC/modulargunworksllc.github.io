@@ -1,6 +1,6 @@
 {
   "category": "gear",
-  "lastUpdated": "2026-01-18T16:18:27.128Z",
+  "lastUpdated": "2026-01-18T20:17:38.371Z",
   "products": [
     {
       "id": "HK22B",
@@ -178,14 +178,14 @@
       "image": "https://images.chattanoogashooting.com/products/sohkpdw.jpg",
       "retailPrice": 180.49,
       "salePrice": 180.49,
-      "inventory": 24,
+      "inventory": 23,
       "inStock": true,
       "requiresFFL": false,
       "serialized": false,
       "dropShip": true,
       "allocated": false,
       "mapPrice": 0,
-      "lastUpdated": "2026-01-13 11:19:31.837",
+      "lastUpdated": "2026-01-18 11:46:20.843",
       "caliber": null,
       "platform": "Heckler & Koch",
       "capacity": null,

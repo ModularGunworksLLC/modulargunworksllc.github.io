@@ -1,6 +1,6 @@
 {
   "category": "optics",
-  "lastUpdated": "2026-01-18T16:18:27.128Z",
+  "lastUpdated": "2026-01-18T20:17:38.371Z",
   "products": [
     {
       "id": "XISOSBDX33111",
@@ -136,14 +136,14 @@
       "image": "https://images.chattanoogashooting.com/products/rj20100723.jpg",
       "retailPrice": 32,
       "salePrice": 32,
-      "inventory": 29,
+      "inventory": 28,
       "inStock": true,
       "requiresFFL": false,
       "serialized": false,
       "dropShip": true,
       "allocated": false,
       "mapPrice": 32,
-      "lastUpdated": "2026-01-12 16:27:20.67",
+      "lastUpdated": "2026-01-18 14:10:50.91",
       "caliber": null,
       "platform": null,
       "capacity": null,

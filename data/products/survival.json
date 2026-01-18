@@ -1,6 +1,6 @@
 {
   "category": "survival",
-  "lastUpdated": "2026-01-18T16:18:27.129Z",
+  "lastUpdated": "2026-01-18T20:17:38.371Z",
   "products": [
     {
       "id": "GLCASE01",
@@ -1018,14 +1018,14 @@
       "image": "https://images.chattanoogashooting.com/products/ur90736.jpg",
       "retailPrice": 40.94,
       "salePrice": 40.94,
-      "inventory": 115,
+      "inventory": 113,
       "inStock": true,
       "requiresFFL": false,
       "serialized": false,
       "dropShip": true,
       "allocated": false,
       "mapPrice": 0,
-      "lastUpdated": "2026-01-17 17:25:51.013",
+      "lastUpdated": "2026-01-18 13:23:51.11",
       "caliber": ".380 ACP",
       "platform": "Ruger",
       "capacity": 2,
