@@ -1,6 +1,6 @@
 {
   "category": "magazines",
-  "lastUpdated": "2026-01-18T12:28:11.763Z",
+  "lastUpdated": "2026-01-18T16:18:27.119Z",
   "products": [
     {
       "id": "AAMAGPRO1",
@@ -430,14 +430,14 @@
       "image": "https://images.chattanoogashooting.com/products/ur90035.jpg",
       "retailPrice": 32.24,
       "salePrice": 32.24,
-      "inventory": 1117,
+      "inventory": 1115,
       "inStock": true,
       "requiresFFL": false,
       "serialized": false,
       "dropShip": true,
       "allocated": false,
       "mapPrice": 0,
-      "lastUpdated": "2026-01-17 12:13:00.83",
+      "lastUpdated": "2026-01-18 10:04:30.93",
       "caliber": "5.56 NATO",
       "platform": "Ruger",
       "capacity": 14,
