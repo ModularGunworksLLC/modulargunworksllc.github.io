@@ -1,6 +1,6 @@
 {
   "category": "gear",
-  "lastUpdated": "2026-01-19T04:47:33.915Z",
+  "lastUpdated": "2026-01-19T08:24:56.351Z",
   "products": [
     {
       "id": "HK22B",
@@ -1344,27 +1344,6 @@
       "caliber": "12 GA",
       "platform": null,
       "capacity": 25,
-      "material": null
-    },
-    {
-      "id": "SW14568",
-      "name": "S&W SLIDE ASSY, M&P9 M2.0 4.9'' OR BLACK",
-      "brand": "S&W",
-      "category": "gear",
-      "image": "https://images.chattanoogashooting.com/products/sw14568.jpg",
-      "retailPrice": 225.69,
-      "salePrice": 225.69,
-      "inventory": 3,
-      "inStock": true,
-      "requiresFFL": false,
-      "serialized": false,
-      "dropShip": false,
-      "allocated": false,
-      "mapPrice": 0,
-      "lastUpdated": "2026-01-11 20:22:50.53",
-      "caliber": null,
-      "platform": "Benelli",
-      "capacity": null,
       "material": null
     },
     {
