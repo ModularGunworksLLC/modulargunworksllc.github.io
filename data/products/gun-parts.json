@@ -1,6 +1,6 @@
 {
   "category": "gun-parts",
-  "lastUpdated": "2026-01-18T20:17:38.369Z",
+  "lastUpdated": "2026-01-19T01:13:34.010Z",
   "products": [
     {
       "id": "BU410990",
@@ -2110,14 +2110,14 @@
       "image": "https://images.chattanoogashooting.com/products/fwbtc4e20.jpg",
       "retailPrice": 72.49,
       "salePrice": 72.49,
-      "inventory": 782,
+      "inventory": 778,
       "inStock": true,
       "requiresFFL": false,
       "serialized": false,
       "dropShip": true,
       "allocated": false,
       "mapPrice": 0,
-      "lastUpdated": "2026-01-18 09:12:20.653",
+      "lastUpdated": "2026-01-18 19:11:40.52",
       "caliber": null,
       "platform": null,
       "capacity": null,
