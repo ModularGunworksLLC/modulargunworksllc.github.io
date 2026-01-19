@@ -1,6 +1,6 @@
 {
   "category": "survival",
-  "lastUpdated": "2026-01-19T01:13:34.012Z",
+  "lastUpdated": "2026-01-19T04:47:33.915Z",
   "products": [
     {
       "id": "GLCASE01",
@@ -178,14 +178,14 @@
       "image": "https://images.chattanoogashooting.com/products/lee90110.jpg",
       "retailPrice": 4.29,
       "salePrice": 4.29,
-      "inventory": 101,
+      "inventory": 100,
       "inStock": true,
       "requiresFFL": false,
       "serialized": false,
       "dropShip": false,
       "allocated": false,
       "mapPrice": 0,
-      "lastUpdated": "2026-01-14 20:42:40.513",
+      "lastUpdated": "2026-01-18 21:33:30.9",
       "caliber": null,
       "platform": null,
       "capacity": null,
