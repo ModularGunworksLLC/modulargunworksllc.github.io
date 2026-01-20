@@ -1,6 +1,6 @@
 {
   "category": "gun-parts",
-  "lastUpdated": "2026-01-20T01:08:55.589Z",
+  "lastUpdated": "2026-01-20T04:40:26.196Z",
   "products": [
     {
       "id": "BU410990",
@@ -2635,14 +2635,14 @@
       "image": "https://images.chattanoogashooting.com/products/fwbtcpsmxhd.jpg",
       "retailPrice": 68.19,
       "salePrice": 68.19,
-      "inventory": 1948,
+      "inventory": 1947,
       "inStock": true,
       "requiresFFL": false,
       "serialized": false,
       "dropShip": true,
       "allocated": false,
       "mapPrice": 0,
-      "lastUpdated": "2026-01-19 08:45:41.657",
+      "lastUpdated": "2026-01-19 22:17:41.043",
       "caliber": null,
       "platform": null,
       "capacity": null,
