@@ -1,6 +1,6 @@
 {
   "category": "gear",
-  "lastUpdated": "2026-01-20T12:35:27.599Z",
+  "lastUpdated": "2026-01-20T16:27:39.937Z",
   "products": [
     {
       "id": "HK22B",
@@ -367,14 +367,14 @@
       "image": "https://images.chattanoogashooting.com/products/fwbtc32gsb.jpg",
       "retailPrice": 12.49,
       "salePrice": 12.49,
-      "inventory": 33,
+      "inventory": 57,
       "inStock": true,
       "requiresFFL": false,
       "serialized": false,
       "dropShip": true,
       "allocated": false,
       "mapPrice": 0,
-      "lastUpdated": "2026-01-18 15:19:50.18",
+      "lastUpdated": "2026-01-20 09:11:10.64",
       "caliber": null,
       "platform": null,
       "capacity": null,
