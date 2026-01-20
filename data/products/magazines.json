@@ -1,6 +1,6 @@
 {
   "category": "magazines",
-  "lastUpdated": "2026-01-20T08:24:17.026Z",
+  "lastUpdated": "2026-01-20T12:35:27.591Z",
   "products": [
     {
       "id": "AAMAGPRO1",
@@ -2782,14 +2782,14 @@
       "image": "https://images.chattanoogashooting.com/products/zmglka18.jpg",
       "retailPrice": 13.09,
       "salePrice": 13.09,
-      "inventory": 35,
+      "inventory": 31,
       "inStock": true,
       "requiresFFL": false,
       "serialized": false,
       "dropShip": true,
       "allocated": false,
       "mapPrice": 0,
-      "lastUpdated": "2026-01-19 20:46:31.147",
+      "lastUpdated": "2026-01-20 05:28:20.79",
       "caliber": ".44 Mag",
       "platform": "Glock",
       "capacity": null,

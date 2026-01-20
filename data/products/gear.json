@@ -1,6 +1,6 @@
 {
   "category": "gear",
-  "lastUpdated": "2026-01-20T08:24:17.036Z",
+  "lastUpdated": "2026-01-20T12:35:27.599Z",
   "products": [
     {
       "id": "HK22B",
@@ -1123,14 +1123,14 @@
       "image": "https://images.chattanoogashooting.com/products/pf1208412.jpg",
       "retailPrice": 21.99,
       "salePrice": 21.99,
-      "inventory": 10,
+      "inventory": 7,
       "inStock": true,
       "requiresFFL": false,
       "serialized": false,
       "dropShip": true,
       "allocated": false,
       "mapPrice": 0,
-      "lastUpdated": "2025-12-14 15:17:00.163",
+      "lastUpdated": "2026-01-20 03:24:30.83",
       "caliber": null,
       "platform": null,
       "capacity": null,
