@@ -1,5 +1,6 @@
 const express = require('express');
 const path = require('path');
+const cors = require('cors');
 const nodemailer = require('nodemailer');
 const app = express();
 const PORT = 3000;
@@ -33,6 +34,9 @@ const mimeTypes = {
 // Middleware to parse JSON
 app.use(express.json());
 
+// Enable CORS
+app.use(cors());
+
 // Middleware to set correct MIME types
 app.use((req, res, next) => {
   const ext = path.extname(req.path).toLowerCase();
@@ -48,7 +52,7 @@ app.use((req, res, next) => {
     "default-src 'self'; " +
     "script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://www.paypal.com https://www.sandbox.paypal.com; " +
     "style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; " +
-    "img-src 'self' data: https:; " +
+    "img-src 'self' data: https: http:; " +
     "font-src 'self' https://cdnjs.cloudflare.com https://fonts.googleapis.com https://fonts.gstatic.com; " +
     "connect-src 'self' http://localhost:3001 https://www.paypal.com https://www.sandbox.paypal.com; " +
     "frame-src https://www.paypal.com https://www.sandbox.paypal.com; " +

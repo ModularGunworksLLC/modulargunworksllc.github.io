@@ -52,7 +52,7 @@ const shouldIncludeBrand(product) {
 **Reloading:**
 - Hornady, RCBS, Lyman, Lee, Dillon, Hodgdon, Alliant, Accurate, Vihtavuori, IMR
 
-**Survival / Gear:**
+**Outdoors / Gear:**
 - Gerber, SOG, Benchmade, Kershaw, CRKT, Streamlight, SureFire
 
 ### BAD_BRANDS Array (Excluded)
@@ -132,10 +132,10 @@ Each category has specific **exclusion patterns** that prevent misclassification
 
 **Result:** Actual firearm components only. Tools and storage go to gear.
 
-#### SURVIVAL / GEAR
+#### OUTDOORS / GEAR
 **Inclusions:** KNIFE, MULTI TOOL, FLASHLIGHT, FIRST AID, MEDICAL, WATER, FIRE STARTER, PARACORD, EMERGENCY, TACTICAL, OUTDOOR, CAMPING, GEAR
 
-**Result:** Quality outdoor/tactical items from known survival brands.
+**Result:** Quality outdoor/tactical items from known outdoors brands.
 
 #### GEAR (Catch-All)
 **Content:** Everything that passes exclusions but doesn't match other categories:
@@ -192,7 +192,7 @@ saveProductToCategoryJSON(category, product);   // Save to correct file
 - **Optics:** 600-1,000 items
 - **Gun-Parts:** 1,500-2,000 items
 - **Reloading:** 1,200-1,800 items
-- **Survival:** 300-500 items
+- **Outdoors:** 300-500 items
 - **Gear:** 2,000-3,000 items
 
 ### Key Improvements

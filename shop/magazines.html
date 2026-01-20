@@ -54,7 +54,7 @@
       <a href="../shop/gear.html">Gear</a>
       <a href="../shop/optics.html">Optics</a>
       <a href="../shop/reloading.html">Reloading</a>
-      <a href="../shop/survival.html">Survival</a>
+      <a href="../shop/outdoors.html">Outdoors</a>
       <a href="../shop/brands.html">Brands</a>
       <a href="../shop/sale.html">ON SALE</a>
       <a href="../services.html">Services</a>
@@ -247,7 +247,7 @@
           <li><a href="../shop/gear.html">Gear</a></li>
           <li><a href="../shop/optics.html">Optics</a></li>
           <li><a href="../shop/reloading.html">Reloading</a></li>
-          <li><a href="../shop/survival.html">Survival</a></li>
+          <li><a href="../shop/outdoors.html">Outdoors</a></li>
           <li><a href="../shop/brands.html">Brands</a></li>
         </ul>
       </div>
@@ -288,14 +288,10 @@
   </footer>
 
   <script>
-    // GLOBAL STATE
-    let allProducts = [];
-    let filteredProducts = [];
+    const CURRENT_PAGE_CATEGORY = "magazines";
+    const INITIAL_ITEMS_SHOWN = 10;
     let currentView = 'grid';
-    let selectedCalibers = [];
-    let selectedCapacities = [];
-    let selectedBrands = [];
-    const INITIAL_ITEMS_SHOWN = 5;
+    // GLOBAL STATE
 
     // EXTRACT FUNCTIONS FOR MAGAZINES
     function extractCaliber(name) {
@@ -320,13 +316,20 @@
         const data = await response.json();
         
         // Load products directly from JSON (no active filter needed)
-        let products = data.products || data || [];
+        let products = Array.isArray(data.products) ? data.products : [];
         
         allProducts = products.map(p => ({
           ...p,
+          category: 'magazines', // Set category for filter protection
           calibre: extractCaliber(p.name),
           capacity: extractCapacity(p.name)
         }));
+
+        // FILTER PROTECTION: Only include products that match this page's category
+        allProducts = allProducts.filter(product => product.category === CURRENT_PAGE_CATEGORY);
+
+        // HIDE PRODUCTS WITHOUT IMAGES: Filter out products marked as hidden due to no available images
+        allProducts = allProducts.filter(product => !product.hidden);
 
         // Initialize filters and render
         initializeFilters();
@@ -358,7 +361,7 @@
       populateCheckboxFilter('brand-list', brands, 'brand-checkbox');
 
       // Set price defaults
-      const prices = allProducts.map(p => p.retailPrice || p.salePrice).filter(Boolean);
+      const prices = allProducts.map(p => p.displayPrice ?? p.msrp ?? 0).filter(Boolean);
       if (prices.length > 0) {
         const minPrice = Math.min(...prices);
         const maxPrice = Math.max(...prices);
@@ -462,22 +465,23 @@
       selectedBrands = Array.from(document.querySelectorAll('.brand-checkbox:checked')).map(cb => cb.value);
 
       filteredProducts = allProducts.filter(product => {
-        const price = product.retailPrice || product.salePrice;
-        const isOnSale = product.salePrice && product.salePrice < price;
+        const price = product.displayPrice ?? product.msrp ?? 0;
+        const msrp = product.msrp ?? 0;
+        const isOnSale = price < msrp;
         const matchesPrice = price >= priceMin && price <= priceMax;
-        const matchesStock = !inStockOnly || (product.inventory > 0);
+        const matchesStock = !inStockOnly || product.inventory === undefined || product.inventory > 0;
         const matchesSale = !onSaleOnly || isOnSale;
-        const matchesCaliber = selectedCalibers.length === 0 || selectedCalibers.includes(product.calibre);
-        const matchesCapacity = selectedCapacities.length === 0 || selectedCapacities.includes(product.capacity);
-        const matchesBrand = selectedBrands.length === 0 || selectedBrands.includes(product.brand);
+        const matchesCaliber = selectedCalibers.length === 0 || (product.calibre && selectedCalibers.includes(product.calibre));
+        const matchesCapacity = selectedCapacities.length === 0 || (product.capacity && selectedCapacities.includes(product.capacity));
+        const matchesBrand = selectedBrands.length === 0 || (product.brand && selectedBrands.includes(product.brand));
         
         return matchesPrice && matchesStock && matchesSale && matchesCaliber && matchesCapacity && matchesBrand;
       });
 
       if (sortBy === 'price-low') {
-        filteredProducts.sort((a, b) => (a.retailPrice || a.salePrice) - (b.retailPrice || b.salePrice));
+        filteredProducts.sort((a, b) => (a.displayPrice ?? a.msrp ?? 0) - (b.displayPrice ?? b.msrp ?? 0));
       } else if (sortBy === 'price-high') {
-        filteredProducts.sort((a, b) => (b.retailPrice || b.salePrice) - (a.retailPrice || a.salePrice));
+        filteredProducts.sort((a, b) => (b.displayPrice ?? b.msrp ?? 0) - (a.displayPrice ?? a.msrp ?? 0));
       } else if (sortBy === 'name') {
         filteredProducts.sort((a, b) => a.name.localeCompare(b.name));
       }
@@ -518,12 +522,12 @@
             <div class="product-brand">${product.brand || 'Unknown'}</div>
             <div class="product-name">${product.name}</div>
             <div class="product-pricing">
-              <div class="product-price">$${(product.retailPrice || product.salePrice).toFixed(2)}</div>
+              <div class="product-price">$${(product.displayPrice ?? product.msrp ?? 0).toFixed(2)}</div>
               <div class="product-stock ${product.inventory > 0 ? 'stock-in' : 'stock-out'}">
                 ${product.inventory > 0 ? 'In Stock' : 'Out of Stock'}
               </div>
             </div>
-            <button class="product-btn" onclick="event.stopPropagation(); addToCart('${product.id}', '${product.name.replace(/'/g, "\\'")}', ${product.retailPrice || product.salePrice})">
+            <button class="product-btn" onclick="event.stopPropagation(); addToCart('${product.id}', '${product.name.replace(/'/g, "\\'")}', ${product.displayPrice ?? product.msrp ?? 0})">
               <i class="fas fa-cart-plus"></i> Add to Cart
             </button>
           </div>
@@ -548,7 +552,7 @@
           </td>
           <td>${product.brand || '-'}</td>
           <td style="text-align: center;">
-            <div class="product-price-list">$${(product.retailPrice || product.salePrice).toFixed(2)}</div>
+            <div class="product-price-list">$${(product.displayPrice ?? product.msrp ?? 0).toFixed(2)}</div>
           </td>
           <td style="text-align: center;">
             <span style="padding: 0.3rem 0.6rem; border-radius: 3px; ${product.inventory > 0 ? 'background: #e8f5e9; color: #2e7d32;' : 'background: #ffebee; color: #c62828;'} font-weight: 600; font-size: 0.85rem;">
@@ -556,7 +560,7 @@
             </span>
           </td>
           <td style="text-align: center;">
-            <button class="product-btn" style="width: auto; padding: 0.6rem 1rem; font-size: 0.85rem;" onclick="event.stopPropagation(); addToCart('${product.id}', '${product.name.replace(/'/g, "\\'")}', ${product.retailPrice || product.salePrice})">
+            <button class="product-btn" style="width: auto; padding: 0.6rem 1rem; font-size: 0.85rem;" onclick="event.stopPropagation(); addToCart('${product.id}', '${product.name.replace(/'/g, "\\'")}', ${product.displayPrice ?? product.msrp ?? 0})">
               <i class="fas fa-cart-plus"></i> Add
             </button>
           </td>

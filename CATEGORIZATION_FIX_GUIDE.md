@@ -12,7 +12,7 @@ The product categorization algorithm had a critical logic flaw:
 3. Ammunition (gets skipped if "MAG" keyword matched)
 4. Optics
 5. Gun Parts
-6. Survival
+6. Outdoors
 7. Default → GEAR (fallback for everything else)
 ```
 
@@ -40,7 +40,7 @@ PASS 4: Optics (scopes, red dots, sights)
          ↓
 PASS 5: Gun Parts (triggers, barrels, uppers, lowers, stocks, grips)
          ↓
-PASS 6: Survival/Gear (knives, flashlights, tactical gear)
+PASS 6: Outdoors/Gear (knives, flashlights, tactical gear)
          ↓
 PASS 7: Brand Fallback (secondary check with brand names)
          ↓
@@ -91,7 +91,7 @@ node scripts/sync-chattanooga-api.js
    - `optics.json`
    - `gun-parts.json`
    - `gear.json` (should be much smaller now)
-   - `survival.json`
+   - `outdoors.json`
    - `brands.json`
    - `sale.json`
 
@@ -114,7 +114,7 @@ The categorization fix has been tested with the following products:
 | BLAZER 357 MAG 158GR JHP AMMO 50RD | ammunition | ammunition | ✅ |
 | ACCURATE POWDER #1680 1LB | reloading | reloading | ✅ |
 | Aguila 9MM FMJ 124 GR 50/RD | ammunition | ammunition | ✅ |
-| Browning Pocket Knife | survival | survival | ✅ |
+| Browning Pocket Knife | outdoors | outdoors | ✅ |
 | MAGPUL PMAG 30 5.56 NATO | magazines | magazines | ✅ |
 | MAGPUL BCM GUNFIGHTER STOCK | gun-parts | gun-parts | ✅ |
 
@@ -147,7 +147,7 @@ After regenerating product files:
    magazines.json    : ~400-600 products
    optics.json       : ~50-100 products
    gun-parts.json    : ~800-1200 products
-   survival.json     : ~20-100 products
+   outdoors.json     : ~20-100 products
    sale.json         : ~100-200 products
    ```
 
@@ -176,6 +176,6 @@ After regenerating product files:
 - `data/products/magazines.json`
 - `data/products/optics.json`
 - `data/products/gun-parts.json`
-- `data/products/survival.json`
+- `data/products/outdoors.json`
 - `data/products/brands.json`
 - `data/products/sale.json`

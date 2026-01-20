@@ -115,7 +115,7 @@ Pass 3: Ammunition (includes "MAG" in exclusions)
   ↓ Falls through if has "MAG" keyword
 Pass 4: Optics
 Pass 5: Gun Parts
-Pass 6: Survival
+Pass 6: Outdoors
 Pass 7: Brand Fallback
 Pass 8: DEFAULT → GEAR ❌
 ```
@@ -132,7 +132,7 @@ Pass 4: Optics
   ↓
 Pass 5: Gun Parts
   ↓
-Pass 6: Survival/Gear
+Pass 6: Outdoors/Gear
   ↓
 Pass 7: Brand Fallback (parts brands checked FIRST)
   ↓
@@ -147,7 +147,7 @@ CCI WMR MAXI MAG 40GR JHP AMMO 50RD → AMMUNITION ✅ (was GEAR)
 BLAZER 357 MAG 158GR JHP AMMO 50RD → AMMUNITION ✅ (was GEAR)
 ACCURATE POWDER #1680 1LB → RELOADING ✅
 Aguila 9MM FMJ 124 GR 50/RD → AMMUNITION ✅
-Browning Pocket Knife → SURVIVAL ✅
+Browning Pocket Knife → OUTDOORS ✅
 MAGPUL PMAG 30 5.56 NATO → MAGAZINES ✅
 MAGPUL BCM GUNFIGHTER STOCK → GUN-PARTS ✅ (was MAGAZINES)
 ```

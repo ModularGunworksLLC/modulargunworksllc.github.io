@@ -264,7 +264,7 @@
       <a href="../shop/gear.html">Gear</a>
       <a href="../shop/optics.html">Optics</a>
       <a href="../shop/reloading.html">Reloading</a>
-      <a href="../shop/survival.html">Survival</a>
+      <a href="../shop/outdoors.html">Outdoors</a>
       <a href="../shop/brands.html">Brands</a>
       <a href="../shop/sale.html">ON SALE</a>
       <a href="../services.html">Services</a>
@@ -334,7 +334,7 @@
           <li><a href="../shop/gear.html">Gear</a></li>
           <li><a href="../shop/optics.html">Optics</a></li>
           <li><a href="../shop/reloading.html">Reloading</a></li>
-          <li><a href="../shop/survival.html">Survival</a></li>
+          <li><a href="../shop/outdoors.html">Outdoors</a></li>
           <li><a href="../shop/brands.html">Brands</a></li>
         </ul>
       </div>
@@ -375,9 +375,10 @@
   </footer>
 
   <script>
-    const categories = ['ammunition', 'magazines', 'gun-parts', 'gear', 'optics', 'reloading', 'survival'];
+    const categories = ['ammunition', 'magazines', 'gun-parts', 'gear', 'optics', 'reloading', 'outdoors'];
     let allSaleProducts = [];
     let currentView = 'grid';
+    const CURRENT_PAGE_CATEGORY = 'sale'; // Filter protection: only show sale products
 
     // Load all products from all categories
     async function loadAllProducts() {
@@ -398,20 +399,21 @@
           const data = await response.json();
           
           if (data.products && Array.isArray(data.products)) {
-            // Filter for products with sale prices AND are activated
+            // Filter for products with sale prices AND are activated AND not hidden
             const saleProducts = data.products.filter(product => {
               const isActive = activeData[product.id] && activeData[product.id].page === category;
-              const regularPrice = product.retailPrice || product.salePrice || 0;
-              const salePrice = product.salePrice || 0;
-              return isActive && salePrice > 0 && salePrice < regularPrice;
+              const regularPrice = product.msrp ?? 0;
+              const displayPrice = product.displayPrice ?? product.msrp ?? 0;
+              const notHidden = !product.hidden;
+              return isActive && displayPrice > 0 && displayPrice < regularPrice && notHidden;
             });
             
             // Add category info to each product
             saleProducts.forEach(product => {
-              product.category = category;
+              product.category = 'sale'; // Set category for filter protection
               product.categoryDisplay = category.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
-              product.regularPrice = product.retailPrice || product.salePrice || 0;
-              product.discount = Math.round(((product.regularPrice - product.salePrice) / product.regularPrice) * 100);
+              product.regularPrice = product.msrp ?? 0;
+              product.discount = Math.round(((product.regularPrice - (product.displayPrice ?? product.msrp ?? 0)) / product.regularPrice) * 100);
             });
             
             allSaleProducts.push(...saleProducts);
@@ -423,6 +425,9 @@
       
       // Sort by discount (highest first)
       allSaleProducts.sort((a, b) => b.discount - a.discount);
+      
+      // FILTER PROTECTION: Only include products that match this page's category
+      allSaleProducts = allSaleProducts.filter(product => product.category === CURRENT_PAGE_CATEGORY);
       
       document.getElementById('product-count').textContent = allSaleProducts.length;
       renderProducts();
@@ -456,7 +461,7 @@
             <div class="product-brand">${product.categoryDisplay}</div>
             <h3 class="product-name">${product.name}</h3>
             <div class="product-pricing">
-              <span class="product-sale-price">$${product.salePrice.toFixed(2)}</span>
+              <span class="product-sale-price">$${(product.displayPrice ?? product.msrp ?? 0).toFixed(2)}</span>
               <span class="product-regular-price">$${product.regularPrice.toFixed(2)}</span>
             </div>
             <div class="product-stock ${product.inventory > 0 ? 'stock-in' : 'stock-out'}">
@@ -483,7 +488,7 @@
           <td style="font-weight: 600; color: #333;">${product.name}</td>
           <td>${product.categoryDisplay}</td>
           <td style="text-decoration: line-through; color: #999;">$${product.regularPrice.toFixed(2)}</td>
-          <td style="font-weight: 700; color: var(--color-primary); font-size: 1.1rem;">$${product.salePrice.toFixed(2)}</td>
+          <td style="font-weight: 700; color: var(--color-primary); font-size: 1.1rem;">$${(product.displayPrice ?? product.msrp ?? 0).toFixed(2)}</td>
           <td><strong style="color: #ff4444;">${product.discount}% off</strong></td>
           <td>${product.inventory > 0 ? '<span style="color: #4caf50; font-weight: 600;">In Stock</span>' : '<span style="color: #f44336; font-weight: 600;">Out of Stock</span>'}</td>
         </tr>

@@ -8,7 +8,7 @@
 - **Optics**: Only quality optics brands (Vortex, Leupold, Bushnell, Zeiss, Trijicon, etc.)
 - **Gun Parts**: Only premium AR/gun builders (Aero Precision, Magpul, Geissele, etc.)
 - **Reloading**: Only established reloading equipment brands (RCBS, Lee, Lyman, Hornady, etc.)
-- **Survival**: Only known outdoor/tactical brands (Benchmade, Spyderco, Gerber, etc.)
+- **Outdoors**: Only known outdoor/tactical brands (Benchmade, Spyderco, Gerber, etc.)
 
 ✅ **Product Filtering**
 - Excludes all FFL-required firearms (actual guns)
@@ -77,7 +77,7 @@ After the new sync with whitelist filtering, you should have roughly:
 - **Optics**: 500-1,500 quality scopes/sights
 - **Gun Parts**: 1,000-2,000 quality AR/accessory parts
 - **Reloading**: 1,000-2,000 reloading components
-- **Survival**: 500-1,000 outdoor/tactical gear
+- **Outdoors**: 500-1,000 outdoor/tactical gear
 - **Total**: ~10,000-15,000 quality products (vs 48,000 with mixed garbage)
 
 ## Troubleshooting

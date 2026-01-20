@@ -1,584 +1,1061 @@
-const fs = require('fs');
-const path = require('path');
-const crypto = require('crypto');
+﻿/**
+ * BATCH TEST MODE
+ * Usage:
+ *   node scripts/sync-chattanooga-api.js --batch file.txt
+ *
+ * file.txt should contain one SKU per line:
+ * KBPICKSET
+ * XNPRSRFMMG
+ * ISPL76566U
+ * RER0003
+ * TJHC740735SM
+ */
 
-// Chattanooga API credentials
+if (require.main === module && process.argv[2] === "--batch") {
+  (async () => {
+    const fs = require("fs");
+    const file = process.argv[3];
+
+    if (!file || !fs.existsSync(file)) {
+      console.log("Usage: node scripts/sync-chattanooga-api.js --batch <file>");
+      process.exit(1);
+    }
+
+    const lines = fs.readFileSync(file, "utf8")
+      .split("\n")
+      .map(l => l.trim())
+      .filter(Boolean);
+
+    console.log(`Running batch image resolver test on ${lines.length} SKUs...\n`);
+
+    const results = [];
+
+    for (const sku of lines) {
+      let attempted = [];
+      let successful = [];
+      let chosen = null;
+
+      // Patch logDebug to capture resolver output
+      const origLogDebug = logDebug;
+      global.logDebug = (section, details) => {
+        if (section === "IMAGE_RESOLVER_LOG") {
+          attempted = details.attempted;
+          successful = details.successful;
+          // chosen = details.chosen; // Don't set from logDebug, use actual return value
+        }
+        origLogDebug(section, details);
+      };
+
+      chosen = await resolveProductImage({ id: sku, brand: "", name: "" });
+
+      results.push({
+        sku,
+        chosen,
+        successCount: successful.length
+      });
+
+      console.log(`SKU: ${sku}`);
+      console.log(`  Successful: ${successful.length}`);
+      console.log(`  Chosen: ${chosen}`);
+      console.log("");
+    }
+
+    console.log("\n===== SUMMARY =====");
+    const passed = results.filter(r => r.chosen);
+    const failed = results.filter(r => !r.chosen);
+
+    console.log(`Total SKUs: ${results.length}`);
+    console.log(`Resolved: ${passed.length}`);
+    console.log(`Failed: ${failed.length}`);
+
+    if (failed.length > 0) {
+      console.log("\nFailed SKUs:");
+      failed.forEach(r => console.log("  " + r.sku));
+    }
+
+    process.exit(0);
+  })();
+}
+// sync-chattanooga-api.js
+// Deterministic, exclusion-first, instrumented Chattanooga sync
+
+const fs = require("fs");
+const path = require("path");
+const crypto = require("crypto");
+
+// ========== CONFIG & CONSTANTS ==========
+
 const API_SID = process.env.API_SID;
 const API_TOKEN = process.env.API_TOKEN;
-const API_BASE = 'https://api.chattanoogashooting.com/rest/v4';
+const API_BASE = "https://api.chattanoogashooting.com/rest/v4";
+const DEBUG_RAW_PRODUCT = process.argv.includes("--debug-raw");
 
-// ============================================================
-// LAYER 1: TOP BRANDS ONLY (PREMIUM BRAND FILTER)
-// ============================================================
-
+// Top brands (inclusive) and bad brands (exclusive)
 const TOP_BRANDS = [
-    // Firearms (pistols, rifles, shotguns)
-    'GLOCK', 'SMITH & WESSON', 'S&W', 'SIG SAUER', 'RUGER', 'FN', 'HK', 'CZ', 'WALTHER', 'SPRINGFIELD ARMORY',
-    'DANIEL DEFENSE', 'BCM', 'AERO PRECISION', 'GEISSELE', 'NOVESKE', 'LWRC', 'PSA',
-    
-    // OPTICS (Top 25 Brands)
-    'TRIJICON', 'EOTECH', 'LEUPOLD', 'SIG SAUER', 'NIGHT FISION', 'MEPROLIGHT', 'XS SIGHT SYSTEMS',
-    'VIRIDIAN', 'PULSAR', 'INFIRAY', 'GERMAN PRECISION OPTICS', 'ATHLON OPTICS', 'BURRIS', 'BUSHNELL',
-    'RITON', 'SWAMPFOX OPTICS', 'ZEROTECH', 'SIGHTMARK', 'HI-VIZ', 'HIVIZ', 'BUTLER CREEK',
-    'WEAVER', 'WARNE', 'TALLEY', 'DNZ', 'AREA 419',
-    
-    // Magazines
-    'MAGPUL', 'PMAG', 'LANCER', 'HEXMAG', 'ETS', 'KCI',
-    
-    // Ammunition (Top 41 Brands)
-    'FEDERAL', 'HORNADY', 'WINCHESTER', 'REMINGTON', 'PMC', 'FIOCCHI', 'SPEER', 'CCI', 'BLAZER', 'NORMA',
-    'AGUILA', 'AMMO INC', 'ARMSCOR', 'ATLANTA ARMS', 'BARNES', 'BARRETT', 'BASCHIERI & PELLAGRI',
-    'BERGER AMMUNITION', 'BROWNING', 'COR-BON', 'DOUBLE TAP', 'ESTATE CARTRIDGE', 'FN USA', 'FRONTIER',
-    'G2 RESEARCH', 'HEVI-SHOT', 'HSM', 'KENT CARTRIDGE', 'LAPUA', 'LIBERTY AMMUNITION', 'MAGTECH',
-    'MIGRA', 'NOBELSPOT', 'NOSLER', 'PPU', 'RIO', 'SELLIER & BELLOT', 'SIERRA', 'SIG SAUER',
-    'SK', 'SWIFT', 'UNDERWOOD', 'WEATHERBY', 'WILSON COMBAT',
-    
-    // Parts & Accessories
-    'MAGPUL', 'BCM', 'GEISSELE', 'MIDWEST INDUSTRIES', 'RADIAN', 'REPTILIA', 'CLOUD DEFENSIVE',
-    'SUREFIRE', 'STREAMLIGHT', 'SAFARILAND', 'BLUE FORCE GEAR', 'HOGUE', 'TIMNEY', 'TRIGGERTECH',
-    
-    // Reloading
-    'HORNADY', 'RCBS', 'LYMAN', 'LEE', 'DILLON', 'HODGDON', 'ALLIANT', 'ACCURATE', 'VIHTAVUORI', 'IMR',
-    
-    // Survival / Gear
-    'GERBER', 'SOG', 'BENCHMADE', 'KERSHAW', 'CRKT', 'STREAMLIGHT', 'SUREFIRE'
+  // Firearms
+  "GLOCK", "SMITH & WESSON", "S&W", "SIG SAUER", "RUGER", "FN", "HK", "CZ",
+  "WALTHER", "SPRINGFIELD ARMORY", "DANIEL DEFENSE", "BCM", "AERO PRECISION",
+  "GEISSELE", "NOVESKE", "LWRC", "PSA",
+
+  // Optics
+  "TRIJICON", "EOTECH", "LEUPOLD", "NIGHT FISION", "MEPROLIGHT", "XS SIGHT SYSTEMS",
+  "VIRIDIAN", "PULSAR", "INFIRAY", "ATHLON", "BURRIS", "BUSHNELL", "RITON",
+  "SWAMPFOX", "SIGHTMARK", "HI-VIZ", "HIVIZ", "BUTLER CREEK", "WEAVER", "WARNE",
+  "TALLEY", "DNZ", "AREA 419",
+
+  // Magazines
+  "MAGPUL", "PMAG", "LANCER", "HEXMAG", "ETS", "KCI",
+
+  // Ammunition
+  "FEDERAL", "HORNADY", "WINCHESTER", "REMINGTON", "PMC", "FIOCCHI", "SPEER",
+  "CCI", "BLAZER", "NORMA", "AGUILA", "AMMO INC", "ARMSCOR", "BARNES",
+  "BERGER", "BROWNING", "COR-BON", "ESTATE", "FN", "FRONTIER", "HEVI-SHOT",
+  "HSM", "KENT", "LAPUA", "MAGTECH", "NOSLER", "PPU", "RIO", "SELLIER & BELLOT",
+  "SIERRA", "SIG SAUER", "UNDERWOOD", "WEATHERBY", "WILSON COMBAT",
+
+  // Parts & Accessories
+  "MAGPUL", "BCM", "GEISSELE", "MIDWEST INDUSTRIES", "RADIAN", "REPTILIA",
+  "CLOUD DEFENSIVE", "SUREFIRE", "STREAMLIGHT", "SAFARILAND", "BLUE FORCE GEAR",
+  "HOGUE", "TIMNEY", "TRIGGERTECH",
+
+  // Reloading
+  "HORNADY", "RCBS", "LYMAN", "LEE", "DILLON", "HODGDON", "ALLIANT",
+  "ACCURATE", "VIHTAVUORI", "IMR",
+
+  // Outdoors / Gear
+  "GERBER", "SOG", "BENCHMADE", "KERSHAW", "CRKT", "STREAMLIGHT", "SUREFIRE"
 ];
 
 const BAD_BRANDS = [
-    'NCSTAR', 'UTG', 'LEAPERS', 'ALLEN', 'GENERIC', 'UNBRANDED', 'UNKNOWN',
-    'AIRSOFT', 'PAINTBALL', 'CROSMAN', 'DAISY',
-    'GAME WINNER', 'HUNTER\'S SPECIALTIES',
-    'MISC', 'IMPORTS'
+  "NCSTAR", "UTG", "LEAPERS", "ALLEN", "GENERIC", "UNBRANDED", "UNKNOWN",
+  "AIRSOFT", "PAINTBALL", "CROSMAN", "DAISY", "GAME WINNER",
+  "HUNTER'S SPECIALTIES", "MISC", "IMPORTS"
 ];
 
-/**
- * LAYER 1: Check if product brand is in TOP_BRANDS (premium only)
- * Returns false if brand is bad or not in top brands
- */
-function shouldIncludeBrand(product) {
-    const brand = (product.brand || 'GENERIC').toUpperCase().trim();
-    
-    // Exclude bad/generic brands
-    if (BAD_BRANDS.some(b => brand.includes(b))) {
-        return false;
-    }
-    
-    // Only include if in TOP_BRANDS
-    return TOP_BRANDS.some(b => brand.includes(b));
+// If you have a Chattanooga→site category map JSON, require it here.
+// Otherwise, use an empty object and rely on name-based categorization.
+let chattanoogaToSiteMapping = {};
+try {
+  chattanoogaToSiteMapping = require("./chattanooga-category-map.json");
+} catch {
+  chattanoogaToSiteMapping = {};
 }
 
-/**
- * LAYER 2: Check compliance - FFL, serialized, allocated, stock
- */
-function shouldIncludeProduct(product) {
-    // Normalize boolean fields
-    const fflRequired = product.ffl_flag === 1 || product.ffl_flag === true || product.ffl_flag === 'Y';
-    const serialized = product.serialized_flag === 1 || product.serialized_flag === true || product.serialized_flag === 'Y';
-    const allocated = product.allocated_flag === 1 || product.allocated_flag === true || product.allocated_flag === 'Y' || product.allocated === true;
-    const inventory = parseInt(product.inventory || 0);
-    
-    // EXCLUDE if: FFL required, serialized, allocated, or out of stock
-    if (fflRequired) return false;
-    if (serialized) return false;
-    if (allocated) return false;
-    if (inventory <= 0) return false;
-    
-    return true;
+// ========== LOGGING ==========
+
+function logDebug(section, details) {
+  console.log(`\n===== ${section} =====`);
+  console.log(JSON.stringify(details, null, 2));
 }
 
-/**
- * Load active products selection
- * Returns map of productId -> { page, addedAt, updatedAt }
- * Filters out metadata/comment fields (starting with _)
- */
-function loadActiveProducts() {
-    try {
-        const activePath = path.join(__dirname, '../data/products/active.json');
-        if (fs.existsSync(activePath)) {
-            const data = JSON.parse(fs.readFileSync(activePath, 'utf8'));
-            // Filter out metadata fields (starting with _)
-            const active = {};
-            Object.entries(data).forEach(([key, value]) => {
-                if (!key.startsWith('_') && value && typeof value === 'object' && value.page) {
-                    active[key] = value;
-                }
-            });
-            return active;
-        }
-    } catch (error) {
-        console.warn('No active.json found, syncing all products');
-    }
-    return {};
-}
+// ========== HELPERS ==========
 
-/**
- * LAYER 3: EXCLUSION-FIRST CATEGORIZATION (4-PASS SYSTEM)
- * 
- * REORDERED FOR ACCURACY:
- * PASS 1: Reloading components (most specific: powder, primers, brass, bullets, dies, presses)
- * PASS 2: Ammunition (finished cartridges - NO magazine keywords in name)
- * PASS 3: Magazines (highest specificity: MAGAZINE, PMAG, CLIP, DRUM, LOADER)
- * PASS 4: Optics (scopes, red dots, sights)
- * PASS 5: Gun Parts (triggers, barrels, uppers, lowers, receivers)
- * PASS 6: Survival/Gear (knives, flashlights, tactical gear)
- * PASS 7: Default to Gear
- */
-function categorizeProduct(product) {
-    const name = (product.name || '').toUpperCase();
-    
-    // ===== GLOBAL EXCLUSIONS =====
-    // These items can NEVER be in any category
-    const globalExclusions = [
-        /GIFT\s*CARD|CREDIT|VOUCHER|SERVICE FEE|ENGRAVING|GUNSMITHING|LABOR|INSTALLATION|LICENSE|PERMIT|TRAINING|CLASS|COURSE/i
-    ];
-    
-    for (const pattern of globalExclusions) {
-        if (pattern.test(name)) return 'gear';
-    }
-    
-    // ===== PASS 1: RELOADING FIRST (Most Specific - Powder, Primers, Brass, Bullets, Components) =====
-    // Components: die, press, scale, tumbler, case trimmer, calipers, etc.
-    const reloadingMatch = /BULLET(?!PROOF)|BULLETS|BRASS|PRIMER(?!Y)|PRIMERS|POWDER|DIE(?!T)|PRESS(?!URE)?|SCALE|CASE\s*TRIMMER|TUMBLER|CALIPERS|RELOADER|PROJECTILE|\.DIA(?!L)|CT\s*BULLET|POWDER\s*CHARGE|LOADING\s*BLOCK|BULLET\s*PULLER/i.test(name);
-    
-    if (reloadingMatch) return 'reloading';
-    
-    // ===== PASS 2: AMMUNITION (Finished Cartridges - Exclude Magazine Keywords) =====
-    // Ammunition brands + caliber patterns + round types, BUT NOT if it's a magazine
-    const ammoExclusions = [
-        /MAGAZINE|MAG(?!NET|AZINE)|CLIP(?!BOARD)|DRUM(?!STICK|FIRE)|POUCH|HOLSTER|CASE\s*ONLY|BOX\s*ONLY|CARRIER|STORAGE|ROUNDS\s*ONLY|EMPTY\s*BOX/i
-    ];
-    
-    // Comprehensive ammo pattern: calibers + types + brand names known for ammo
-    const ammoMatch = !ammoExclusions.some(p => p.test(name)) && 
-        /AMMO|ROUND(?!UP|ER)|CARTRIDGE|SHOTSHELL|9MM|9X19|5\.56|223|308|7\.62|45\s*ACP|40\s*S&W|12GA|20GA|\.22|FMJ|JHP|FEDERAL|HORNADY|WINCHESTER|REMINGTON|BLAZER|CCI|AGUILA|PMC|FIOCCHI|SPEER|NORMA|MAGTECH|ARMSCOR|PPU|RIO|SELLIER|HSM|FRONTIER|AMMO\s*INC|CORBON|UNDERWOOD|LIBERTY|LIBERTY\s*AMMUNITION/i.test(name);
-    
-    if (ammoMatch) return 'ammunition';
-    
-    // ===== PASS 3: MAGAZINES (Most Specific After Ammo/Reloading) =====
-    // Magazine-specific keywords with exclusions for ammo/reloading
-    const magExclusions = [
-        /POWDER|PRIMER|BRASS|BULLET|RELOAD|COMPONENT|AMMO|CARTRIDGE|ROUND(?!UP|ER)|POUCH|HOLSTER|CARRIER|CASE\s*ONLY|BOX\s*ONLY/i
-    ];
-    
-    const magMatch = !magExclusions.some(p => p.test(name)) && 
-        /\bMAGAZINE\b|\bMAG\s|\bPMAG\b|\bCLIP\b|\bDRUM\b|\bLOADER\b|(\d+RD(?:\s+MAG)?)|RD\s+(?:MAGAZINE|MAG|DRUM)|\bMAGAZINE\s*EXTENSION\b/i.test(name);
-    
-    if (magMatch) return 'magazines';
-    
-    // ===== PASS 4: OPTICS (Scopes, Red Dots, Sights) =====
-    const opticsExclusions = [
-        /COVER|CAP|MOUNT|BASE|RING|RAIL|TARGET|BAG|CASE|SLING|STRAP|CLEAN|TOOL|KIT|POUCH|BATTERY|ADAPTER|CONNECTOR|EXTENSION|CLAMP|RISER|SPACER/i
-    ];
-    
-    const opticsMatch = !opticsExclusions.some(p => p.test(name)) && 
-        /SCOPE|RED\s*DOT|HOLOGRAPHIC|MAGNIFIER|RIFLESCOPE|REFLEX|LASER\s*SIGHT|OPTIC(?!S\s*READY)?|BINOCULAR|MONOCULAR|RANGEFINDER|THERMAL|NIGHT\s*VISION/i.test(name);
-    
-    if (opticsMatch) return 'optics';
-    
-    // ===== PASS 5: GUN PARTS (Triggers, Barrels, Uppers, Lowers, Receivers, etc.) =====
-    const partsExclusions = [
-        /CLEANER|BRUSH|BORE|SCRUBBER|DEGREASER|PUNCH|HAMMER|WRENCH|VISE|TOOL|KIT|ROD|PATCH|LUBRIC|SOLVENT|POUCH|HOLSTER|STORAGE|CARRIER|PACK|VEST|CHEST|SLING|STRAP|POWDER|PRIMER|BRASS|BULLET|RELOAD|COMPONENT|AMMUNITION|AMMO|CARTRIDGE|ROUND/i
-    ];
-    
-    const partsMatch = !partsExclusions.some(p => p.test(name)) && 
-        /TRIGGER|BCG|BOLT\s*CARRIER|BARREL|UPPER|LOWER|BUFFER|GAS\s*BLOCK|HANDGUARD|STOCK|GRIP|RECEIVER|CHARGING\s*HANDLE|SAFETY|SELECTOR|SPRING|PIN|MOUNT|BASE|RING|RAIL|FOREGRIP|MUZZLE|BRAKE|FLASH\s*HIDER|SUPPRESSOR|BOLT|CARRIER\s*GROUP|CHARGING\s*HANDLE/i.test(name);
-    
-    if (partsMatch) return 'gun-parts';
-    
-    // ===== PASS 6: SURVIVAL/GEAR (Knives, Flashlights, Tactical Gear) =====
-    const survivalMatch = /KNIFE|MULTI\s*TOOL|MULTI-TOOL|FLASHLIGHT|FIRST\s*AID|MEDICAL|WATER|FIRE\s*STARTER|PARACORD|EMERGENCY|TACTICAL|OUTDOOR|CAMPING|GEAR|BACKPACK|PACK|POUCH|HOLSTER|CHEST\s*RIG|VEST|BELT|SLING|STRAP|CASE|BAG|CASE/i.test(name);
-    
-    if (survivalMatch) return 'survival';
-    // ===== PASS 7: BRAND FALLBACK (Secondary Check for Mis-matched Names) =====
-    // If no positive match from keywords, use brand name to determine category
-    // NOTE: Check parts brands FIRST to avoid MAGPUL parts being caught as magazines
-    
-    // Gun parts brands (secondary check - FIRST before magazine brands)
-    if (/MAGPUL|BCM|GEISSELE|MIDWEST|RADIAN|REPTILIA|CLOUD|SUREFIRE|STREAMLIGHT|SAFARILAND|BLUE\s*FORCE|HOGUE|TIMNEY|TRIGGERTECH|AR15|AR-15|AERO\s*PRECISION|DANIEL\s*DEFENSE|LWRC|NOVESKE|PSA|BALLISTIC/i.test(name)) {
-        // BUT exclude if it's clearly a magazine
-        if (!/MAGAZINE|MAG(?!NET|AZINE)|PMAG|CLIP|DRUM|LOADER/i.test(name)) {
-            return 'gun-parts';
-        }
-    }
-    
-    // Ammunition brands (secondary check)
-    if (/FEDERAL|HORNADY|WINCHESTER|REMINGTON|PMC|FIOCCHI|SPEER|CCI|BLAZER|NORMA|AGUILA|AMMO\s*INC|ARMSCOR|ATLANTA\s*ARMS|BARNES|BARRETT|BERGER|BROWNING|CORBON|DOUBLE\s*TAP|ESTATE|FRONTIER|HEVI-SHOT|HSM|KENT|LIBERTY|MAGTECH|MIGRA|NOBEL|NOSLER|PPU|RIO|SELLIER|SIERRA|SIG\s*SAUER|SK|SWIFT|UNDERWOOD|WEATHERBY|WILSON/i.test(name)) {
-        return 'ammunition';
-    }
-    
-    // Reloading brands (secondary check)
-    if (/RCBS|LEE|LYMAN|HORNADY|DILLON|REDDING|FRANKFORD|HODGDON|ALLIANT|ACCURATE|VIHTAVUORI|IMR|LAPUA|STARLINE|POWDER\s*VALLEY/i.test(name)) {
-        return 'reloading';
-    }
-    
-    // Optics brands (secondary check)
-    if (/TRIJICON|EOTECH|AIMPOINT|HOLOSUN|VORTEX|LEUPOLD|PRIMARY\s*ARMS|NIGHTFORCE|BUSHNELL|ZEISS|NIKON|STEINER|SWAROVSKI|RIFLESCOPE|THERMAL/i.test(name)) {
-        return 'optics';
-    }
-    
-    // Magazine brands (secondary check)
-    if (/MAGPUL|PMAG|LANCER|HEXMAG|ETS|KCI|GLOCK|RUGER|MAGAZINE/i.test(name)) {
-        return 'magazines';
-    }
-    
-    // Survival/Tactical brands (secondary check)
-    if (/GERBER|SOG|BENCHMADE|KERSHAW|CRKT|STREAMLIGHT|SUREFIRE|BROWNING|SMITH\s*AND\s*WESSON|VICTORINOX|OPINEL|CONDOR|ESEE|COLD\s*STEEL/i.test(name)) {
-        return 'survival';
-    }
-    
-    // ===== PASS 8: DEFAULT TO GEAR =====
-    // Everything else that passed compliance goes to Gear
-    return 'gear';
-}
-
-/**
- * Extract caliber from product name
- * Normalizes formats (9MM, 9mm, 9x19, etc. -> 9MM)
- */
-function extractCaliber(name) {
-    const caliberPatterns = [
-        // Pistol calibers
-        { pattern: /\b(9MM|9x19|9x19mm|9 ?MM|parabellum)/i, normalized: '9MM' },
-        { pattern: /\b(40\s*S&W|40\s*cal|.40|40sw)/i, normalized: '.40 S&W' },
-        { pattern: /\b(45\s*ACP|45\s*auto|.45|45 ?cal)/i, normalized: '.45 ACP' },
-        { pattern: /\b(380|.380|380 ?auto)/i, normalized: '.380 ACP' },
-        { pattern: /\b(357|.357|357\s*mag|357magnum)/i, normalized: '.357 Mag' },
-        { pattern: /\b(38|.38|38\s*spl|38\s*special)/i, normalized: '.38 SPL' },
-        { pattern: /\b(44|.44|44\s*mag|44magnum)/i, normalized: '.44 Mag' },
-        { pattern: /\b(10MM|10\s*mm)/i, normalized: '10MM' },
-        { pattern: /\b(45\s*GAP)/i, normalized: '.45 GAP' },
-        // Rifle calibers
-        { pattern: /\b(223|5\.56|5\.56\s*NATO|5\.56x45)/i, normalized: '5.56 NATO' },
-        { pattern: /\b(308|7\.62\s*NATO|7\.62x51)/i, normalized: '.308 WIN' },
-        { pattern: /\b(30-06|30\s*06|7\.62x54)/i, normalized: '.30-06' },
-        { pattern: /\b(300\s*BLK|300\s*blackout)/i, normalized: '300 BLK' },
-        { pattern: /\b(6\.5\s*Creed|6\.5\s*creedmoor)/i, normalized: '6.5 Creed' },
-        { pattern: /\b(270|\.270)/i, normalized: '.270 WIN' },
-        { pattern: /\b(30-30|30\s*30)/i, normalized: '.30-30' },
-        { pattern: /\b(338|\.338)/i, normalized: '.338 Lapua' },
-        { pattern: /\b(375|\.375)/i, normalized: '.375 H&H' },
-        { pattern: /\b(7\.62x39)/i, normalized: '7.62x39' },
-        { pattern: /\b(5\.45x39)/i, normalized: '5.45x39' },
-        // Rimfire
-        { pattern: /\b(22\s*LR|22\s*long\s*rifle|\.22|22lr)/i, normalized: '.22 LR' },
-        { pattern: /\b(22\s*WMR|22\s*mag|\.22\s*mag)/i, normalized: '.22 WMR' },
-        // Shotgun
-        { pattern: /\b(12\s*GA|12\s*gauge|12ga)/i, normalized: '12 GA' },
-        { pattern: /\b(20\s*GA|20\s*gauge|20ga)/i, normalized: '20 GA' },
-        { pattern: /\b(16\s*GA|16\s*gauge|16ga)/i, normalized: '16 GA' },
-        { pattern: /\b(10\s*GA|10\s*gauge|10ga)/i, normalized: '10 GA' },
-        { pattern: /\b(\.410|410)/i, normalized: '.410' },
-        // Uncommon/specialty
-        { pattern: /\b(50\s*BMG|\.50\s*BMG)/i, normalized: '.50 BMG' },
-        { pattern: /\b(9\.3x62|9\.3x74)/i, normalized: '9.3x62' },
-        { pattern: /\b(7\.7x58|303\s*British)/i, normalized: '.303 British' },
-    ];
-
-    for (const { pattern, normalized } of caliberPatterns) {
-        if (pattern.test(name)) {
-            return normalized;
-        }
-    }
-    
-    return null;
-}
-
-/**
- * Extract platform/firearm family from product name
- * AR-15, Glock, AK, 1911, etc.
- */
-function extractPlatform(name) {
-    const platformPatterns = [
-        { pattern: /\b(AR-?15|AR15|AR\s*15|M4|M16|AR\s*platform)/i, normalized: 'AR-15' },
-        { pattern: /\b(AR-?10|AR10|DPMS|LR308)/i, normalized: 'AR-10' },
-        { pattern: /\b(AK|AK-?47|AK-?74|AKMS|AKM|Saiga)/i, normalized: 'AK Platform' },
-        { pattern: /\b(Glock|G19|G17|G34)/i, normalized: 'Glock' },
-        { pattern: /\b(1911|45\s*auto\s*pistol)/i, normalized: '1911' },
-        { pattern: /\b(Sig\s*Sauer|P226|P229|P320|P365)/i, normalized: 'Sig Sauer' },
-        { pattern: /\b(HK|Heckler\s*Koch|MP5|HK417)/i, normalized: 'Heckler & Koch' },
-        { pattern: /\b(Ruger|10\/22|Mini\s*14|Precision)/i, normalized: 'Ruger' },
-        { pattern: /\b(Mossberg|500|590|Maverick)/i, normalized: 'Mossberg' },
-        { pattern: /\b(Remington|870|1100|700)/i, normalized: 'Remington' },
-        { pattern: /\b(Benelli|M4|M2)/i, normalized: 'Benelli' },
-        { pattern: /\b(Shotgun|Pump|Semi-?Auto|Over\s*Under)/i, normalized: 'Shotgun' },
-        { pattern: /\b(Rifle|Bolt\s*Action)/i, normalized: 'Rifle' },
-        { pattern: /\b(Pistol|Handgun)/i, normalized: 'Pistol' },
-    ];
-
-    for (const { pattern, normalized } of platformPatterns) {
-        if (pattern.test(name)) {
-            return normalized;
-        }
-    }
-    
-    return null;
-}
-
-/**
- * Extract magazine capacity from product name
- * 10, 30, 47, etc.
- */
-function extractCapacity(name) {
-    // Look for patterns like "30RD", "10 ROUND", "MAGAZINE 20"
-    const capacityMatch = name.match(/(?:MAG|MAGAZINE|CLIP).*?(\d{1,3})(?:\s*RD|ROUND|CAPACITY)?|(\d{1,3})\s*(?:RD|ROUND)/i);
-    if (capacityMatch) {
-        const capacity = capacityMatch[1] || capacityMatch[2];
-        return parseInt(capacity);
-    }
-    return null;
-}
-
-/**
- * Extract material from product name
- * Polymer, Steel, Aluminum, etc.
- */
-function extractMaterial(name) {
-    const materialPatterns = [
-        { pattern: /\bpolymer\b|\bplastic\b/i, normalized: 'Polymer' },
-        { pattern: /\bsteel\b|\bstainless\b|\bstainless\s*steel\b/i, normalized: 'Steel' },
-        { pattern: /\baluminum\b|\baluminium\b|\baluminum\s*alloy\b/i, normalized: 'Aluminum' },
-        { pattern: /\bcarbon\s*fiber\b|\bcarbon\s*composite\b/i, normalized: 'Carbon Fiber' },
-        { pattern: /\bfiberglass\b/i, normalized: 'Fiberglass' },
-        { pattern: /\brubber\b/i, normalized: 'Rubber' },
-    ];
-
-    for (const { pattern, normalized } of materialPatterns) {
-        if (pattern.test(name)) {
-            return normalized;
-        }
-    }
-    
-    return null;
-}
-
-/**
- * Get authentication header for API
- */
 function getAuthHeader(token) {
-    const tokenHash = crypto.createHash('md5').update(token).digest('hex');
-    return `Basic ${API_SID}:${tokenHash}`;
+  const tokenHash = crypto.createHash("md5").update(token).digest("hex");
+  return `Basic ${API_SID}:${tokenHash}`;
 }
 
-/**
- * Fetch products from Chattanooga API
- */
 async function fetchAllProducts(page = 1) {
+  try {
+    const url = `${API_BASE}/items?page=${page}&per_page=200`;
+    const authHeader = getAuthHeader(API_TOKEN);
+
+    const response = await fetch(url, {
+      headers: {
+        Authorization: authHeader,
+        "Content-Type": "application/json"
+      }
+    });
+
+    if (!response.ok) {
+      throw new Error(`API error: ${response.status}`);
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error(`Error fetching page ${page}:`, error.message);
+    return { items: [], pagination: {} };
+  }
+}
+
+function loadActiveProducts() {
+  try {
+    const activePath = path.join(__dirname, "../data/products/active.json");
+    if (fs.existsSync(activePath)) {
+      const data = JSON.parse(fs.readFileSync(activePath, "utf8"));
+      const active = {};
+      Object.entries(data).forEach(([key, value]) => {
+        if (!key.startsWith("_") && value && typeof value === "object" && value.page) {
+          active[key] = value;
+        }
+      });
+      return active;
+    }
+  } catch (error) {
+    console.warn("No active.json found, syncing all products");
+  }
+  return {};
+}
+
+// ========== BRAND & COMPLIANCE FILTERS ==========
+
+function shouldIncludeBrand(product) {
+  const brand = (product.brand || "GENERIC").toUpperCase().trim();
+
+  if (BAD_BRANDS.some(b => brand.includes(b))) return false;
+  if (TOP_BRANDS.some(b => brand.includes(b))) return true;
+
+  // Soft-allow: if brand is unknown but category is strong
+  return ["ammunition", "magazines", "optics", "gun-parts", "reloading"].includes(
+    product.category || ""
+  );
+}
+
+function shouldIncludeProduct(apiProduct) {
+  const fflRequired =
+    apiProduct.ffl_flag === 1 ||
+    apiProduct.ffl_flag === true ||
+    apiProduct.ffl_flag === "Y";
+
+  const serialized =
+    apiProduct.serialized_flag === 1 ||
+    apiProduct.serialized_flag === true ||
+    apiProduct.serialized_flag === "Y";
+
+  const allocated =
+    apiProduct.allocated_flag === 1 ||
+    apiProduct.allocated_flag === true ||
+    apiProduct.allocated_flag === "Y" ||
+    apiProduct.allocated === true;
+
+  const discontinued =
+    apiProduct.discontinued === 1 ||
+    apiProduct.discontinued === true ||
+    apiProduct.discontinued === "Y";
+
+  const inventory = parseInt(apiProduct.inventory || 0, 10);
+  const price = parseFloat(apiProduct.retail_price || 0);
+  const upc = (apiProduct.upc_code || "").trim();
+  const sku = (apiProduct.cssi_id || "").trim();
+  const department = apiProduct.department || "";
+  const name = (apiProduct.name || "").toUpperCase();
+
+  if (inventory <= 0) return false;
+  if (discontinued) return false;
+  if (price <= 0) return false;
+  if (!upc && !sku) return false;
+
+  // Be conservative with FFL/serialized: exclude for now
+  if (fflRequired || serialized) return false;
+
+  // Suppressors and parts: allow only clear accessories
+  if (department === "Suppressors and Parts") {
+    const allowedParts = /ADAPTER|MOUNT|PISTON|END\s*CAP|SPACER|SHIM|WRENCH/i.test(name);
+    const hasSuppressorKeywords = /SUPPRESSOR|SILENCER|QD\s*SUPPRESSOR|SUPPRESSOR\s*KIT/i.test(
+      name
+    );
+    if (!allowedParts || hasSuppressorKeywords) return false;
+  }
+
+  // Exclude explicit suppressor keywords anywhere
+  if (/SUPPRESSOR|SILENCER|QD\s*SUPPRESSOR|SUPPRESSOR\s*KIT/i.test(name)) return false;
+
+  return true;
+}
+
+// ========== CATEGORIZATION ==========
+
+function categorizeProduct(product) {
+  const name = (product.name || "").toUpperCase();
+  const vendorCategory = product.vendorCategory || "";
+
+  // 0. Vendor category mapping
+  if (vendorCategory && chattanoogaToSiteMapping[vendorCategory]) {
+    return chattanoogaToSiteMapping[vendorCategory];
+  }
+
+  // Global exclusions → gear
+  if (
+    /GIFT\s*CARD|CREDIT|VOUCHER|SERVICE FEE|ENGRAVING|GUNSMITHING|LABOR|INSTALLATION|LICENSE|PERMIT|TRAINING|CLASS|COURSE/i.test(
+      name
+    )
+  ) {
+    return "gear";
+  }
+
+  const hasAmmoWords =
+    /\bAMMO\b|\bROUND\b|\bCARTRIDGE\b|\b9MM\b|\b223\b|\b308\b|\b45\s*AUTO\b|\b40\s*S&W\b|\b380\s*AUTO\b|\b10MM\b|\b12GA\b|\b20GA\b|\b410GA\b|\bBUCKSHOT\b|\bSLUG\b/i.test(
+      name
+    );
+
+  const hasGunPartWords =
+    /\bTRIGGER\b|\bBARREL\b|\bUPPER\b|\bLOWER\b|\bRECEIVER\b|\bSTOCK\b|\bHANDGUARD\b|\bBOLT CARRIER\b|\bBUFFER\b/i.test(
+      name
+    );
+
+  const hasOpticWords =
+    /\bSCOPE\b|\bRED\s*DOT\b|\bHOLOGRAPHIC\b|\bRIFLESCOPE\b|\bOPTIC\b|\bMAGNIFIER\b/i.test(
+      name
+    );
+
+  const hasOutdoorsWords =
+    /\bKNIFE\b|\bFLASHLIGHT\b|\bTACTICAL\b|\bGEAR\b|\bHOLSTER\b|\bCASE\b|\bSLING\b|\bMULTI-TOOL\b|\bPACK\b|\bBACKPACK\b/i.test(
+      name
+    );
+
+  const isCaseOrBag =
+    /\bCASE\b|\bBAG\b|\bSLEEVE\b|\bHOLSTER\b|\bSCABBARD\b|\bPACK\b|\bBACKPACK\b/i.test(name);
+
+  const magazineExclusions = [
+    "MAG PRO",
+    "MAGNUM",
+    "MAGTECH",
+    "PERCUSSION",
+    "CAPS",
+    "PRIMER",
+    "PRIMERS",
+    "POWDER",
+    "GRAIN",
+    "MUZZLE",
+    "MUZZLELOADER",
+    "BLACK POWDER",
+    "RELOADING",
+    "MAXI MAG"
+  ];
+
+  const isMagazineCore =
+    /\bMAGAZINE\b/i.test(name) ||
+    /\bMAG\b/i.test(name) ||
+    /\bPMAG\b/i.test(name) ||
+    /\bDRUM\b/i.test(name);
+
+  const blockedMagazine = magazineExclusions.some(ex => name.includes(ex));
+  const isMagazine = isMagazineCore && !blockedMagazine && !hasAmmoWords;
+
+  const ammoExclusive = hasAmmoWords && !isMagazine;
+
+  // 1. Reloading
+  if (
+    /\bBULLET\b|\bBRASS\b|\bPRIMER\b|\bPOWDER\b|\bDIE\b|\bPRESS\b|\bRELOADING\b|\bSHELL HOLDER\b/i.test(
+      name
+    )
+  ) {
+    return "reloading";
+  }
+
+  // 2. Ammunition
+  if (ammoExclusive && !hasGunPartWords) {
+    return "ammunition";
+  }
+
+  // 3. Magazines
+  if (isMagazine) {
+    return "magazines";
+  }
+
+  // 4. Optics
+  if (hasOpticWords && !isCaseOrBag) {
+    return "optics";
+  }
+
+  // 5. Gun parts
+  if (hasGunPartWords) {
+    return "gun-parts";
+  }
+
+  // 6. Outdoors
+  if (hasOutdoorsWords || isCaseOrBag) {
+    return "outdoors";
+  }
+
+  // 7. Brand fallback
+  const brand = (product.brand || "").toUpperCase();
+  if (brand.match(/\bMAGPUL\b|\bBCM\b|\bGEISSELE\b/)) return "gun-parts";
+  if (brand.match(/\bLEUPOLD\b|\bTRIJICON\b|\bEOTECH\b/)) return "optics";
+  if (brand.match(/\bHORNADY\b|\bFEDERAL\b|\bWINCHESTER\b|\bREMINGTON\b/)) {
+    if (ammoExclusive) return "ammunition";
+    return "reloading";
+  }
+
+  // 8. Default
+  return "gear";
+}
+
+function applyGlobalOverrides(product, category) {
+  const name = (product.name || "").toUpperCase();
+
+  // Bore-sighters → gear
+  if (/BORESIGHT|BORE\s*SIGHT|LASER\s*CARTRIDGE/i.test(name)) {
+    return "gear";
+  }
+
+  // Shotgun ammo → ammunition
+  if (
+    /12GA|20GA|16GA|10GA|410|SHOTSHELL|BUCKSHOT|SLUG/i.test(name) &&
+    !/DIE|PRESS|POWDER|PRIMER|CASE|BRASS|BULLET|SHELL\s*HOLDER|RELOADING|DECAPPER|SIZER|TRIMMER/i.test(
+      name
+    )
+  ) {
+    return "ammunition";
+  }
+
+  return category;
+}
+
+// ========== ATTRIBUTE EXTRACTION ==========
+
+function extractCaliber(name) {
+  if (!name) return null;
+  const patterns = [
+    { pattern: /\b(9MM|9x19|9x19mm|9 ?MM|PARABELLUM)\b/i, normalized: "9MM" },
+    { pattern: /\b(40\s*S&W|40\s*CAL|\.40|40SW)\b/i, normalized: ".40 S&W" },
+    { pattern: /\b(45\s*ACP|45\s*AUTO|\.45|45 ?CAL)\b/i, normalized: ".45 ACP" },
+    { pattern: /\b(380|\.380|380 ?AUTO)\b/i, normalized: ".380 ACP" },
+    { pattern: /\b(357|\.357|357\s*MAG|357MAGNUM)\b/i, normalized: ".357 Mag" },
+    { pattern: /\b(38|\.38|38\s*SPL|38\s*SPECIAL)\b/i, normalized: ".38 SPL" },
+    { pattern: /\b(44|\.44|44\s*MAG|44MAGNUM)\b/i, normalized: ".44 Mag" },
+    { pattern: /\b(10MM|10\s*MM)\b/i, normalized: "10MM" },
+    { pattern: /\b(223|5\.56|5\.56\s*NATO|5\.56x45)\b/i, normalized: "5.56 NATO" },
+    { pattern: /\b(308|7\.62\s*NATO|7\.62x51)\b/i, normalized: ".308 WIN" },
+    { pattern: /\b(300\s*BLK|300\s*BLACKOUT)\b/i, normalized: "300 BLK" },
+    { pattern: /\b(6\.5\s*CREED|6\.5\s*CREEDMOOR)\b/i, normalized: "6.5 Creed" },
+    { pattern: /\b(22\s*LR|22\s*LONG\s*RIFLE|\.22|22LR)\b/i, normalized: ".22 LR" },
+    { pattern: /\b(22\s*WMR|22\s*MAG|\.22\s*MAG)\b/i, normalized: ".22 WMR" },
+    { pattern: /\b(12\s*GA|12\s*GAUGE|12GA)\b/i, normalized: "12 GA" },
+    { pattern: /\b(20\s*GA|20\s*GAUGE|20GA)\b/i, normalized: "20 GA" },
+    { pattern: /\b(16\s*GA|16\s*GAUGE|16GA)\b/i, normalized: "16 GA" },
+    { pattern: /\b(10\s*GA|10\s*GAUGE|10GA)\b/i, normalized: "10 GA" },
+    { pattern: /\b(\.410|410)\b/i, normalized: ".410" }
+  ];
+  for (const { pattern, normalized } of patterns) {
+    if (pattern.test(name)) return normalized;
+  }
+  return null;
+}
+
+function extractPlatform(name) {
+  if (!name) return null;
+  const patterns = [
+    { pattern: /\b(AR-?15|AR15|M4|M16)\b/i, normalized: "AR-15" },
+    { pattern: /\b(AR-?10|AR10|LR308)\b/i, normalized: "AR-10" },
+    { pattern: /\b(AK|AK-?47|AK-?74|AKM|SAIGA)\b/i, normalized: "AK Platform" },
+    { pattern: /\bGLOCK\b/i, normalized: "Glock" },
+    { pattern: /\b1911\b/i, normalized: "1911" },
+    { pattern: /\bP320|P365|P226|P229\b/i, normalized: "Sig Sauer" }
+  ];
+  for (const { pattern, normalized } of patterns) {
+    if (pattern.test(name)) return normalized;
+  }
+  return null;
+}
+
+function extractCapacity(name) {
+  if (!name) return null;
+  const match = name.match(
+    /(?:MAG|MAGAZINE|CLIP).*?(\d{1,3})(?:\s*RD|ROUND|RDS)?|(\d{1,3})\s*(?:RD|ROUND|RDS)\b/i
+  );
+  if (match) {
+    const capacity = match[1] || match[2];
+    return parseInt(capacity, 10);
+  }
+  return null;
+}
+
+function extractMaterial(name) {
+  if (!name) return null;
+  const patterns = [
+    { pattern: /\bPOLYMER\b|\bPLASTIC\b/i, normalized: "Polymer" },
+    { pattern: /\bSTEEL\b|\BSTAINLESS\b/i, normalized: "Steel" },
+    { pattern: /\bALUMINUM\b|\bALUMINIUM\b/i, normalized: "Aluminum" },
+    { pattern: /\bCARBON\s*FIBER\b/i, normalized: "Carbon Fiber" },
+    { pattern: /\bRUBBER\b/i, normalized: "Rubber" }
+  ];
+  for (const { pattern, normalized } of patterns) {
+    if (pattern.test(name)) return normalized;
+  }
+  return null;
+}
+
+function deriveSubCategory(name, category) {
+  const lower = (name || "").toLowerCase();
+
+  if (category === "ammunition") {
+    if (lower.includes("9mm") || lower.includes(".45") || lower.includes(".40") || lower.includes("10mm"))
+      return "Handgun Ammo";
+    if (lower.includes("223") || lower.includes("5.56") || lower.includes("308") || lower.includes("creed"))
+      return "Rifle Ammo";
+    if (lower.includes("12 gauge") || lower.includes("20 gauge") || lower.includes("buck") || lower.includes("slug"))
+      return "Shotgun Ammo";
+    if (lower.includes("rimfire") || lower.includes(".22")) return "Rimfire Ammo";
+    return "Other Ammo";
+  }
+
+  if (category === "magazines") return "Magazines";
+
+  return "";
+}
+// ========== IMAGE RESOLUTION (MONOLITHIC, MAX-COVERAGE) ==========
+
+// Helper: safely normalize strings
+function safeLower(str) {
+  return (str || "").toString().trim().toLowerCase();
+}
+
+// Helper: collect all ID-like fields for filename patterns
+function getIdCandidates(raw) {
+  const ids = new Set();
+
+  // Core SKU/id
+  if (raw.sku) ids.add(raw.sku);
+  if (raw.id) ids.add(raw.id);
+
+  // Item number / vendor item / internal codes
+  if (raw.itemNumber) ids.add(raw.itemNumber);
+  if (raw.item_no) ids.add(raw.item_no);
+  if (raw.item) ids.add(raw.item);
+  if (raw.item_id) ids.add(raw.item_id);
+  if (raw.vendorItemNumber) ids.add(raw.vendorItemNumber);
+  if (raw.vendor_item_number) ids.add(raw.vendor_item_number);
+  if (raw.internalId) ids.add(raw.internalId);
+  if (raw.internal_id) ids.add(raw.internal_id);
+
+  // MPN / manufacturer part number
+  if (raw.mpn) ids.add(raw.mpn);
+  if (raw.manufacturerPartNumber) ids.add(raw.manufacturerPartNumber);
+  if (raw.manufacturer_part_number) ids.add(raw.manufacturer_part_number);
+  if (raw.model) ids.add(raw.model);
+
+  // UPC / GTIN
+  if (raw.upc) ids.add(raw.upc);
+  if (raw.upcCode) ids.add(raw.upcCode);
+  if (raw.upc_code) ids.add(raw.upc_code);
+  if (raw.gtin) ids.add(raw.gtin);
+
+  return Array.from(ids).filter(Boolean);
+}
+
+// Helper: derive "internal" numeric-ish codes from SKUs (e.g., TJP0M252102 -> TJP00252102)
+function deriveInternalCodes(raw) {
+  const codes = new Set();
+
+  const sku = (raw.sku || raw.id || "").toString();
+  if (!sku) return [];
+
+  // Example heuristic: keep first 3 letters, then all digits
+  const prefix = sku.replace(/[^A-Za-z]/g, "").slice(0, 3);
+  const digits = sku.replace(/[^0-9]/g, "");
+  if (prefix && digits) {
+    codes.add(prefix + digits);
+  }
+
+  return Array.from(codes).filter(Boolean);
+}
+
+// Helper: build base filenames from all ID-like sources
+function buildBaseFilenames(product) {
+  const raw = product.raw || {};
+  const base = new Set();
+
+  // Only use SKU/ID-based values for image filename patterns
+  const idCandidates = getIdCandidates({
+    sku: product.id,
+    id: product.id,
+    ...raw,
+  });
+
+  const internalCodes = deriveInternalCodes({ sku: product.id, ...raw });
+
+  // Add all ID-like values
+  for (const id of idCandidates) {
+    base.add(id.toString());
+  }
+
+  // Add internal transformed codes
+  for (const code of internalCodes) {
+    base.add(code.toString());
+  }
+
+  // Do NOT add product-name-based or brand+SKU-based patterns
+
+  return Array.from(base);
+}
+
+// Helper: expand filenames into all filename variants
+function expandFilenameVariants(filename) {
+  const variants = new Set();
+  const base = filename.toString();
+
+  // Always include the base
+  variants.add(`${base}.jpg`);
+  variants.add(`${base}.png`);
+
+  // Common numeric and main variants
+  variants.add(`${base}_1.jpg`);
+  variants.add(`${base}_1.png`);
+  variants.add(`${base}__1.jpg`);
+  variants.add(`${base}__1.png`);
+  variants.add(`${base}-1.jpg`);
+  variants.add(`${base}-1.png`);
+  variants.add(`${base}-2.jpg`);
+  variants.add(`${base}-2.png`);
+  variants.add(`${base}-3.jpg`);
+  variants.add(`${base}-3.png`);
+  variants.add(`${base}_main.jpg`);
+  variants.add(`${base}_main.png`);
+  variants.add(`${base}-main.jpg`);
+  variants.add(`${base}-main.png`);
+
+  // Add ammo type suffixes if present in the product name
+  let productName = null;
+  if (typeof global !== 'undefined' && global._currentProductName) {
+    productName = global._currentProductName;
+  }
+  const ammoTypes = [
+    'Centerfire', 'Rimfire', 'Shotgun', 'Handgun', 'Rifle', 'Pistol', 'Revolver',
+    'Blank', 'Subsonic', 'Buckshot', 'Slug', 'Magnum', 'Match', 'Practice',
+    'Training', 'Lead', 'Steel', 'Brass', 'Polymer', 'Non-Toxic', 'Plated',
+    'HollowPoint', 'FMJ', 'JHP', 'SP', 'HP', 'LRN', 'TMJ', 'Varmint', 'Ball',
+    'Tracer', 'Incendiary', 'ArmorPiercing', 'Frangible', 'ReducedRecoil',
+    'LowRecoil', 'HighVelocity', 'Super', 'Mini', 'Short', 'Long', 'Extra',
+    'Special', 'Express', 'Auto', 'ACP', 'WMR', 'Mag', 'Win', 'Rem', 'Savage',
+    'Weatherby', 'Nosler', 'Lapua', 'Hornady', 'Federal', 'Fiocchi', 'PMC',
+    'Blazer', 'Speer', 'CCI', 'Aguila', 'Norma', 'Barnes', 'Browning', 'CorBon',
+    'Estate', 'Frontier', 'HSM', 'Kent', 'Lapua', 'Magtech', 'Nosler', 'PPU',
+    'Rio', 'SellierBellot', 'Sierra', 'SigSauer', 'Underwood', 'Weatherby', 'WilsonCombat'
+  ];
+  if (productName) {
+    for (const type of ammoTypes) {
+      const regex = new RegExp(type, 'i');
+      if (regex.test(productName)) {
+        variants.add(`${base}-${type}.jpg`);
+        variants.add(`${base}-${type}.png`);
+      }
+    }
+  }
+  return Array.from(variants);
+}
+
+// Helper: expand query-string variants for a given URL
+function expandQueryVariants(url) {
+  const variants = new Set();
+
+  // bare
+  variants.add(url);
+
+  // simple width
+  variants.add(`${url}?w=500`);
+  variants.add(`${url}?width=500`);
+
+  // Chattanooga-style transform
+  variants.add(`${url}?w=437&h=454&q=5&v=1.0`);
+
+  return Array.from(variants);
+}
+
+async function resolveProductImage(raw) {
+
+  // ---- Basic guards ----
+  if (!raw || !raw.id) {
+    logDebug("IMAGE_RESOLVER_SKU_MISSING", {
+      rawId: raw ? raw.id : null,
+      brand: raw && raw.brand ? raw.brand : "",
+      name: raw && raw.name ? raw.name : ""
+    });
+    return null;
+  }
+
+  const sku = raw.id;
+  // Set a global for expandFilenameVariants to access product name
+  if (typeof global !== 'undefined') {
+    global._currentProductName = raw.name || '';
+  }
+  const baseFilenames = buildBaseFilenames(raw);
+
+  const attempted = [];
+  const successful = [];
+
+  const baseUrlDir = `https://media.chattanoogashooting.com/images/product/${sku}`;
+  const flatBaseDir = `https://media.chattanoogashooting.com/products`;
+
+  // Build all URL candidates (directory + flat + query variants)
+  const urlCandidates = new Set();
+
+  for (const base of baseFilenames) {
+    const filenameVariants = expandFilenameVariants(base);
+
+    for (const fn of filenameVariants) {
+      // directory form
+      const dirUrl = `${baseUrlDir}/${fn}`;
+      for (const u of expandQueryVariants(dirUrl)) {
+        urlCandidates.add(u);
+      }
+
+      // flat fallback
+      const flatUrl = `${flatBaseDir}/${fn}`;
+      for (const u of expandQueryVariants(flatUrl)) {
+        urlCandidates.add(u);
+      }
+    }
+  }
+
+  // Try each URL until one succeeds (use GET instead of HEAD for CDN compatibility)
+  for (const url of urlCandidates) {
+    attempted.push(url);
     try {
-        const url = `${API_BASE}/items?page=${page}&per_page=50`;
-        const authHeader = getAuthHeader(API_TOKEN);
-        
-        const response = await fetch(url, {
-            headers: {
-                'Authorization': authHeader,
-                'Content-Type': 'application/json'
-            }
-        });
-
-        if (!response.ok) {
-            throw new Error(`API error: ${response.status}`);
-        }
-
-        return await response.json();
-    } catch (error) {
-        console.error(`Error fetching page ${page}:`, error.message);
-        return { items: [], pagination: {} };
+      const res = await fetch(url, { method: "GET" });
+      // Accept any 2xx response as valid
+      if (res.status >= 200 && res.status < 300) {
+        successful.push(url);
+      }
+    } catch (e) {
+      // ignore network errors, just treat as failed
     }
+  }
+
+  // Choose the "best" URL: longest filename (most specific), prefer directory over flat
+  let chosen = null;
+  if (successful.length > 0) {
+    successful.sort((a, b) => {
+      const aIsDir = a.includes(`/images/product/`);
+      const bIsDir = b.includes(`/images/product/`);
+      if (aIsDir && !bIsDir) return -1;
+      if (!aIsDir && bIsDir) return 1;
+      return b.length - a.length;
+    });
+    chosen = successful[0];
+  }
+
+  logDebug("IMAGE_RESOLVER_LOG", {
+    sku,
+    attempted,
+    successful,
+    chosen,
+  });
+
+  return chosen;
 }
 
-/**
- * Extract brand from product name
- * Looks for known brand patterns at the start of product names
- */
-function extractBrand(productName) {
-    const brandPatterns = [
-        /^(Federal|Remington|Hornady|Winchester|Blazer|Wolf|Tulammo|Fiocchi|PMC|Aguila|American|Armscor|Magtech|Norma|Perfecta|PPU|Rocky|Vista|Sellier|Speer|Sierra|Nosler|CCI|Cci|Lyman|RCBS|Lee|Frankford|Dillon|Redding|Sinclair|Accurate|Hodgdon|IMR|Alliant|Vihtavuori|Unique|Blackhorn|Scot|Powder|Corbon|Browning|Savage|Ruger|Colt|Smith|Wesson|S&W|Taurus|Glock|Sig|Sauer|HK|Beretta|Walther|FN|Mossberg|Remington|Benelli|Weatherby|Tikka|Marlin|Winchester|Ruger|Savage|Bushmaster|Daniel|Defense|DPMS|AR15|AR-15|Seekins|Mega|Aero|Anderson|Ballistic|Advantage|Criterion|Faxon|Lothar|Walther|POF|Proof|Research|Criterion|Core|Rifle|Systems|Hodgdon|Alliant|Vihtavuori|Unique|IMR|Accurate|Blackhorn|H110|H4895|WIN)/i,
-        /^(FEDERAL|REMINGTON|HORNADY|WINCHESTER|BLAZER|WOLF|TULAMMO|FIOCCHI|PMC|AGUILA)/i
-    ];
+// ========== TRANSFORMATION & SAVE ==========
 
-    const name = productName || '';
-    
-    for (const pattern of brandPatterns) {
-        const match = name.match(pattern);
-        if (match) {
-            return match[1].trim();
-        }
-    }
-
-    return 'Generic';
+function extractBrandFromName(name) {
+  if (!name) return "Generic";
+  const firstWord = name.split(" ")[0].toUpperCase();
+  return firstWord;
 }
 
-/**
- * Transform API product to local format
- */
-function transformProduct(apiProduct) {
-    const imageUrl = apiProduct.cssi_id 
-        ? `https://images.chattanoogashooting.com/products/${apiProduct.cssi_id.toLowerCase()}.jpg`
-        : '/images/products/placeholder.jpg';
+async function transformProduct(apiProduct) {
+  const productName = apiProduct.name || "Unknown Product";
+  const msrp = parseFloat(apiProduct.retail_price || 0);
+  const map = parseFloat(apiProduct.map_price || 0);
+  const displayPrice = map > 0 ? map : msrp;
 
-    const productName = apiProduct.name || 'Unknown Product';
+  if (displayPrice <= 0) return null;
 
-    return {
-        id: apiProduct.cssi_id || '',
-        name: productName,
-        brand: extractBrand(productName),
-        category: '',  // Will be set later
-        image: imageUrl,
-        retailPrice: parseFloat(apiProduct.retail_price || 0),
-        salePrice: parseFloat(apiProduct.custom_price || apiProduct.retail_price || 0),
-        inventory: parseInt(apiProduct.inventory || 0),
-        inStock: apiProduct.in_stock_flag === 1,
-        requiresFFL: apiProduct.ffl_flag === 1,
-        serialized: apiProduct.serialized_flag === 1,
-        dropShip: apiProduct.drop_ship_flag === 1,
-        allocated: apiProduct.allocated_flag === 1,
-        mapPrice: parseFloat(apiProduct.map_price || 0),
-        lastUpdated: apiProduct.qas_last_updated_at || '',
-        // New extracted fields
-        caliber: extractCaliber(productName),
-        platform: extractPlatform(productName),
-        capacity: extractCapacity(productName),
-        material: extractMaterial(productName)
-    };
+  const brand = (apiProduct.brand || extractBrandFromName(productName) || "Generic").toUpperCase();
+  const vendorCategory = apiProduct.category || apiProduct.subcategory || "";
+
+  const image = await resolveProductImage({
+    id: apiProduct.cssi_id || apiProduct.id || "",
+    brand,
+    name: productName
+  });
+
+  const category = categorizeProduct({
+    name: productName,
+    brand,
+    vendorCategory
+  });
+
+  const finalCategory = applyGlobalOverrides(
+    { name: productName, brand },
+    category || "gear"
+  );
+
+  const subCategory = deriveSubCategory(productName, finalCategory);
+
+  const transformed = {
+    id: apiProduct.cssi_id || apiProduct.id || "",
+    name: productName,
+    brand,
+    category: finalCategory,
+    subCategory,
+    image,
+    hidden: false, // set below
+    msrp,
+    mapPrice: map,
+    displayPrice,
+    inventory: parseInt(apiProduct.inventory || 0, 10),
+    inStock: apiProduct.in_stock_flag === 1,
+    requiresFFL: apiProduct.ffl_flag === 1,
+    serialized: apiProduct.serialized_flag === 1,
+    dropShip: apiProduct.drop_ship_flag === 1,
+    allocated: apiProduct.allocated_flag === 1,
+    lastUpdated: apiProduct.qas_last_updated_at || "",
+    caliber: extractCaliber(productName),
+    platform: extractPlatform(productName),
+    capacity: extractCapacity(productName),
+    material: extractMaterial(productName)
+  };
+
+  logDebug("CATEGORY_DECISION", {
+    sku: transformed.id,
+    name: transformed.name,
+    brand: transformed.brand,
+    vendorCategory,
+    assignedCategory: finalCategory
+  });
+
+  // Category-aware hiding logic
+  const hideCategories = ["optics", "magazines", "gun-parts", "gear"];
+  const shouldHide =
+    transformed.image === null && hideCategories.includes(finalCategory);
+
+  transformed.hidden = shouldHide;
+
+  if (shouldHide) {
+    logDebug("PRODUCT_HIDDEN", {
+      sku: transformed.id,
+      category: finalCategory,
+      reason: "Missing image"
+    });
+  } else {
+    logDebug("PRODUCT_VISIBLE", {
+      sku: transformed.id,
+      category: finalCategory,
+      image: transformed.image
+    });
+  }
+
+  return transformed;
 }
 
-/**
- * Save products to JSON file for a specific category
- */
 function saveProducts(category, products) {
-    const dir = path.join(__dirname, '../data/products');
-    
-    if (!fs.existsSync(dir)) {
-        fs.mkdirSync(dir, { recursive: true });
-    }
+  const dir = path.join(__dirname, "../data/products");
+  if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
 
-    const filepath = path.join(dir, `${category}.json`);
-    const data = {
-        category,
-        lastUpdated: new Date().toISOString(),
-        products: products
-    };
+  const filepath = path.join(dir, `${category}.json`);
+  const data = {
+    category,
+    lastUpdated: new Date().toISOString(),
+    products
+  };
 
-    fs.writeFileSync(filepath, JSON.stringify(data, null, 2));
-    console.log(`✓ Saved ${products.length} products to ${category}.json`);
+  logDebug("JSON_WRITE", { file: filepath, count: products.length });
+  fs.writeFileSync(filepath, JSON.stringify(data, null, 2));
+  console.log(`✓ Saved ${products.length} products to ${category}.json`);
 }
 
-/**
- * Main sync function
- */
-async function syncAllProducts() {
-    console.log('Starting Chattanooga API sync with active product filtering...\n');
-    
-    if (!API_SID || !API_TOKEN) {
-        console.error('❌ Error: API_SID and API_TOKEN environment variables required');
-        process.exit(1);
-    }
+// ========== MISSING IMAGE AUDIT ==========
 
-    try {
-        // Load active product selection
-        const activeProducts = loadActiveProducts();
-        console.log(`📋 Active products configured: ${Object.keys(activeProducts).length}`);
-        console.log(`ℹ️  If empty, all products will be synced\n`);
+async function checkImageExists(url) {
+  try {
+    const res = await fetch(url, { method: "HEAD" });
+    return res.ok;
+  } catch {
+    return false;
+  }
+}
 
-        // Fetch all products from API
-        let allProducts = [];
-        let page = 1;
-        let hasMore = true;
-        
-        while (hasMore) {
-            const response = await fetchAllProducts(page);
-            if (response.items && response.items.length > 0) {
-                allProducts = allProducts.concat(response.items);
-                page++;
-                const pagination = response.pagination || {};
-                hasMore = page <= (pagination.page_count || 0);
-            } else {
-                hasMore = false;
-            }
-        }
-        
-        console.log(`✓ Fetched ${allProducts.length} products from API\n`);
-        
-        // ===== 3-LAYER FILTERING PIPELINE =====
-        // Layer 1: Brand filtering (TOP_BRANDS only)
-        // Layer 2: Compliance filtering (FFL, inventory, allocation)
-        // Layer 3: Categorization (exclusion-first)
-        
-        const transformedProducts = allProducts
-            .map((apiProduct, index) => ({
-                apiProduct,
-                transformed: transformProduct(apiProduct),
-                index
-            }))
-            .filter(({ apiProduct, transformed }) => {
-                // LAYER 1: Top brands only
-                if (!shouldIncludeBrand(transformed)) {
-                    return false;
-                }
-                
-                // LAYER 2: Compliance checks
-                if (!shouldIncludeProduct(apiProduct)) {
-                    return false;
-                }
-                
-                return true;
-            })
-            .map(({ transformed }) => {
-                // LAYER 3: Categorization
-                transformed.category = categorizeProduct(transformed);
-                return transformed;
-            });
-        
-        console.log(`✓ Transformed & filtered to ${transformedProducts.length} premium, compliant products\n`);
-        
-        // Group by category
-        const categorizedProducts = {
-            ammunition: [],
-            magazines: [],
-            reloading: [],
-            'gun-parts': [],
-            optics: [],
-            gear: [],
-            survival: [],
-            brands: [],
-            sale: []
-        };
-        
-        transformedProducts.forEach(product => {
-            const targetCategory = product.category;
-            
-            if (categorizedProducts[targetCategory]) {
-                categorizedProducts[targetCategory].push(product);
-            } else {
-                // Fallback to gear if category doesn't exist
-                categorizedProducts['gear'].push(product);
-            }
+async function auditMissingImages() {
+  const categories = [
+    "ammunition",
+    "magazines",
+    "reloading",
+    "gun-parts",
+    "optics",
+    "gear",
+    "outdoors"
+  ];
+
+  const results = {};
+  const missingDetails = [];
+
+  for (const cat of categories) {
+    const file = path.join(__dirname, `../data/products/${cat}.json`);
+    if (!fs.existsSync(file)) continue;
+
+    const data = JSON.parse(fs.readFileSync(file, "utf8"));
+    let missing = 0;
+
+    for (const product of data.products) {
+      if (!product.image) {
+        missing++;
+        missingDetails.push({
+          id: product.id,
+          name: product.name,
+          brand: product.brand,
+          category: cat,
+          price: product.displayPrice || null,
+          image: product.image
         });
-        
-        // Save each category
-        let totalSaved = 0;
-        for (const [category, products] of Object.entries(categorizedProducts)) {
-            if (products.length > 0) {
-                saveProducts(category, products);
-                totalSaved += products.length;
-            }
-        }
-        
-        console.log(`\n📊 FINAL PRODUCT CATALOG BY CATEGORY:`);
-        for (const [category, products] of Object.entries(categorizedProducts)) {
-            if (products.length > 0) {
-                console.log(`  ✓ ${category.padEnd(15)}: ${products.length.toString().padEnd(6)} products`);
-            }
-        }
-        
-        console.log(`\n════════════════════════════════════════`);
-        console.log(`✓ SYNC COMPLETED SUCCESSFULLY`);
-        console.log(`  Total products: ${totalSaved}`);
-        console.log(`  Filtering: TOP BRANDS + COMPLIANCE + EXCLUSION-FIRST CATEGORIZATION`);
-        console.log(`════════════════════════════════════════\n`);
-    } catch (error) {
-        console.error('❌ Sync failed:', error);
-        process.exit(1);
+        continue;
+      }
+
+      const exists = await checkImageExists(product.image);
+      if (!exists) {
+        missing++;
+        missingDetails.push({
+          id: product.id,
+          name: product.name,
+          brand: product.brand,
+          category: cat,
+          price: product.displayPrice || null,
+          image: product.image
+        });
+      }
     }
+
+    results[cat] = missing;
+  }
+
+  console.log("\n===== Missing Images Report =====");
+  for (const [cat, count] of Object.entries(results)) {
+    console.log(`${cat}: ${count} missing`);
+  }
+  console.log("=================================\n");
+
+  console.log("\n===== Missing Image Details by Category =====");
+  const grouped = {};
+  missingDetails.forEach(item => {
+    if (!grouped[item.category]) grouped[item.category] = [];
+    grouped[item.category].push(item);
+  });
+
+  Object.keys(grouped).forEach(cat => {
+    console.log(`\n--- ${cat.toUpperCase()} (${grouped[cat].length} missing) ---`);
+    grouped[cat].forEach(item => {
+      console.log(
+        `${item.brand} | ${item.name} | ${item.id} | $${item.price} | ${item.image}`
+      );
+    });
+  });
+
+  console.log("\n=============================================\n");
+}
+
+// ========== MAIN SYNC ==========
+
+async function syncAllProducts() {
+  console.log("Starting Chattanooga API sync...\n");
+
+  if (!API_SID || !API_TOKEN) {
+    console.error("❌ Error: API_SID and API_TOKEN environment variables required");
+    process.exit(1);
+  }
+
+  try {
+    const activeProducts = loadActiveProducts();
+    console.log(
+      `📋 Active products configured: ${Object.keys(activeProducts).length}`
+    );
+    console.log("ℹ️  If empty, all products will be synced\n");
+
+    let allProducts = [];
+    let page = 1;
+    let hasMore = true;
+
+    while (hasMore) {
+      const response = await fetchAllProducts(page);
+      if (response.items && response.items.length > 0) {
+        allProducts = allProducts.concat(response.items);
+        page++;
+        const pagination = response.pagination || {};
+        hasMore = page <= (pagination.page_count || 0);
+      } else {
+        hasMore = false;
+      }
+    }
+
+    console.log(`✓ Fetched ${allProducts.length} products from API\n`);
+
+    if (DEBUG_RAW_PRODUCT) {
+      console.log("===== RAW PRODUCT SAMPLE =====");
+      console.log(JSON.stringify(allProducts[0], null, 2));
+      console.log("===== END RAW SAMPLE =====");
+      process.exit(0);
+    }
+
+    console.log("🔄 Transforming products with image resolution...");
+
+    const transformationResults = await Promise.all(
+      allProducts.map(apiProduct => transformProduct(apiProduct))
+    );
+
+    const transformedProducts = transformationResults.filter(p => p !== null);
+
+    // Apply brand & compliance filters
+    const finalProducts = [];
+    for (const transformed of transformedProducts) {
+      const apiProduct = allProducts.find(
+        p => (p.cssi_id || p.id) === transformed.id
+      );
+      if (!apiProduct) continue;
+
+      if (!shouldIncludeBrand(transformed)) continue;
+      if (!shouldIncludeProduct(apiProduct)) continue;
+
+      finalProducts.push(transformed);
+    }
+
+    console.log(
+      `✓ Transformed & filtered to ${finalProducts.length} premium, compliant products\n`
+    );
+
+    const categorizedProducts = {
+      ammunition: [],
+      magazines: [],
+      reloading: [],
+      "gun-parts": [],
+      optics: [],
+      gear: [],
+      outdoors: [],
+      brands: [],
+      sale: [],
+      firearms: [],
+      services: []
+    };
+
+    finalProducts.forEach(product => {
+      const targetCategory = product.category || "gear";
+      if (categorizedProducts[targetCategory]) {
+        categorizedProducts[targetCategory].push(product);
+      } else {
+        categorizedProducts["gear"].push(product);
+      }
+    });
+
+    let totalSaved = 0;
+    for (const [category, products] of Object.entries(categorizedProducts)) {
+      if (products.length > 0) {
+        saveProducts(category, products);
+        totalSaved += products.length;
+      }
+    }
+
+    console.log(`\n📊 FINAL PRODUCT CATALOG BY CATEGORY:`);
+    for (const [category, products] of Object.entries(categorizedProducts)) {
+      if (products.length > 0) {
+        console.log(
+          `  ✓ ${category.padEnd(15)}: ${products.length
+            .toString()
+            .padEnd(6)} products`
+        );
+      }
+    }
+
+    console.log("\n════════════════════════════════════════");
+    console.log("✓ SYNC COMPLETED SUCCESSFULLY");
+    console.log(`  Total products: ${totalSaved}`);
+    console.log(
+      "  Filtering: TOP BRANDS (soft) + COMPLIANCE + EXCLUSION-FIRST CATEGORIZATION"
+    );
+    console.log("════════════════════════════════════════\n");
+
+    await auditMissingImages();
+  } catch (error) {
+    console.error("❌ Sync failed:", error);
+    process.exit(1);
+  }
 }
 
 syncAllProducts();

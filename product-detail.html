@@ -378,7 +378,7 @@
     <a href="shop/gear.html" style="color: #fff; text-decoration: none; font-weight: 600; transition: color 0.2s;">Gear</a>
     <a href="shop/optics.html" style="color: #fff; text-decoration: none; font-weight: 600; transition: color 0.2s;">Optics</a>
     <a href="shop/reloading.html" style="color: #fff; text-decoration: none; font-weight: 600; transition: color 0.2s;">Reloading</a>
-    <a href="shop/survival.html" style="color: #fff; text-decoration: none; font-weight: 600; transition: color 0.2s;">Survival</a>
+    <a href="shop/outdoors.html" style="color: #fff; text-decoration: none; font-weight: 600; transition: color 0.2s;">Outdoors</a>
     <a href="brands.html" style="color: #fff; text-decoration: none; font-weight: 600; transition: color 0.2s;">Brands</a>
     <a href="shop/sale.html" style="color: var(--color-primary); text-decoration: none; font-weight: 700; transition: color 0.2s;">ON SALE</a>
     <a href="services.html" style="color: #fff; text-decoration: none; font-weight: 600; transition: color 0.2s;">Services</a>
@@ -433,6 +433,12 @@
           return;
         }
 
+        // Check if product is hidden (no images available)
+        if (product.hidden) {
+          document.getElementById('product-content').innerHTML = '<div class="error-message"><i class="fas fa-exclamation-circle"></i> This product is currently not available.</div>';
+          return;
+        }
+
         // Set back link
         document.getElementById('back-link').href = `shop/${category}.html`;
 
@@ -446,8 +452,8 @@
 
     // RENDER PRODUCT
     function renderProduct(product, category) {
-      const price = product.customPrice || product.retailPrice;
-      const retailPrice = product.retailPrice;
+      const price = product.displayPrice ?? product.msrp ?? 0;
+      const msrp = product.msrp;
       const inStock = product.inventory > 0;
 
       const productHTML = `
@@ -470,7 +476,7 @@
 
             <!-- PRICING -->
             <div class="product-detail-price">$${price.toFixed(2)}</div>
-            ${retailPrice && retailPrice !== price ? `<div class="product-detail-retail">Retail: $${retailPrice.toFixed(2)}</div>` : ''}
+            ${msrp && msrp !== price ? `<div class="product-detail-retail">MSRP: $${msrp.toFixed(2)}</div>` : ''}
 
             <!-- STOCK STATUS -->
             <div class="product-detail-stock ${inStock ? 'stock-in' : 'stock-out'}">

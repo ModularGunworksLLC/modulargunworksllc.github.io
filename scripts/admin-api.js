@@ -84,7 +84,7 @@ function saveActive(data) {
 function loadAllProducts() {
     const products = [];
     const productsDir = path.join(__dirname, '../data/products');
-    const categories = ['ammunition', 'magazines', 'reloading', 'gun-parts', 'optics', 'gear', 'survival'];
+    const categories = ['ammunition', 'magazines', 'reloading', 'gun-parts', 'optics', 'gear', 'outdoors'];
 
     categories.forEach(category => {
         try {

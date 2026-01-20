@@ -1,0 +1,15 @@
+{
+  "totalProcessed": 62253,
+  "totalSkipped": 18743,
+  "totalErrors": 0,
+  "categories": {
+    "ammunition": 7010,
+    "gear": 16063,
+    "gun-parts": 5597,
+    "magazines": 3203,
+    "optics": 11810,
+    "outdoors": 11799,
+    "reloading": 6771,
+    "sale": 0
+  }
+}

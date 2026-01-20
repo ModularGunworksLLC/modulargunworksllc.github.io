@@ -801,7 +801,7 @@
                         <option value="gun-parts">Gun Parts</option>
                         <option value="optics">Optics</option>
                         <option value="gear">Gear</option>
-                        <option value="survival">Survival</option>
+                        <option value="outdoors">Outdoors</option>
                         <option value="brands">Brands</option>
                         <option value="sale">Sale</option>
                     </select>
@@ -994,7 +994,7 @@
                 const matchStock = !stock || (stock === 'in-stock' ? p.inStock : !p.inStock);
                 
                 // Price filter
-                const productPrice = p.salePrice || p.retailPrice || 0;
+                const productPrice = p.displayPrice ?? p.msrp ?? 0;
                 const matchPrice = !maxPrice || productPrice <= maxPrice;
                 
                 // Advanced filters
@@ -1041,7 +1041,7 @@
                         <div class="product-info" onclick="showProductDetails('${product.id}')" style="cursor: pointer;">
                             <div class="product-name">${product.name}</div>
                             <div class="product-details">
-                                <span>💰 $${product.salePrice.toFixed(2)}</span>
+                                <span>💰 $${(product.displayPrice ?? product.msrp ?? 0).toFixed(2)}</span>
                                 <span>📦 ${product.inventory} in stock</span>
                                 <span>🏷️ ${product.brand}</span>
                                 <span>📂 ${product.category}</span>
@@ -1264,7 +1264,7 @@
                 <div class="product-details-info">
                     <div class="detail-item">
                         <div class="detail-label">Price</div>
-                        <div class="detail-value">$${product.salePrice.toFixed(2)}</div>
+                        <div class="detail-value">$${(product.displayPrice ?? product.msrp ?? 0).toFixed(2)}</div>
                     </div>
                     <div class="detail-item">
                         <div class="detail-label">Stock</div>
@@ -1299,8 +1299,8 @@
                         <div class="detail-value">${product.inStock ? '✓ In Stock' : '✗ Out of Stock'}</div>
                     </div>
                     <div class="detail-item">
-                        <div class="detail-label">Retail Price</div>
-                        <div class="detail-value">$${product.retailPrice.toFixed(2)}</div>
+                        <div class="detail-label">MSRP</div>
+                        <div class="detail-value">$${(product.msrp ?? 0).toFixed(2)}</div>
                     </div>
                     ${product.serialized ? `<div class="detail-item" style="background: #4a3a1a; border-color: #ff6600;">
                         <div class="detail-label">🔫 Firearm</div>

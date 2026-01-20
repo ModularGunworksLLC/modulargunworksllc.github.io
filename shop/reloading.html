@@ -333,7 +333,7 @@
       <a href="../shop/gear.html">Gear</a>
       <a href="../shop/optics.html">Optics</a>
       <a href="../shop/reloading.html">Reloading</a>
-      <a href="../shop/survival.html">Survival</a>
+      <a href="../shop/outdoors.html">Outdoors</a>
       <a href="../shop/brands.html">Brands</a>
       <a href="../shop/sale.html">ON SALE</a>
       <a href="../services.html">Services</a>
@@ -511,7 +511,7 @@
           <li><a href="../shop/gear.html">Gear</a></li>
           <li><a href="../shop/optics.html">Optics</a></li>
           <li><a href="../shop/reloading.html">Reloading</a></li>
-          <li><a href="../shop/survival.html">Survival</a></li>
+          <li><a href="../shop/outdoors.html">Outdoors</a></li>
           <li><a href="../shop/brands.html">Brands</a></li>
         </ul>
       </div>
@@ -552,18 +552,10 @@
   </footer>
 
   <script>
-    let allProducts = [];
-    let filteredProducts = [];
+    const CURRENT_PAGE_CATEGORY = "reloading";
+    const INITIAL_ITEMS_SHOWN = 10;
     let currentView = 'grid';
-    let selectedFilters = {
-      type: [],
-      caliber: [],
-      price: [0, Infinity],
-      brand: [],
-      stock: false,
-      sale: false,
-      sort: 'newest'
-    };
+    let allProducts = [];
 
     // Extract Type from Product Name (Powder, Press, Dies, Primers, Cases, Scale, Tumbler, etc.)
     function extractType(productName) {
@@ -601,17 +593,21 @@
         let data = await response.json();
         
         // Load products directly from JSON (no active filter needed)
-        if (!Array.isArray(data)) {
-          data = data.products || [];
-        }
-
-        allProducts = data.map(product => ({
-          ...product,
+        let products = Array.isArray(data.products) ? data.products : [];
+        
+        allProducts = products.map(product => ({
+          category: 'reloading', // Set category for filter protection
           type: extractType(product.name),
           caliber: extractCaliber(product.name),
-          price: product.retailPrice || product.salePrice || 0,
+          price: product.displayPrice ?? product.msrp ?? 0,
           stock: product.inventory || 0
         }));
+
+        // FILTER PROTECTION: Only include products that match this page's category
+        allProducts = allProducts.filter(product => product.category === CURRENT_PAGE_CATEGORY);
+
+        // HIDE PRODUCTS WITHOUT IMAGES: Filter out products marked as hidden due to no available images
+        allProducts = allProducts.filter(product => !product.hidden);
 
         filteredProducts = [...allProducts];
         initializeFilters();
@@ -838,23 +834,23 @@
     function applyFilters() {
       filteredProducts = allProducts.filter(product => {
         // Type filter
-        if (selectedFilters.type.length > 0 && !selectedFilters.type.includes(product.type)) return false;
+        if (selectedFilters.type.length > 0 && (!product.type || !selectedFilters.type.includes(product.type))) return false;
         
         // Caliber filter
-        if (selectedFilters.caliber.length > 0 && !selectedFilters.caliber.includes(product.caliber)) return false;
+        if (selectedFilters.caliber.length > 0 && (!product.caliber || !selectedFilters.caliber.includes(product.caliber))) return false;
         
         // Price filter
-        const price = product.price || 0;
-        if (price < selectedFilters.price[0] || price > selectedFilters.price[1]) return false;
+        const price = product.price;
+        if (price !== undefined && (price < selectedFilters.price[0] || price > selectedFilters.price[1])) return false;
         
         // Brand filter
-        if (selectedFilters.brand.length > 0 && !selectedFilters.brand.includes(product.brand)) return false;
+        if (selectedFilters.brand.length > 0 && (!product.brand || !selectedFilters.brand.includes(product.brand))) return false;
         
         // Stock filter
-        if (selectedFilters.stock && (product.inventory || 0) === 0) return false;
+        if (selectedFilters.stock && product.inventory !== undefined && product.inventory === 0) return false;
         
         // Sale filter
-        if (selectedFilters.sale && (!product.salePrice || product.salePrice >= price)) return false;
+        if (selectedFilters.sale && !(product.displayPrice < product.msrp)) return false;
         
         return true;
       });
@@ -894,9 +890,9 @@
           <div style="padding: 1rem; flex: 1; display: flex; flex-direction: column;">
             <h3 style="font-size: 0.95rem; margin: 0 0 0.5rem 0; color: #333; font-weight: 600; line-height: 1.3;">${product.name}</h3>
             <p style="color: #666; font-size: 0.85rem; margin: 0 0 0.5rem 0;">${product.brand || 'Unknown'}</p>
-            <p style="color: var(--color-primary); font-weight: 700; font-size: 1.1rem; margin: 0.5rem 0;">$${parseFloat(product.price).toFixed(2)}</p>
+            <p style="color: var(--color-primary); font-weight: 700; font-size: 1.1rem; margin: 0.5rem 0;">$${(product.displayPrice ?? product.msrp ?? 0).toFixed(2)}</p>
             <p style="color: ${product.stock > 0 ? '#4caf50' : '#f44336'}; font-size: 0.85rem; margin: 0.5rem 0; font-weight: 600;">${product.stock > 0 ? 'In Stock' : 'Out of Stock'}</p>
-            <button onclick="addToCart('${product.name}', '${product.price}')" style="margin-top: auto; padding: 0.6rem; background: var(--color-primary); color: #fff; border: none; border-radius: 4px; cursor: pointer; font-weight: 600; transition: background 0.3s;">Add to Cart</button>
+            <button onclick="addToCart('${product.name}', '${product.displayPrice ?? product.msrp ?? 0}')" style="margin-top: auto; padding: 0.6rem; background: var(--color-primary); color: #fff; border: none; border-radius: 4px; cursor: pointer; font-weight: 600; transition: background 0.3s;">Add to Cart</button>
           </div>
         </div>
       `).join('');
@@ -916,9 +912,9 @@
         <tr style="border-bottom: 1px solid #e0e0e0; transition: background 0.2s;" onmouseover="this.style.background='#f9f9f9'" onmouseout="this.style.background='#fff'">
           <td style="padding: 1rem;">${product.name}</td>
           <td style="padding: 1rem;">${product.brand || 'Unknown'}</td>
-          <td style="padding: 1rem; text-align: center; font-weight: 600; color: var(--color-primary);">$${parseFloat(product.price).toFixed(2)}</td>
+          <td style="padding: 1rem; text-align: center; font-weight: 600; color: var(--color-primary);">$${(product.displayPrice ?? product.msrp ?? 0).toFixed(2)}</td>
           <td style="padding: 1rem; text-align: center;"><span style="background: ${product.stock > 0 ? '#e8f5e9' : '#ffebee'}; color: ${product.stock > 0 ? '#2e7d32' : '#c62828'}; padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600;">${product.stock}</span></td>
-          <td style="padding: 1rem; text-align: center;"><button onclick="addToCart('${product.name}', '${product.price}')" style="padding: 0.4rem 0.8rem; background: var(--color-primary); color: #fff; border: none; border-radius: 4px; cursor: pointer; font-weight: 600; font-size: 0.85rem; transition: background 0.3s;">Add</button></td>
+          <td style="padding: 1rem; text-align: center;"><button onclick="addToCart('${product.name}', '${product.displayPrice ?? product.msrp ?? 0}')" style="padding: 0.4rem 0.8rem; background: var(--color-primary); color: #fff; border: none; border-radius: 4px; cursor: pointer; font-weight: 600; font-size: 0.85rem; transition: background 0.3s;">Add</button></td>
         </tr>
       `).join('');
     }

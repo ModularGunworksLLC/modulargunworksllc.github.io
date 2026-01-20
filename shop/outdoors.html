@@ -3,19 +3,19 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Shop survival gear at Modular Gunworks LLC - emergency preparedness and survival equipment.">
-  <meta name="keywords" content="survival, emergency, preparedness, first aid, tactical gear">
+  <meta name="description" content="Shop outdoors gear at Modular Gunworks LLC - emergency preparedness and outdoors equipment.">
+  <meta name="keywords" content="outdoors, emergency, preparedness, first aid, tactical gear">
   <meta name="author" content="Modular Gunworks LLC">
   <meta name="theme-color" content="#181a1b">
   
-  <title>Survival - Modular Gunworks LLC</title>
+  <title>Outdoors - Modular Gunworks LLC</title>
   
   <!-- Modular CSS -->
   <link rel="stylesheet" href="../styles/design-system.css">
   <link rel="stylesheet" href="../styles/components.css">
   <link rel="stylesheet" href="../styles/layout.css">
   <link rel="stylesheet" href="../styles/age-gate.css">
-  <link rel="stylesheet" href="../styles/survival.css">
+  <link rel="stylesheet" href="../styles/outdoors.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="icon" type="image/png" href="../favicon.png">
   
@@ -58,7 +58,7 @@
       <a href="../shop/gear.html">Gear</a>
       <a href="../shop/optics.html">Optics</a>
       <a href="../shop/reloading.html">Reloading</a>
-      <a href="../shop/survival.html">Survival</a>
+      <a href="../shop/outdoors.html">Outdoors</a>
       <a href="../shop/brands.html">Brands</a>
       <a href="../shop/sale.html">ON SALE</a>
       <a href="../services.html">Services</a>
@@ -94,6 +94,19 @@
             <!-- Populated by JavaScript -->
           </div>
           <button class="show-more-btn" data-filter="type">Show More</button>
+        </div>
+      </div>
+
+      <!-- AMMO TYPE FILTER (COLLAPSIBLE) - Special for Outdoors -->
+      <div class="filter-section">
+        <button class="filter-toggle" data-filter="ammoType">
+          <span>Ammo Type</span>
+          <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="filter-content">
+          <div id="ammo-type-list">
+            <!-- Populated by JavaScript -->
+          </div>
         </div>
       </div>
 
@@ -174,8 +187,8 @@
 
     <!-- RIGHT CONTENT AREA -->
     <div>
-      <h1 class="page-title">Survival & Preparedness</h1>
-      <p>Emergency preparedness and survival equipment for any situation</p>
+      <h1 class="page-title">Outdoors & Preparedness</h1>
+      <p>Emergency preparedness and outdoors equipment for any situation</p>
 
       <!-- PRODUCT CONTROLS & COUNT -->
       <div class="controls-row">
@@ -236,7 +249,7 @@
           <li><a href="../shop/gear.html">Gear</a></li>
           <li><a href="../shop/optics.html">Optics</a></li>
           <li><a href="../shop/reloading.html">Reloading</a></li>
-          <li><a href="../shop/survival.html">Survival</a></li>
+          <li><a href="../shop/outdoors.html">Outdoors</a></li>
           <li><a href="../shop/brands.html">Brands</a></li>
         </ul>
       </div>
@@ -277,17 +290,10 @@
   </footer>
 
   <script>
-    let allProducts = [];
-    let filteredProducts = [];
+    const CURRENT_PAGE_CATEGORY = "outdoors";
+    const INITIAL_ITEMS_SHOWN = 10;
     let currentView = 'grid';
-    let selectedFilters = {
-      type: [],
-      price: [0, Infinity],
-      brand: [],
-      stock: false,
-      sale: false,
-      sort: 'newest'
-    };
+    let allProducts = [];
 
     // Extract Type from Product Name (Knife, Flashlight, Water, Food, Rope, Kit, etc.)
     function extractType(productName) {
@@ -307,23 +313,38 @@
       return 'Other';
     }
 
+    // Extract Ammo Type for Outdoors (Rimfire, Shotgun, Hunting, Other)
+    function extractAmmoType(productName) {
+      const name = productName.toLowerCase();
+      if (name.includes('.22') || name.includes('rimfire') || name.includes('lr')) return 'Rimfire';
+      if (name.includes('shotgun') || name.includes('12ga') || name.includes('20ga') || name.includes('410')) return 'Shotgun';
+      if (name.includes('hunting') || name.includes('rifle') || name.includes('magnum') || name.includes('winchester')) return 'Hunting';
+      return 'Other';
+    }
+
     // Load products from JSON
     async function loadProducts() {
       try {
-        const response = await fetch('../data/products/survival.json');
+        const response = await fetch('../data/products/outdoors.json');
         let data = await response.json();
         
         // Load products directly from JSON (no active filter needed)
-        if (!Array.isArray(data)) {
-          data = data.products || [];
-        }
-
-        allProducts = data.map(product => ({
+        let products = Array.isArray(data.products) ? data.products : [];
+        
+        allProducts = products.map(product => ({
           ...product,
+          category: 'outdoors', // Set category for filter protection
           type: extractType(product.name),
-          price: product.retailPrice || product.salePrice || 0,
+          ammoType: extractAmmoType(product.name), // Special ammo-type filter for outdoors
+          price: product.displayPrice ?? product.msrp ?? 0,
           stock: product.inventory || 0
         }));
+
+        // FILTER PROTECTION: Only include products that match this page's category
+        allProducts = allProducts.filter(product => product.category === CURRENT_PAGE_CATEGORY);
+
+        // HIDE PRODUCTS WITHOUT IMAGES: Filter out products marked as hidden due to no available images
+        allProducts = allProducts.filter(product => !product.hidden);
 
         filteredProducts = [...allProducts];
         initializeFilters();
@@ -338,9 +359,11 @@
     // Initialize Filter Options
     function initializeFilters() {
       const types = [...new Set(allProducts.map(p => p.type).filter(Boolean))].sort();
+      const ammoTypes = [...new Set(allProducts.map(p => p.ammoType).filter(Boolean))].sort(); // Special ammo-type filter
       const brands = [...new Set(allProducts.map(p => p.brand).filter(Boolean))].sort();
 
       populateCheckboxFilter('type-list', types, 'type');
+      populateCheckboxFilter('ammo-type-list', ammoTypes, 'ammoType'); // Special ammo-type filter
       populateCheckboxFilter('brand-list', brands, 'brand');
 
       setupFilterToggle();
@@ -549,20 +572,23 @@
     function applyFilters() {
       filteredProducts = allProducts.filter(product => {
         // Type filter
-        if (selectedFilters.type.length > 0 && !selectedFilters.type.includes(product.type)) return false;
+        if (selectedFilters.type.length > 0 && (!product.type || !selectedFilters.type.includes(product.type))) return false;
+        
+        // Ammo Type filter (special for outdoors)
+        if (selectedFilters.ammoType.length > 0 && (!product.ammoType || !selectedFilters.ammoType.includes(product.ammoType))) return false;
         
         // Price filter
-        const price = product.price || 0;
-        if (price < selectedFilters.price[0] || price > selectedFilters.price[1]) return false;
+        const price = product.price;
+        if (price !== undefined && (price < selectedFilters.price[0] || price > selectedFilters.price[1])) return false;
         
         // Brand filter
-        if (selectedFilters.brand.length > 0 && !selectedFilters.brand.includes(product.brand)) return false;
+        if (selectedFilters.brand.length > 0 && (!product.brand || !selectedFilters.brand.includes(product.brand))) return false;
         
         // Stock filter
-        if (selectedFilters.stock && (product.inventory || 0) === 0) return false;
+        if (selectedFilters.stock && product.inventory !== undefined && product.inventory === 0) return false;
         
         // Sale filter
-        if (selectedFilters.sale && (!product.salePrice || product.salePrice >= price)) return false;
+        if (selectedFilters.sale && !(product.displayPrice < product.msrp)) return false;
         
         return true;
       });
@@ -597,14 +623,14 @@
       container.innerHTML = filteredProducts.map(product => `
         <div style="display: flex; flex-direction: column; background: #fff; border: 1px solid #e0e0e0; border-radius: 8px; overflow: hidden; transition: all 0.3s; cursor: pointer;" onmouseover="this.style.boxShadow='0 4px 12px rgba(0,0,0,0.1)'" onmouseout="this.style.boxShadow='none'">
           <div style="width: 100%; aspect-ratio: 1; overflow: hidden; background: #f5f5f5;">
-            <img src="${product.image || '../images/categories/survival.jpg'}" alt="${product.name}" style="width: 100%; height: 100%; object-fit: cover;">
+            <img src="${product.image || '../images/categories/outdoors.jpg'}" alt="${product.name}" style="width: 100%; height: 100%; object-fit: cover;">
           </div>
           <div style="padding: 1rem; flex: 1; display: flex; flex-direction: column;">
             <h3 style="font-size: 0.95rem; margin: 0 0 0.5rem 0; color: #333; font-weight: 600; line-height: 1.3;">${product.name}</h3>
             <p style="color: #666; font-size: 0.85rem; margin: 0 0 0.5rem 0;">${product.brand || 'Unknown'}</p>
-            <p style="color: var(--color-primary); font-weight: 700; font-size: 1.1rem; margin: 0.5rem 0;">$${parseFloat(product.price).toFixed(2)}</p>
+            <p style="color: var(--color-primary); font-weight: 700; font-size: 1.1rem; margin: 0.5rem 0;">$${(product.displayPrice ?? product.msrp ?? 0).toFixed(2)}</p>
             <p style="color: ${product.stock > 0 ? '#4caf50' : '#f44336'}; font-size: 0.85rem; margin: 0.5rem 0; font-weight: 600;">${product.stock > 0 ? 'In Stock' : 'Out of Stock'}</p>
-            <button onclick="addToCart('${product.name}', '${product.price}')" style="margin-top: auto; padding: 0.6rem; background: var(--color-primary); color: #fff; border: none; border-radius: 4px; cursor: pointer; font-weight: 600; transition: background 0.3s;">Add to Cart</button>
+            <button onclick="addToCart('${product.name}', '${product.displayPrice ?? product.msrp ?? 0}')" style="margin-top: auto; padding: 0.6rem; background: var(--color-primary); color: #fff; border: none; border-radius: 4px; cursor: pointer; font-weight: 600; transition: background 0.3s;">Add to Cart</button>
           </div>
         </div>
       `).join('');
@@ -624,9 +650,9 @@
         <tr style="border-bottom: 1px solid #e0e0e0; transition: background 0.2s;" onmouseover="this.style.background='#f9f9f9'" onmouseout="this.style.background='#fff'">
           <td style="padding: 1rem;">${product.name}</td>
           <td style="padding: 1rem;">${product.brand || 'Unknown'}</td>
-          <td style="padding: 1rem; text-align: center; font-weight: 600; color: var(--color-primary);">$${parseFloat(product.price).toFixed(2)}</td>
+          <td style="padding: 1rem; text-align: center; font-weight: 600; color: var(--color-primary);">$${(product.displayPrice ?? product.msrp ?? 0).toFixed(2)}</td>
           <td style="padding: 1rem; text-align: center;"><span style="background: ${product.stock > 0 ? '#e8f5e9' : '#ffebee'}; color: ${product.stock > 0 ? '#2e7d32' : '#c62828'}; padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600;">${product.stock}</span></td>
-          <td style="padding: 1rem; text-align: center;"><button onclick="addToCart('${product.name}', '${product.price}')" style="padding: 0.4rem 0.8rem; background: var(--color-primary); color: #fff; border: none; border-radius: 4px; cursor: pointer; font-weight: 600; font-size: 0.85rem; transition: background 0.3s;">Add</button></td>
+          <td style="padding: 1rem; text-align: center;"><button onclick="addToCart('${product.name}', '${product.displayPrice ?? product.msrp ?? 0}')" style="padding: 0.4rem 0.8rem; background: var(--color-primary); color: #fff; border: none; border-radius: 4px; cursor: pointer; font-weight: 600; font-size: 0.85rem; transition: background 0.3s;">Add</button></td>
         </tr>
       `).join('');
     }

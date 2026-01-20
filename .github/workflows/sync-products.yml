@@ -59,4 +59,4 @@ jobs:
       - name: Log sync status
         run: |
           echo "✅ Product sync completed successfully"
-          echo "📊 Updated categories: Ammunition, Magazines, Reloading, Gun-Parts, Optics, Gear, Survival"
+          echo "📊 Updated categories: Ammunition, Magazines, Reloading, Gun-Parts, Optics, Gear, Outdoors"
