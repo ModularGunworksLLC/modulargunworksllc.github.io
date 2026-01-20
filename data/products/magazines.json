@@ -1,6 +1,6 @@
 {
   "category": "magazines",
-  "lastUpdated": "2026-01-20T04:40:26.189Z",
+  "lastUpdated": "2026-01-20T08:24:17.026Z",
   "products": [
     {
       "id": "AAMAGPRO1",
@@ -1165,14 +1165,14 @@
       "image": "https://images.chattanoogashooting.com/products/ur90548.jpg",
       "retailPrice": 35.14,
       "salePrice": 35.14,
-      "inventory": 363,
+      "inventory": 362,
       "inStock": true,
       "requiresFFL": false,
       "serialized": false,
       "dropShip": true,
       "allocated": false,
       "mapPrice": 0,
-      "lastUpdated": "2026-01-19 21:14:10.727",
+      "lastUpdated": "2026-01-20 00:45:30.68",
       "caliber": ".22 LR",
       "platform": "Ruger",
       "capacity": 10,
@@ -1785,27 +1785,6 @@
       "caliber": null,
       "platform": "Ruger",
       "capacity": 10,
-      "material": null
-    },
-    {
-      "id": "XRTG970GD",
-      "name": "GLOCK DISASSEMBLY TOOL/PUNCH",
-      "brand": "GLOCK",
-      "category": "magazines",
-      "image": "https://images.chattanoogashooting.com/products/xrtg970gd.jpg",
-      "retailPrice": 3.29,
-      "salePrice": 3.29,
-      "inventory": 5,
-      "inStock": true,
-      "requiresFFL": false,
-      "serialized": false,
-      "dropShip": true,
-      "allocated": false,
-      "mapPrice": 0,
-      "lastUpdated": "2026-01-11 22:15:30.713",
-      "caliber": null,
-      "platform": "Glock",
-      "capacity": null,
       "material": null
     },
     {
