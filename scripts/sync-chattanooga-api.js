@@ -1037,4 +1037,9 @@ async function writeCategoryFilesIncrementally(productsBatch, categoryFirstWrite
   if (require.main === module) {
     syncAllProducts();
   }
-  }
+}
+
+// ========== EXECUTE SYNC WHEN RUN DIRECTLY ==========
+if (require.main === module) {
+  syncAllProducts();
+}
