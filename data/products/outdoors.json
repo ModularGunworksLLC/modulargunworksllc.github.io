@@ -8,7 +8,7 @@
       "brand": "GLOCK",
       "category": "outdoors",
       "subCategory": "",
-      "image": null,
+      "image": "../images/placeholders/product-placeholder.png",
       "hidden": false,
       "msrp": 31.89,
       "mapPrice": 0,
@@ -27,8 +27,6 @@
     },
     {
       "id": "HK100B",
-      "name": "HKS CASE DBL BLK CORDURA",
-      "brand": "HKS",
       "category": "outdoors",
       "subCategory": "",
       "image": null,

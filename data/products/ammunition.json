@@ -8,7 +8,7 @@
       "brand": "9MM",
       "category": "ammunition",
       "subCategory": "Handgun Ammo",
-      "image": null,
+      "image": "../images/placeholders/product-placeholder.png",
       "hidden": false,
       "msrp": 33.69,
       "mapPrice": 0,
@@ -27,8 +27,6 @@
     },
     {
       "id": "AU1E092110",
-      "name": "Aguila 9MM FMJ 124 GR 50/RD",
-      "brand": "AGUILA",
       "category": "ammunition",
       "subCategory": "Handgun Ammo",
       "image": null,

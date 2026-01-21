@@ -8,7 +8,7 @@
       "brand": "ACCURATE",
       "category": "reloading",
       "subCategory": "",
-      "image": null,
+      "image": "../images/placeholders/product-placeholder.png",
       "hidden": false,
       "msrp": 42.99,
       "mapPrice": 0,
@@ -27,8 +27,6 @@
     },
     {
       "id": "AA16808",
-      "name": "ACCURATE POWDER #1680 8LB (0623) (OVER 18)",
-      "brand": "ACCURATE",
       "category": "reloading",
       "subCategory": "",
       "image": null,
