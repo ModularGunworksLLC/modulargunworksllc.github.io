@@ -310,6 +310,7 @@
 
     // EXTRACT CATEGORY FROM PRODUCT NAME
     function extractCategory(name) {
+      if (!name || typeof name !== "string") return 'Other Ammo';
       const categoryPatterns = {
         'Hunting Ammo': ['hunting', 'rifle', 'magnum', 'win mag', 'magnum', 'xp', '300 win', '338 lapua'],
         'AR-15 Ammo': ['.223', '.556', 'nato', '5.56', 'ar-15'],

@@ -661,78 +661,56 @@ async function resolveProductImage(raw) {
       brand: raw && raw.brand ? raw.brand : "",
       name: raw && raw.name ? raw.name : ""
     });
-    return null;
+    return { image: "../images/placeholders/product-placeholder.png", ext: null };
   }
 
   const sku = raw.id;
-  // Set a global for expandFilenameVariants to access product name
-  if (typeof global !== 'undefined') {
-    global._currentProductName = raw.name || '';
-  }
-  const baseFilenames = buildBaseFilenames(raw);
+  const fs = require("fs");
+  const path = require("path");
+  const fetch = global.fetch || require("node-fetch");
 
-  const attempted = [];
-  const successful = [];
+  // Deterministic CDN check order
+  const candidates = [
+    `https://media.chattanoogashooting.com/productimages/${sku}.jpg`,
+    `https://media.chattanoogashooting.com/productimages/${sku}_1.jpg`,
+    `https://media.chattanoogashooting.com/productimages/${sku}.png`,
+    `https://media.chattanoogashooting.com/productimages/${sku}_1.png`
+  ];
 
-  const baseUrlDir = `https://media.chattanoogashooting.com/images/product/${sku}`;
-  const flatBaseDir = `https://media.chattanoogashooting.com/products`;
-
-  // Build all URL candidates (directory + flat + query variants)
-  const urlCandidates = new Set();
-
-  for (const base of baseFilenames) {
-    const filenameVariants = expandFilenameVariants(base);
-
-    for (const fn of filenameVariants) {
-      // directory form
-      const dirUrl = `${baseUrlDir}/${fn}`;
-      for (const u of expandQueryVariants(dirUrl)) {
-        urlCandidates.add(u);
-      }
-
-      // flat fallback
-      const flatUrl = `${flatBaseDir}/${fn}`;
-      for (const u of expandQueryVariants(flatUrl)) {
-        urlCandidates.add(u);
-      }
-    }
-  }
-
-  // Try each URL until one succeeds (use GET instead of HEAD for CDN compatibility)
-  for (const url of urlCandidates) {
-    attempted.push(url);
+  let foundUrl = null;
+  let ext = null;
+  for (const url of candidates) {
     try {
-      const res = await fetch(url, { method: "GET" });
-      // Accept any 2xx response as valid
+      const res = await fetch(url, { method: "HEAD" });
       if (res.status >= 200 && res.status < 300) {
-        successful.push(url);
+        foundUrl = url;
+        ext = url.endsWith(".png") ? "png" : "jpg";
+        break;
       }
-    } catch (e) {
-      // ignore network errors, just treat as failed
-    }
+    } catch (e) {}
   }
 
-  // Choose the "best" URL: longest filename (most specific), prefer directory over flat
-  let chosen = null;
-  if (successful.length > 0) {
-    successful.sort((a, b) => {
-      const aIsDir = a.includes(`/images/product/`);
-      const bIsDir = b.includes(`/images/product/`);
-      if (aIsDir && !bIsDir) return -1;
-      if (!aIsDir && bIsDir) return 1;
-      return b.length - a.length;
-    });
-    chosen = successful[0];
+  // Download and save image if found
+  if (foundUrl && ext) {
+    try {
+      const res = await fetch(foundUrl);
+      if (res.status >= 200 && res.status < 300) {
+        const arrayBuffer = await res.arrayBuffer();
+        const buffer = Buffer.from(arrayBuffer);
+        const outDir = path.join(__dirname, "../public/images/thumbnails");
+        if (!fs.existsSync(outDir)) fs.mkdirSync(outDir, { recursive: true });
+        const outPath = path.join(outDir, `${sku}.${ext}`);
+        fs.writeFileSync(outPath, buffer);
+        const relPath = `../images/thumbnails/${sku}.${ext}`;
+        console.log(`Resolved image for ${sku}: ${relPath}`);
+        return { image: relPath, ext };
+      }
+    } catch (e) {}
   }
 
-  logDebug("IMAGE_RESOLVER_LOG", {
-    sku,
-    attempted,
-    successful,
-    chosen,
-  });
-
-  return chosen;
+  // If not found, use placeholder
+  console.log(`Image missing for ${sku}, using placeholder`);
+  return { image: "../images/placeholders/product-placeholder.png", ext: null };
 }
 
 // ========== TRANSFORMATION & SAVE ==========
@@ -754,7 +732,7 @@ async function transformProduct(apiProduct) {
   const brand = (apiProduct.brand || extractBrandFromName(productName) || "Generic").toUpperCase();
   const vendorCategory = apiProduct.category || apiProduct.subcategory || "";
 
-  const image = await resolveProductImage({
+  const imageResult = await resolveProductImage({
     id: apiProduct.cssi_id || apiProduct.id || "",
     brand,
     name: productName
@@ -769,7 +747,7 @@ async function transformProduct(apiProduct) {
   const finalCategory = applyGlobalOverrides(
     { name: productName, brand },
     category || "gear"
-  );
+  ) || "gear";
 
   const subCategory = deriveSubCategory(productName, finalCategory);
 
@@ -779,7 +757,7 @@ async function transformProduct(apiProduct) {
     brand,
     category: finalCategory,
     subCategory,
-    image,
+    image: imageResult.image,
     hidden: false, // set below
     msrp,
     mapPrice: map,
@@ -943,6 +921,8 @@ async function syncAllProducts() {
     process.exit(1);
   }
 
+
+
   try {
     const activeProducts = loadActiveProducts();
     console.log(
@@ -950,105 +930,73 @@ async function syncAllProducts() {
     );
     console.log("ℹ️  If empty, all products will be synced\n");
 
-    let allProducts = [];
+    const BATCH_SIZE = 2000;
     let page = 1;
     let hasMore = true;
+    let totalFetched = 0;
+    let batchNum = 1;
+    // Prepare file streams for incremental writing
+    const categoryFiles = {};
+    const categoryFirstWrite = {};
+    const categories = [
+      "ammunition",
+      "magazines",
+      "reloading",
+      "gun-parts",
+      "optics",
+      "gear",
+      "outdoors",
+      "brands",
+      "sale",
+      "firearms",
+      "services"
+    ];
+    // Remove/replace old files before starting
+    for (const cat of categories) {
+      const filePath = path.join(__dirname, `../data/products/${cat}.json`);
+      if (fs.existsSync(filePath)) fs.unlinkSync(filePath);
+      categoryFirstWrite[cat] = true;
+    }
 
     while (hasMore) {
       const response = await fetchAllProducts(page);
-      if (response.items && response.items.length > 0) {
-        allProducts = allProducts.concat(response.items);
-        page++;
-        const pagination = response.pagination || {};
-        hasMore = page <= (pagination.page_count || 0);
-      } else {
+      const items = response.items || [];
+      if (items.length === 0) {
         hasMore = false;
+        break;
       }
-    }
+      totalFetched += items.length;
+      console.log(`Processing batch ${batchNum}`);
+      batchNum++;
 
-    console.log(`✓ Fetched ${allProducts.length} products from API\n`);
-
-    if (DEBUG_RAW_PRODUCT) {
-      console.log("===== RAW PRODUCT SAMPLE =====");
-      console.log(JSON.stringify(allProducts[0], null, 2));
-      console.log("===== END RAW SAMPLE =====");
-      process.exit(0);
-    }
-
-    console.log("🔄 Transforming products with image resolution...");
-
-    const transformationResults = await Promise.all(
-      allProducts.map(apiProduct => transformProduct(apiProduct))
-    );
-
-    const transformedProducts = transformationResults.filter(p => p !== null);
-
-    // Apply brand & compliance filters
-    const finalProducts = [];
-    for (const transformed of transformedProducts) {
-      const apiProduct = allProducts.find(
-        p => (p.cssi_id || p.id) === transformed.id
+      // Transform and resolve images in batch
+      const transformationResults = await Promise.all(
+        items.map(apiProduct => transformProduct(apiProduct))
       );
-      if (!apiProduct) continue;
+      const transformedProducts = transformationResults.filter(p => p !== null);
 
-      if (!shouldIncludeBrand(transformed)) continue;
-      if (!shouldIncludeProduct(apiProduct)) continue;
+      // Apply brand & compliance filters
+      const finalProducts = [];
+      for (let i = 0; i < transformedProducts.length; i++) {
+        const transformed = transformedProducts[i];
+        const apiProduct = items[i];
+        if (!shouldIncludeBrand(transformed)) continue;
+        if (!shouldIncludeProduct(apiProduct)) continue;
+        finalProducts.push(transformed);
+      }
 
-      finalProducts.push(transformed);
+      // Write each product to its category file incrementally
+      await writeCategoryFilesIncrementally(finalProducts, categoryFirstWrite);
+
+      // Next batch
+      page++;
+      const pagination = response.pagination || {};
+      hasMore = page <= (pagination.page_count || 0);
     }
 
-    console.log(
-      `✓ Transformed & filtered to ${finalProducts.length} premium, compliant products\n`
-    );
-
-    const categorizedProducts = {
-      ammunition: [],
-      magazines: [],
-      reloading: [],
-      "gun-parts": [],
-      optics: [],
-      gear: [],
-      outdoors: [],
-      brands: [],
-      sale: [],
-      firearms: [],
-      services: []
-    };
-
-    finalProducts.forEach(product => {
-      const targetCategory = product.category || "gear";
-      if (categorizedProducts[targetCategory]) {
-        categorizedProducts[targetCategory].push(product);
-      } else {
-        categorizedProducts["gear"].push(product);
-      }
-    });
-
-    let totalSaved = 0;
-    for (const [category, products] of Object.entries(categorizedProducts)) {
-      if (products.length > 0) {
-        saveProducts(category, products);
-        totalSaved += products.length;
-      }
-    }
-
-    console.log(`\n📊 FINAL PRODUCT CATALOG BY CATEGORY:`);
-    for (const [category, products] of Object.entries(categorizedProducts)) {
-      if (products.length > 0) {
-        console.log(
-          `  ✓ ${category.padEnd(15)}: ${products.length
-            .toString()
-            .padEnd(6)} products`
-        );
-      }
-    }
-
+    console.log(`\n✓ Fetched and processed ${totalFetched} products from API in batches\n`);
     console.log("\n════════════════════════════════════════");
     console.log("✓ SYNC COMPLETED SUCCESSFULLY");
-    console.log(`  Total products: ${totalSaved}`);
-    console.log(
-      "  Filtering: TOP BRANDS (soft) + COMPLIANCE + EXCLUSION-FIRST CATEGORIZATION"
-    );
     console.log("════════════════════════════════════════\n");
 
     await auditMissingImages();
@@ -1058,4 +1006,35 @@ async function syncAllProducts() {
   }
 }
 
-syncAllProducts();
+// Helper: Incrementally write products to category files in batches
+async function writeCategoryFilesIncrementally(productsBatch, categoryFirstWrite) {
+  const fs = require("fs");
+  const path = require("path");
+  const byCategory = {};
+  for (const product of productsBatch) {
+    const cat = product.category || "gear";
+    if (!byCategory[cat]) byCategory[cat] = [];
+    byCategory[cat].push(product);
+  }
+  for (const [cat, products] of Object.entries(byCategory)) {
+    const filePath = path.join(__dirname, `../data/products/${cat}.json`);
+    let fileExists = fs.existsSync(filePath);
+    let data = { category: cat, lastUpdated: new Date().toISOString(), products: [] };
+    if (fileExists && !categoryFirstWrite[cat]) {
+      // Read existing products array only
+      try {
+        const raw = fs.readFileSync(filePath, "utf8");
+        const parsed = JSON.parse(raw);
+        if (Array.isArray(parsed.products)) data.products = parsed.products;
+      } catch {}
+    }
+    data.products = data.products.concat(products);
+    fs.writeFileSync(filePath, JSON.stringify(data, null, 2));
+    categoryFirstWrite[cat] = false;
+  }
+}
+  // ========== EXECUTE SYNC WHEN RUN DIRECTLY ==========
+  if (require.main === module) {
+    syncAllProducts();
+  }
+  }
