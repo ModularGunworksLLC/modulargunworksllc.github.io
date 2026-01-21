@@ -670,11 +670,14 @@ async function resolveProductImage(raw) {
   const fetch = global.fetch || require("node-fetch");
 
   // Deterministic CDN check order
+
   const candidates = [
     `https://media.chattanoogashooting.com/productimages/${sku}.jpg`,
     `https://media.chattanoogashooting.com/productimages/${sku}_1.jpg`,
     `https://media.chattanoogashooting.com/productimages/${sku}.png`,
-    `https://media.chattanoogashooting.com/productimages/${sku}_1.png`
+    `https://media.chattanoogashooting.com/productimages/${sku}_1.png`,
+    `https://media.chattanoogashooting.com/productimages/${sku}.webp`,
+    `https://media.chattanoogashooting.com/productimages/${sku}_1.webp`
   ];
 
   let foundUrl = null;
@@ -684,7 +687,9 @@ async function resolveProductImage(raw) {
       const res = await fetch(url, { method: "HEAD" });
       if (res.status >= 200 && res.status < 300) {
         foundUrl = url;
-        ext = url.endsWith(".png") ? "png" : "jpg";
+        if (url.endsWith(".webp")) ext = "webp";
+        else if (url.endsWith(".png")) ext = "png";
+        else ext = "jpg";
         break;
       }
     } catch (e) {}
@@ -1011,33 +1016,31 @@ async function writeCategoryFilesIncrementally(productsBatch, categoryFirstWrite
   const fs = require("fs");
   const path = require("path");
   const byCategory = {};
+
   for (const product of productsBatch) {
     const cat = product.category || "gear";
     if (!byCategory[cat]) byCategory[cat] = [];
     byCategory[cat].push(product);
   }
+
   for (const [cat, products] of Object.entries(byCategory)) {
     const filePath = path.join(__dirname, `../data/products/${cat}.json`);
     let fileExists = fs.existsSync(filePath);
     let data = { category: cat, lastUpdated: new Date().toISOString(), products: [] };
+
     if (fileExists && !categoryFirstWrite[cat]) {
-      // Read existing products array only
       try {
         const raw = fs.readFileSync(filePath, "utf8");
         const parsed = JSON.parse(raw);
         if (Array.isArray(parsed.products)) data.products = parsed.products;
       } catch {}
     }
+
     data.products = data.products.concat(products);
     fs.writeFileSync(filePath, JSON.stringify(data, null, 2));
     categoryFirstWrite[cat] = false;
   }
-}
-  // ========== EXECUTE SYNC WHEN RUN DIRECTLY ==========
-  if (require.main === module) {
-    syncAllProducts();
-  }
-}
+}   // ← ✔️ THIS IS THE ONLY CLOSING BRACE NEEDED HERE
 
 // ========== EXECUTE SYNC WHEN RUN DIRECTLY ==========
 if (require.main === module) {
