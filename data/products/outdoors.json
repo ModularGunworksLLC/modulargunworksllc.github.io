@@ -1,6 +1,6 @@
 {
   "category": "outdoors",
-  "lastUpdated": "2026-01-22T04:03:43.469Z",
+  "lastUpdated": "2026-01-22T07:36:22.878Z",
   "products": [
     {
       "id": "GLCASE01",
@@ -2175,13 +2175,13 @@
       "msrp": 18.59,
       "mapPrice": 0,
       "displayPrice": 18.59,
-      "inventory": 4,
+      "inventory": 3,
       "inStock": true,
       "requiresFFL": false,
       "serialized": false,
       "dropShip": true,
       "allocated": false,
-      "lastUpdated": "2026-01-20 18:59:00.937",
+      "lastUpdated": "2026-01-22 00:11:10.503",
       "caliber": null,
       "platform": null,
       "capacity": null,
