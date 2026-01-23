@@ -1,45 +1,76 @@
-name: Sync Chattanooga Products Every 4 Hours
+name: Modular Gunworks — Full Sync Pipeline
 
 on:
   schedule:
-    # Runs at 12 AM, 4 AM, 8 AM, 12 PM, 4 PM, 8 PM UTC (every 4 hours)
-    - cron: '0 0,4,8,12,16,20 * * *'
-  
-  # Allow manual trigger from GitHub Actions tab
+    # Runs every 4 hours (UTC): 12 AM, 4 AM, 8 AM, 12 PM, 4 PM, 8 PM
+    - cron: "0 0,4,8,12,16,20 * * *"
   workflow_dispatch:
 
 permissions:
   contents: write
 
 jobs:
-  sync-products:
+  sync:
     runs-on: ubuntu-latest
-    
+
     steps:
+      # ------------------------------
+      # CHECKOUT REPO
+      # ------------------------------
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
+
+      # ------------------------------
+      # SETUP NODE
+      # ------------------------------
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
-          node-version: '18'
-      
+          node-version: 20
+
+      # ------------------------------
+      # INSTALL DEPENDENCIES
+      # ------------------------------
       - name: Install dependencies
         run: npm install
-      
-      - name: Sync products from Chattanooga API
-        env:
-          API_SID: ${{ secrets.CHATTANOOGA_SID }}
-          API_TOKEN: ${{ secrets.CHATTANOOGA_TOKEN }}
-        run: node scripts/sync-chattanooga-api.js
-      
-      - name: Configure Git
+
+      # ------------------------------
+      # SET ENVIRONMENT VARIABLES
+      # ------------------------------
+      - name: Set environment variables
         run: |
-          git config --global user.name "Modular Gunworks Bot"
-          git config --global user.email "bot@modulargunworks.com"
-      
+          echo "CHATTANOOGA_SID=${{ secrets.CHATTANOOGA_SID }}" >> $GITHUB_ENV
+          echo "CHATTANOOGA_TOKEN=${{ secrets.CHATTANOOGA_TOKEN }}" >> $GITHUB_ENV
+
+      # ------------------------------
+      # STEP 1 — BUILD FROM XLSX
+      # ------------------------------
+      - name: Build products from XLSX
+        run: node scripts/build-products-from-xlsx.js
+
+      # ------------------------------
+      # STEP 2 — UPDATE FROM API
+      # ------------------------------
+      - name: Update products from API
+        run: node scripts/update-products-from-api.js
+
+      # ------------------------------
+      # STEP 3 — UPDATE IMAGE MANIFEST (incremental)
+      # ------------------------------
+      - name: Update image manifest
+        run: node scripts/update-image-manifest.js
+
+      # ------------------------------
+      # STEP 4 — VALIDATE CATEGORY PAGES
+      # ------------------------------
+      - name: Validate category pages
+        run: node scripts/category-page-validator.js
+
+      # ------------------------------
+      # STEP 5 — CHECK FOR CHANGES
+      # ------------------------------
       - name: Check for changes
         id: check_changes
         run: |
@@ -48,15 +79,25 @@ jobs:
           else
             echo "has_changes=true" >> $GITHUB_OUTPUT
           fi
-      
+
+      # ------------------------------
+      # STEP 6 — COMMIT & PUSH
+      # ------------------------------
       - name: Commit and push changes
         if: steps.check_changes.outputs.has_changes == 'true'
         run: |
+          git config --global user.name "Modular Gunworks Bot"
+          git config --global user.email "bot@modulargunworks.com"
           git add data/products/*.json
-          git commit -m "Auto-sync: Update product data from Chattanooga API at $(date -u +'%Y-%m-%d %H:%M:%S UTC')"
+          git add data/chattanooga-image-cdn-manifest.json
+          git add data/missing-images.log
+          git commit -m "Automated sync: $(date -u)"
           git push origin main
-      
+
+      # ------------------------------
+      # STEP 7 — LOG STATUS
+      # ------------------------------
       - name: Log sync status
         run: |
-          echo "✅ Product sync completed successfully"
-          echo "📊 Updated categories: Ammunition, Magazines, Reloading, Gun-Parts, Optics, Gear, Outdoors"
+          echo "✅ Full ingestion pipeline completed successfully"
+          echo "📦 Products updated, images resolved, categories validated"
