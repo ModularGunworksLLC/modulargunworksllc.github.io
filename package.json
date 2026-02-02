@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node serve.js",
     "admin": "node scripts/admin-api.js",
-    "sync": "node scripts/sync-chattanooga-api.js",
+    "sync": "node scripts/sync-products.js",
+    "sync:schedule": "node scripts/sync-products.js --schedule",
     "dev": "start cmd /k node serve.js && start cmd /k node scripts/admin-api.js"
   },
   "keywords": [
@@ -19,7 +20,9 @@
   "dependencies": {
     "cors": "^2.8.5",
     "csv-parser": "^3.2.0",
+    "dotenv": "^17.2.3",
     "express": "^4.22.1",
-    "nodemailer": "^7.0.12"
+    "nodemailer": "^7.0.12",
+    "puppeteer": "^24.36.1"
   }
 }

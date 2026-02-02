@@ -1,34 +1,41 @@
-/* Age Gate Modal Styles */
+/* Age Gate - Industry-standard verification for firearm/ammunition retailers
+   Aligns with PSA, Ammo Depot, Chattanooga-style implementations: 21+, no bypass */
 
 .age-gate-modal {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.9);
+  inset: 0;
+  z-index: 99999;
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 9999;
-  backdrop-filter: blur(5px);
+  padding: 1rem;
+  background: rgba(0, 0, 0, 0.92);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.age-gate-backdrop {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
 }
 
 .age-gate-content {
+  position: relative;
   background: #fff;
   border-radius: 12px;
-  padding: 3rem 2rem;
-  max-width: 500px;
-  width: 90%;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+  padding: 2.5rem 2rem;
+  max-width: 480px;
+  width: 100%;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
   text-align: center;
-  animation: slideUp 0.4s ease-out;
+  animation: age-gate-slideUp 0.35s ease-out;
 }
 
-@keyframes slideUp {
+@keyframes age-gate-slideUp {
   from {
     opacity: 0;
-    transform: translateY(30px);
+    transform: translateY(24px);
   }
   to {
     opacity: 1;
@@ -36,89 +43,81 @@
   }
 }
 
+.age-gate-header {
+  margin-bottom: 1.25rem;
+}
+
+.age-gate-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  margin-bottom: 0.75rem;
+  background: #b22222;
+  color: #fff;
+  border-radius: 50%;
+  font-size: 1.5rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.age-gate-icon::before {
+  content: "21";
+}
+
 .age-gate-content h1 {
-  font-size: 1.8rem;
+  font-size: 1.5rem;
   color: #181a1b;
-  margin-bottom: 0.5rem;
-  font-weight: 900;
+  margin: 0;
+  font-weight: 800;
+  letter-spacing: 0.02em;
 }
 
-.age-gate-content p {
-  color: #666;
+.age-gate-intro {
+  color: #444;
+  font-size: 0.95rem;
+  line-height: 1.55;
   margin-bottom: 1.5rem;
-  line-height: 1.6;
-  font-size: 1rem;
 }
 
-.age-gate-warning {
-  background: #fff3cd;
-  border-left: 4px solid #ffc107;
-  padding: 1rem;
-  margin-bottom: 1.5rem;
-  border-radius: 4px;
-  color: #856404;
-  font-size: 0.9rem;
-  display: none;
+.age-gate-intro strong {
+  color: #181a1b;
 }
 
 .age-gate-question {
   background: #f5f5f5;
-  padding: 1.5rem;
+  padding: 1.25rem 1.5rem;
   border-radius: 8px;
-  margin-bottom: 2rem;
-  font-size: 1.1rem;
+  margin-bottom: 1.75rem;
+  border: 1px solid #e8e8e8;
+}
+
+.age-gate-question p {
+  margin: 0;
+  font-size: 1.05rem;
   font-weight: 600;
   color: #181a1b;
 }
 
-.age-gate-form {
-  display: none;
-  flex-direction: column;
-  gap: 1rem;
-  margin-bottom: 1.5rem;
-}
-
-.age-gate-form label {
-  text-align: left;
-  font-weight: 600;
-  color: #333;
-  font-size: 0.95rem;
-}
-
-.age-gate-form select,
-.age-gate-form input {
-  padding: 0.8rem;
-  border: 2px solid #ddd;
-  border-radius: 6px;
-  font-size: 1rem;
-  transition: border-color 0.3s;
-}
-
-.age-gate-form select:focus,
-.age-gate-form input:focus {
-  outline: none;
-  border-color: #c00;
-}
-
 .age-gate-buttons {
   display: flex;
-  gap: 1rem;
-  justify-content: center;
   flex-direction: column;
-  margin-bottom: 1.5rem;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
 }
 
 .age-gate-btn {
-  padding: 1rem 2rem;
+  padding: 1rem 1.5rem;
   border: 2px solid transparent;
-  border-radius: 6px;
+  border-radius: 8px;
   font-size: 1rem;
   font-weight: 700;
   cursor: pointer;
-  transition: all 0.3s ease;
-  text-transform: uppercase;
-  letter-spacing: 1px;
+  transition: background 0.2s, border-color 0.2s, box-shadow 0.2s;
   width: 100%;
+  text-transform: none;
+  letter-spacing: 0.02em;
 }
 
 .age-gate-btn-confirm {
@@ -129,30 +128,34 @@
 
 .age-gate-btn-confirm:hover {
   background: #8b1a1a;
-  box-shadow: 0 4px 12px rgba(178, 34, 34, 0.3);
+  border-color: #8b1a1a;
+  box-shadow: 0 4px 14px rgba(178, 34, 34, 0.35);
 }
 
 .age-gate-btn-deny {
-  background: #ddd;
-  color: #333;
+  background: #fff;
+  color: #555;
   border-color: #ccc;
 }
 
 .age-gate-btn-deny:hover {
-  background: #bbb;
+  background: #f5f5f5;
   border-color: #999;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .age-gate-legal {
-  font-size: 0.8rem;
-  color: #999;
-  margin-top: 1rem;
-  line-height: 1.4;
+  font-size: 0.75rem;
+  color: #777;
+  line-height: 1.45;
+  margin-top: 0;
+}
+
+.age-gate-legal p {
+  margin: 0;
 }
 
 .age-gate-legal a {
-  color: #c00;
+  color: #b22222;
   text-decoration: none;
   font-weight: 600;
 }
@@ -161,11 +164,12 @@
   text-decoration: underline;
 }
 
-/* Hide body content when age gate is shown */
+/* Block all page content and scroll when gate is shown */
 body.age-gate-shown {
   overflow: hidden;
+  height: 100%;
 }
 
 body.age-gate-shown > *:not(.age-gate-modal) {
-  display: none;
+  display: none !important;
 }

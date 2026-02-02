@@ -237,6 +237,9 @@
     }
   </style>
   <script src="../scripts/age-gate.js"></script>
+  <script src="../scripts/cart.js"></script>
+  <script src="../scripts/load-products.js"></script>
+  <script src="../scripts/shop-products-ui.js"></script>
 </head>
 
 <body>
@@ -252,7 +255,7 @@
       <div class="header-left-links">
         <a href="#account">Account</a>
         <a href="#help">Help</a>
-        <a href="../shop/cart.html">Cart</a>
+        <a href="../shop/cart.html"><i class="fas fa-shopping-cart"></i> Cart <span class="cart-count-badge" style="background: var(--color-primary); color: #fff; padding: 2px 6px; border-radius: 10px; font-size: 0.75rem; display: none;">0</span></a>
       </div>
       <form class="search-bar" action="#" method="get">
         <input type="text" placeholder="Search ammo, gear, optics...">
@@ -286,6 +289,14 @@
         <button id="clear-filters" style="padding: 0.3rem 0.6rem; background: transparent; color: var(--color-primary); border: none; cursor: pointer; font-weight: 600; font-size: 0.75rem; text-transform: uppercase; transition: all 0.2s;">
           Clear All
         </button>
+      </div>
+
+      <!-- SHOW ONLY IN STOCK - standalone at top, always visible -->
+      <div class="filter-stock-top" style="padding: 1rem 1.2rem; border-bottom: 1px solid #e0e0e0; background: #fafafa;">
+        <label style="display: flex; align-items: center; cursor: pointer; font-weight: 600; color: #333; gap: 0.6rem;">
+          <input type="checkbox" id="in-stock-filter" style="width: 18px; height: 18px; cursor: pointer; accent-color: var(--color-primary);">
+          Show Only In Stock
+        </label>
       </div>
 
       <!-- PART TYPE FILTER (COLLAPSIBLE) -->
@@ -359,19 +370,6 @@
           </label>
         </div>
       </div>
-      <!-- STOCK FILTER (COLLAPSIBLE) -->
-      <div class="filter-section">
-        <button class="filter-toggle" data-filter="stock" style="width: 100%; padding: 1rem 1.2rem; background: #fff; border: none; border-bottom: 1px solid #e0e0e0; text-align: left; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-weight: 700; color: #333; font-size: 0.95rem;">
-          <span>Stock</span>
-          <i class="fas fa-chevron-down" style="font-size: 0.8rem;"></i>
-        </button>
-        <div class="filter-content" style="display: none; padding: 1rem 1.2rem; border-bottom: 1px solid #e0e0e0;">
-          <label style="display: flex; align-items: center; cursor: pointer; font-weight: 500; color: #333; gap: 0.6rem;">
-            <input type="checkbox" id="in-stock-filter" style="width: 18px; height: 18px; cursor: pointer;">
-            Show Only In Stock
-          </label>
-        </div>
-      </div>
 
       <!-- SORT BY FILTER (COLLAPSIBLE) -->
       <div class="filter-section">
@@ -398,7 +396,8 @@
 
       <!-- PRODUCT CONTROLS & COUNT -->
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
-        <div style="color: #666; font-weight: 500;">
+        <input type="text" id="product-search" class="product-search" placeholder="Search by name, brand, SKU..." style="max-width: 280px; padding: 0.5rem 0.75rem; border: 1px solid #ddd; border-radius: 4px; font-size: 0.95rem;">
+        <div class="product-count" style="color: #666; font-weight: 500;">
           Showing <span id="product-count">0</span> of <span id="total-count">0</span> products
         </div>
         
@@ -517,38 +516,7 @@
       return null;
     }
 
-    // LOAD PRODUCTS FROM JSON
-    async function loadProducts() {
-      try {
-        const response = await fetch('../data/products/gun-parts.json');
-        const data = await response.json();
-        
-        // Load products directly from JSON (no active filter needed)
-        let products = Array.isArray(data.products) ? data.products : [];
-        
-        allProducts = products.map(p => ({
-          ...p,
-          category: 'gun-parts', // Set category for filter protection
-          type: extractPartType(p.name),
-          calibre: extractCaliber(p.name)
-        }));
-
-        // FILTER PROTECTION: Only include products that match this page's category
-        allProducts = allProducts.filter(product => product.category === CURRENT_PAGE_CATEGORY);
-
-        // HIDE PRODUCTS WITHOUT IMAGES: Filter out products marked as hidden due to no available images
-        allProducts = allProducts.filter(product => !product.hidden);
-
-        // Initialize filters and render
-        initializeFilters();
-        setupFilterToggle();
-        applyFilters();
-      } catch (error) {
-        console.error('Error loading products:', error);
-        document.getElementById('grid-view').innerHTML = 
-          '<div style="grid-column: 1 / -1; text-align: center; padding: 2rem; color: #c62828;">Error loading products. Please refresh the page.</div>';
-      }
-    }
+    // ...product loading logic removed...
 
     // INITIALIZE FILTERS
     function initializeFilters() {
@@ -712,7 +680,7 @@
       }
 
       container.innerHTML = filteredProducts.map(product => `
-        <div class="product-card" onclick="location.href='../product-detail.html?id=${product.id}&category=gun-parts';" style="cursor: pointer;">
+        <div class="product-card" onclick="location.href='../product-detail.html?sku=${encodeURIComponent(product.sku || product.SKU || '')}&category=gun-parts';" style="cursor: pointer;">
           <div class="product-image">
             ${product.image 
               ? `<img src="${product.image}" alt="${product.name}" onerror="this.parentElement.innerHTML='<div class=&quot;product-image-placeholder&quot;><i class=&quot;fas fa-box&quot;></i></div>'">` 
@@ -728,7 +696,7 @@
                 ${product.inventory > 0 ? 'In Stock' : 'Out of Stock'}
               </div>
             </div>
-            <button class="product-btn" onclick="event.stopPropagation(); addToCart('${product.id}', '${product.name.replace(/'/g, "\\'")}', ${product.displayPrice ?? product.msrp ?? 0})">
+            <button class="product-btn" onclick="event.stopPropagation(); addToCart('${(product.sku || product.SKU || '').replace(/'/g, "\\'")}', '${product.name.replace(/'/g, "\\'")}', ${product.displayPrice ?? product.msrp ?? 0})">
               <i class="fas fa-cart-plus"></i> Add to Cart
             </button>
           </div>
@@ -746,7 +714,7 @@
       }
 
       tbody.innerHTML = filteredProducts.map(product => `
-        <tr style="cursor: pointer;" onclick="location.href='../product-detail.html?id=${product.id}&category=gun-parts';">
+        <tr style="cursor: pointer;" onclick="location.href='../product-detail.html?sku=${encodeURIComponent(product.sku || product.SKU || '')}&category=gun-parts';">
           <td>
             <div class="product-name-list">${product.name}</div>
             <div style="font-size: 0.85rem; color: #999; margin-top: 0.3rem;">${product.brand || 'Unknown'}</div>
@@ -761,17 +729,12 @@
             </span>
           </td>
           <td style="text-align: center;">
-            <button class="product-btn" style="width: auto; padding: 0.6rem 1rem; font-size: 0.85rem;" onclick="event.stopPropagation(); addToCart('${product.id}', '${product.name.replace(/'/g, "\\'")}', ${product.displayPrice ?? product.msrp ?? 0})">
+            <button class="product-btn" style="width: auto; padding: 0.6rem 1rem; font-size: 0.85rem;" onclick="event.stopPropagation(); addToCart('${(product.sku || product.SKU || '').replace(/'/g, "\\'")}', '${product.name.replace(/'/g, "\\'")}', ${product.displayPrice ?? product.msrp ?? 0})">
               <i class="fas fa-cart-plus"></i> Add
             </button>
           </td>
         </tr>
       `).join('');
-    }
-
-    // ADD TO CART (placeholder)
-    function addToCart(id, name, price) {
-      alert(`Added "${name}" ($${price.toFixed(2)}) to cart!\n\n(Cart functionality coming soon)`);
     }
 
     // LOAD ON PAGE READY

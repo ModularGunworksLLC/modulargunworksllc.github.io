@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Shop products by brand at Modular Gunworks LLC">
+  <meta name="author" content="Modular Gunworks LLC">
+  <meta name="theme-color" content="#181a1b">
+  
+  <title>Brand Products - Modular Gunworks LLC</title>
+  
+  <!-- Modular CSS -->
+  <link rel="stylesheet" href="../styles/design-system.css">
+  <link rel="stylesheet" href="../styles/components.css">
+  <link rel="stylesheet" href="../styles/layout.css">
+  <link rel="stylesheet" href="../styles/age-gate.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="icon" type="image/png" href="../favicon.png">
+  
+  <style>
+    :root { --color-primary: #b22222; --color-accent: #1a2c4b; --color-bg-dark: #181a1b; --color-text: #333; --color-light: #f5f5f5; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { height: 100%; background-color: #fff; }
+
+    /* Header styles */
+    #site-header { background: linear-gradient(135deg, rgba(24,26,27,0.15) 0%, rgba(24,26,27,0.05) 100%), url('../images/Header-flagV2.png') center top/cover no-repeat; background-attachment: fixed; color: #fff; padding: 2rem 0 0 0; position: sticky; top: 0; z-index: 100; max-height: 450px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+    .header-top-row { text-align: center; padding: 1.5rem 2rem; display: flex; align-items: center; justify-content: center; position: relative; }
+    .header-top-row h1 { font-size: 2rem; font-weight: 900; letter-spacing: 2px; text-shadow: 0 2px 8px rgba(0,0,0,0.5); margin: 0; color: #fff; position: absolute; left: 50%; transform: translateX(-50%); flex: 1; }
+    .header-logo { position: absolute; left: 2rem; margin: 0; cursor: pointer; display: flex; flex-direction: column; align-items: center; transition: transform 0.3s ease; text-decoration: none; gap: 0.3rem; }
+    .header-logo:hover { transform: scale(1.08); }
+    .logo-label { font-size: 0.7rem; font-weight: 700; letter-spacing: 1px; color: #fff; text-shadow: 0 1px 3px rgba(0,0,0,0.3); }
+    .header-logo img { height: 70px; width: auto; background: rgba(255,255,255,0.98); padding: 6px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.25); border: none; }
+    .header-middle-row { padding: 1.5rem 2rem; display: flex; align-items: center; justify-content: center; gap: 2rem; position: relative; }
+    .header-left-links { display: flex; gap: 2rem; align-items: center; position: absolute; right: 2rem; }
+    .header-left-links a { color: #fff; text-decoration: none; font-weight: 600; font-size: 0.95rem; transition: color 0.3s; text-shadow: 0 1px 4px rgba(0,0,0,0.3); }
+    .header-left-links a:hover { color: #ffeb3b; }
+    .search-bar { display: flex; gap: 0; box-shadow: 0 2px 8px rgba(0,0,0,0.1); border-radius: 4px; overflow: hidden; }
+    .search-bar input { flex: 1; padding: 0.8rem 1.2rem; border: none; font-size: 0.95rem; }
+    .search-bar button { padding: 0.8rem 1.5rem; background: var(--color-primary); color: #fff; border: none; font-weight: 600; cursor: pointer; }
+    .category-nav { background: var(--color-accent); display: flex; justify-content: center; gap: 2.5rem; padding: 0.8rem 2rem; flex-wrap: wrap; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
+    .category-nav a { color: #fff; text-decoration: none; font-weight: 600; font-size: 0.9rem; transition: color 0.3s; white-space: nowrap; }
+    .category-nav a:hover { color: var(--color-primary); }
+    .promo-bar { background: linear-gradient(90deg, var(--color-primary) 0%, var(--color-accent) 100%); color: #fff; text-align: center; padding: 0.8rem 2rem; font-weight: 600; font-size: 1rem; letter-spacing: 1px; }
+
+    main { max-width: 1400px; margin: 0 auto; padding: 2rem; }
+
+    .brand-header { margin-bottom: 2rem; }
+    .brand-header h1 { font-size: 2rem; color: var(--color-bg-dark); margin-bottom: 0.5rem; }
+    .brand-header p { color: #666; }
+    .back-link { display: inline-flex; align-items: center; gap: 0.5rem; color: var(--color-primary); text-decoration: none; font-weight: 600; margin-bottom: 1rem; }
+    .back-link:hover { text-decoration: underline; }
+
+    /* Filters Row */
+    .filters-row { display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 2rem; padding: 1rem; background: #f9f9f9; border-radius: 8px; align-items: center; }
+    .filters-row label { font-weight: 600; color: #555; }
+    .filters-row select, .filters-row input { padding: 0.5rem 1rem; border: 1px solid #ddd; border-radius: 4px; font-size: 0.95rem; }
+    .filters-row input[type="text"] { min-width: 200px; }
+
+    /* Products Grid */
+    .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1.5rem; }
+    .product-card { background: #fff; border: 1px solid #e0e0e0; border-radius: 8px; overflow: hidden; transition: all 0.3s ease; display: flex; flex-direction: column; }
+    .product-card:hover { transform: translateY(-4px); box-shadow: 0 8px 16px rgba(0,0,0,0.12); border-color: var(--color-primary); }
+    .product-image { width: 100%; height: 180px; background: #f5f5f5; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+    .product-image img { width: 100%; height: 100%; object-fit: cover; }
+    .product-image-placeholder { color: #ccc; font-size: 3rem; }
+    .product-info { padding: 1rem; flex: 1; display: flex; flex-direction: column; }
+    .product-category { font-size: 0.75rem; color: #999; text-transform: uppercase; margin-bottom: 0.25rem; }
+    .product-name { font-size: 0.95rem; font-weight: 600; color: var(--color-bg-dark); margin-bottom: 0.5rem; line-height: 1.4; flex: 1; }
+    .product-price { font-size: 1.1rem; font-weight: 700; color: var(--color-primary); }
+    .product-stock { font-size: 0.8rem; margin-top: 0.25rem; }
+    .stock-in { color: #2e7d32; }
+    .stock-out { color: #c62828; }
+    .product-btn { width: 100%; padding: 0.75rem; background: var(--color-primary); color: #fff; border: none; border-radius: 0 0 8px 8px; cursor: pointer; font-weight: 600; transition: background 0.3s; }
+    .product-btn:hover { background: #a01a1a; }
+
+    .loading { text-align: center; padding: 4rem; color: #666; font-size: 1.2rem; }
+    .no-products { text-align: center; padding: 4rem; background: #f9f9f9; border-radius: 8px; }
+    .no-products i { font-size: 4rem; color: #ccc; margin-bottom: 1rem; }
+    .no-products h2 { color: var(--color-bg-dark); margin-bottom: 0.5rem; }
+
+    /* Pagination */
+    .load-more-wrap { text-align: center; padding: 2rem; }
+    .load-more-btn { padding: 1rem 3rem; background: var(--color-primary); color: #fff; border: none; border-radius: 4px; cursor: pointer; font-weight: 700; font-size: 1rem; transition: all 0.3s; }
+    .load-more-btn:hover { background: #a01a1a; transform: translateY(-2px); }
+  </style>
+
+  <script src="../scripts/age-gate.js"></script>
+  <script src="../scripts/cart.js"></script>
+</head>
+
+<body>
+  <header id="site-header">
+    <div class="header-top-row">
+      <h1>MODULAR GUNWORKS LLC</h1>
+      <a href="../index.html" class="header-logo" title="Home">
+        <img src="../images/modular-gunworks-llc.png" alt="Modular Gunworks Logo">
+        <span class="logo-label">HOME</span>
+      </a>
+    </div>
+
+    <div class="header-middle-row">
+      <div class="header-left-links">
+        <a href="#account">Account</a>
+        <a href="#help">Help</a>
+        <a href="cart.html"><i class="fas fa-shopping-cart"></i> Cart <span class="cart-count-badge" style="background: var(--color-primary); color: #fff; padding: 2px 6px; border-radius: 10px; font-size: 0.75rem; display: none;">0</span></a>
+      </div>
+
+      <form class="search-bar" action="#" method="get">
+        <input type="text" placeholder="Search ammo, gear, optics...">
+        <button type="submit"><i class="fas fa-search"></i></button>
+      </form>
+    </div>
+
+    <nav class="category-nav">
+      <a href="ammunition.html">Ammunition</a>
+      <a href="magazines.html">Magazines</a>
+      <a href="gun-parts.html">Gun Parts</a>
+      <a href="gear.html">Gear</a>
+      <a href="optics.html">Optics</a>
+      <a href="reloading.html">Reloading</a>
+      <a href="outdoors.html">Outdoors</a>
+      <a href="brands.html">Brands</a>
+      <a href="sale.html">ON SALE</a>
+      <a href="../services.html">Services</a>
+    </nav>
+
+    <div class="promo-bar">
+      Veteran-Owned Business | Fast Shipping | Professional Service
+    </div>
+  </header>
+
+  <main>
+    <a href="brands.html" class="back-link"><i class="fas fa-arrow-left"></i> Back to All Brands</a>
+    
+    <div class="brand-header">
+      <h1 id="brand-title">Loading...</h1>
+      <p id="brand-subtitle"></p>
+    </div>
+
+    <div class="filters-row">
+      <label for="category-filter">Category:</label>
+      <select id="category-filter">
+        <option value="">All Categories</option>
+      </select>
+      
+      <label for="search-filter">Search:</label>
+      <input type="text" id="search-filter" placeholder="Search products...">
+      
+      <label for="sort-filter">Sort:</label>
+      <select id="sort-filter">
+        <option value="price-low">Price: Low to High</option>
+        <option value="price-high">Price: High to Low</option>
+        <option value="name">Name A-Z</option>
+      </select>
+
+      <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+        <input type="checkbox" id="in-stock-filter"> In Stock Only
+      </label>
+    </div>
+
+    <div id="products-container">
+      <div class="loading"><i class="fas fa-spinner fa-spin"></i> Loading products...</div>
+    </div>
+  </main>
+
+  <script>
+    // Get brand from URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const brandName = urlParams.get('brand') || '';
+
+    // Same map as brands.html: raw manufacturer string (lowercase) -> display name
+    const MANUFACTURER_NAME_MAP = {
+      'hornady mfg': 'Hornady', 'hornady manufacturing': 'Hornady', 'hornady reloading': 'Hornady', 'hornady': 'Hornady',
+      'rcbs': 'RCBS',
+      'federal cartridge co': 'Federal', 'federal cartridge': 'Federal', 'federal premium': 'Federal', 'federal premium ammunition': 'Federal',
+      'lee precision': 'Lee Precision', 'lee precision, inc': 'Lee Precision', 'lee': 'Lee Precision',
+      'leupold & stevens inc': 'Leupold', 'leupold & stevens': 'Leupold', 'leupold': 'Leupold',
+      'hogue inc': 'Hogue', 'hogue': 'Hogue',
+      'lyman': 'Lyman',
+      'burris company inc': 'Burris', 'burris': 'Burris',
+      'glock inc': 'Glock', 'glock': 'Glock',
+      'sig sauer': 'Sig Sauer', 'sig': 'Sig Sauer',
+      'smith & wesson inc': 'Smith & Wesson', 'smith & wesson': 'Smith & Wesson', 'smith and wesson': 'Smith & Wesson', 's&w': 'Smith & Wesson',
+      'sturm ruger & co': 'Ruger', 'sturm ruger & co le': 'Ruger', 'ruger': 'Ruger',
+      'springfield armory': 'Springfield Armory', 'springfield': 'Springfield Armory',
+      'magpul': 'Magpul', 'magpul industries': 'Magpul', 'magpul accessories': 'Magpul',
+      'holosun': 'Holosun',
+      'aero precision': 'Aero Precision',
+      'fn usa': 'FN America', 'fn america': 'FN America', 'fnh usa': 'FN America',
+      'heckler & koch inc': 'Heckler & Koch', 'heckler & koch': 'Heckler & Koch', 'hk': 'Heckler & Koch',
+      'bushnell': 'Bushnell', 'vortex optics': 'Vortex', 'vortex': 'Vortex',
+      'trijiconinc': 'Trijicon', 'trijicon': 'Trijicon',
+      'streamlight': 'Streamlight', 'surefire llc': 'SureFire', 'surefire': 'SureFire',
+      'savage arms': 'Savage', 'savage': 'Savage',
+      'mossberg & sons inc': 'Mossberg', 'mossberg': 'Mossberg',
+      'remington arms co. inc': 'Remington', 'remington': 'Remington', 'remington firearms': 'Remington', 'remington bulk components': 'Remington',
+      'winchester ammunition': 'Winchester', 'winchester': 'Winchester', 'winchester repeating arms / browning': 'Winchester', 'winchester bulk components': 'Winchester',
+      'browning firearms': 'Browning', 'browning clothing': 'Browning', 'browning': 'Browning',
+      'hodgdon powder company inc': 'Hodgdon', 'hodgdon': 'Hodgdon',
+      'alliant powder': 'Alliant Powder', 'accurate powders': 'Accurate Powders',
+      'fiocchi ammunition': 'Fiocchi', 'fiocchi': 'Fiocchi',
+      'norma ammunition': 'Norma', 'lapua ammunition': 'Lapua',
+      'barnes bullets': 'Barnes', 'sierra bullets': 'Sierra', 'berger bullets': 'Berger', 'nosler bullets inc': 'Nosler', 'nosler': 'Nosler',
+      'berry\'s mfg': 'Berry\'s', 'berrys mfg': 'Berry\'s',
+      'redding reloading equipment': 'Redding', 'redding': 'Redding',
+      'forster products': 'Forster', 'forster': 'Forster',
+      'wilson combat': 'Wilson Combat', 'daniel defense': 'Daniel Defense',
+      'dead air silencers': 'Dead Air', 'silencerco': 'SilencerCo',
+      'blackhawk': 'Blackhawk',
+      'sellmark corporation': 'Sellmark', 'sellmark': 'Sellmark',
+      'promag mfg. inc': 'ProMag', 'promag mfg inc': 'ProMag',
+      'umarex usa': 'Umarex', 'umarex': 'Umarex',
+      'desantis leather goods co': 'DeSantis', 'desantis': 'DeSantis',
+      'hoppe\'s': 'Hoppe\'s', 'hoppes': 'Hoppe\'s',
+      'meprolight sights': 'Meprolight', 'meprolight': 'Meprolight',
+      'athlon optics': 'Athlon', 'athlon': 'Athlon',
+      'yankee hill machine': 'Yankee Hill', 'rugged rare': 'Rugged Rare', 'rugged suppressor': 'Rugged Suppressors',
+      'safariland': 'Safariland', 'safariland / safariland': 'Safariland',
+      'truglo': 'TRUGLO', 'ameriglo': 'Ameriglo',
+      'crimson trace corporation': 'Crimson Trace', 'crimson trace': 'Crimson Trace',
+      'primary arms': 'Primary Arms', 'aimpoint': 'Aimpoint', 'l-3 communications- eotech': 'EOTech', 'eotech': 'EOTech',
+      'xs sight systems inc': 'XS Sights', 'xs sights': 'XS Sights',
+      'henry repeating arms company': 'Henry', 'henry': 'Henry',
+      'kimber': 'Kimber', 'walther arms': 'Walther', 'walther': 'Walther',
+      'beretta u.s.a': 'Beretta', 'beretta': 'Beretta',
+      'kel-tec cnc industries inc': 'Kel-Tec', 'kel-tec': 'Kel-Tec',
+      'century arms': 'Century Arms',
+      'underwood ammo': 'Underwood', 'underwood': 'Underwood',
+      'vihtavuori': 'Vihtavuori',
+      'cmc triggers': 'CMC Triggers', 'radian weapons': 'Radian',
+      'magtech ammunition companyinc': 'Magtech', 'magtech': 'Magtech',
+      'mec-gar usa inc': 'Mec-Gar', 'mec-gar': 'Mec-Gar',
+      'blue force gear': 'Blue Force Gear', 'mechanix wear llc': 'Mechanix', 'mechanix': 'Mechanix',
+      'mission first tactical': 'Mission First Tactical',
+      'weaver': 'Weaver', 'warne manufacturing company': 'Warne', 'warne': 'Warne',
+      'konus optics': 'Konus', 'simmons': 'Simmons', 'ncstar inc': 'NCSTAR', 'barska': 'Barska'
+    };
+
+    function getManufacturerDisplayName(rawName) {
+      if (!rawName || !rawName.trim()) return null;
+      const key = rawName.trim().toLowerCase().replace(/\.$/, '');
+      return MANUFACTURER_NAME_MAP[key] || null;
+    }
+
+    // Categories to load
+    const CATEGORIES = ['Ammunition', 'Magazines', 'Gun_Parts', 'Gear', 'Optics', 'Reloading', 'Outdoors', 'Firearms', 'Knives', 'Clothing___Footwear'];
+
+    let allProducts = [];
+    let filteredProducts = [];
+    let currentPage = 1;
+    const PRODUCTS_PER_PAGE = 24;
+
+    // Valid numeric price; treat "custom"/"call"/"quote" as invalid
+    function priceOrNull(value) {
+      if (value == null || value === '') return null;
+      const s = String(value).trim().toLowerCase();
+      if (s === 'custom' || s === 'call' || s === 'quote') return null;
+      const n = (value != null && value !== '' && !isNaN(Number(value))) ? Number(value) : null;
+      return n != null && n > 0 ? n : null;
+    }
+
+    // Normalize product — displayPrice: MSRP ?? MAP ?? Price (prefer MSRP/MAP)
+    function normalizeProduct(row, categoryName) {
+      const num = v => (v != null && v !== '' && !isNaN(Number(v))) ? Number(v) : null;
+      const msrp = priceOrNull(row.MSRP);
+      const map = priceOrNull(row.MAP);
+      const price = priceOrNull(row.Price);
+      const displayPrice = msrp ?? map ?? price ?? null;
+      return {
+        sku: row.SKU || row.sku || '',
+        name: row['Web Item Name'] || row['Item Name'] || row.name || '',
+        image: row.image || row['Image Location'] || '',
+        price: num(row.Price) ?? 0,
+        displayPrice: displayPrice ?? 0,
+        inventory: num(row['Quantity In Stock']) ?? 0,
+        manufacturer: row.Manufacturer || row.manufacturer || '',
+        category: categoryName.replace(/_/g, ' ').replace(/___/g, ' & ')
+      };
+    }
+
+    // Suppressors (NFA items) require SOT license — exclude from store until then
+    function isSuppressor(row) {
+      return (row.Category === 'Suppressors') || (row.mappedCategory && row.mappedCategory.sub === 'Suppressors');
+    }
+
+    // Load all products from all categories
+    async function loadAllProducts() {
+      const promises = CATEGORIES.map(async (cat) => {
+        try {
+          const response = await fetch(`../data/products/mapped-products/${cat}.json`);
+          if (!response.ok) return [];
+          const data = await response.json();
+          const list = Array.isArray(data) ? data : [];
+          return list.filter(row => !isSuppressor(row)).map(p => normalizeProduct(p, cat)).filter(p => (p.displayPrice != null && p.displayPrice > 0));
+        } catch (e) {
+          return [];
+        }
+      });
+
+      const results = await Promise.all(promises);
+      return results.flat();
+    }
+
+    // Filter products by brand (supports display name from brands page, e.g. "Hornady", or raw name)
+    function filterByBrand(products, brand) {
+      if (!brand) return products;
+      const brandTrimmed = brand.trim();
+      const brandLower = brandTrimmed.toLowerCase();
+      return products.filter(p => {
+        const raw = (p.manufacturer || '').trim();
+        const displayName = getManufacturerDisplayName(raw);
+        if (displayName === brandTrimmed) return true;
+        if (raw.toLowerCase() === brandLower || raw.toLowerCase().includes(brandLower)) return true;
+        return false;
+      });
+    }
+
+    // Apply filters
+    function applyFilters() {
+      let result = allProducts.slice();
+
+      // Category filter
+      const categoryVal = document.getElementById('category-filter').value;
+      if (categoryVal) {
+        result = result.filter(p => p.category === categoryVal);
+      }
+
+      // Search filter
+      const searchVal = (document.getElementById('search-filter').value || '').toLowerCase().trim();
+      if (searchVal) {
+        result = result.filter(p => 
+          (p.name || '').toLowerCase().includes(searchVal) ||
+          (p.sku || '').toLowerCase().includes(searchVal)
+        );
+      }
+
+      // In stock filter
+      if (document.getElementById('in-stock-filter').checked) {
+        result = result.filter(p => p.inventory > 0);
+      }
+
+      // Sort
+      const sortVal = document.getElementById('sort-filter').value;
+      if (sortVal === 'price-low') result.sort((a, b) => (a.displayPrice || 0) - (b.displayPrice || 0));
+      else if (sortVal === 'price-high') result.sort((a, b) => (b.displayPrice || 0) - (a.displayPrice || 0));
+      else if (sortVal === 'name') result.sort((a, b) => (a.name || '').localeCompare(b.name || ''));
+
+      filteredProducts = result;
+      currentPage = 1;
+      renderProducts();
+    }
+
+    // Render products
+    function renderProducts(append = false) {
+      const container = document.getElementById('products-container');
+      const start = (currentPage - 1) * PRODUCTS_PER_PAGE;
+      const slice = filteredProducts.slice(start, start + PRODUCTS_PER_PAGE);
+      const hasMore = start + slice.length < filteredProducts.length;
+
+      if (filteredProducts.length === 0) {
+        container.innerHTML = `
+          <div class="no-products">
+            <i class="fas fa-search"></i>
+            <h2>No products found</h2>
+            <p>Try adjusting your filters or search terms.</p>
+          </div>
+        `;
+        return;
+      }
+
+      const html = slice.map(p => {
+        const inStock = p.inventory > 0;
+        const price = (p.displayPrice || 0).toFixed(2);
+        const detailUrl = `../product-detail.html?sku=${encodeURIComponent(p.sku)}&category=${encodeURIComponent(p.category.toLowerCase().replace(/ & /g, '___').replace(/ /g, '_'))}`;
+        const imgEsc = (p.image || '').replace(/'/g, "\\'");
+        
+        return `
+          <div class="product-card">
+            <a href="${detailUrl}" style="text-decoration: none; color: inherit; display: flex; flex-direction: column; flex: 1;">
+              <div class="product-image">
+                ${p.image ? `<img src="${p.image}" alt="${escapeHtml(p.name)}" loading="lazy" onerror="this.parentElement.innerHTML='<div class=\\'product-image-placeholder\\'><i class=\\'fas fa-box\\'></i></div>'">` : '<div class="product-image-placeholder"><i class="fas fa-box"></i></div>'}
+              </div>
+              <div class="product-info">
+                <div class="product-category">${escapeHtml(p.category)}</div>
+                <div class="product-name">${escapeHtml(p.name)}</div>
+                <div class="product-price">$${price}</div>
+                <div class="product-stock ${inStock ? 'stock-in' : 'stock-out'}">${inStock ? 'In Stock' : 'Out of Stock'}</div>
+              </div>
+            </a>
+            <button class="product-btn" onclick="event.preventDefault(); addToCart('${p.sku.replace(/'/g, "\\'")}', '${(p.name || '').replace(/'/g, "\\'")}', ${p.displayPrice || 0}, 1, '${imgEsc}', '${p.category.toLowerCase().replace(/ /g, '-')}')">
+              <i class="fas fa-cart-plus"></i> Add to Cart
+            </button>
+          </div>
+        `;
+      }).join('');
+
+      if (append) {
+        // Remove old load more button
+        const oldBtn = container.querySelector('.load-more-wrap');
+        if (oldBtn) oldBtn.remove();
+        container.insertAdjacentHTML('beforeend', html);
+      } else {
+        container.innerHTML = `<div class="products-grid">${html}</div>`;
+      }
+
+      // Add load more button
+      if (hasMore) {
+        const loadMoreHtml = `
+          <div class="load-more-wrap">
+            <button class="load-more-btn" onclick="loadMore()">Load More Products</button>
+          </div>
+        `;
+        if (append) {
+          container.insertAdjacentHTML('beforeend', loadMoreHtml);
+        } else {
+          container.querySelector('.products-grid').insertAdjacentHTML('afterend', loadMoreHtml);
+        }
+      }
+
+      // Update subtitle
+      document.getElementById('brand-subtitle').textContent = `${filteredProducts.length} products found`;
+    }
+
+    function loadMore() {
+      currentPage++;
+      const container = document.getElementById('products-container');
+      const grid = container.querySelector('.products-grid');
+      const start = (currentPage - 1) * PRODUCTS_PER_PAGE;
+      const slice = filteredProducts.slice(start, start + PRODUCTS_PER_PAGE);
+      const hasMore = start + slice.length < filteredProducts.length;
+
+      // Remove load more button
+      const oldBtn = container.querySelector('.load-more-wrap');
+      if (oldBtn) oldBtn.remove();
+
+      // Append products
+      const html = slice.map(p => {
+        const inStock = p.inventory > 0;
+        const price = (p.displayPrice || 0).toFixed(2);
+        const detailUrl = `../product-detail.html?sku=${encodeURIComponent(p.sku)}&category=${encodeURIComponent(p.category.toLowerCase().replace(/ & /g, '___').replace(/ /g, '_'))}`;
+        const imgEsc = (p.image || '').replace(/'/g, "\\'");
+        
+        return `
+          <div class="product-card">
+            <a href="${detailUrl}" style="text-decoration: none; color: inherit; display: flex; flex-direction: column; flex: 1;">
+              <div class="product-image">
+                ${p.image ? `<img src="${p.image}" alt="${escapeHtml(p.name)}" loading="lazy" onerror="this.parentElement.innerHTML='<div class=\\'product-image-placeholder\\'><i class=\\'fas fa-box\\'></i></div>'">` : '<div class="product-image-placeholder"><i class="fas fa-box"></i></div>'}
+              </div>
+              <div class="product-info">
+                <div class="product-category">${escapeHtml(p.category)}</div>
+                <div class="product-name">${escapeHtml(p.name)}</div>
+                <div class="product-price">$${price}</div>
+                <div class="product-stock ${inStock ? 'stock-in' : 'stock-out'}">${inStock ? 'In Stock' : 'Out of Stock'}</div>
+              </div>
+            </a>
+            <button class="product-btn" onclick="event.preventDefault(); addToCart('${p.sku.replace(/'/g, "\\'")}', '${(p.name || '').replace(/'/g, "\\'")}', ${p.displayPrice || 0}, 1, '${imgEsc}', '${p.category.toLowerCase().replace(/ /g, '-')}')">
+              <i class="fas fa-cart-plus"></i> Add to Cart
+            </button>
+          </div>
+        `;
+      }).join('');
+
+      grid.insertAdjacentHTML('beforeend', html);
+
+      if (hasMore) {
+        container.insertAdjacentHTML('beforeend', `
+          <div class="load-more-wrap">
+            <button class="load-more-btn" onclick="loadMore()">Load More Products</button>
+          </div>
+        `);
+      }
+    }
+
+    function escapeHtml(str) {
+      const div = document.createElement('div');
+      div.textContent = str || '';
+      return div.innerHTML;
+    }
+
+    // Populate category filter
+    function populateCategoryFilter(products) {
+      const categories = [...new Set(products.map(p => p.category))].sort();
+      const select = document.getElementById('category-filter');
+      categories.forEach(cat => {
+        const opt = document.createElement('option');
+        opt.value = cat;
+        opt.textContent = cat;
+        select.appendChild(opt);
+      });
+    }
+
+    // Initialize
+    async function init() {
+      if (!brandName) {
+        document.getElementById('brand-title').textContent = 'No brand specified';
+        document.getElementById('products-container').innerHTML = `
+          <div class="no-products">
+            <i class="fas fa-exclamation-circle"></i>
+            <h2>No brand specified</h2>
+            <p><a href="brands.html">View all brands</a></p>
+          </div>
+        `;
+        return;
+      }
+
+      document.getElementById('brand-title').textContent = decodeURIComponent(brandName);
+      document.title = `${decodeURIComponent(brandName)} - Modular Gunworks LLC`;
+
+      const products = await loadAllProducts();
+      allProducts = filterByBrand(products, brandName);
+      filteredProducts = allProducts;
+
+      if (allProducts.length === 0) {
+        document.getElementById('brand-subtitle').textContent = 'No products found';
+        document.getElementById('products-container').innerHTML = `
+          <div class="no-products">
+            <i class="fas fa-search"></i>
+            <h2>No products found for this brand</h2>
+            <p><a href="brands.html">View all brands</a></p>
+          </div>
+        `;
+        return;
+      }
+
+      populateCategoryFilter(allProducts);
+      applyFilters();
+
+      // Event listeners
+      document.getElementById('category-filter').addEventListener('change', applyFilters);
+      document.getElementById('search-filter').addEventListener('input', debounce(applyFilters, 300));
+      document.getElementById('sort-filter').addEventListener('change', applyFilters);
+      document.getElementById('in-stock-filter').addEventListener('change', applyFilters);
+    }
+
+    function debounce(fn, ms) {
+      let t;
+      return (...args) => {
+        clearTimeout(t);
+        t = setTimeout(() => fn(...args), ms);
+      };
+    }
+
+    document.addEventListener('DOMContentLoaded', init);
+  </script>
+</body>
+</html>

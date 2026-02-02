@@ -301,476 +301,14 @@
   </style>
 
   <script src="../scripts/age-gate.js"></script>
+  <script src="../scripts/load-products.js"></script>
+  <script src="../scripts/shop-products-ui.js"></script>
+  <!-- Filters and product grid are driven by shop-products-ui.js (industry-style: filters from data, search, pagination, product links). -->
 
   <script>
-    const CURRENT_PAGE_CATEGORY = "ammunition";
-    const INITIAL_ITEMS_SHOWN = 10;
-    let currentView = 'grid';
-    // GLOBAL STATE
-
-    // EXTRACT CATEGORY FROM PRODUCT NAME
-    function extractCategory(name) {
-      if (!name || typeof name !== "string") return 'Other Ammo';
-      const categoryPatterns = {
-        'Hunting Ammo': ['hunting', 'rifle', 'magnum', 'win mag', 'magnum', 'xp', '300 win', '338 lapua'],
-        'AR-15 Ammo': ['.223', '.556', 'nato', '5.56', 'ar-15'],
-        'Handgun Ammo': ['9mm', '.45', '.40', '.357', '.38', '10mm', '.380'],
-        'Rimfire Ammo': ['.22', '.22 lr', 'rimfire'],
-        'Shotgun Ammo': ['12 gauge', '20 gauge', '410', 'shotgun', 'buck', 'slug'],
-        'Steel Cased Ammo': ['steel', 'tula', 'wolf', 'barnaul']
-      };
-
-      const nameLower = name.toLowerCase();
-      for (let [category, patterns] of Object.entries(categoryPatterns)) {
-        for (let pattern of patterns) {
-          if (nameLower.includes(pattern)) {
-            return category;
-          }
-        }
-      }
-      return 'Other Ammo';
-    }
-
-    // EXTRACT CALIBER FROM PRODUCT NAME
-    function extractCaliber(name) {
-      const calibrePatterns = [
-        '.22 LR', '.22 Magnum', '.38 Special', '.357 Magnum', '.40 S&W', '.45 ACP',
-        '9mm', '10mm', '.223', '.224', '.243', '.270', '.308', '.30-06', '.300 Win Mag',
-        '.300 BLK', '.300 Blackout', '5.56', '5.56 NATO', '7.62x39', '7.62x54', '12 Gauge', '20 Gauge',
-        '410', '.45-70', '.375 H&H', '.338 Lapua', '6.5 Creedmoor', '6mm ARC', '.556 NATO'
-      ];
-
-      for (let calibre of calibrePatterns) {
-        if (name.toUpperCase().includes(calibre.toUpperCase())) {
-          return calibre;
-        }
-      }
-      return null;
-    }
-
-    // EXTRACT BULLET TYPE FROM PRODUCT NAME
-    function extractBulletType(name) {
-      const bulletPatterns = {
-        'FMJ': ['FMJ', 'Full Metal Jacket'],
-        'JHP': ['JHP', 'Jacketed Hollow Point'],
-        'HP': ['Hollow Point', ' HP'],
-        'Soft Point': ['Soft Point', 'SP'],
-        'BTHP': ['BTHP', 'Boat Tail'],
-        'Round Nose': ['Round Nose', 'LRN'],
-        'Lead': ['Lead ', 'Lead Round'],
-        'Buckshot': ['Buck', 'Buckshot'],
-        'Slug': ['Slug'],
-        'Sabot': ['Sabot']
-      };
-
-      for (let [type, patterns] of Object.entries(bulletPatterns)) {
-        for (let pattern of patterns) {
-          if (name.toUpperCase().includes(pattern.toUpperCase())) {
-            return type;
-          }
-        }
-      }
-      return null;
-    }
-
-    // EXTRACT GRAIN WEIGHT FROM PRODUCT NAME
-    function extractGrainWeight(name) {
-      const match = name.match(/(\d+)\s*(?:gr|grain)/i);
-      return match ? match[1] + 'gr' : null;
-    }
-
-    // LOAD PRODUCTS
-    async function loadProducts() {
-      try {
-        // Load ammunition products directly from JSON (no active filter)
-        const response = await fetch('../data/products/ammunition.json');
-        if (!response.ok) throw new Error('Failed to load products');
-        
-        const data = await response.json();
-        allProducts = Array.isArray(data.products) ? data.products : [];
-        
-        // If no products, show empty message
-        if (allProducts.length === 0) {
-          document.getElementById('grid-view').innerHTML = 
-            '<div style="grid-column: 1 / -1; text-align: center; padding: 2rem; color: #666;">No products available. Check back soon!</div>';
-          return;
-        }
-        
-        // Add extracted properties to products
-        allProducts.forEach(product => {
-          product.subCategory = extractCategory(product.name);
-          product.calibre = extractCaliber(product.name);
-          product.bulletType = extractBulletType(product.name);
-          product.grainWeight = extractGrainWeight(product.name);
-        });
-
-        // FILTER PROTECTION: Only include products that match this page's category
-        allProducts = allProducts.filter(product => product.category === CURRENT_PAGE_CATEGORY);
-
-        // HIDE PRODUCTS WITHOUT IMAGES: Filter out products marked as hidden due to no available images
-        allProducts = allProducts.filter(product => !product.hidden);
-
-        // Initialize filters and render
-        initializeFilters();
-        setupFilterToggle();
-        applyFilters();
-      } catch (error) {
-        console.error('Error loading products:', error);
-        document.getElementById('grid-view').innerHTML = 
-          '<div style="grid-column: 1 / -1; text-align: center; padding: 2rem; color: #c62828;">Error loading products. Please refresh the page.</div>';
-      }
-    }
-
-    // INITIALIZE FILTERS
-    function initializeFilters() {
-      // CATEGORY FILTER
-      const categories = [...new Set(allProducts.map(p => p.category).filter(Boolean))].sort();
-      const categoryList = document.getElementById('category-list');
-      categories.forEach(cat => {
-        const div = document.createElement('div');
-        div.className = 'filter-option';
-        div.innerHTML = `
-          <label style="display: flex; align-items: center; cursor: pointer; gap: 0.5rem; color: #555; font-weight: 500;">
-            <input type="checkbox" class="filter-checkbox category-checkbox" value="${cat}" />
-            ${cat}
-          </label>
-        `;
-        categoryList.appendChild(div);
-      });
-
-      // CALIBRE FILTER
-      const calibres = [...new Set(allProducts.map(p => p.calibre).filter(Boolean))].sort();
-      populateCheckboxFilter('caliber-list', calibres, 'calibre-checkbox');
-
-      // BULLET TYPE FILTER
-      const bulletTypes = [...new Set(allProducts.map(p => p.bulletType).filter(Boolean))].sort();
-      populateCheckboxFilter('bullet-type-list', bulletTypes, 'bullet-type-checkbox');
-
-      // GRAIN WEIGHT FILTER
-      const grainWeights = [...new Set(allProducts.map(p => p.grainWeight).filter(Boolean))].sort((a, b) => {
-        return parseInt(a) - parseInt(b);
-      });
-      populateCheckboxFilter('grain-weight-list', grainWeights, 'grain-weight-checkbox');
-
-      // BRAND FILTER
-      const brands = [...new Set(allProducts.map(p => p.brand).filter(Boolean))].sort();
-      populateCheckboxFilter('brand-list', brands, 'brand-checkbox');
-
-      // Set price defaults
-      const prices = allProducts.map(p => p.displayPrice ?? p.msrp ?? 0).filter(Boolean);
-      if (prices.length > 0) {
-        const minPrice = Math.min(...prices);
-        const maxPrice = Math.max(...prices);
-        document.getElementById('price-min').placeholder = `$${minPrice.toFixed(2)}`;
-        document.getElementById('price-max').placeholder = `$${maxPrice.toFixed(2)}`;
-      }
-    }
-
-    // POPULATE CHECKBOX FILTER
-    function populateCheckboxFilter(containerId, items, className) {
-      const container = document.getElementById(containerId);
-      container.innerHTML = '';
-      items.forEach((item, index) => {
-        const div = document.createElement('div');
-        div.className = `filter-option ${index >= INITIAL_ITEMS_SHOWN ? 'hidden-item' : ''}`;
-        div.innerHTML = `
-          <label style="display: flex; align-items: center; cursor: pointer; gap: 0.5rem; color: #555; font-weight: 500;">
-            <input type="checkbox" class="filter-checkbox ${className}" value="${item}" />
-            ${item}
-          </label>
-        `;
-        container.appendChild(div);
-      });
-
-      // Show "Show More" button if items exceed initial count
-      if (items.length > INITIAL_ITEMS_SHOWN) {
-        const showMoreBtn = container.parentElement.querySelector('.show-more-btn');
-        if (showMoreBtn) showMoreBtn.style.display = 'block';
-      }
-    }
-
-    // SETUP FILTER TOGGLE FUNCTIONALITY
-    function setupFilterToggle() {
-      // Expand first filter by default
-      const firstToggle = document.querySelector('.filter-toggle');
-      if (firstToggle) {
-        firstToggle.click();
-      }
-
-      // Toggle click handlers
-      document.querySelectorAll('.filter-toggle').forEach(btn => {
-        btn.addEventListener('click', function() {
-          const content = this.nextElementSibling;
-          const icon = this.querySelector('i');
-          const isVisible = content.style.display !== 'none';
-          
-          content.style.display = isVisible ? 'none' : 'block';
-          icon.style.transform = isVisible ? 'rotate(0deg)' : 'rotate(180deg)';
-          icon.style.transition = 'transform 0.2s';
-        });
-      });
-
-      // Search functionality
-      document.querySelectorAll('.filter-search').forEach(searchInput => {
-        searchInput.addEventListener('input', function() {
-          const filterType = this.dataset.filter;
-          const searchTerm = this.value.toLowerCase();
-          const container = this.nextElementSibling;
-          
-          container.querySelectorAll('.filter-option').forEach(option => {
-            const text = option.textContent.toLowerCase();
-            option.style.display = text.includes(searchTerm) ? 'block' : 'none';
-          });
-        });
-      });
-
-      // Show More button functionality
-      document.querySelectorAll('.show-more-btn').forEach(btn => {
-        btn.addEventListener('click', function() {
-          const container = this.parentElement.querySelector('div[id$="-list"]');
-          const isExpanded = this.dataset.expanded === 'true';
-          
-          container.querySelectorAll('.hidden-item').forEach(item => {
-            item.style.display = isExpanded ? 'none' : 'block';
-            item.classList.toggle('hidden-item');
-          });
-          
-          this.textContent = isExpanded ? 'Show More' : 'Show Less';
-          this.dataset.expanded = !isExpanded;
-        });
-      });
-
-      // Filter checkbox listeners
-      document.querySelectorAll('.filter-checkbox').forEach(checkbox => {
-        checkbox.addEventListener('change', applyFilters);
-      });
-
-      // Price input listeners
-      document.getElementById('price-min').addEventListener('input', applyFilters);
-      document.getElementById('price-max').addEventListener('input', applyFilters);
-      document.getElementById('in-stock-filter').addEventListener('change', applyFilters);
-      document.getElementById('sort-filter').addEventListener('change', applyFilters);
-    }
-
-    // APPLY FILTERS AND SORT
-    function applyFilters() {
-      // Reset pagination when filters change
-      currentPage = 1;
-
-      const priceMin = parseFloat(document.getElementById('price-min').value) || 0;
-      const priceMax = parseFloat(document.getElementById('price-max').value) || Infinity;
-      const inStockOnly = document.getElementById('in-stock-filter').checked;
-      const sortBy = document.getElementById('sort-filter').value;
-
-      selectedCategories = Array.from(document.querySelectorAll('.category-checkbox:checked')).map(cb => cb.value);
-      selectedCalibres = Array.from(document.querySelectorAll('.calibre-checkbox:checked')).map(cb => cb.value);
-      selectedBulletTypes = Array.from(document.querySelectorAll('.bullet-type-checkbox:checked')).map(cb => cb.value);
-      selectedBrands = Array.from(document.querySelectorAll('.brand-checkbox:checked')).map(cb => cb.value);
-
-      filteredProducts = allProducts.filter(product => {
-        const price = product.displayPrice ?? product.msrp ?? 0;
-        const matchesPrice = price >= priceMin && price <= priceMax;
-        const matchesStock = !inStockOnly || product.inventory === undefined || product.inventory > 0;
-        const matchesCategory = selectedCategories.length === 0 || (product.subCategory && selectedCategories.includes(product.subCategory));
-        const matchesCalibre = selectedCalibres.length === 0 || (product.calibre && selectedCalibres.includes(product.calibre));
-        const matchesBulletType = selectedBulletTypes.length === 0 || (product.bulletType && selectedBulletTypes.includes(product.bulletType));
-        const matchesBrand = selectedBrands.length === 0 || (product.brand && selectedBrands.includes(product.brand));
-        
-        return matchesPrice && matchesStock && matchesCategory && matchesCalibre && matchesBulletType && matchesBrand;
-      });
-
-      // Sort products
-      if (sortBy === 'price-low') {
-        filteredProducts.sort((a, b) => (a.displayPrice ?? a.msrp ?? 0) - (b.displayPrice ?? b.msrp ?? 0));
-      } else if (sortBy === 'price-high') {
-        filteredProducts.sort((a, b) => (b.displayPrice ?? b.msrp ?? 0) - (a.displayPrice ?? a.msrp ?? 0));
-      } else if (sortBy === 'name') {
-        filteredProducts.sort((a, b) => a.name.localeCompare(b.name));
-      }
-
-      // Update counts
-      document.getElementById('product-count').textContent = filteredProducts.length;
-      document.getElementById('total-count').textContent = allProducts.length;
-
-      // Render
-      renderProducts();
-    }
-
-    // RENDER PRODUCTS
-    function renderProducts() {
-      if (currentView === 'grid') {
-        renderGridView();
-      } else {
-        renderListView();
-      }
-    }
-
-    // PAGINATION CONSTANTS
-    const PRODUCTS_PER_PAGE = 20;
-    let currentPage = 1;
-
-    // RENDER GRID VIEW
-    function renderGridView() {
-      const container = document.getElementById('grid-view');
-      
-      if (filteredProducts.length === 0) {
-        container.innerHTML = '<div style="grid-column: 1 / -1; text-align: center; padding: 2rem; color: #999;">No products found matching your filters.</div>';
-        return;
-      }
-
-      // Calculate pagination
-      const startIndex = (currentPage - 1) * PRODUCTS_PER_PAGE;
-      const endIndex = startIndex + PRODUCTS_PER_PAGE;
-      const productsToShow = filteredProducts.slice(0, endIndex);
-      const hasMore = endIndex < filteredProducts.length;
-
-      // Generate HTML for visible products
-      const productsHTML = productsToShow.slice(startIndex).map(product => `
-        <div class="product-card" onclick="location.href='../product-detail.html?id=${product.id}&category=ammunition';" style="cursor: pointer;">
-          <div class="product-image">
-            ${product.image 
-              ? `<img src="${product.image}" alt="${product.name}" loading="lazy" onerror="this.parentElement.innerHTML='<div class=&quot;product-image-placeholder&quot;><i class=&quot;fas fa-box&quot;></i></div>'">` 
-              : `<div class="product-image-placeholder"><i class="fas fa-box"></i></div>`
-            }
-          </div>
-          <div class="product-info">
-            <div class="product-brand">${product.brand || 'Unknown'}</div>
-            <div class="product-name">${product.name}</div>
-            <div class="product-pricing">
-              <div class="product-price">$${(product.displayPrice ?? product.msrp ?? 0).toFixed(2)}</div>
-              <div class="product-stock ${product.inventory > 0 ? 'stock-in' : 'stock-out'}">
-                ${product.inventory > 0 ? 'In Stock' : 'Out of Stock'}
-              </div>
-            </div>
-            <button class="product-btn" onclick="event.stopPropagation(); addToCart('${product.id}', '${product.name.replace(/'/g, "\\'")}', ${product.displayPrice ?? product.msrp ?? 0})">
-              <i class="fas fa-cart-plus"></i> Add to Cart
-            </button>
-          </div>
-        </div>
-      `).join('');
-
-      // Add load more button if needed
-      let html = productsHTML;
-      if (hasMore) {
-        html += `
-          <div style="grid-column: 1 / -1; text-align: center; padding: 2rem;">
-            <button id="load-more-btn" onclick="loadMoreProducts()" style="padding: 0.8rem 2rem; background: var(--color-primary); color: #fff; border: none; border-radius: 4px; font-weight: 600; font-size: 1rem; cursor: pointer; transition: background 0.3s;">
-              Load More Products
-            </button>
-          </div>
-        `;
-      }
-
-      container.innerHTML = html;
-    }
-
-    // LOAD MORE PRODUCTS
-    function loadMoreProducts() {
-      currentPage++;
-      renderGridView();
-      // Scroll to load more button
-      setTimeout(() => {
-        document.getElementById('load-more-btn')?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-      }, 100);
-    }
-
-    // RENDER LIST VIEW
-    function renderListView() {
-      const tbody = document.getElementById('list-body');
-      
-      if (filteredProducts.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="5" style="padding: 2rem; text-align: center; color: #999;">No products found matching your filters.</td></tr>';
-        return;
-      }
-
-      // Calculate pagination
-      const startIndex = (currentPage - 1) * PRODUCTS_PER_PAGE;
-      const endIndex = startIndex + PRODUCTS_PER_PAGE;
-      const productsToShow = filteredProducts.slice(0, endIndex);
-      const hasMore = endIndex < filteredProducts.length;
-
-      // Generate table rows for visible products
-      const rowsHTML = productsToShow.slice(startIndex).map(product => `
-        <tr style="cursor: pointer;" onclick="location.href='../product-detail.html?id=${product.id}&category=ammunition';">
-          <td>
-            <div class="product-name-list">${product.name}</div>
-            <div style="font-size: 0.85rem; color: #999; margin-top: 0.3rem;">${product.brand || 'Unknown'}</div>
-          </td>
-          <td>${product.brand || '-'}</td>
-          <td style="text-align: center;">
-            <div class="product-price-list">$${(product.displayPrice ?? product.msrp ?? 0).toFixed(2)}</div>
-          </td>
-          <td style="text-align: center;">
-            <span style="padding: 0.3rem 0.6rem; border-radius: 3px; ${product.inventory > 0 ? 'background: #e8f5e9; color: #2e7d32;' : 'background: #ffebee; color: #c62828;'} font-weight: 600; font-size: 0.85rem;">
-              ${product.inventory > 0 ? 'In Stock' : 'Out'}
-            </span>
-          </td>
-          <td style="text-align: center;">
-            <button class="product-btn" style="width: auto; padding: 0.6rem 1rem; font-size: 0.85rem;" onclick="event.stopPropagation(); addToCart('${product.id}', '${product.name.replace(/'/g, "\\'")}', ${product.displayPrice ?? product.msrp ?? 0})">
-              <i class="fas fa-cart-plus"></i> Add
-            </button>
-          </td>
-        </tr>
-      `).join('');
-
-      // Add load more row if needed
-      let html = rowsHTML;
-      if (hasMore) {
-        html += `
-          <tr>
-            <td colspan="5" style="padding: 1.5rem; text-align: center;">
-              <button id="load-more-btn" onclick="loadMoreProducts()" style="padding: 0.8rem 2rem; background: var(--color-primary); color: #fff; border: none; border-radius: 4px; font-weight: 600; font-size: 1rem; cursor: pointer; transition: background 0.3s;">
-                Load More Products
-              </button>
-            </td>
-          </tr>
-        `;
-      }
-
-      tbody.innerHTML = html;
-    }
-
-    // ADD TO CART (placeholder)
-    function addToCart(id, name, price) {
-      alert(`Added "${name}" ($${price.toFixed(2)}) to cart!\n\n(Cart functionality coming soon)`);
-    }
-
-    // LOAD ON PAGE READY
-    document.addEventListener('DOMContentLoaded', function() {
-      loadProducts();
-
-      // VIEW TOGGLE
-      document.getElementById('view-grid').addEventListener('click', function() {
-        currentView = 'grid';
-        document.getElementById('grid-view').style.display = 'grid';
-        document.getElementById('list-view').style.display = 'none';
-        this.style.background = 'var(--color-primary)';
-        this.style.color = '#fff';
-        document.getElementById('view-list').style.background = '#ddd';
-        document.getElementById('view-list').style.color = '#333';
-      });
-
-      document.getElementById('view-list').addEventListener('click', function() {
-        currentView = 'list';
-        document.getElementById('grid-view').style.display = 'none';
-        document.getElementById('list-view').style.display = 'block';
-        this.style.background = 'var(--color-primary)';
-        this.style.color = '#fff';
-        document.getElementById('view-grid').style.background = '#ddd';
-        document.getElementById('view-grid').style.color = '#333';
-      });
-
-      // CLEAR FILTERS
-      document.getElementById('clear-filters').addEventListener('click', function() {
-        document.querySelectorAll('.filter-checkbox').forEach(cb => cb.checked = false);
-        document.getElementById('price-min').value = '';
-        document.getElementById('price-max').value = '';
-        document.getElementById('in-stock-filter').checked = false;
-        document.getElementById('sort-filter').value = 'newest';
-        applyFilters();
-      });
-    });
   </script>
+  <!-- Cart functionality -->
+  <script src="../scripts/cart.js"></script>
 </head>
 
 
@@ -790,7 +328,7 @@
       <div class="header-left-links">
         <a href="#account">Account</a>
         <a href="#help">Help</a>
-        <a href="../shop/cart.html">Cart</a>
+        <a href="../shop/cart.html"><i class="fas fa-shopping-cart"></i> Cart <span class="cart-count-badge" style="background: var(--color-primary); color: #fff; padding: 2px 6px; border-radius: 10px; font-size: 0.75rem; display: none;">0</span></a>
       </div>
 
       <form class="search-bar" action="#" method="get">
@@ -829,6 +367,14 @@
         <button id="clear-filters">
           Clear All
         </button>
+      </div>
+
+      <!-- SHOW ONLY IN STOCK - standalone at top, always visible -->
+      <div class="filter-stock-top" style="padding: 1rem 1.2rem; border-bottom: 1px solid #e0e0e0; background: #fafafa;">
+        <label class="filter-label" style="display: flex; align-items: center; cursor: pointer; font-weight: 600; color: #333; gap: 0.6rem;">
+          <input type="checkbox" id="in-stock-filter" style="width: 18px; height: 18px; cursor: pointer; accent-color: var(--color-primary);">
+          Show Only In Stock
+        </label>
       </div>
 
       <!-- CATEGORY FILTER (COLLAPSIBLE) -->
@@ -918,20 +464,6 @@
         </div>
       </div>
 
-      <!-- IN STOCK FILTER (COLLAPSIBLE) -->
-      <div class="filter-section">
-        <button class="filter-toggle" data-filter="stock">
-          <span>Stock</span>
-          <i class="fas fa-chevron-down"></i>
-        </button>
-        <div class="filter-content">
-          <label class="filter-label">
-            <input type="checkbox" id="in-stock-filter">
-            Show Only In Stock
-          </label>
-        </div>
-      </div>
-
       <!-- SORT BY FILTER (COLLAPSIBLE) -->
       <div class="filter-section">
         <button class="filter-toggle" data-filter="sort">
@@ -955,8 +487,9 @@
       <h1 class="page-title">Ammunition</h1>
       <p class="ammunition-description">Quality ammunition from top brands with competitive pricing</p>
 
-      <!-- PRODUCT CONTROLS & COUNT -->
+      <!-- PRODUCT CONTROLS & COUNT (industry-style: search + count + view) -->
       <div class="product-controls">
+        <input type="text" id="product-search" class="product-search" placeholder="Search by name, brand, SKU..." style="max-width: 280px; padding: 0.5rem 0.75rem; border: 1px solid #ddd; border-radius: 4px; font-size: 0.95rem;">
         <div class="product-count">
           Showing <span id="product-count">0</span> of <span id="total-count">0</span> products
         </div>

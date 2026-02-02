@@ -3,96 +3,74 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FFL Transfers - Modular Gunworks LLC</title>
+  <meta name="description" content="FFL transfer services coming soon at Modular Gunworks LLC in Huntsville, Alabama.">
+  <meta name="robots" content="noindex, follow">
+  <title>FFL Transfers - Coming Soon - Modular Gunworks LLC</title>
+  <link rel="stylesheet" href="styles/design-system.css">
+  <link rel="stylesheet" href="styles/components.css">
+  <link rel="stylesheet" href="styles/layout.css">
+  <link rel="stylesheet" href="styles/age-gate.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="icon" type="image/png" href="favicon.png">
-  <link rel="stylesheet" href="style.css">
+  <style>
+    :root { --color-primary: #b22222; --color-accent: #1a2c4b; --color-bg-dark: #181a1b; }
+    main { max-width: 700px; margin: 0 auto; padding: 4rem 2rem; text-align: center; }
+    .coming-soon-hero { background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); border-radius: 16px; padding: 3rem 2rem; margin-bottom: 2rem; }
+    .coming-soon-hero .icon { font-size: 4rem; color: var(--color-accent); margin-bottom: 1rem; }
+    .coming-soon-hero h1 { font-size: 2rem; color: var(--color-bg-dark); margin-bottom: 1rem; }
+    .coming-soon-hero p { color: #666; margin-bottom: 1.5rem; line-height: 1.6; }
+    .badge { display: inline-flex; align-items: center; gap: 0.5rem; background: #fff3cd; color: #856404; padding: 0.75rem 1.25rem; border-radius: 8px; font-weight: 600; font-size: 0.9rem; }
+    .cta-link { display: inline-block; background: var(--color-primary); color: #fff; padding: 0.75rem 1.5rem; border-radius: 8px; text-decoration: none; font-weight: 600; margin-top: 1rem; }
+    .cta-link:hover { background: #8b1a1a; color: #fff; }
+  </style>
+  <script src="scripts/age-gate.js"></script>
 </head>
 <body>
-  <!-- HEADER -->
-  <header class="site-header">
-    <div class="header-container">
-      <div class="header-left">
-        <a href="index.html" class="logo-link">
-          <img src="images/modular-gunworks-llc.png" alt="Modular Gunworks LLC Logo" class="logo">
-        </a>
-      </div>
-      <div class="header-center">
-        <form class="search-form" action="#search">
-          <input type="text" class="search-input" placeholder="Search...">
-          <button type="submit" class="search-btn">Search</button>
-        </form>
-      </div>
-      <div class="header-right">
-        <a href="#account" class="header-link">Account</a>
-        <a href="#help" class="header-link">Help</a>
-        <a href="#cart" class="header-link">Cart</a>
-      </div>
+  <header id="site-header">
+    <div class="header-top-row">
+      <h1>MODULAR GUNWORKS LLC</h1>
+      <a href="index.html" class="header-logo" title="Home">
+        <img src="images/modular-gunworks-llc.png" alt="Modular Gunworks Logo">
+        <span class="logo-label">HOME</span>
+      </a>
     </div>
+    <div class="header-middle-row">
+      <div class="header-left-links">
+        <a href="#account">Account</a>
+        <a href="#help">Help</a>
+        <a href="shop/cart.html">Cart</a>
+      </div>
+      <form class="search-bar" action="#" method="get">
+        <input type="text" placeholder="Search ammo, gear, optics...">
+        <button type="submit" title="Search"><i class="fas fa-search"></i></button>
+      </form>
+    </div>
+    <nav class="category-nav">
+      <a href="shop/ammunition.html">Ammunition</a>
+      <a href="shop/magazines.html">Magazines</a>
+      <a href="shop/gun-parts.html">Gun Parts</a>
+      <a href="shop/gear.html">Gear</a>
+      <a href="shop/optics.html">Optics</a>
+      <a href="shop/reloading.html">Reloading</a>
+      <a href="shop/outdoors.html">Outdoors</a>
+      <a href="shop/brands.html">Brands</a>
+      <a href="shop/sale.html">ON SALE</a>
+      <a href="services.html">Services</a>
+    </nav>
+    <div class="promo-bar">Veteran-Owned Business | Fast Shipping | Professional Service</div>
   </header>
 
-  <!-- NAVIGATION -->
-  <nav class="main-nav">
-    <a href="shop/ammunition.html">Ammunition</a>
-    <a href="shop/guns.html">Guns</a>
-    <a href="shop/magazines.html">Magazines</a>
-    <a href="shop/gun-parts.html">Gun Parts</a>
-    <a href="shop/gear.html">Gear</a>
-    <a href="shop/optics.html">Optics & Sights</a>
-    <a href="shop/reloading.html">Reloading</a>
-    <a href="shop/outdoors.html">Outdoors</a>
-    <a href="gunsmithing.html">Gunsmithing</a>
-    <a href="ffl-transfers.html">FFL Transfers</a>
-  </nav>
-
-  <!-- PAGE HERO -->
-  <section class="hero">
-    <div class="hero-content">
-      <h1>FFL Transfer Services</h1>
-      <p>Licensed Federal Firearms License holder for safe and compliant firearm transfers</p>
+  <main>
+    <div class="coming-soon-hero">
+      <div class="icon"><i class="fas fa-file-alt"></i></div>
+      <h1>FFL Transfers — Coming Soon</h1>
+      <p>FFL transfer services require a Federal Firearms License. We are not currently offering FFL transfers or other license-required services. For updates on when these services may become available, see our Services page.</p>
+      <span class="badge"><i class="fas fa-hourglass-half"></i> Not yet available</span>
+      <br>
+      <a href="services.html" class="cta-link">View Services page</a>
     </div>
-  </section>
+  </main>
 
-  <!-- CONTENT -->
-  <div style="max-width: 1000px; margin: 40px auto; padding: 0 20px;">
-    <h2 style="color: var(--primary-color); margin-bottom: 20px;">About Our FFL Transfer Services</h2>
-    
-    <div style="background: var(--light-bg); padding: 30px; border-radius: 8px; margin-bottom: 30px;">
-      <h3 style="color: var(--primary-color); margin-bottom: 15px;">What We Offer</h3>
-      <p>As a licensed Federal Firearms License holder, we facilitate firearm transfers with full compliance to all federal, state, and local regulations.</p>
-      <ul style="margin-top: 15px; margin-left: 20px; color: var(--light-text);">
-        <li>Compliant FFL transfers from any licensed dealer</li>
-        <li>Complete background check processing</li>
-        <li>All required documentation and reporting</li>
-        <li>Secure storage and handling</li>
-        <li>Expert guidance on applicable laws</li>
-      </ul>
-    </div>
-
-    <div style="background: var(--light-bg); padding: 30px; border-radius: 8px; margin-bottom: 30px;">
-      <h3 style="color: var(--primary-color); margin-bottom: 15px;">Our Process</h3>
-      <ol style="margin-top: 15px; margin-left: 20px; color: var(--light-text);">
-        <li>Contact us with your transfer details</li>
-        <li>Provide valid identification and complete required forms</li>
-        <li>Background check and waiting period (where applicable)</li>
-        <li>Secure pickup of your firearm</li>
-        <li>Complete transfer and delivery</li>
-      </ol>
-    </div>
-
-    <div style="background: var(--light-bg); padding: 30px; border-radius: 8px; margin-bottom: 30px;">
-      <h3 style="color: var(--primary-color); margin-bottom: 15px;">Legal Compliance</h3>
-      <p>All firearm sales and transfers comply with federal, state, and local laws. FFL licensing is required for applicable items. Not all products are available in all states.</p>
-      <p style="margin-top: 15px;">We take pride in following all regulations and ensuring a safe, legal transfer process.</p>
-    </div>
-
-    <div style="text-align: center; background: var(--primary-color); color: white; padding: 40px; border-radius: 8px; margin-bottom: 30px;">
-      <h3 style="margin-bottom: 15px;">Ready to Schedule a Transfer?</h3>
-      <p style="margin-bottom: 20px;">Contact us to discuss your FFL transfer needs and get started today.</p>
-      <a href="contact.html" class="cta-btn" style="background: var(--accent-color);">Contact Us</a>
-    </div>
-  </div>
-
-  <!-- FOOTER -->
   <footer>
     <div class="footer-content">
       <div class="footer-section">
@@ -108,7 +86,6 @@
           <li><a href="shop/brands.html">Brands</a></li>
         </ul>
       </div>
-
       <div class="footer-section">
         <h3>Company</h3>
         <ul>
@@ -118,7 +95,6 @@
           <li><a href="blog.html">Blog</a></li>
         </ul>
       </div>
-
       <div class="footer-section">
         <h3>Legal</h3>
         <ul>
@@ -128,7 +104,6 @@
           <li><a href="order-status.html">Order Status</a></li>
         </ul>
       </div>
-
       <div class="footer-section">
         <h3>Contact</h3>
         <p><strong>Phone:</strong> (256) 384-3852<br>
@@ -137,7 +112,6 @@
         <strong>Hours:</strong> M-F 9AM-6PM, Sat 10AM-4PM CT</p>
       </div>
     </div>
-
     <div class="footer-bottom">
       <p>© 2026 Modular Gunworks LLC. All rights reserved. | Veteran-Owned Business in Huntsville, Alabama</p>
       <p>All firearm sales comply with federal, state, and local laws. FFL required for applicable items.</p>

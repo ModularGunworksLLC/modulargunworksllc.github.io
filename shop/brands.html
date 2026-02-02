@@ -43,12 +43,25 @@
     main { max-width: 1400px; margin: 0 auto; padding: 3rem 2rem; }
     .page-title { font-size: 2rem; color: var(--color-bg-dark); margin-bottom: 2rem; }
     .brands-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-bottom: 4rem; }
-    .brand-card { background: #fff; border: 1px solid #e0e0e0; border-radius: 8px; padding: 2rem; text-align: center; transition: all 0.3s ease; cursor: pointer; box-shadow: 0 1px 3px rgba(0,0,0,0.05); text-decoration: none; color: inherit; }
-    .brand-card:hover { transform: translateY(-4px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); border-color: var(--color-primary); }
-    .brand-card h3 { font-size: 1.3rem; color: var(--color-bg-dark); margin-bottom: 0.5rem; }
+    .brand-card { background: #fff; border: 1px solid #e0e0e0; border-radius: 8px; padding: 1.5rem; text-align: center; transition: all 0.3s ease; cursor: pointer; box-shadow: 0 1px 3px rgba(0,0,0,0.05); text-decoration: none; color: inherit; position: relative; overflow: hidden; }
+    .brand-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: var(--color-primary); transform: scaleX(0); transition: transform 0.3s ease; }
+    .brand-card:hover { transform: translateY(-4px); box-shadow: 0 8px 20px rgba(0,0,0,0.12); border-color: var(--color-primary); }
+    .brand-card:hover::before { transform: scaleX(1); }
+    .brand-logo { width: 100%; height: 80px; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem; }
+    .brand-logo img { max-width: 100%; max-height: 80px; object-fit: contain; }
+    .brand-logo-placeholder { width: 80px; height: 80px; background: linear-gradient(135deg, var(--color-accent) 0%, #2d4a6f 100%); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 700; font-size: 1.5rem; letter-spacing: 1px; }
+    .brand-card h3 { font-size: 1.1rem; color: var(--color-bg-dark); margin-bottom: 0.25rem; }
+    .brand-card p { color: #666; font-size: 0.9rem; }
+    .brands-az-section { margin-top: 3rem; padding-top: 2rem; border-top: 1px solid #e0e0e0; }
+    .brands-az-section h2 { font-size: 1.35rem; color: var(--color-bg-dark); margin-bottom: 1rem; }
+    .brands-az-list { display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; list-style: none; }
+    .brands-az-list li { margin: 0; }
+    .brands-az-list a { color: var(--color-primary); text-decoration: none; font-weight: 500; }
+    .brands-az-list a:hover { text-decoration: underline; }
   </style>
 
   <script src="../scripts/age-gate.js"></script>
+  <script src="../scripts/cart.js"></script>
 </head>
 
 <body>
@@ -66,7 +79,7 @@
       <div class="header-left-links">
         <a href="#account">Account</a>
         <a href="#help">Help</a>
-        <a href="../shop/cart.html">Cart</a>
+        <a href="../shop/cart.html"><i class="fas fa-shopping-cart"></i> Cart <span class="cart-count-badge" style="background: var(--color-primary); color: #fff; padding: 2px 6px; border-radius: 10px; font-size: 0.75rem; display: none;">0</span></a>
       </div>
 
       <form class="search-bar" action="#" method="get">
@@ -95,50 +108,486 @@
 
   <main>
     <h1 class="page-title">Shop by Brand</h1>
+    <p style="color: #666; margin-bottom: 2rem;">Browse our top manufacturers. Click any brand to see all their products.</p>
 
-    <div class="brands-grid">
-      <a href="#" class="brand-card">
-        <h3>Glock</h3>
-        <p>Premium Handguns</p>
-      </a>
-      <a href="#" class="brand-card">
-        <h3>Sig Sauer</h3>
-        <p>Quality Firearms</p>
-      </a>
-      <a href="#" class="brand-card">
-        <h3>Ruger</h3>
-        <p>Reliable Weapons</p>
-      </a>
-      <a href="#" class="brand-card">
-        <h3>Smith & Wesson</h3>
-        <p>Classic Firearms</p>
-      </a>
-      <a href="#" class="brand-card">
-        <h3>Springfield Armory</h3>
-        <p>Quality Pistols</p>
-      </a>
-      <a href="#" class="brand-card">
-        <h3>FN America</h3>
-        <p>Professional Grade</p>
-      </a>
-      <a href="#" class="brand-card">
-        <h3>HK (Heckler & Koch)</h3>
-        <p>Premium Quality</p>
-      </a>
-      <a href="#" class="brand-card">
-        <h3>Aero Precision</h3>
-        <p>AR Parts & Builds</p>
-      </a>
-      <a href="#" class="brand-card">
-        <h3>Magpul</h3>
-        <p>Tactical Accessories</p>
-      </a>
-      <a href="#" class="brand-card">
-        <h3>Holosun</h3>
-        <p>Advanced Optics</p>
-      </a>
+    <div class="brands-grid" id="brands-grid">
+      <div style="grid-column: 1/-1; text-align: center; padding: 2rem; color: #666;">
+        <i class="fas fa-spinner fa-spin"></i> Loading brands...
+      </div>
     </div>
+
+    <section class="brands-az-section" id="brands-az-section" style="display: none;">
+      <h2>All Brands A–Z</h2>
+      <ul class="brands-az-list" id="brands-az-list"></ul>
+    </section>
   </main>
+
+  <script>
+    // Categories to load
+    const CATEGORIES = ['Ammunition', 'Magazines', 'Gun_Parts', 'Gear', 'Optics', 'Reloading', 'Outdoors', 'Firearms', 'Knives', 'Clothing___Footwear'];
+
+    // --- MANUFACTURERS ONLY (no wholesalers/distributors) ---
+    // Maps product-data "Manufacturer" string (lowercase) -> display name for brands page.
+    // Only manufacturers in FEATURED_MANUFACTURERS are shown.
+    const MANUFACTURER_NAME_MAP = {
+      'hornady mfg': 'Hornady', 'hornady manufacturing': 'Hornady', 'hornady reloading': 'Hornady', 'hornady': 'Hornady',
+      'rcbs': 'RCBS',
+      'federal cartridge co': 'Federal', 'federal cartridge': 'Federal', 'federal premium': 'Federal', 'federal premium ammunition': 'Federal',
+      'lee precision': 'Lee Precision', 'lee precision, inc': 'Lee Precision', 'lee': 'Lee Precision',
+      'leupold & stevens inc': 'Leupold', 'leupold & stevens': 'Leupold', 'leupold': 'Leupold',
+      'hogue inc': 'Hogue', 'hogue': 'Hogue',
+      'lyman': 'Lyman',
+      'burris company inc': 'Burris', 'burris': 'Burris',
+      'glock inc': 'Glock', 'glock': 'Glock',
+      'sig sauer': 'Sig Sauer', 'sig': 'Sig Sauer',
+      'smith & wesson inc': 'Smith & Wesson', 'smith & wesson': 'Smith & Wesson', 'smith and wesson': 'Smith & Wesson', 's&w': 'Smith & Wesson',
+      'sturm ruger & co': 'Ruger', 'sturm ruger & co le': 'Ruger', 'ruger': 'Ruger',
+      'springfield armory': 'Springfield Armory', 'springfield': 'Springfield Armory',
+      'magpul': 'Magpul', 'magpul industries': 'Magpul', 'magpul accessories': 'Magpul',
+      'holosun': 'Holosun',
+      'aero precision': 'Aero Precision',
+      'fn usa': 'FN America', 'fn america': 'FN America', 'fnh usa': 'FN America',
+      'heckler & koch inc': 'Heckler & Koch', 'heckler & koch': 'Heckler & Koch', 'hk': 'Heckler & Koch',
+      'bushnell': 'Bushnell',
+      'vortex optics': 'Vortex', 'vortex': 'Vortex',
+      'trijiconinc': 'Trijicon', 'trijicon': 'Trijicon',
+      'streamlight': 'Streamlight',
+      'surefire llc': 'SureFire', 'surefire': 'SureFire',
+      'savage arms': 'Savage', 'savage': 'Savage',
+      'mossberg & sons inc': 'Mossberg', 'mossberg': 'Mossberg',
+      'remington arms co. inc': 'Remington', 'remington': 'Remington', 'remington firearms': 'Remington', 'remington bulk components': 'Remington',
+      'winchester ammunition': 'Winchester', 'winchester': 'Winchester', 'winchester repeating arms / browning': 'Winchester', 'winchester bulk components': 'Winchester',
+      'browning firearms': 'Browning', 'browning clothing': 'Browning', 'browning': 'Browning',
+      'hodgdon powder company inc': 'Hodgdon', 'hodgdon': 'Hodgdon',
+      'alliant powder': 'Alliant Powder', 'accurate powders': 'Accurate Powders',
+      'fiocchi ammunition': 'Fiocchi', 'fiocchi': 'Fiocchi',
+      'norma ammunition': 'Norma', 'lapua ammunition': 'Lapua',
+      'barnes bullets': 'Barnes', 'sierra bullets': 'Sierra', 'berger bullets': 'Berger', 'nosler bullets inc': 'Nosler', 'nosler': 'Nosler',
+      'berry\'s mfg': 'Berry\'s', 'berrys mfg': 'Berry\'s',
+      'redding reloading equipment': 'Redding', 'redding': 'Redding',
+      'forster products': 'Forster', 'forster': 'Forster',
+      'wilson combat': 'Wilson Combat', 'daniel defense': 'Daniel Defense',
+      'dead air silencers': 'Dead Air', 'silencerco': 'SilencerCo',
+      'blackhawk': 'Blackhawk',
+      'sellmark corporation': 'Sellmark', 'sellmark': 'Sellmark',
+      'promag mfg. inc': 'ProMag', 'promag mfg inc': 'ProMag',
+      'umarex usa': 'Umarex', 'umarex': 'Umarex',
+      'desantis leather goods co': 'DeSantis', 'desantis': 'DeSantis',
+      'hoppe\'s': 'Hoppe\'s', 'hoppes': 'Hoppe\'s',
+      'meprolight sights': 'Meprolight', 'meprolight': 'Meprolight',
+      'athlon optics': 'Athlon', 'athlon': 'Athlon',
+      'yankee hill machine': 'Yankee Hill', 'rugged rare': 'Rugged Rare', 'rugged suppressor': 'Rugged Suppressors',
+      'safariland': 'Safariland', 'safariland / safariland': 'Safariland',
+      'truglo': 'TRUGLO', 'ameriglo': 'Ameriglo',
+      'crimson trace corporation': 'Crimson Trace', 'crimson trace': 'Crimson Trace',
+      'primary arms': 'Primary Arms', 'aimpoint': 'Aimpoint', 'l-3 communications- eotech': 'EOTech', 'eotech': 'EOTech',
+      'xs sight systems inc': 'XS Sights', 'xs sights': 'XS Sights',
+      'henry repeating arms company': 'Henry', 'henry': 'Henry',
+      'kimber': 'Kimber', 'walther arms': 'Walther', 'walther': 'Walther',
+      'beretta u.s.a': 'Beretta', 'beretta': 'Beretta',
+      'kel-tec cnc industries inc': 'Kel-Tec', 'kel-tec': 'Kel-Tec',
+      'century arms': 'Century Arms',
+      'underwood ammo': 'Underwood', 'underwood': 'Underwood',
+      'vihtavuori': 'Vihtavuori',
+      'cmc triggers': 'CMC Triggers', 'radian weapons': 'Radian',
+      'magtech ammunition companyinc': 'Magtech', 'magtech': 'Magtech',
+      'mec-gar usa inc': 'Mec-Gar', 'mec-gar': 'Mec-Gar',
+      'blue force gear': 'Blue Force Gear', 'mechanix wear llc': 'Mechanix', 'mechanix': 'Mechanix',
+      'mission first tactical': 'Mission First Tactical',
+      'weaver': 'Weaver', 'warne manufacturing company': 'Warne', 'warne': 'Warne',
+      'konus optics': 'Konus', 'simmons': 'Simmons', 'ncstar inc': 'NCSTAR', 'barska': 'Barska'
+    };
+
+    // Only these manufacturers are shown (curated list – no wholesalers/distributors).
+    const FEATURED_MANUFACTURERS = [
+      'Hornady', 'RCBS', 'Federal', 'Lee Precision', 'Leupold', 'Hogue', 'Lyman', 'Burris',
+      'Glock', 'Sig Sauer', 'Smith & Wesson', 'Ruger', 'Springfield Armory', 'Magpul', 'Holosun',
+      'Aero Precision', 'FN America', 'Heckler & Koch', 'Bushnell', 'Vortex', 'Trijicon', 'Streamlight', 'SureFire',
+      'Savage', 'Mossberg', 'Remington', 'Winchester', 'Browning',
+      'Hodgdon', 'Alliant Powder', 'Fiocchi', 'Norma', 'Lapua',
+      'Barnes', 'Sierra', 'Berger', 'Nosler', 'Berry\'s', 'Redding', 'Forster',
+      'Wilson Combat', 'Daniel Defense', 'Dead Air', 'SilencerCo',
+      'Blackhawk', 'Sellmark', 'ProMag', 'Umarex', 'DeSantis', 'Hoppe\'s',
+      'Meprolight', 'Athlon', 'Yankee Hill', 'Rugged Rare', 'Rugged Suppressors', 'Safariland',
+      'TRUGLO', 'Ameriglo', 'Crimson Trace', 'Primary Arms', 'Aimpoint', 'EOTech', 'XS Sights',
+      'Henry', 'Kimber', 'Walther', 'Beretta', 'Kel-Tec', 'Century Arms',
+      'Underwood', 'Vihtavuori', 'CMC Triggers', 'Radian', 'Magtech', 'Mec-Gar',
+      'Blue Force Gear', 'Mechanix', 'Mission First Tactical', 'Weaver', 'Warne', 'Konus', 'Simmons', 'NCSTAR', 'Barska'
+    ];
+
+    function getManufacturerDisplayName(rawName) {
+      if (!rawName || !rawName.trim()) return null;
+      const key = rawName.trim().toLowerCase().replace(/\.$/, '');
+      return MANUFACTURER_NAME_MAP[key] || null;
+    }
+
+    // Brand logos mapping (brand name variations -> logo file)
+    const BRAND_LOGOS = {
+      'aero precision': 'aero-precision.png',
+      'fn america': 'fn-america.png',
+      'fn usa': 'fn-america.png',
+      'fn': 'fn-america.png',
+      'fnh usa': 'fn-america.png',
+      'glock inc': 'glock.png',
+      'glock': 'glock.png',
+      'heckler & koch inc': 'hk.png',
+      'heckler & koch': 'hk.png',
+      'hk': 'hk.png',
+      'h&k': 'hk.png',
+      'holosun': 'holosun.png',
+      'magpul accessories': 'magpul.png',
+      'magpul': 'magpul.png',
+      'magpul industries': 'magpul.png',
+      'ruger': 'ruger.png',
+      'sturm ruger & co': 'ruger.png',
+      'sturm ruger & co le': 'ruger.png',
+      'sturm, ruger & co': 'ruger.png',
+      'remington': 'remington.png',
+      'remington arms co. inc': 'remington.png',
+      'remington firearms': 'remington.png',
+      'remington bulk components': 'remington.png',
+      'sig sauer': 'sig-sauer.png',
+      'sig': 'sig-sauer.png',
+      'smith & wesson inc': 'smith-and-wesson.png',
+      'smith & wesson': 'smith-and-wesson.png',
+      'smith and wesson': 'smith-and-wesson.png',
+      's&w': 'smith-and-wesson.png',
+      'springfield armory': 'springfield-armory.png',
+      'springfield': 'springfield-armory.png',
+      'promag': 'promag.png',
+      'promag mfg. inc': 'promag.png',
+      'promag mfg inc': 'promag.png',
+      'hornady reloading': 'hornady.png',
+      'hornady': 'hornady.png',
+      'hornady manufacturing': 'hornady.png',
+      'hornady mfg': 'hornady.png',
+      'rcbs': 'rcbs.png',
+      'leupold & stevens inc': 'leupold.png',
+      'leupold & stevens': 'leupold.png',
+      'leupold': 'leupold.png',
+      'federal cartridge co': 'federal.png',
+      'federal cartridge': 'federal.png',
+      'federal premium': 'federal.png',
+      'federal premium ammunition': 'federal.png',
+      'lee precision': 'lee-precision.png',
+      'lee': 'lee-precision.png',
+      'lee precision, inc': 'lee-precision.png',
+      'hogue inc': 'hogue.png',
+      'hogue': 'hogue.png',
+      'sellmark corporation': 'sellmark.png',
+      'sellmark': 'sellmark.png',
+      'lyman': 'lyman.png',
+      'blackhawk': 'blackhawk.png',
+      'burris': 'burris.png',
+      'burris company inc': 'burris.png',
+      'federal': 'federal.png',
+      'leupold': 'leupold.png',
+      'lee precision': 'lee-precision.png',
+      'forster': 'forster.png',
+      'forster products': 'forster.png',
+      'wilson combat': 'wilson-combat.png',
+      'springfield armory': 'springfield-armory.png',
+      'springfield': 'springfield-armory.png',
+      'athlon optics': 'athlon.png',
+      'athlon': 'athlon.png',
+      'browning firearms': 'browning.png',
+      'browning clothing': 'browning.png',
+      'browning': 'browning.png',
+      'truglo': 'truglo.png',
+      'yankee hill machine': 'yankee-hill.png',
+      'yankee hill': 'yankee-hill.png',
+      'meprolight sights': 'meprolight.png',
+      'meprolight': 'meprolight.png',
+      'redding reloading equipment': 'redding.png',
+      'redding': 'redding.png',
+      'surefire llc': 'surefire.png',
+      'surefire': 'surefire.png',
+      'walther arms': 'walther.png',
+      'walther': 'walther.png',
+      'daniel defense': 'daniel-defense.png',
+      'kimber': 'kimber.png',
+      'mossberg & sons inc': 'mossberg.png',
+      'mossberg': 'mossberg.png',
+      'nosler bullets inc': 'nosler.png',
+      'nosler': 'nosler.png'
+    };
+
+    // Brand domains for Clearbit Logo API (logo.clearbit.com/domain)
+    // Used when no local logo exists - fetches company logo by website domain
+    const BRAND_DOMAINS = {
+      'federal cartridge co': 'federalpremium.com',
+      'federal cartridge': 'federalpremium.com',
+      'federal premium': 'federalpremium.com',
+      'lee precision': 'leeprecision.com',
+      'lee': 'leeprecision.com',
+      'leupold & stevens inc': 'leupold.com',
+      'leupold & stevens': 'leupold.com',
+      'leupold': 'leupold.com',
+      'hogue inc': 'hogueinc.com',
+      'hogue': 'hogueinc.com',
+      'sellmark corporation': 'sellmark.com',
+      'sellmark': 'sellmark.com',
+      'sightmark': 'sellmark.com',
+      'gsm': 'gsgroupusa.com',
+      'vortex optics': 'vortexoptics.com',
+      'vortex': 'vortexoptics.com',
+      'bushnell': 'bushnell.com',
+      'trijiconinc': 'trijicon.com',
+      'trijicon': 'trijicon.com',
+      'streamlight': 'streamlight.com',
+      'surefire llc': 'surefire.com',
+      'surefire': 'surefire.com',
+      'savage arms': 'savagearms.com',
+      'savage': 'savagearms.com',
+      'mossberg & sons inc': 'mossberg.com',
+      'mossberg': 'mossberg.com',
+      'remington arms co. inc': 'remington.com',
+      'remington': 'remington.com',
+      'winchester ammunition': 'winchester.com',
+      'winchester': 'winchester.com',
+      'cci': 'cci-ammunition.com',
+      'blazer': 'blazer-ammunition.com',
+      'speer': 'speer-ammunition.com',
+      'nosler bullets inc': 'nosler.com',
+      'nosler': 'nosler.com',
+      'berger bullets': 'bergerbullets.com',
+      'brownells': 'brownells.com',
+      'truglo': 'truglo.com',
+      'crimson trace corporation': 'crimsontrace.com',
+      'crimson trace': 'crimsontrace.com',
+      'aimpoint': 'aimpoint.com',
+      'l-3 communications- eotech': 'eotech-inc.com',
+      'eotech': 'eotech-inc.com',
+      'burris company inc': 'burrisoptics.com',
+      'burris': 'burrisoptics.com',
+      'forster products': 'forsterproducts.com',
+      'forster': 'forsterproducts.com',
+      'lyman': 'lymanproducts.com',
+      'the allen company inc': 'allencompany.com',
+      'blackhawk': 'blackhawk.com',
+      'moultrie enterprises': 'moultrie.com',
+      'promag mfg. inc': 'promagindustries.com',
+      'promag mfg inc': 'promagindustries.com',
+      'readywise company': 'readywise.com',
+      'lem products': 'lemproducts.com',
+      'forster products': 'forsterproducts.com',
+      'remington firearms': 'remington.com',
+      'hodgdon powder company inc': 'hodgdon.com',
+      'hodgdon': 'hodgdon.com',
+      'alliant powder': 'alliantpowder.com',
+      'accurate powders': 'accuratepowder.com',
+      'fiocchi ammunition': 'fiocchi.com',
+      'fiocchi': 'fiocchi.com',
+      'norma ammunition': 'norma-ammunition.com',
+      'lapua ammunition': 'lapua.com',
+      'barnes bullets': 'barnesbullets.com',
+      'sierra bullets': 'sierrabullets.com',
+      'berry\'s mfg': 'berrysmfg.com',
+      'berrys mfg': 'berrysmfg.com',
+      'redding reloading equipment': 'reddingreloading.com',
+      'redding': 'reddingreloading.com',
+      'wilson combat': 'wilsoncombat.com',
+      'daniel defense': 'danieldefense.com',
+      'dead air silencers': 'deadairsilencers.com',
+      'silencerco': 'silencerco.com',
+      'umarex usa': 'umarexusa.com',
+      'umarex': 'umarexusa.com',
+      'browning firearms': 'browning.com',
+      'browning clothing': 'browning.com',
+      'browning': 'browning.com',
+      'desantis leather goods co': 'desantisholster.com',
+      'desantis': 'desantisholster.com',
+      'hoppe\'s': 'hoppes.com',
+      'hoppes': 'hoppes.com',
+      'primos': 'primos.com',
+      'feradyne outdoors': 'feradyne.com',
+      'athlon optics': 'athlonoptics.com',
+      'athlon': 'athlonoptics.com',
+      'meprolight sights': 'meprolight.com',
+      'meprolight': 'meprolight.com',
+      'yankee hill machine': 'yhm.net',
+      'rugged suppressor': 'ruggedsuppressors.com',
+      'rugged suppressors': 'ruggedsuppressors.com',
+      'safariland': 'safariland.com',
+      'safariland / safariland': 'safariland.com',
+      'michaels of oregon': 'michaels-of-oregon.com',
+      'blue force gear': 'blueforcegear.com',
+      'mechanix wear llc': 'mechanix.com',
+      'mechanix': 'mechanix.com',
+      'mission first tactical': 'missionfirsttactical.com',
+      'cmc triggers': 'cmctriggers.com',
+      'vihtavuori': 'vihtavuori.com',
+      'underwood ammo': 'underwoodammo.com',
+      'underwood': 'underwoodammo.com',
+      'century arms': 'centuryarms.com',
+      'kel-tec cnc industries inc': 'keltecweapons.com',
+      'kel-tec': 'keltecweapons.com',
+      'henry repeating arms company': 'henryusa.com',
+      'henry': 'henryusa.com',
+      'kimber': 'kimberamerica.com',
+      'walther arms': 'waltherarms.com',
+      'walther': 'waltherarms.com',
+      'beretta u.s.a': 'beretta.com',
+      'beretta': 'beretta.com',
+      'charter arms': 'charterarms.com',
+      'rock island armory': 'armscor.com',
+      'radian weapons': 'radianweapons.com',
+      'troy industries': 'troyind.com',
+      'midwest industries': 'midwestindustriesinc.com',
+      'leapers inc': 'leapers.com',
+      'mec-gar usa inc': 'mec-gar.com',
+      'mec-gar': 'mec-gar.com',
+      'magtech ammunition companyinc': 'magtechammunition.com',
+      'magtech': 'magtechammunition.com',
+      'pro-shot products': 'proshotproducts.com',
+      'mtm molded products company': 'mtmcase-gard.com',
+      'plano molding company': 'planomolding.com',
+      'plano': 'planomolding.com',
+      'tenpoint crossbow technologies': 'tenpointcrossbows.com',
+      'tenpoint': 'tenpointcrossbows.com',
+      'primos': 'primos.com',
+      'ameristep/evolved ingenuity': 'ameristep.com',
+      'rhino blinds': 'rhinoblinds.com',
+      'barronett blinds': 'barronettblinds.com',
+      'ardisam (river\'s edge/ barronett blinds)': 'ardisam.com',
+      'ardisam': 'ardisam.com',
+      'ncstar inc': 'ncstar.com',
+      'konus optics': 'konus.com',
+      'simmons': 'simmonsoptics.com',
+      'barska': 'barska.com',
+      'weaver': 'weaveroptics.com',
+      'warne manufacturing company': 'warnescopemounts.com',
+      'warne': 'warnescopemounts.com',
+      'xs sight systems inc': 'xssights.com',
+      'xs sights': 'xssights.com',
+      'ameriglo': 'ameriglo.net',
+      'truglo': 'truglo.com',
+      'nikon': 'nikon.com',
+      'zeiss': 'zeiss.com',
+      'swarovski': 'swarovskioptik.com',
+      'primary arms': 'primaryarms.com',
+      'midwayusa': 'midwayusa.com',
+      'p-mag industries': 'magpul.com',
+      'benchmark barrels': 'benchmarkbarrels.com'
+    };
+
+    // Get logo URL: local first, then Clearbit by domain, else null
+    function getBrandLogoUrl(brandName) {
+      const key = (brandName || '').toLowerCase().trim().replace(/\.$/, '');
+      const local = BRAND_LOGOS[key];
+      if (local) return { type: 'local', url: '../images/brands/' + local };
+      
+      const domain = BRAND_DOMAINS[key];
+      if (domain) return { type: 'clearbit', url: 'https://logo.clearbit.com/' + domain };
+      
+      return null;
+    }
+
+    // Get initials for placeholder
+    function getInitials(brandName) {
+      const words = (brandName || '').split(/\s+/).filter(Boolean);
+      if (words.length === 1) return words[0].substring(0, 2).toUpperCase();
+      return words.slice(0, 2).map(w => w[0]).join('').toUpperCase();
+    }
+
+    // Suppressors (NFA) require SOT license — don't count until we have it
+    function isSuppressor(row) {
+      return (row.Category === 'Suppressors') || (row.mappedCategory && row.mappedCategory.sub === 'Suppressors');
+    }
+
+    // Count products with any valid price (MSRP, MAP, or Price). Excludes custom/call/quote.
+    function hasValidPrice(row) {
+      const v = (val) => {
+        if (val == null || val === '') return null;
+        const s = String(val).trim().toLowerCase();
+        if (s === 'custom' || s === 'call' || s === 'quote') return null;
+        const n = Number(val);
+        return Number.isFinite(n) && n > 0 ? n : null;
+      };
+      return (v(row.MSRP) ?? v(row.MAP) ?? v(row.Price)) != null;
+    }
+
+    // Load all products and count only featured manufacturers (no wholesalers)
+    async function loadBrands() {
+      const brandCounts = {};
+
+      const promises = CATEGORIES.map(async (cat) => {
+        try {
+          const response = await fetch(`../data/products/mapped-products/${cat}.json`);
+          if (!response.ok) return;
+          const data = await response.json();
+          const products = (Array.isArray(data) ? data : []).filter(p => !isSuppressor(p) && hasValidPrice(p));
+          products.forEach(p => {
+            const raw = (p.Manufacturer || p.manufacturer || '').trim();
+            if (!raw) return;
+            const displayName = getManufacturerDisplayName(raw);
+            if (displayName && FEATURED_MANUFACTURERS.includes(displayName)) {
+              brandCounts[displayName] = (brandCounts[displayName] || 0) + 1;
+            }
+          });
+        } catch (e) {
+          console.error('Error loading', cat, e);
+        }
+      });
+
+      await Promise.all(promises);
+      return brandCounts;
+    }
+
+    // Render manufacturers only (sorted by product count)
+    function renderBrands(brandCounts) {
+      const grid = document.getElementById('brands-grid');
+
+      const sorted = Object.entries(brandCounts)
+        .filter(([, count]) => count > 0)
+        .sort((a, b) => b[1] - a[1]);
+
+      if (sorted.length === 0) {
+        grid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 2rem; color: #999;">No manufacturers found.</div>';
+        return;
+      }
+
+      grid.innerHTML = sorted.map(([displayName, count]) => {
+        const logoInfo = getBrandLogoUrl(displayName);
+        const initials = getInitials(displayName);
+        const fallbackHtml = `<div class="brand-logo-placeholder">${initials}</div>`;
+        const fallbackAttr = fallbackHtml.replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+
+        const logoHtml = logoInfo
+          ? `<div class="brand-logo"><img src="${logoInfo.url}" alt="${escapeHtml(displayName)} logo" loading="lazy" onerror="this.parentElement.innerHTML='${fallbackAttr}'"></div>`
+          : `<div class="brand-logo"><div class="brand-logo-placeholder">${initials}</div></div>`;
+
+        return `
+          <a href="brand-products.html?brand=${encodeURIComponent(displayName)}" class="brand-card">
+            ${logoHtml}
+            <h3>${escapeHtml(displayName)}</h3>
+            <p>${count} product${count !== 1 ? 's' : ''}</p>
+          </a>
+        `;
+      }).join('');
+
+      // All brands A–Z list (clickable)
+      const azSection = document.getElementById('brands-az-section');
+      const azList = document.getElementById('brands-az-list');
+      if (azSection && azList) {
+        const namesAz = sorted.map(([name]) => name).sort((a, b) => a.localeCompare(b, undefined, { sensitivity: 'base' }));
+        azList.innerHTML = namesAz.map(name => `<li><a href="brand-products.html?brand=${encodeURIComponent(name)}">${escapeHtml(name)}</a></li>`).join('');
+        azSection.style.display = 'block';
+      }
+    }
+
+    function escapeHtml(str) {
+      const div = document.createElement('div');
+      div.textContent = str || '';
+      return div.innerHTML;
+    }
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', async () => {
+      const brandCounts = await loadBrands();
+      renderBrands(brandCounts);
+    });
+  </script>
 
   <footer>
     <div class="footer-content">

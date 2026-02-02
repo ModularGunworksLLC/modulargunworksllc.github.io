@@ -1,131 +1,124 @@
 /**
- * Age Gate - Verify user age before access
- * Compliant with firearm/adult product regulations
+ * Age Gate - Industry-standard age verification for firearm/ammunition retailers
+ * Aligns with ATF Gun Control Act: 21+ for handguns and handgun ammo; 18+ for long guns/rifle ammo.
+ * This site uses 21+ as the minimum to access (conservative, used by PSA, Ammo Depot, and similar retailers).
  */
 
-class AgeGate {
-  constructor(options = {}) {
-    this.minAge = options.minAge || 18;
-    this.storageKey = 'modular-gunworks-age-verified';
-    this.storageExpiry = options.storageExpiry || 86400000; // 24 hours in ms
-    
-    this.init();
-  }
+(function () {
+  'use strict';
 
-  init() {
-    // TEMPORARY: Skip age gate for testing/debugging - REMOVE AFTER AUDIT
-    this.hideAgeGate();
-    return;
-    
-    // Check if user already verified
-    if (this.isVerified()) {
-      this.hideAgeGate();
-      return;
+  const MIN_AGE = 21;
+  const STORAGE_KEY = 'modular-gunworks-age-verified';
+  const STORAGE_EXPIRY_MS = 86400000; // 24 hours
+
+  function getStored() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return null;
+      return JSON.parse(raw);
+    } catch (_) {
+      return null;
     }
-
-    // Create and show age gate
-    this.createAgeGate();
   }
 
-  isVerified() {
-    const stored = localStorage.getItem(this.storageKey);
-    if (!stored) return false;
-
-    const { timestamp } = JSON.parse(stored);
-    const now = Date.now();
-
-    // Check if verification has expired
-    if (now - timestamp > this.storageExpiry) {
-      localStorage.removeItem(this.storageKey);
+  function isVerified() {
+    const stored = getStored();
+    if (!stored || typeof stored.timestamp !== 'number') return false;
+    if (Date.now() - stored.timestamp > STORAGE_EXPIRY_MS) {
+      localStorage.removeItem(STORAGE_KEY);
       return false;
     }
-
     return true;
   }
 
-  createAgeGate() {
-    // Block body scrolling
-    document.body.classList.add('age-gate-shown');
-
-    // Create modal
-    const modal = document.createElement('div');
-    modal.className = 'age-gate-modal';
-    modal.id = 'age-gate-modal';
-
-    modal.innerHTML = `
-      <div class="age-gate-content">
-        <h1>Age Verification Required</h1>
-        <p>You must be at least ${this.minAge} years old to access this site.</p>
-        
-        <div class="age-gate-question">
-          <p>Are you ${this.minAge} years or older?</p>
-        </div>
-
-        <div class="age-gate-buttons">
-          <button type="button" class="age-gate-btn age-gate-btn-confirm" id="confirm-btn">Yes, I am ${this.minAge}+</button>
-          <button type="button" class="age-gate-btn age-gate-btn-deny" id="deny-btn">No, I am under ${this.minAge}</button>
-        </div>
-
-        <div class="age-gate-legal">
-          <p>By clicking "Yes," you confirm that you are at least ${this.minAge} years old.</p>
-        </div>
-      </div>
-    `;
-
-    document.body.appendChild(modal);
-    this.attachEventListeners();
-  }
-
-  populateSelects(currentYear) {
-    // This method is no longer needed with Yes/No buttons
-  }
-
-  attachEventListeners() {
-    const confirmBtn = document.getElementById('confirm-btn');
-    const denyBtn = document.getElementById('deny-btn');
-
-    confirmBtn.addEventListener('click', () => {
-      this.verify();
-    });
-
-    denyBtn.addEventListener('click', () => {
-      window.location.href = 'https://www.google.com';
-    });
-  }
-
-  handleSubmit() {
-    // This method is no longer needed with Yes/No buttons
-  }
-
-  verify() {
-    localStorage.setItem(this.storageKey, JSON.stringify({
+  function setVerified() {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({
       verified: true,
       timestamp: Date.now()
     }));
-
-    this.hideAgeGate();
   }
 
-  hideAgeGate() {
+  function hideGate() {
     const modal = document.getElementById('age-gate-modal');
     if (modal) {
       modal.style.opacity = '0';
-      modal.style.transition = 'opacity 0.3s ease-out';
-      setTimeout(() => {
+      modal.style.transition = 'opacity 0.25s ease-out';
+      setTimeout(function () {
         modal.remove();
         document.body.classList.remove('age-gate-shown');
-      }, 300);
+      }, 250);
     } else {
       document.body.classList.remove('age-gate-shown');
     }
   }
-}
 
-// Initialize age gate when DOM is ready
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', () => {
-    new AgeGate({ minAge: 18 });
-  });
-} else {
-  new AgeGate({ minAge: 18 });
-}
+  function showGate() {
+    document.body.classList.add('age-gate-shown');
+
+    const modal = document.createElement('div');
+    modal.className = 'age-gate-modal';
+    modal.id = 'age-gate-modal';
+    modal.setAttribute('role', 'dialog');
+    modal.setAttribute('aria-modal', 'true');
+    modal.setAttribute('aria-labelledby', 'age-gate-title');
+
+    modal.innerHTML =
+      '<div class="age-gate-backdrop" aria-hidden="true"></div>' +
+      '<div class="age-gate-content">' +
+        '<div class="age-gate-header">' +
+          '<span class="age-gate-icon" aria-hidden="true"></span>' +
+          '<h1 id="age-gate-title">Age Verification Required</h1>' +
+        '</div>' +
+        '<p class="age-gate-intro">You must be <strong>21 years of age or older</strong> to enter this website. Federal law prohibits the sale of firearms and ammunition to persons under the applicable minimum age in your jurisdiction.</p>' +
+        '<div class="age-gate-question">' +
+          '<p>Are you 21 years of age or older?</p>' +
+        '</div>' +
+        '<div class="age-gate-buttons">' +
+          '<button type="button" class="age-gate-btn age-gate-btn-confirm" id="age-gate-confirm">Yes, I am 21 or older</button>' +
+          '<button type="button" class="age-gate-btn age-gate-btn-deny" id="age-gate-deny">No, I am not</button>' +
+        '</div>' +
+        '<div class="age-gate-legal">' +
+          '<p>By clicking &quot;Yes,&quot; you confirm that you are of legal age to purchase firearms and/or ammunition in your state and agree to comply with all applicable federal, state, and local laws. This site uses a 24-hour verification cookie.</p>' +
+        '</div>' +
+      '</div>';
+
+    document.body.appendChild(modal);
+
+    document.getElementById('age-gate-confirm').addEventListener('click', function () {
+      setVerified();
+      hideGate();
+    });
+
+    document.getElementById('age-gate-deny').addEventListener('click', function () {
+      window.location.href = 'https://www.google.com';
+    });
+
+    // Prevent closing by clicking backdrop or Escape (industry standard: must choose)
+    modal.querySelector('.age-gate-backdrop').addEventListener('click', function (e) {
+      e.stopPropagation();
+    });
+    modal.addEventListener('click', function (e) {
+      if (e.target === modal) e.preventDefault();
+    });
+    document.addEventListener('keydown', function onKey(e) {
+      if (e.key === 'Escape') {
+        e.preventDefault();
+        document.removeEventListener('keydown', onKey);
+      }
+    });
+  }
+
+  function init() {
+    if (isVerified()) {
+      hideGate();
+      return;
+    }
+    showGate();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();

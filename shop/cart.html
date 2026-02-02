@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Shopping Cart - Modular Gunworks LLC">
+  <meta name="author" content="Modular Gunworks LLC">
+  <meta name="theme-color" content="#181a1b">
+  
+  <title>Shopping Cart - Modular Gunworks LLC</title>
+  
+  <!-- Modular CSS -->
+  <link rel="stylesheet" href="../styles/design-system.css">
+  <link rel="stylesheet" href="../styles/components.css">
+  <link rel="stylesheet" href="../styles/layout.css">
+  <link rel="stylesheet" href="../styles/age-gate.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="icon" type="image/png" href="../favicon.png">
+  
+  <!-- PayPal SDK -->
+  <script src="https://www.paypal.com/sdk/js?client-id=AYd1GcwFQbrNbYKm2nYjeGLYy4Cfdh7aH3AtrjrtJHFgSLbUJC_8CHo-DXmNZXJqjqFIEsmIe-e02OPA&currency=USD"></script>
+  
+  <style>
+    :root {
+      --color-primary: #b22222;
+      --color-accent: #1a2c4b;
+      --color-bg-dark: #181a1b;
+      --color-text: #333;
+      --color-light: #f5f5f5;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+      background-color: #fff;
+    }
+
+    main {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    .page-title {
+      font-size: 2rem;
+      color: var(--color-bg-dark);
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .page-subtitle {
+      color: #666;
+      margin-bottom: 2rem;
+    }
+
+    /* CART LAYOUT */
+    .cart-container {
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: 2rem;
+      align-items: start;
+    }
+
+    @media (max-width: 900px) {
+      .cart-container {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* CART ITEMS */
+    .cart-items {
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .cart-item {
+      display: grid;
+      grid-template-columns: 100px 1fr auto;
+      gap: 1.5rem;
+      padding: 1.5rem;
+      border-bottom: 1px solid #e0e0e0;
+      align-items: center;
+    }
+
+    .cart-item:last-child {
+      border-bottom: none;
+    }
+
+    .cart-item-image {
+      width: 100px;
+      height: 100px;
+      background: #f5f5f5;
+      border-radius: 8px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .cart-item-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .cart-item-image-placeholder {
+      color: #ccc;
+      font-size: 2rem;
+    }
+
+    .cart-item-details {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .cart-item-name {
+      font-weight: 600;
+      color: var(--color-bg-dark);
+      font-size: 1rem;
+      line-height: 1.4;
+    }
+
+    .cart-item-name a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .cart-item-name a:hover {
+      color: var(--color-primary);
+    }
+
+    .cart-item-sku {
+      font-size: 0.85rem;
+      color: #999;
+    }
+
+    .cart-item-price {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--color-primary);
+    }
+
+    .cart-item-actions {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 1rem;
+    }
+
+    .cart-item-total {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--color-bg-dark);
+    }
+
+    /* QUANTITY SELECTOR */
+    .quantity-selector {
+      display: flex;
+      align-items: center;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .quantity-selector button {
+      width: 36px;
+      height: 36px;
+      background: #f5f5f5;
+      border: none;
+      cursor: pointer;
+      font-weight: 700;
+      color: #333;
+      transition: background 0.2s;
+      font-size: 1rem;
+    }
+
+    .quantity-selector button:hover {
+      background: #e0e0e0;
+    }
+
+    .quantity-selector input {
+      width: 50px;
+      height: 36px;
+      border: none;
+      border-left: 1px solid #ddd;
+      border-right: 1px solid #ddd;
+      text-align: center;
+      font-weight: 600;
+      font-size: 1rem;
+    }
+
+    .remove-item {
+      background: none;
+      border: none;
+      color: #999;
+      cursor: pointer;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      transition: color 0.2s;
+    }
+
+    .remove-item:hover {
+      color: #c62828;
+    }
+
+    /* CART SUMMARY */
+    .cart-summary {
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      padding: 1.5rem;
+      position: sticky;
+      top: 2rem;
+    }
+
+    .cart-summary-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--color-bg-dark);
+      margin-bottom: 1.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid #e0e0e0;
+    }
+
+    .cart-summary-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.75rem 0;
+      font-size: 1rem;
+    }
+
+    .cart-summary-row.total {
+      border-top: 2px solid #e0e0e0;
+      margin-top: 1rem;
+      padding-top: 1rem;
+      font-size: 1.25rem;
+      font-weight: 700;
+    }
+
+    .cart-summary-row.total .summary-value {
+      color: var(--color-primary);
+    }
+
+    .summary-label {
+      color: #666;
+    }
+
+    .summary-value {
+      font-weight: 600;
+      color: var(--color-bg-dark);
+    }
+
+    .checkout-note {
+      font-size: 0.85rem;
+      color: #666;
+      margin: 1rem 0;
+      padding: 0.75rem;
+      background: #f9f9f9;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .checkout-note i {
+      color: var(--color-primary);
+    }
+
+    #paypal-button-container {
+      margin-top: 1rem;
+    }
+
+    .continue-shopping {
+      display: block;
+      text-align: center;
+      margin-top: 1rem;
+      color: var(--color-primary);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+
+    .continue-shopping:hover {
+      text-decoration: underline;
+    }
+
+    /* EMPTY CART */
+    .cart-empty {
+      text-align: center;
+      padding: 4rem 2rem;
+      background: #f9f9f9;
+      border-radius: 8px;
+    }
+
+    .cart-empty i {
+      font-size: 4rem;
+      color: #ccc;
+      margin-bottom: 1.5rem;
+    }
+
+    .cart-empty h2 {
+      font-size: 1.5rem;
+      color: var(--color-bg-dark);
+      margin-bottom: 0.5rem;
+    }
+
+    .cart-empty p {
+      color: #666;
+      margin-bottom: 2rem;
+    }
+
+    .shop-now-btn {
+      display: inline-block;
+      padding: 1rem 2rem;
+      background: var(--color-primary);
+      color: #fff;
+      text-decoration: none;
+      border-radius: 4px;
+      font-weight: 700;
+      transition: all 0.3s;
+    }
+
+    .shop-now-btn:hover {
+      background: #a01a1a;
+      transform: translateY(-2px);
+    }
+
+    /* CLEAR CART BUTTON */
+    .clear-cart-btn {
+      background: none;
+      border: 1px solid #ddd;
+      color: #666;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: all 0.2s;
+    }
+
+    .clear-cart-btn:hover {
+      border-color: #c62828;
+      color: #c62828;
+    }
+
+    .cart-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 600px) {
+      .cart-item {
+        grid-template-columns: 80px 1fr;
+        gap: 1rem;
+      }
+
+      .cart-item-actions {
+        grid-column: 1 / -1;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .cart-item-image {
+        width: 80px;
+        height: 80px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- AGE GATE -->
+  <script src="../scripts/age-gate.js"></script>
+
+  <!-- HEADER -->
+  <header id="site-header">
+    <div class="header-top-row">
+      <h1>MODULAR GUNWORKS LLC</h1>
+      <a href="../index.html" class="header-logo" title="Home">
+        <img src="../images/modular-gunworks-llc.png" alt="Modular Gunworks Logo">
+        <span class="logo-label">HOME</span>
+      </a>
+    </div>
+
+    <div class="header-middle-row">
+      <div class="header-left-links">
+        <a href="#account">Account</a>
+        <a href="#help">Help</a>
+        <a href="cart.html" style="color: var(--color-primary); font-weight: 700;"><i class="fas fa-shopping-cart"></i> Cart <span class="cart-count-badge" style="background: var(--color-primary); color: #fff; padding: 2px 6px; border-radius: 10px; font-size: 0.75rem; display: none;">0</span></a>
+      </div>
+
+      <form class="search-bar" action="#" method="get">
+        <input type="text" placeholder="Search ammo, gear, optics...">
+        <button type="submit" title="Search"><i class="fas fa-search"></i></button>
+      </form>
+    </div>
+
+    <nav class="category-nav">
+      <a href="ammunition.html">Ammunition</a>
+      <a href="magazines.html">Magazines</a>
+      <a href="gun-parts.html">Gun Parts</a>
+      <a href="gear.html">Gear</a>
+      <a href="optics.html">Optics</a>
+      <a href="reloading.html">Reloading</a>
+      <a href="outdoors.html">Outdoors</a>
+      <a href="brands.html">Brands</a>
+      <a href="sale.html" style="color: var(--color-primary); font-weight: 700;">ON SALE</a>
+      <a href="../services.html">Services</a>
+    </nav>
+
+    <div class="promo-bar">
+      Veteran-Owned Business | Fast Shipping | Professional Service
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT -->
+  <main>
+    <div class="cart-header">
+      <div>
+        <h1 class="page-title"><i class="fas fa-shopping-cart"></i> Shopping Cart</h1>
+        <p class="page-subtitle" id="cart-count-text">Loading cart...</p>
+      </div>
+      <button class="clear-cart-btn" id="clear-cart-btn" style="display: none;">
+        <i class="fas fa-trash-alt"></i> Clear Cart
+      </button>
+    </div>
+
+    <div id="cart-content">
+      <!-- Cart items will be rendered here -->
+    </div>
+  </main>
+
+  <!-- CART SCRIPT -->
+  <script src="../scripts/cart.js"></script>
+  <script>
+    function renderCart() {
+      const cart = MGWCart.get();
+      const container = document.getElementById('cart-content');
+      const countText = document.getElementById('cart-count-text');
+      const clearBtn = document.getElementById('clear-cart-btn');
+
+      if (!cart || cart.length === 0) {
+        countText.textContent = 'Your cart is empty';
+        clearBtn.style.display = 'none';
+        container.innerHTML = `
+          <div class="cart-empty">
+            <i class="fas fa-shopping-cart"></i>
+            <h2>Your cart is empty</h2>
+            <p>Looks like you haven't added any items yet.</p>
+            <a href="ammunition.html" class="shop-now-btn">
+              <i class="fas fa-shopping-bag"></i> Start Shopping
+            </a>
+          </div>
+        `;
+        return;
+      }
+
+      const itemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+      const subtotal = MGWCart.getTotal();
+      
+      countText.textContent = `${itemCount} item${itemCount !== 1 ? 's' : ''} in your cart`;
+      clearBtn.style.display = 'block';
+
+      const itemsHTML = cart.map(item => {
+        const itemTotal = (item.price * item.quantity).toFixed(2);
+        const detailUrl = item.category 
+          ? `../product-detail.html?sku=${encodeURIComponent(item.sku)}&category=${encodeURIComponent(item.category)}`
+          : '#';
+        
+        return `
+          <div class="cart-item" data-sku="${escapeHtml(item.sku)}">
+            <div class="cart-item-image">
+              ${item.image 
+                ? `<img src="${escapeHtml(item.image)}" alt="${escapeHtml(item.name)}" onerror="this.parentElement.innerHTML='<div class=\\'cart-item-image-placeholder\\'><i class=\\'fas fa-box\\'></i></div>'">`
+                : '<div class="cart-item-image-placeholder"><i class="fas fa-box"></i></div>'
+              }
+            </div>
+            <div class="cart-item-details">
+              <div class="cart-item-name"><a href="${detailUrl}">${escapeHtml(item.name)}</a></div>
+              <div class="cart-item-sku">SKU: ${escapeHtml(item.sku)}</div>
+              <div class="cart-item-price">$${item.price.toFixed(2)} each</div>
+            </div>
+            <div class="cart-item-actions">
+              <div class="cart-item-total">$${itemTotal}</div>
+              <div class="quantity-selector">
+                <button type="button" onclick="updateQuantity('${escapeHtml(item.sku)}', ${item.quantity - 1})">−</button>
+                <input type="number" value="${item.quantity}" min="1" readonly>
+                <button type="button" onclick="updateQuantity('${escapeHtml(item.sku)}', ${item.quantity + 1})">+</button>
+              </div>
+              <button class="remove-item" onclick="removeItem('${escapeHtml(item.sku)}')">
+                <i class="fas fa-trash-alt"></i> Remove
+              </button>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      container.innerHTML = `
+        <div class="cart-container">
+          <div class="cart-items">
+            ${itemsHTML}
+          </div>
+          <div class="cart-summary">
+            <div class="cart-summary-title">Order Summary</div>
+            <div class="cart-summary-row">
+              <span class="summary-label">Subtotal (${itemCount} items)</span>
+              <span class="summary-value">$${subtotal.toFixed(2)}</span>
+            </div>
+            <div class="cart-summary-row">
+              <span class="summary-label">Shipping</span>
+              <span class="summary-value">Calculated at checkout</span>
+            </div>
+            <div class="cart-summary-row total">
+              <span class="summary-label">Estimated Total</span>
+              <span class="summary-value">$${subtotal.toFixed(2)}</span>
+            </div>
+            <div class="checkout-note">
+              <i class="fas fa-lock"></i>
+              Secure checkout powered by PayPal
+            </div>
+            <div id="paypal-button-container"></div>
+            <a href="ammunition.html" class="continue-shopping">
+              <i class="fas fa-arrow-left"></i> Continue Shopping
+            </a>
+          </div>
+        </div>
+      `;
+
+      // Initialize PayPal buttons
+      initPayPal(cart, subtotal);
+    }
+
+    function initPayPal(cart, total) {
+      const container = document.getElementById('paypal-button-container');
+      if (!container) return;
+
+      paypal.Buttons({
+        style: {
+          layout: 'vertical',
+          color: 'gold',
+          shape: 'rect',
+          label: 'paypal',
+          tagline: false
+        },
+        createOrder: (data, actions) => {
+          const items = cart.map(item => ({
+            name: item.name.substring(0, 127),
+            unit_amount: {
+              currency_code: 'USD',
+              value: item.price.toFixed(2)
+            },
+            quantity: item.quantity.toString(),
+            sku: item.sku,
+            category: 'PHYSICAL_GOODS'
+          }));
+
+          return actions.order.create({
+            purchase_units: [{
+              amount: {
+                value: total.toFixed(2),
+                currency_code: 'USD',
+                breakdown: {
+                  item_total: {
+                    currency_code: 'USD',
+                    value: total.toFixed(2)
+                  }
+                }
+              },
+              items: items
+            }],
+            application_context: {
+              brand_name: 'Modular Gunworks LLC',
+              locale: 'en-US',
+              user_action: 'PAY_NOW'
+            }
+          });
+        },
+        onApprove: (data, actions) => {
+          return actions.order.capture().then((orderData) => {
+            console.log('Order completed:', orderData);
+            
+            // Send order notification
+            const orderSummary = cart.map(item => 
+              `${item.quantity}× ${item.name} ($${(item.price * item.quantity).toFixed(2)})`
+            ).join('\n');
+
+            // Clear cart after successful purchase
+            MGWCart.clear();
+
+            // Show success message
+            document.getElementById('cart-content').innerHTML = `
+              <div class="cart-empty" style="background: #e8f5e9;">
+                <i class="fas fa-check-circle" style="color: #4caf50;"></i>
+                <h2>Order Confirmed!</h2>
+                <p>Thank you for your purchase! Your order ID is: <strong>${orderData.id}</strong></p>
+                <p style="font-size: 0.9rem; color: #666;">A confirmation has been sent to your PayPal email.</p>
+                <a href="ammunition.html" class="shop-now-btn" style="margin-top: 1rem;">
+                  <i class="fas fa-shopping-bag"></i> Continue Shopping
+                </a>
+              </div>
+            `;
+            document.getElementById('cart-count-text').textContent = 'Order complete!';
+            document.getElementById('clear-cart-btn').style.display = 'none';
+          });
+        },
+        onError: (err) => {
+          console.error('PayPal Error:', err);
+          alert('Payment error. Please try again.');
+        },
+        onCancel: () => {
+          console.log('Payment cancelled');
+        }
+      }).render('#paypal-button-container');
+    }
+
+    function updateQuantity(sku, newQty) {
+      if (newQty <= 0) {
+        removeItem(sku);
+        return;
+      }
+      MGWCart.updateQuantity(sku, newQty);
+      renderCart();
+    }
+
+    function removeItem(sku) {
+      MGWCart.remove(sku);
+      renderCart();
+    }
+
+    function escapeHtml(str) {
+      const div = document.createElement('div');
+      div.textContent = str || '';
+      return div.innerHTML;
+    }
+
+    // Clear cart button
+    document.getElementById('clear-cart-btn').addEventListener('click', () => {
+      if (confirm('Are you sure you want to clear your cart?')) {
+        MGWCart.clear();
+        renderCart();
+      }
+    });
+
+    // Render cart on load
+    document.addEventListener('DOMContentLoaded', renderCart);
+  </script>
+</body>
+</html>

@@ -29,7 +29,48 @@
       padding: 3rem 2rem;
     }
     
+    .sale-page-header {
+      width: 100%;
+      margin-bottom: 1.5rem;
+    }
+    
+    .sale-main-row {
+      display: flex;
+      gap: 2rem;
+      align-items: flex-start;
+    }
+    
+    #sale-filters-sidebar {
+      flex: 0 0 280px;
+      position: sticky;
+      top: 180px;
+      height: fit-content;
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      padding: 0;
+      overflow-y: auto;
+      max-height: calc(100vh - 200px);
+    }
+    .sale-filter-header { display: flex; justify-content: space-between; align-items: center; padding: 1rem 1.2rem; border-bottom: 1px solid #e0e0e0; background: #f9f9f9; }
+    .sale-filter-header h3 { font-size: 0.95rem; color: #333; margin: 0; font-weight: 700; text-transform: uppercase; }
+    .sale-filter-header-btn { padding: 0.3rem 0.6rem; background: transparent; color: var(--color-primary); border: none; cursor: pointer; font-weight: 600; font-size: 0.75rem; }
+    .sale-filter-section { border-bottom: 1px solid #e0e0e0; }
+    .sale-filter-toggle { width: 100%; padding: 1rem 1.2rem; background: #fff; border: none; text-align: left; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-weight: 700; color: #333; font-size: 0.95rem; }
+    .sale-filter-toggle:hover { background: #f9f9f9; }
+    .sale-filter-content { padding: 1rem 1.2rem; border-bottom: 1px solid #e0e0e0; }
+    .sale-filter-content label { display: flex; align-items: center; cursor: pointer; font-weight: 500; color: #333; gap: 0.6rem; }
+    .sale-filter-content input[type="checkbox"] { width: 18px; height: 18px; cursor: pointer; accent-color: var(--color-primary); }
+    .sale-filter-option { display: flex; margin-bottom: 0.6rem; }
+    .sale-filter-search { width: 100%; padding: 0.6rem; margin-bottom: 0.8rem; border: 1px solid #ddd; border-radius: 4px; font-size: 0.85rem; }
+    #sale-category-list, #sale-brand-list { display: flex; flex-direction: column; gap: 0.5rem; max-height: 200px; overflow-y: auto; }
+    .sale-price-flex { display: flex; gap: 0.4rem; }
+    #sale-price-min, #sale-price-max { flex: 1; padding: 0.6rem; border: 1px solid #ddd; border-radius: 4px; font-size: 0.85rem; }
+    #sale-sort-filter { width: 100%; padding: 0.6rem; border: 1px solid #ddd; border-radius: 4px; font-size: 0.85rem; background: #fff; }
+    
     .page-title { font-size: 2rem; color: var(--color-bg-dark); margin-bottom: 1rem; }
+    
+    .sale-content-area { flex: 1; min-width: 0; }
     
     .controls {
       display: flex;
@@ -223,14 +264,20 @@
       .products-grid { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); }
     }
     
+    @media (max-width: 1024px) {
+      .sale-main-row { flex-direction: column; }
+      #sale-filters-sidebar { flex: none; width: 100%; max-height: none; position: static; }
+    }
     @media (max-width: 768px) {
       main { padding: 2rem 1rem; }
       .products-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 1rem; }
       .page-title { font-size: 1.5rem; }
+      .controls { flex-direction: column; align-items: stretch; }
     }
   </style>
 
   <script src="../scripts/age-gate.js"></script>
+  <script src="../scripts/cart.js"></script>
 </head>
 
 <body>
@@ -248,7 +295,7 @@
       <div class="header-left-links">
         <a href="#account">Account</a>
         <a href="#help">Help</a>
-        <a href="../shop/cart.html">Cart</a>
+        <a href="../shop/cart.html"><i class="fas fa-shopping-cart"></i> Cart <span class="cart-count-badge" style="background: var(--color-primary); color: #fff; padding: 2px 6px; border-radius: 10px; font-size: 0.75rem; display: none;">0</span></a>
       </div>
 
       <form class="search-bar" action="#" method="get">
@@ -276,25 +323,91 @@
   </header>
 
   <main>
-    <h1 class="page-title">ON SALE</h1>
-    <p style="color: #666; margin-bottom: 2rem;">Exclusive deals across all categories - limited time offers!</p>
-
-    <div class="controls">
-      <div class="product-count">
-        Showing <span id="product-count">0</span> products on sale
-      </div>
-      <div class="view-toggle">
-        <label style="font-weight: 600; color: #333; font-size: 0.9rem; margin-right: 0.5rem;">VIEW:</label>
-        <button id="view-grid" style="border-radius: 4px 0 0 4px;">
-          <i class="fas fa-th"></i> Grid
-        </button>
-        <button id="view-list">
-          <i class="fas fa-list"></i> List
-        </button>
+    <!-- FULL-WIDTH HEADER: title, subtitle, search, count, view -->
+    <div class="sale-page-header">
+      <h1 class="page-title">ON SALE</h1>
+      <p style="color: #666; margin-bottom: 1rem;">Exclusive deals across all categories - limited time offers!</p>
+      <div class="controls">
+        <input type="text" id="sale-product-search" placeholder="Search by name, brand, SKU..." style="max-width: 280px; padding: 0.5rem 0.75rem; border: 1px solid #ddd; border-radius: 4px; font-size: 0.95rem;">
+        <div class="product-count">
+          Showing <span id="product-count">0</span> of <span id="total-count">0</span> products
+        </div>
+        <div class="view-toggle">
+          <label style="font-weight: 600; color: #333; font-size: 0.9rem; margin-right: 0.5rem;">VIEW:</label>
+          <button id="view-grid" style="border-radius: 4px 0 0 4px;">
+            <i class="fas fa-th"></i> Grid
+          </button>
+          <button id="view-list">
+            <i class="fas fa-list"></i> List
+          </button>
+        </div>
       </div>
     </div>
 
-    <!-- GRID VIEW -->
+    <!-- ROW: FILTERS + PRODUCT GRID (aligned) -->
+    <div class="sale-main-row">
+    <aside id="sale-filters-sidebar">
+      <div class="sale-filter-header">
+        <h3>Filters</h3>
+        <button type="button" id="sale-clear-filters" class="sale-filter-header-btn">Clear All</button>
+      </div>
+      <div class="sale-filter-section" style="padding: 1rem 1.2rem; border-bottom: 1px solid #e0e0e0; background: #fafafa;">
+        <label style="display: flex; align-items: center; cursor: pointer; font-weight: 600; color: #333; gap: 0.6rem;">
+          <input type="checkbox" id="sale-in-stock-filter" style="width: 18px; height: 18px; cursor: pointer; accent-color: var(--color-primary);">
+          Show Only In Stock
+        </label>
+      </div>
+      <div class="sale-filter-section">
+        <button type="button" class="sale-filter-toggle" data-sale-filter="category">
+          <span>Category</span>
+          <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="sale-filter-content" style="display: none;">
+          <input type="text" class="sale-filter-search" placeholder="Search category..." id="sale-category-search">
+          <div id="sale-category-list"></div>
+        </div>
+      </div>
+      <div class="sale-filter-section">
+        <button type="button" class="sale-filter-toggle" data-sale-filter="price">
+          <span>Price</span>
+          <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="sale-filter-content" style="display: none;">
+          <div class="sale-price-flex">
+            <input type="number" id="sale-price-min" placeholder="$0" min="0">
+            <input type="number" id="sale-price-max" placeholder="$999" min="0">
+          </div>
+        </div>
+      </div>
+      <div class="sale-filter-section">
+        <button type="button" class="sale-filter-toggle" data-sale-filter="brand">
+          <span>Brand</span>
+          <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="sale-filter-content" style="display: none;">
+          <input type="text" class="sale-filter-search" placeholder="Search brand..." id="sale-brand-search">
+          <div id="sale-brand-list"></div>
+        </div>
+      </div>
+      <div class="sale-filter-section">
+        <button type="button" class="sale-filter-toggle" data-sale-filter="sort">
+          <span>Sort By</span>
+          <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="sale-filter-content" style="display: none;">
+          <select id="sale-sort-filter">
+            <option value="discount">Discount (Highest First)</option>
+            <option value="price-low">Price: Low to High</option>
+            <option value="price-high">Price: High to Low</option>
+            <option value="name">Product Name (A-Z)</option>
+          </select>
+        </div>
+      </div>
+    </aside>
+
+    <!-- RIGHT: PRODUCT GRID / LIST -->
+    <div class="sale-content-area">
+      <!-- GRID VIEW -->
     <div id="grid-view" class="products-grid">
       <div style="grid-column: 1 / -1; text-align: center; padding: 2rem;">
         <i class="fas fa-spinner fa-spin" style="font-size: 2rem; color: var(--color-primary);"></i> Loading sale items...
@@ -321,7 +434,12 @@
         </tbody>
       </table>
     </div>
+    </div>
+    </div>
   </main>
+
+  <script src="../scripts/age-gate.js"></script>
+  <script src="../scripts/cart.js"></script>
 
   <footer>
     <div class="footer-content">
@@ -377,8 +495,23 @@
   <script>
     const categories = ['ammunition', 'magazines', 'gun-parts', 'gear', 'optics', 'reloading', 'outdoors'];
     let allSaleProducts = [];
+    let filteredSaleProducts = [];
     let currentView = 'grid';
-    const CURRENT_PAGE_CATEGORY = 'sale'; // Filter protection: only show sale products
+    const CURRENT_PAGE_CATEGORY = 'sale';
+
+    function toHighResImageUrl(url, size) {
+      if (!url || typeof url !== 'string') return url;
+      size = size || 500;
+      return url.replace(/\?w=\d+&h=\d+/, '?w=' + size + '&h=' + size);
+    }
+
+    function priceOrNull(val) {
+      if (val == null || val === '') return null;
+      const s = String(val).trim().toLowerCase();
+      if (s === 'custom' || s === 'call' || s === 'quote') return null;
+      const n = Number(val);
+      return Number.isFinite(n) && n > 0 ? n : null;
+    }
 
     // Load all products from all categories
     async function loadAllProducts() {
@@ -393,44 +526,202 @@
         console.error('Error loading active products:', error);
       }
       
+      const skusInSale = new Set();
+      
       for (const category of categories) {
         try {
-          const response = await fetch(`../data/products/${category}.json`);
+          const fileCategory = category.charAt(0).toUpperCase() + category.slice(1).replace(/-/g, '_');
+          const response = await fetch(`../data/products/mapped-products/${fileCategory}.json`);
+          if (!response.ok) continue;
           const data = await response.json();
+          const list = Array.isArray(data) ? data : (data.products || data.items || []);
           
-          if (data.products && Array.isArray(data.products)) {
-            // Filter for products with sale prices AND are activated AND not hidden
-            const saleProducts = data.products.filter(product => {
-              const isActive = activeData[product.id] && activeData[product.id].page === category;
-              const regularPrice = product.msrp ?? 0;
-              const displayPrice = product.displayPrice ?? product.msrp ?? 0;
+          if (list.length) {
+            // 1) Traditional sale: active + sell price < regular (MSRP or MAP)
+            const saleProducts = list.filter(product => {
+              const sku = (product.SKU || product.sku || '').toString();
+              const isActive = activeData[sku] && activeData[sku].page === category;
+              const regularPrice = priceOrNull(product.MSRP) ?? priceOrNull(product.MAP);
+              if (regularPrice == null) return false;
+              const sellPrice = priceOrNull(product.Price);
+              const displayPrice = (sellPrice != null && sellPrice < regularPrice) ? sellPrice : (priceOrNull(product.MAP) ?? priceOrNull(product.MSRP));
               const notHidden = !product.hidden;
-              return isActive && displayPrice > 0 && displayPrice < regularPrice && notHidden;
+              return isActive && displayPrice != null && displayPrice > 0 && displayPrice < regularPrice && notHidden;
             });
-            
-            // Add category info to each product
+
             saleProducts.forEach(product => {
-              product.category = 'sale'; // Set category for filter protection
+              const regularPrice = priceOrNull(product.MSRP) ?? priceOrNull(product.MAP);
+              const sellPrice = priceOrNull(product.Price);
+              const displayPrice = (sellPrice != null && sellPrice < regularPrice) ? sellPrice : (priceOrNull(product.MAP) ?? priceOrNull(product.MSRP));
+              product.category = 'sale';
+              product.sourceCategory = category;
               product.categoryDisplay = category.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
-              product.regularPrice = product.msrp ?? 0;
-              product.discount = Math.round(((product.regularPrice - (product.displayPrice ?? product.msrp ?? 0)) / product.regularPrice) * 100);
+              product.regularPrice = regularPrice;
+              product.discount = product.regularPrice > 0 ? Math.round(((product.regularPrice - displayPrice) / product.regularPrice) * 100) : 0;
+              product.displayPrice = displayPrice;
+              product.isMapOnly = false;
+              product.image = toHighResImageUrl(product['Image Location'] || product.image || '', 500);
+              product.name = product['Item Name'] || product['Web Item Name'] || product.name || '';
+              product.inventory = product['Quantity In Stock'] != null ? Number(product['Quantity In Stock']) : (product.inventory ?? 0);
+              product.sku = product.SKU || product.sku || '';
+              product.brand = product.Manufacturer || product.manufacturer || '';
+              skusInSale.add(product.sku);
             });
-            
             allSaleProducts.push(...saleProducts);
+
+            // 2) MAP-only: has MAP, no MSRP — add so customers feel they found a deal
+            const mapOnlyProducts = list.filter(product => {
+              const sku = (product.SKU || product.sku || '').toString();
+              if (skusInSale.has(sku) || product.hidden) return false;
+              const mapPrice = priceOrNull(product.MAP);
+              const msrpPrice = priceOrNull(product.MSRP);
+              return mapPrice != null && msrpPrice == null;
+            });
+
+            mapOnlyProducts.forEach(product => {
+              const mapPrice = priceOrNull(product.MAP);
+              product.category = 'sale';
+              product.sourceCategory = category;
+              product.categoryDisplay = category.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+              product.regularPrice = mapPrice;
+              product.displayPrice = mapPrice;
+              product.discount = 0;
+              product.isMapOnly = true;
+              product.image = toHighResImageUrl(product['Image Location'] || product.image || '', 500);
+              product.name = product['Item Name'] || product['Web Item Name'] || product.name || '';
+              product.inventory = product['Quantity In Stock'] != null ? Number(product['Quantity In Stock']) : (product.inventory ?? 0);
+              product.sku = product.SKU || product.sku || '';
+              product.brand = product.Manufacturer || product.manufacturer || '';
+              skusInSale.add(product.sku);
+            });
+            allSaleProducts.push(...mapOnlyProducts);
           }
         } catch (error) {
           console.error(`Error loading ${category}:`, error);
         }
       }
       
-      // Sort by discount (highest first)
-      allSaleProducts.sort((a, b) => b.discount - a.discount);
+      // Sort: real discounts first (by % off), then MAP-only by name
+      allSaleProducts.sort((a, b) => {
+        if (a.discount > 0 && b.discount === 0) return -1;
+        if (a.discount === 0 && b.discount > 0) return 1;
+        if (a.discount > 0 && b.discount > 0) return b.discount - a.discount;
+        return (a.name || '').localeCompare(b.name || '');
+      });
       
-      // FILTER PROTECTION: Only include products that match this page's category
       allSaleProducts = allSaleProducts.filter(product => product.category === CURRENT_PAGE_CATEGORY);
       
-      document.getElementById('product-count').textContent = allSaleProducts.length;
+      populateSaleFilters();
+      applySaleFilters();
+      setupSaleFilterToggle();
+      setupSaleFilterEvents();
+    }
+
+    function populateSaleFilters() {
+      const categories = [...new Set(allSaleProducts.map(p => p.categoryDisplay).filter(Boolean))].sort();
+      const brands = [...new Set(allSaleProducts.map(p => (p.brand || '').trim()).filter(Boolean))].sort();
+      
+      const catList = document.getElementById('sale-category-list');
+      if (catList) {
+        catList.innerHTML = categories.map(c => `
+          <label class="sale-filter-option">
+            <input type="checkbox" class="sale-filter-checkbox" data-filter="category" value="${(c + '').replace(/"/g, '&quot;')}">
+            ${(c + '').replace(/</g, '&lt;')}
+          </label>
+        `).join('');
+      }
+      const brandList = document.getElementById('sale-brand-list');
+      if (brandList) {
+        brandList.innerHTML = brands.map(b => `
+          <label class="sale-filter-option">
+            <input type="checkbox" class="sale-filter-checkbox" data-filter="brand" value="${(b + '').replace(/"/g, '&quot;')}">
+            ${(b + '').replace(/</g, '&lt;')}
+          </label>
+        `).join('');
+      }
+      const prices = allSaleProducts.map(p => p.displayPrice ?? 0).filter(n => n > 0);
+      if (prices.length) {
+        const minP = Math.min(...prices), maxP = Math.max(...prices);
+        const pm = document.getElementById('sale-price-min');
+        const pM = document.getElementById('sale-price-max');
+        if (pm) pm.placeholder = '$' + minP.toFixed(0);
+        if (pM) pM.placeholder = '$' + maxP.toFixed(0);
+      }
+    }
+
+    function applySaleFilters() {
+      const searchVal = (document.getElementById('sale-product-search')?.value || '').toLowerCase().trim();
+      const inStockOnly = document.getElementById('sale-in-stock-filter')?.checked || false;
+      const priceMin = parseFloat(document.getElementById('sale-price-min')?.value) || 0;
+      const priceMax = parseFloat(document.getElementById('sale-price-max')?.value) || Infinity;
+      const sortVal = document.getElementById('sale-sort-filter')?.value || 'discount';
+      const selectedCategories = Array.from(document.querySelectorAll('.sale-filter-checkbox[data-filter="category"]:checked')).map(cb => cb.value);
+      const selectedBrands = Array.from(document.querySelectorAll('.sale-filter-checkbox[data-filter="brand"]:checked')).map(cb => cb.value);
+
+      let result = allSaleProducts.slice();
+      if (searchVal) {
+        result = result.filter(p =>
+          (p.name || '').toLowerCase().includes(searchVal) ||
+          (p.sku || '').toLowerCase().includes(searchVal) ||
+          (p.brand || '').toLowerCase().includes(searchVal)
+        );
+      }
+      if (inStockOnly) result = result.filter(p => (p.inventory ?? 0) > 0);
+      if (priceMin > 0 || priceMax !== Infinity) result = result.filter(p => {
+        const pr = p.displayPrice ?? 0;
+        return pr >= priceMin && pr <= priceMax;
+      });
+      if (selectedCategories.length) result = result.filter(p => selectedCategories.includes(p.categoryDisplay));
+      if (selectedBrands.length) result = result.filter(p => selectedBrands.includes((p.brand || '').trim()));
+
+      if (sortVal === 'discount') {
+        result.sort((a, b) => { if (a.discount > 0 && b.discount === 0) return -1; if (a.discount === 0 && b.discount > 0) return 1; if (a.discount > 0 && b.discount > 0) return b.discount - a.discount; return (a.name || '').localeCompare(b.name || ''); });
+      } else if (sortVal === 'price-low') result.sort((a, b) => (a.displayPrice ?? 0) - (b.displayPrice ?? 0));
+      else if (sortVal === 'price-high') result.sort((a, b) => (b.displayPrice ?? 0) - (a.displayPrice ?? 0));
+      else if (sortVal === 'name') result.sort((a, b) => (a.name || '').localeCompare(b.name || ''));
+
+      filteredSaleProducts = result;
+      document.getElementById('product-count').textContent = filteredSaleProducts.length;
+      document.getElementById('total-count').textContent = allSaleProducts.length;
       renderProducts();
+    }
+
+    function setupSaleFilterToggle() {
+      document.querySelectorAll('.sale-filter-toggle').forEach(btn => {
+        btn.addEventListener('click', function() {
+          const content = this.nextElementSibling;
+          const icon = this.querySelector('i');
+          const isOpen = content && content.style.display !== 'none';
+          if (content) content.style.display = isOpen ? 'none' : 'block';
+          if (icon) icon.style.transform = isOpen ? 'rotate(0deg)' : 'rotate(180deg)';
+        });
+      });
+    }
+
+    function setupSaleFilterEvents() {
+      document.getElementById('sale-clear-filters')?.addEventListener('click', () => {
+        document.querySelectorAll('.sale-filter-checkbox').forEach(cb => { cb.checked = false; });
+        document.getElementById('sale-in-stock-filter').checked = false;
+        const pm = document.getElementById('sale-price-min'); const pM = document.getElementById('sale-price-max');
+        if (pm) pm.value = ''; if (pM) pM.value = '';
+        document.getElementById('sale-product-search').value = '';
+        document.getElementById('sale-sort-filter').value = 'discount';
+        applySaleFilters();
+      });
+      document.getElementById('sale-in-stock-filter')?.addEventListener('change', applySaleFilters);
+      document.getElementById('sale-price-min')?.addEventListener('input', applySaleFilters);
+      document.getElementById('sale-price-max')?.addEventListener('input', applySaleFilters);
+      document.getElementById('sale-sort-filter')?.addEventListener('change', applySaleFilters);
+      document.getElementById('sale-product-search')?.addEventListener('input', () => { clearTimeout(window._saleSearchT); window._saleSearchT = setTimeout(applySaleFilters, 200); });
+      document.querySelectorAll('.sale-filter-checkbox').forEach(cb => cb.addEventListener('change', applySaleFilters));
+      document.getElementById('sale-category-search')?.addEventListener('input', function() {
+        const q = (this.value || '').toLowerCase();
+        document.querySelectorAll('#sale-category-list .sale-filter-option').forEach(el => { el.style.display = !q || (el.textContent || '').toLowerCase().includes(q) ? '' : 'none'; });
+      });
+      document.getElementById('sale-brand-search')?.addEventListener('input', function() {
+        const q = (this.value || '').toLowerCase();
+        document.querySelectorAll('#sale-brand-list .sale-filter-option').forEach(el => { el.style.display = !q || (el.textContent || '').toLowerCase().includes(q) ? '' : 'none'; });
+      });
     }
 
     // Render products
@@ -446,53 +737,64 @@
     function renderGridView() {
       const container = document.getElementById('grid-view');
       
-      if (allSaleProducts.length === 0) {
-        container.innerHTML = '<div style="grid-column: 1 / -1; text-align: center; padding: 2rem; color: #999;">No products currently on sale.</div>';
+      if (filteredSaleProducts.length === 0) {
+        container.innerHTML = '<div style="grid-column: 1 / -1; text-align: center; padding: 2rem; color: #999;">No products match your filters.</div>';
         return;
       }
 
-      container.innerHTML = allSaleProducts.map(product => `
-        <div class="product-card">
+      container.innerHTML = filteredSaleProducts.map(product => {
+        const isMapOnly = product.isMapOnly === true;
+        const badge = isMapOnly ? 'Great Price' : (product.discount + '% OFF');
+        const regularHtml = isMapOnly ? '' : `<span class="product-regular-price">$${product.regularPrice.toFixed(2)}</span>`;
+        return `
+        <div class="product-card" onclick="location.href='../product-detail.html?sku=${encodeURIComponent(product.sku || '')}&category=${encodeURIComponent(product.sourceCategory || 'gear')}';" style="cursor: pointer;">
           <div class="product-image">
-            <img src="${product.image || '../images/categories/' + product.category + '.jpg'}" alt="${product.name}">
-            <div class="sale-badge">${product.discount}% OFF</div>
+            <img src="${product.image || ''}" alt="${(product.name || '').replace(/"/g, '&quot;')}" onerror="this.style.display='none'; this.nextElementSibling && (this.nextElementSibling.style.display='flex');">
+            <div class="product-image-placeholder" style="display: ${product.image ? 'none' : 'flex'}; align-items: center; justify-content: center; background: #f5f5f5; height: 100%; min-height: 180px;"><i class="fas fa-box" style="color: #ccc; font-size: 2rem;"></i></div>
+            <div class="sale-badge">${badge}</div>
           </div>
           <div class="product-info">
             <div class="product-brand">${product.categoryDisplay}</div>
             <h3 class="product-name">${product.name}</h3>
             <div class="product-pricing">
               <span class="product-sale-price">$${(product.displayPrice ?? product.msrp ?? 0).toFixed(2)}</span>
-              <span class="product-regular-price">$${product.regularPrice.toFixed(2)}</span>
+              ${regularHtml}
             </div>
             <div class="product-stock ${product.inventory > 0 ? 'stock-in' : 'stock-out'}">
               ${product.inventory > 0 ? 'In Stock' : 'Out of Stock'}
             </div>
-            <button class="product-btn" onclick="addToCart('${product.id}')">Add to Cart</button>
+            <button class="product-btn" onclick="event.stopPropagation(); addToCart('${(product.sku || product.SKU || '').replace(/'/g, "\\'")}', '${(product.name || '').replace(/'/g, "\\'")}', ${product.displayPrice ?? product.Price ?? 0})">Add to Cart</button>
           </div>
         </div>
-      `).join('');
+      `;
+      }).join('');
     }
 
     // Render list view
     function renderListView() {
       const tbody = document.getElementById('list-body');
       
-      if (allSaleProducts.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; color: #999; padding: 2rem;">No products currently on sale.</td></tr>';
+      if (filteredSaleProducts.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; color: #999; padding: 2rem;">No products match your filters.</td></tr>';
         document.getElementById('list-view').style.display = 'block';
         return;
       }
 
-      tbody.innerHTML = allSaleProducts.map(product => `
+      tbody.innerHTML = filteredSaleProducts.map(product => {
+        const isMapOnly = product.isMapOnly === true;
+        const regularCell = isMapOnly ? '<td style="color: #999;">—</td>' : `<td style="text-decoration: line-through; color: #999;">$${product.regularPrice.toFixed(2)}</td>`;
+        const dealCell = isMapOnly ? '<td><strong style="color: var(--color-primary);">Great Price</strong></td>' : `<td><strong style="color: #ff4444;">${product.discount}% off</strong></td>`;
+        return `
         <tr>
           <td style="font-weight: 600; color: #333;">${product.name}</td>
           <td>${product.categoryDisplay}</td>
-          <td style="text-decoration: line-through; color: #999;">$${product.regularPrice.toFixed(2)}</td>
+          ${regularCell}
           <td style="font-weight: 700; color: var(--color-primary); font-size: 1.1rem;">$${(product.displayPrice ?? product.msrp ?? 0).toFixed(2)}</td>
-          <td><strong style="color: #ff4444;">${product.discount}% off</strong></td>
+          ${dealCell}
           <td>${product.inventory > 0 ? '<span style="color: #4caf50; font-weight: 600;">In Stock</span>' : '<span style="color: #f44336; font-weight: 600;">Out of Stock</span>'}</td>
         </tr>
-      `).join('');
+      `;
+      }).join('');
       
       document.getElementById('list-view').style.display = 'block';
     }
@@ -518,10 +820,6 @@
       document.getElementById('view-list').style.color = '#fff';
     });
 
-    // Add to cart placeholder
-    function addToCart(productId) {
-      alert('Added to cart: ' + productId);
-    }
 
     // Load products on page load
     document.addEventListener('DOMContentLoaded', loadAllProducts);

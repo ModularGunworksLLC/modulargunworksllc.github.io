@@ -1,5 +1,43 @@
 # Product Sync & Activation Guide
 
+## Auto-update every 4 hours (GitHub Actions) — no action needed after setup
+
+The repo has a workflow that runs **every 4 hours** on GitHub, pulls from the Chattanooga API, updates `data/products/mapped-products/*.json`, and pushes so your site stays current.
+
+**One-time setup (you must do this):**
+
+1. Open your repo on GitHub → **Settings** → **Secrets and variables** → **Actions**.
+2. Click **New repository secret** and add:
+   - **Name:** `CHATTANOOGA_SID`  
+     **Value:** your Chattanooga API SID (same as `API_SID` in your local `.env`).
+3. Click **New repository secret** again:
+   - **Name:** `CHATTANOOGA_TOKEN`  
+     **Value:** your Chattanooga API token (same as `API_TOKEN` in your local `.env`).
+4. Push the latest code (including `.github/workflows/sync-products.yml`) to `main` if you haven’t already.
+
+After that, the workflow runs automatically every 4 hours (UTC: 12a, 4a, 8a, 12p, 4p, 8p). You can also run it anytime: **Actions** → **Modular Gunworks — Product Sync** → **Run workflow**.
+
+---
+
+## Single-script sync (recommended for local runs)
+
+**One script does everything:** pull from the wholesaler API → map to your categories → write shop JSON. No chain of files, so fewer errors and one place to run.
+
+- **Run once:**  
+  `npm run sync`  
+  or: `node scripts/sync-products.js`
+
+- **Run every 4 hours** (keeps stock and prices updated so you don’t sell out-of-stock):  
+  `npm run sync:schedule`  
+  or: `node scripts/sync-products.js --schedule`  
+  Leave this running (e.g. in a separate terminal or as a background service). To use 6 hours instead of 4, edit `INTERVAL_HOURS` in `scripts/sync-products.js`.
+
+**Requires:** `.env` with `API_SID` and `API_TOKEN`.  
+**Uses:** `data/products/category-mapping-template-cleaned.json` (Chattanooga category → your categories).  
+**Writes:** `data/products/mapped-products/*.json` (what your shop pages load). Nothing else is written by this script.
+
+---
+
 ## What We Just Did
 
 ✅ **Improved Categorization with Whitelist Approach**

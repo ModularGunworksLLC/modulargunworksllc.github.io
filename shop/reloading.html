@@ -300,6 +300,9 @@
   </style>
 
   <script src="../scripts/age-gate.js"></script>
+  <script src="../scripts/cart.js"></script>
+  <script src="../scripts/load-products.js"></script>
+  <script src="../scripts/shop-products-ui.js"></script>
 </head>
 
 <body>
@@ -317,7 +320,7 @@
       <div class="header-left-links">
         <a href="#account">Account</a>
         <a href="#help">Help</a>
-        <a href="../shop/cart.html">Cart</a>
+        <a href="../shop/cart.html"><i class="fas fa-shopping-cart"></i> Cart <span class="cart-count-badge" style="background: var(--color-primary); color: #fff; padding: 2px 6px; border-radius: 10px; font-size: 0.75rem; display: none;">0</span></a>
       </div>
 
       <form class="search-bar" action="#" method="get">
@@ -355,6 +358,14 @@
         <button id="clear-filters">
           Clear All
         </button>
+      </div>
+
+      <!-- SHOW ONLY IN STOCK - standalone at top, always visible -->
+      <div class="filter-stock-top" style="padding: 1rem 1.2rem; border-bottom: 1px solid #e0e0e0; background: #fafafa;">
+        <label class="filter-label" style="display: flex; align-items: center; cursor: pointer; font-weight: 600; color: #333; gap: 0.6rem;">
+          <input type="checkbox" id="in-stock-filter" style="width: 18px; height: 18px; cursor: pointer; accent-color: var(--color-primary);">
+          Show Only In Stock
+        </label>
       </div>
 
       <!-- TYPE FILTER (COLLAPSIBLE) -->
@@ -415,20 +426,6 @@
         </div>
       </div>
 
-      <!-- IN STOCK FILTER (COLLAPSIBLE) -->
-      <div class="filter-section">
-        <button class="filter-toggle" data-filter="stock">
-          <span>Stock</span>
-          <i class="fas fa-chevron-down"></i>
-        </button>
-        <div class="filter-content">
-          <label class="filter-label">
-            <input type="checkbox" id="in-stock-filter">
-            Show Only In Stock
-          </label>
-        </div>
-      </div>
-
       <!-- SORT BY FILTER (COLLAPSIBLE) -->
       <div class="filter-section">
         <button class="filter-toggle" data-filter="sort">
@@ -454,6 +451,7 @@
 
       <!-- PRODUCT CONTROLS & COUNT -->
       <div class="product-controls">
+        <input type="text" id="product-search" class="product-search" placeholder="Search by name, brand, SKU..." style="max-width: 280px; padding: 0.5rem 0.75rem; border: 1px solid #ddd; border-radius: 4px; font-size: 0.95rem;">
         <div class="product-count">
           Showing <span id="product-count">0</span> of <span id="total-count">0</span> products
         </div>
@@ -589,34 +587,7 @@
     // Load products from JSON
     async function loadProducts() {
       try {
-        const response = await fetch('../data/products/reloading.json');
-        let data = await response.json();
-        
-        // Load products directly from JSON (no active filter needed)
-        let products = Array.isArray(data.products) ? data.products : [];
-        
-        allProducts = products.map(product => ({
-          category: 'reloading', // Set category for filter protection
-          type: extractType(product.name),
-          caliber: extractCaliber(product.name),
-          price: product.displayPrice ?? product.msrp ?? 0,
-          stock: product.inventory || 0
-        }));
-
-        // FILTER PROTECTION: Only include products that match this page's category
-        allProducts = allProducts.filter(product => product.category === CURRENT_PAGE_CATEGORY);
-
-        // HIDE PRODUCTS WITHOUT IMAGES: Filter out products marked as hidden due to no available images
-        allProducts = allProducts.filter(product => !product.hidden);
-
-        filteredProducts = [...allProducts];
-        initializeFilters();
-        renderGridView();
-        updateProductCount();
-      } catch (error) {
-        console.error('Error loading products:', error);
-        document.getElementById('grid-view').innerHTML = '<div style="grid-column: 1 / -1; text-align: center; padding: 2rem;"><p style="color: #999;">No products available. JSON file may be empty.</p></div>';
-      }
+        // ...product loading logic removed...
     }
 
     // Initialize Filter Options
@@ -929,10 +900,6 @@
       }
     }
 
-    // Add to Cart
-    function addToCart(name, price) {
-      alert(`Added "${name}" ($${price}) to cart!`);
-    }
 
     // Load products when page loads
     document.addEventListener('DOMContentLoaded', loadProducts);

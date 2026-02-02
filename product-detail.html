@@ -210,35 +210,6 @@
       font-size: 1rem;
     }
 
-    .add-to-cart-btn {
-      flex: 1;
-      padding: 0.8rem 2rem;
-      background: var(--color-primary);
-      color: #fff;
-      border: none;
-      border-radius: 4px;
-      font-size: 1rem;
-      font-weight: 700;
-      cursor: pointer;
-      transition: all 0.3s;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.5rem;
-    }
-
-    .add-to-cart-btn:hover {
-      background: #a01a1a;
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(178, 34, 34, 0.3);
-    }
-
-    .add-to-cart-btn:disabled {
-      background: #ccc;
-      cursor: not-allowed;
-      transform: none;
-    }
-
     /* PRODUCT SPECS */
     .product-specs-section {
       margin-bottom: 3rem;
@@ -305,13 +276,6 @@
         font-size: 1.8rem;
       }
 
-      .add-to-cart-section {
-        flex-direction: column;
-      }
-
-      .add-to-cart-btn {
-        width: 100%;
-      }
     }
 
     /* LOADING & ERROR STATES */
@@ -345,49 +309,85 @@
     .back-link:hover {
       gap: 1rem;
     }
+
+    /* SCROLL HINT – so customers know there’s more content below */
+    .detail-scroll-hint {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      padding: 1rem 1.5rem;
+      margin: 0 0 2rem;
+      background: linear-gradient(to bottom, #f9f9f9, #f0f0f0);
+      border: 1px dashed #ccc;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      color: #555;
+    }
+    .detail-scroll-hint a {
+      color: var(--color-primary);
+      font-weight: 600;
+      text-decoration: none;
+    }
+    .detail-scroll-hint a:hover { text-decoration: underline; }
+    .detail-scroll-hint .hint-sep { color: #999; }
+    .detail-scroll-hint .scroll-arrow {
+      display: inline-flex;
+      animation: bounce-down 2s ease-in-out infinite;
+    }
+    @keyframes bounce-down {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(4px); }
+    }
+    #product-description-wrap, #product-specs-wrap { scroll-margin-top: 1rem; }
   </style>
 </head>
 
 <body>
   <!-- AGE GATE -->
   <script src="scripts/age-gate.js"></script>
+  <script src="scripts/cart.js"></script>
 
   <!-- HEADER -->
-  <header style="background: linear-gradient(135deg, var(--color-accent) 0%, #244563 100%); color: #fff; padding: 2rem; display: flex; align-items: center; justify-content: space-between;">
-    <a href="index.html" style="display: flex; align-items: center; gap: 1rem; text-decoration: none; color: #fff;">
-      <i class="fas fa-shield" style="font-size: 2rem;"></i>
-      <div>
-        <div style="font-size: 1.5rem; font-weight: 700; letter-spacing: 2px;">MODULAR GUNWORKS LLC</div>
+  <header id="site-header">
+    <div class="header-top-row">
+      <h1>MODULAR GUNWORKS LLC</h1>
+      <a href="index.html" class="header-logo" title="Home">
+        <img src="images/modular-gunworks-llc.png" alt="Modular Gunworks Logo">
+        <span class="logo-label">HOME</span>
+      </a>
+    </div>
+
+    <div class="header-middle-row">
+      <div class="header-left-links">
+        <a href="#account">Account</a>
+        <a href="#help">Help</a>
+        <a href="shop/cart.html"><i class="fas fa-shopping-cart"></i> Cart <span class="cart-count-badge" style="background: var(--color-primary); color: #fff; padding: 2px 6px; border-radius: 10px; font-size: 0.75rem; display: none;">0</span></a>
       </div>
-    </a>
-    <div style="display: flex; align-items: center; gap: 2rem;">
-      <input type="text" placeholder="Search ammo, gear, optics..." style="padding: 0.8rem 1.2rem; border: none; border-radius: 4px; width: 300px; font-size: 0.95rem;">
-      <div style="display: flex; gap: 2rem;">
-        <a href="#" style="color: #fff; text-decoration: none; font-weight: 600;">Account</a>
-        <a href="#" style="color: #fff; text-decoration: none; font-weight: 600;">Help</a>
-        <a href="#" style="color: #fff; text-decoration: none; font-weight: 600;">Cart</a>
-      </div>
+
+      <form class="search-bar" action="#" method="get">
+        <input type="text" placeholder="Search ammo, gear, optics...">
+        <button type="submit" title="Search"><i class="fas fa-search"></i></button>
+      </form>
+    </div>
+
+    <nav class="category-nav">
+      <a href="shop/ammunition.html">Ammunition</a>
+      <a href="shop/magazines.html">Magazines</a>
+      <a href="shop/gun-parts.html">Gun Parts</a>
+      <a href="shop/gear.html">Gear</a>
+      <a href="shop/optics.html">Optics</a>
+      <a href="shop/reloading.html">Reloading</a>
+      <a href="shop/outdoors.html">Outdoors</a>
+      <a href="shop/brands.html">Brands</a>
+      <a href="shop/sale.html">ON SALE</a>
+      <a href="services.html">Services</a>
+    </nav>
+
+    <div class="promo-bar">
+      Veteran-Owned Business | Fast Shipping | Professional Service
     </div>
   </header>
-
-  <!-- NAVIGATION -->
-  <nav style="background: var(--color-accent); padding: 0.8rem 2rem; display: flex; gap: 2rem;">
-    <a href="shop/ammunition.html" style="color: #fff; text-decoration: none; font-weight: 600; transition: color 0.2s;">Ammunition</a>
-    <a href="shop/magazines.html" style="color: #fff; text-decoration: none; font-weight: 600; transition: color 0.2s;">Magazines</a>
-    <a href="shop/gun-parts.html" style="color: #fff; text-decoration: none; font-weight: 600; transition: color 0.2s;">Gun Parts</a>
-    <a href="shop/gear.html" style="color: #fff; text-decoration: none; font-weight: 600; transition: color 0.2s;">Gear</a>
-    <a href="shop/optics.html" style="color: #fff; text-decoration: none; font-weight: 600; transition: color 0.2s;">Optics</a>
-    <a href="shop/reloading.html" style="color: #fff; text-decoration: none; font-weight: 600; transition: color 0.2s;">Reloading</a>
-    <a href="shop/outdoors.html" style="color: #fff; text-decoration: none; font-weight: 600; transition: color 0.2s;">Outdoors</a>
-    <a href="brands.html" style="color: #fff; text-decoration: none; font-weight: 600; transition: color 0.2s;">Brands</a>
-    <a href="shop/sale.html" style="color: var(--color-primary); text-decoration: none; font-weight: 700; transition: color 0.2s;">ON SALE</a>
-    <a href="services.html" style="color: #fff; text-decoration: none; font-weight: 600; transition: color 0.2s;">Services</a>
-  </nav>
-
-  <!-- TAGLINE -->
-  <div style="background: var(--color-primary); color: #fff; padding: 0.8rem 2rem; text-align: center; font-weight: 700; letter-spacing: 1px;">
-    Veteran-Owned Business | Fast Shipping | Professional Service
-  </div>
 
   <!-- MAIN CONTENT -->
   <main>
@@ -409,40 +409,107 @@
       return urlParams.get(name);
     }
 
+    // Request larger image size so main image stays crisp (CDN often gives ?w=110&h=110).
+    function toHighResImageUrl(url, size) {
+      if (!url || typeof url !== 'string') return url;
+      size = size || 800;
+      return url.replace(/\?w=\d+&h=\d+/, '?w=' + size + '&h=' + size);
+    }
+
+    function escapeHtml(str) {
+      if (str == null) return '';
+      const div = document.createElement('div');
+      div.textContent = str;
+      return div.innerHTML;
+    }
+
+    // Valid numeric price; treat custom/call/quote as invalid
+    function priceOrNull(value) {
+      if (value == null || value === '') return null;
+      const s = String(value).trim().toLowerCase();
+      if (s === 'custom' || s === 'call' || s === 'quote') return null;
+      const n = Number(value);
+      return Number.isFinite(n) && n > 0 ? n : null;
+    }
+
+    // Normalize vendor row (mapped-products JSON) to product shape.
+    function normalizeVendorRow(row) {
+      const num = v => (v != null && v !== '' && !isNaN(Number(v))) ? Number(v) : null;
+      const rawImage = row['Image Location'] || row.image || '';
+      const msrp = priceOrNull(row.MSRP);
+      const map = priceOrNull(row.MAP);
+      const price = priceOrNull(row.Price);
+      const displayPrice = msrp ?? map ?? price ?? null;
+      return {
+        sku: row.SKU || row.sku || '',
+        name: row['Item Name'] || row['Web Item Name'] || row.name || '',
+        webName: row['Web Item Name'] || row['Item Name'] || '',
+        image: toHighResImageUrl(rawImage, 800),
+        price: num(row.Price) ?? 0,
+        msrp: num(row.MSRP),
+        displayPrice: displayPrice ?? 0,
+        inventory: num(row['Quantity In Stock']) ?? 0,
+        brand: row.Manufacturer || row.manufacturer || '',
+        manufacturer: row.Manufacturer || row.manufacturer || '',
+        description: row['Web Item Description'] || row.description || '',
+        upc: row.UPC || '',
+        manufacturerItemNumber: row['Manufacturer Item Number'] || '',
+        category: row.Category || row.mappedCategory?.sub || '',
+        shipWeight: num(row['Ship Weight']),
+        length: num(row.Length),
+        width: num(row.Width),
+        height: num(row.Height),
+        dropShipOptions: row['Available Drop Ship Delivery Options'] || '',
+        allocated: row['Allocated Item?'] || '',
+        hidden: false
+      };
+    }
+
     // LOAD PRODUCT
     async function loadProduct() {
       const productId = getQueryParam('id');
+      const skuParam = getQueryParam('sku');
       const category = getQueryParam('category') || 'ammunition';
+      const lookup = skuParam || productId;
 
-      if (!productId) {
-        document.getElementById('product-content').innerHTML = '<div class="error-message"><i class="fas fa-exclamation-circle"></i> No product specified.</div>';
+      if (!lookup) {
+        document.getElementById('product-content').innerHTML = '<div class="error-message"><i class="fas fa-exclamation-circle"></i> No product specified. Use ?sku=...&category=...</div>';
         return;
       }
 
       try {
-        // Load product JSON
-        const response = await fetch(`./data/products/${category}.json`);
+        const fileCategory = category.charAt(0).toUpperCase() + category.slice(1).replace(/-/g, '_');
+        const mappedUrl = `./data/products/mapped-products/${fileCategory}.json`;
+        const response = await fetch(mappedUrl);
         if (!response.ok) throw new Error('Failed to load product data');
-        
+
         const data = await response.json();
-        const products = data.products || [];
-        const product = products.find(p => p.id === productId);
+        const rawList = Array.isArray(data) ? data : (data.products || data.items || []);
+        let product = null;
+
+        if (rawList.length && rawList[0] && (rawList[0].SKU !== undefined || rawList[0].sku !== undefined)) {
+          const match = rawList.find(p => (p.SKU || p.sku || '').toString() === lookup.toString());
+          product = match ? normalizeVendorRow(match) : null;
+        } else {
+          product = rawList.find(p => (p.id || p.sku) === lookup) || null;
+        }
 
         if (!product) {
           document.getElementById('product-content').innerHTML = '<div class="error-message"><i class="fas fa-exclamation-circle"></i> Product not found.</div>';
           return;
         }
 
-        // Check if product is hidden (no images available)
         if (product.hidden) {
           document.getElementById('product-content').innerHTML = '<div class="error-message"><i class="fas fa-exclamation-circle"></i> This product is currently not available.</div>';
           return;
         }
 
-        // Set back link
-        document.getElementById('back-link').href = `shop/${category}.html`;
+        if (!product.displayPrice || product.displayPrice <= 0) {
+          document.getElementById('product-content').innerHTML = '<div class="error-message"><i class="fas fa-exclamation-circle"></i> This product has no valid price in our catalog. Please contact us for pricing.</div>';
+          return;
+        }
 
-        // Render product
+        document.getElementById('back-link').href = `shop/${category}.html`;
         renderProduct(product, category);
       } catch (error) {
         console.error('Error loading product:', error);
@@ -452,9 +519,10 @@
 
     // RENDER PRODUCT
     function renderProduct(product, category) {
-      const price = product.displayPrice ?? product.msrp ?? 0;
-      const msrp = product.msrp;
+      const displayPrice = product.displayPrice ?? 0;
+      const sellPrice = product.price ?? 0;
       const inStock = product.inventory > 0;
+      const hasDiscount = sellPrice > 0 && sellPrice < displayPrice;
 
       const productHTML = `
         <div class="product-detail-container">
@@ -474,9 +542,9 @@
             <h1 class="product-detail-title">${product.name}</h1>
             <div class="product-detail-brand">${product.brand || 'Unknown Brand'}</div>
 
-            <!-- PRICING -->
-            <div class="product-detail-price">$${price.toFixed(2)}</div>
-            ${msrp && msrp !== price ? `<div class="product-detail-retail">MSRP: $${msrp.toFixed(2)}</div>` : ''}
+            <!-- PRICING (display = MSRP → MAP → Price) -->
+            <div class="product-detail-price">$${displayPrice.toFixed(2)}</div>
+            ${hasDiscount ? `<div class="product-detail-retail">Your price: $${sellPrice.toFixed(2)}</div>` : ''}
 
             <!-- STOCK STATUS -->
             <div class="product-detail-stock ${inStock ? 'stock-in' : 'stock-out'}">
@@ -484,56 +552,104 @@
               ${inStock ? `In Stock (${product.inventory} available)` : 'Out of Stock'}
             </div>
 
-            <!-- ADD TO CART -->
-            <div class="add-to-cart-section">
-              <div class="quantity-selector">
-                <button onclick="decreaseQuantity()">−</button>
-                <input type="number" id="quantity" value="1" min="1" readonly>
-                <button onclick="increaseQuantity()">+</button>
+            <!-- QUANTITY & CHECKOUT -->
+            <div style="margin-bottom: 1.5rem;">
+              <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                <label style="font-weight: 600; color: #333;">Quantity:</label>
+                <div class="quantity-selector">
+                  <button onclick="decreaseQuantity()">−</button>
+                  <input type="number" id="quantity" value="1" min="1" readonly>
+                  <button onclick="increaseQuantity()">+</button>
+                </div>
+              </div>
+              <div style="font-size: 0.9rem; color: #666; margin-bottom: 0.75rem;">
+                <i class="fas fa-lock" style="color: var(--color-primary);"></i> Secure checkout with PayPal
               </div>
             </div>
 
             <!-- PAYPAL BUTTONS -->
             <div id="paypal-button-container" style="margin-bottom: 2rem;"></div>
 
-            <!-- SKU & DETAILS -->
-            <div style="border-top: 1px solid #e0e0e0; padding-top: 1.5rem;">
-              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; font-size: 0.9rem;">
-                <div>
-                  <div style="color: #999; font-weight: 600; margin-bottom: 0.3rem;">SKU</div>
-                  <div style="color: #333;">${product.sku || 'N/A'}</div>
-                </div>
-                ${product.requiresFFL ? `
-                <div>
-                  <div style="color: #999; font-weight: 600; margin-bottom: 0.3rem;">FFL TRANSFER</div>
-                  <div style="color: #d32f2f;"><i class="fas fa-exclamation-triangle"></i> Required</div>
-                </div>
-                ` : ''}
+            <!-- PRODUCT DETAILS (SKU, UPC, etc.) -->
+            <div class="product-details-grid" style="border-top: 1px solid #e0e0e0; padding-top: 1.5rem;">
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem 1.5rem; font-size: 0.9rem;">
+                <div><div style="color: #999; font-weight: 600; margin-bottom: 0.3rem;">SKU</div><div style="color: #333;">${escapeHtml(product.sku || '—')}</div></div>
+                ${product.upc ? `<div><div style="color: #999; font-weight: 600; margin-bottom: 0.3rem;">UPC</div><div style="color: #333;">${escapeHtml(product.upc)}</div></div>` : ''}
+                ${product.manufacturerItemNumber ? `<div><div style="color: #999; font-weight: 600; margin-bottom: 0.3rem;">Manufacturer Part #</div><div style="color: #333;">${escapeHtml(product.manufacturerItemNumber)}</div></div>` : ''}
+                ${product.category ? `<div><div style="color: #999; font-weight: 600; margin-bottom: 0.3rem;">Category</div><div style="color: #333;">${escapeHtml(product.category)}</div></div>` : ''}
+                ${product.shipWeight != null && product.shipWeight > 0 ? `<div><div style="color: #999; font-weight: 600; margin-bottom: 0.3rem;">Ship Weight</div><div style="color: #333;">${product.shipWeight} lbs</div></div>` : ''}
+                ${(product.length != null || product.width != null || product.height != null) ? `<div><div style="color: #999; font-weight: 600; margin-bottom: 0.3rem;">Dimensions</div><div style="color: #333;">${[product.length, product.width, product.height].filter(Boolean).map(n => n + '"').join(' × ') || '—'}</div></div>` : ''}
+                ${product.requiresFFL ? `<div><div style="color: #999; font-weight: 600; margin-bottom: 0.3rem;">FFL</div><div style="color: #d32f2f;"><i class="fas fa-exclamation-triangle"></i> Required</div></div>` : ''}
               </div>
             </div>
           </div>
         </div>
 
-        <!-- PRODUCT SPECS -->
-        ${product.specs && Object.keys(product.specs).length > 0 ? `
-        <div class="product-specs-section">
-          <h2 class="specs-title">Specifications</h2>
-          <div class="specs-grid">
-            ${Object.entries(product.specs).map(([key, value]) => `
-              <div class="spec-item">
-                <div class="spec-label">${key}</div>
-                <div class="spec-value">${value}</div>
-              </div>
-            `).join('')}
-          </div>
+        <!-- Hint so customers know there’s more below (shown only when description/specs exist) -->
+        <div id="detail-scroll-hint" class="detail-scroll-hint" style="display: none;"></div>
+
+        <!-- DESCRIPTION (from Chattanooga Web Item Description) -->
+        <div id="product-description-wrap" style="display: none; margin-bottom: 2rem;">
+          <h2 class="specs-title" style="font-size: 1.25rem; color: #333; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid #e0e0e0;">Product Description</h2>
+          <div id="product-description" class="product-detail-description"></div>
         </div>
-        ` : ''}
+
+        <!-- SPECIFICATIONS -->
+        <div id="product-specs-wrap" style="display: none;" class="product-specs-section">
+          <h2 class="specs-title">Specifications</h2>
+          <div class="specs-grid" id="product-specs-grid"></div>
+        </div>
       `;
 
       document.getElementById('product-content').innerHTML = productHTML;
 
-      // Initialize PayPal buttons
-      initializePayPalButtons(product, price);
+      // Product description (HTML from Chattanooga Web Item Description)
+      const descWrap = document.getElementById('product-description-wrap');
+      const descEl = document.getElementById('product-description');
+      if (descWrap && descEl && product.description) {
+        descEl.innerHTML = product.description;
+        descWrap.style.display = 'block';
+      }
+
+      // Specifications from API fields
+      const specsWrap = document.getElementById('product-specs-wrap');
+      const specsGrid = document.getElementById('product-specs-grid');
+      if (specsWrap && specsGrid) {
+        const specs = [];
+        if (product.sku) specs.push({ label: 'SKU', value: product.sku });
+        if (product.upc) specs.push({ label: 'UPC', value: product.upc });
+        if (product.manufacturerItemNumber) specs.push({ label: 'Manufacturer Part #', value: product.manufacturerItemNumber });
+        if (product.category) specs.push({ label: 'Category', value: product.category });
+        if (product.shipWeight != null && product.shipWeight > 0) specs.push({ label: 'Ship Weight', value: product.shipWeight + ' lbs' });
+        if (product.length != null || product.width != null || product.height != null) {
+          const dim = [product.length, product.width, product.height].filter(Boolean).map(n => n + '"').join(' × ');
+          specs.push({ label: 'Dimensions', value: dim || '—' });
+        }
+        if (product.dropShipOptions) specs.push({ label: 'Shipping Options', value: String(product.dropShipOptions).replace(/\|/g, ', ') });
+        if (product.allocated) specs.push({ label: 'Allocated', value: product.allocated });
+        if (specs.length > 0) {
+          specsGrid.innerHTML = specs.map(s => `
+            <div class="spec-item"><div class="spec-label">${escapeHtml(s.label)}</div><div class="spec-value">${escapeHtml(s.value)}</div></div>
+          `).join('');
+          specsWrap.style.display = 'block';
+        }
+      }
+
+      // Show “more below” hint when there’s description or specs so customers know to scroll
+      const hintEl = document.getElementById('detail-scroll-hint');
+      const hasDesc = descWrap && descWrap.style.display === 'block';
+      const hasSpecs = specsWrap && specsWrap.style.display !== 'none';
+      if (hintEl && (hasDesc || hasSpecs)) {
+        const parts = [];
+        if (hasDesc) parts.push('<a href="#product-description-wrap">Description</a>');
+        if (hasSpecs) parts.push('<a href="#product-specs-wrap">Specifications</a>');
+        hintEl.innerHTML = '<span class="scroll-arrow"><i class="fas fa-chevron-down"></i></span> More details below: ' + parts.join(' <span class="hint-sep">|</span> ');
+        hintEl.style.display = 'flex';
+      }
+
+      // Charge sell price when set, else display price (MSRP/MAP)
+      const amountToCharge = (product.price != null && product.price > 0) ? product.price : displayPrice;
+      initializePayPalButtons(product, amountToCharge);
     }
 
     // INITIALIZE PAYPAL BUTTONS
@@ -639,12 +755,6 @@
       if (parseInt(input.value) > 1) {
         input.value = parseInt(input.value) - 1;
       }
-    }
-
-    // ADD TO CART
-    function addToCart(id, name, price) {
-      const quantity = document.getElementById('quantity').value;
-      alert(`Added ${quantity}x "${name}" ($${(price * quantity).toFixed(2)}) to cart!\n\n(Cart functionality coming soon)`);
     }
 
     // LOAD ON PAGE READY

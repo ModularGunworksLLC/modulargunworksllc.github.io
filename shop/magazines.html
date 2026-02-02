@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -20,6 +20,8 @@
   <link rel="icon" type="image/png" href="../favicon.png">
   
   <script src="../scripts/age-gate.js"></script>
+  <script src="../scripts/load-products.js"></script>
+  <script src="../scripts/shop-products-ui.js"></script>
 </head>
 
 <body>
@@ -38,7 +40,7 @@
       <div class="header-left-links">
         <a href="#account">Account</a>
         <a href="#help">Help</a>
-        <a href="../shop/cart.html">Cart</a>
+        <a href="../shop/cart.html"><i class="fas fa-shopping-cart"></i> Cart <span class="cart-count-badge" style="background: var(--color-primary); color: #fff; padding: 2px 6px; border-radius: 10px; font-size: 0.75rem; display: none;">0</span></a>
       </div>
 
       <form class="search-bar" action="#" method="get">
@@ -77,6 +79,29 @@
         <button id="clear-filters" class="filter-header-btn">
           Clear All
         </button>
+      </div>
+
+      <!-- SHOW ONLY IN STOCK - standalone at top, always visible -->
+      <div class="filter-stock-top" style="padding: 1rem 1.2rem; border-bottom: 1px solid #e0e0e0; background: #fafafa;">
+        <label style="display: flex; align-items: center; cursor: pointer; font-weight: 600; color: #333; gap: 0.6rem;">
+          <input type="checkbox" id="in-stock-filter" style="width: 18px; height: 18px; cursor: pointer; accent-color: var(--color-primary);">
+          Show Only In Stock
+        </label>
+      </div>
+
+      <!-- TYPE / CATEGORY (Handgun, Rifle, Shotgun Magazines) -->
+      <div class="filter-section">
+        <button class="filter-toggle" data-filter="type">
+          <span>Type</span>
+          <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="filter-content">
+          <input type="text" class="filter-search" placeholder="Search (Handgun, Rifle, ...)" data-filter="type">
+          <div id="type-list">
+            <!-- Populated by JavaScript -->
+          </div>
+          <button class="show-more-btn" data-filter="type">Show More</button>
+        </div>
       </div>
 
       <!-- CALIBER FILTER (COLLAPSIBLE) -->
@@ -150,19 +175,6 @@
           </label>
         </div>
       </div>
-      <!-- STOCK FILTER (COLLAPSIBLE) -->
-      <div class="filter-section">
-        <button class="filter-toggle" data-filter="stock">
-          <span>Stock</span>
-          <i class="fas fa-chevron-down"></i>
-        </button>
-        <div class="filter-content">
-          <label>
-            <input type="checkbox" id="in-stock-filter">
-            Show Only In Stock
-          </label>
-        </div>
-      </div>
 
       <!-- SORT BY FILTER (COLLAPSIBLE) -->
       <div class="filter-section">
@@ -187,18 +199,19 @@
       <h1 class="page-title">Magazines</h1>
       <p>High-capacity magazines from top brands with competitive pricing</p>
 
-      <!-- PRODUCT CONTROLS & COUNT -->
-      <div class="controls-wrapper">
+      <!-- PRODUCT CONTROLS & COUNT (industry-style: search + count + view) -->
+      <div class="controls-wrapper product-controls">
+        <input type="text" id="product-search" class="product-search" placeholder="Search by name, brand, SKU..." style="max-width: 280px; padding: 0.5rem 0.75rem; border: 1px solid #ddd; border-radius: 4px; font-size: 0.95rem;">
         <div class="product-count">
           Showing <span id="product-count">0</span> of <span id="total-count">0</span> products
         </div>
         
-        <div class="view-controls">
-          <label>VIEW:</label>
-          <button id="view-grid">
+        <div class="view-controls view-toggle">
+          <label class="view-label">VIEW:</label>
+          <button id="view-grid" class="view-btn active">
             <i class="fas fa-th"></i> Grid
           </button>
-          <button id="view-list">
+          <button id="view-list" class="view-btn">
             <i class="fas fa-list"></i> List
           </button>
         </div>
@@ -287,326 +300,8 @@
     </div>
   </footer>
 
-  <script>
-    const CURRENT_PAGE_CATEGORY = "magazines";
-    const INITIAL_ITEMS_SHOWN = 10;
-    let currentView = 'grid';
-    // GLOBAL STATE
-
-    // EXTRACT FUNCTIONS FOR MAGAZINES
-    function extractCaliber(name) {
-      const calibers = ['9mm', '.40', '.45', '10mm', '5.56', '.308', '7.62', '12ga', '.22'];
-      for (let cal of calibers) {
-        if (name.toLowerCase().includes(cal.toLowerCase())) {
-          return cal;
-        }
-      }
-      return null;
-    }
-
-    function extractCapacity(name) {
-      const match = name.match(/(\d+)\s*(?:rd|round|capacity)/i);
-      return match ? match[1] + 'rd' : null;
-    }
-
-    // LOAD PRODUCTS FROM JSON
-    async function loadProducts() {
-      try {
-        const response = await fetch('../data/products/magazines.json');
-        const data = await response.json();
-        
-        // Load products directly from JSON (no active filter needed)
-        let products = Array.isArray(data.products) ? data.products : [];
-        
-        allProducts = products.map(p => ({
-          ...p,
-          category: 'magazines', // Set category for filter protection
-          calibre: extractCaliber(p.name),
-          capacity: extractCapacity(p.name)
-        }));
-
-        // FILTER PROTECTION: Only include products that match this page's category
-        allProducts = allProducts.filter(product => product.category === CURRENT_PAGE_CATEGORY);
-
-        // HIDE PRODUCTS WITHOUT IMAGES: Filter out products marked as hidden due to no available images
-        allProducts = allProducts.filter(product => !product.hidden);
-
-        // Initialize filters and render
-        initializeFilters();
-        setupFilterToggle();
-        applyFilters();
-      } catch (error) {
-        console.error('Error loading products:', error);
-        document.getElementById('grid-view').innerHTML = 
-          '<div class="loading">Error loading products. Please refresh the page.</div>';
-      }
-    }
-
-    // PAGINATION CONSTANTS
-    const PRODUCTS_PER_PAGE = 20;
-    let currentPage = 1;
-
-    // INITIALIZE FILTERS
-    function initializeFilters() {
-      // CALIBER FILTER
-      const calibers = [...new Set(allProducts.map(p => p.calibre).filter(Boolean))].sort();
-      populateCheckboxFilter('caliber-list', calibers, 'caliber-checkbox');
-
-      // CAPACITY FILTER
-      const capacities = [...new Set(allProducts.map(p => p.capacity).filter(Boolean))].sort();
-      populateCheckboxFilter('capacity-list', capacities, 'capacity-checkbox');
-
-      // BRAND FILTER
-      const brands = [...new Set(allProducts.map(p => p.brand).filter(Boolean))].sort();
-      populateCheckboxFilter('brand-list', brands, 'brand-checkbox');
-
-      // Set price defaults
-      const prices = allProducts.map(p => p.displayPrice ?? p.msrp ?? 0).filter(Boolean);
-      if (prices.length > 0) {
-        const minPrice = Math.min(...prices);
-        const maxPrice = Math.max(...prices);
-        document.getElementById('price-min').placeholder = `$${minPrice.toFixed(2)}`;
-        document.getElementById('price-max').placeholder = `$${maxPrice.toFixed(2)}`;
-      }
-    }
-
-    // POPULATE CHECKBOX FILTER
-    function populateCheckboxFilter(containerId, items, className) {
-      const container = document.getElementById(containerId);
-      container.innerHTML = '';
-      items.forEach((item, index) => {
-        const div = document.createElement('div');
-        div.className = `filter-option ${index >= INITIAL_ITEMS_SHOWN ? 'hidden-item' : ''}`;
-        div.innerHTML = `
-          <label style="display: flex; align-items: center; cursor: pointer; gap: 0.5rem; color: #555; font-weight: 500;">
-            <input type="checkbox" class="filter-checkbox ${className}" value="${item}" />
-            ${item}
-          </label>
-        `;
-        container.appendChild(div);
-      });
-
-      if (items.length > INITIAL_ITEMS_SHOWN) {
-        const showMoreBtn = container.parentElement.querySelector('.show-more-btn');
-        if (showMoreBtn) showMoreBtn.style.display = 'block';
-      }
-    }
-
-    // SETUP FILTER TOGGLE FUNCTIONALITY
-    function setupFilterToggle() {
-      const firstToggle = document.querySelector('.filter-toggle');
-      if (firstToggle) {
-        firstToggle.click();
-      }
-
-      document.querySelectorAll('.filter-toggle').forEach(btn => {
-        btn.addEventListener('click', function() {
-          const content = this.nextElementSibling;
-          const icon = this.querySelector('i');
-          const isVisible = content.style.display !== 'none';
-          
-          content.style.display = isVisible ? 'none' : 'block';
-          icon.style.transform = isVisible ? 'rotate(0deg)' : 'rotate(180deg)';
-          icon.style.transition = 'transform 0.2s';
-        });
-      });
-
-      document.querySelectorAll('.filter-search').forEach(searchInput => {
-        searchInput.addEventListener('input', function() {
-          const filterType = this.dataset.filter;
-          const searchTerm = this.value.toLowerCase();
-          const container = this.nextElementSibling;
-          
-          container.querySelectorAll('.filter-option').forEach(option => {
-            const text = option.textContent.toLowerCase();
-            option.style.display = text.includes(searchTerm) ? 'block' : 'none';
-          });
-        });
-      });
-
-      document.querySelectorAll('.show-more-btn').forEach(btn => {
-        btn.addEventListener('click', function() {
-          const container = this.parentElement.querySelector('div[id$="-list"]');
-          const isExpanded = this.dataset.expanded === 'true';
-          
-          container.querySelectorAll('.hidden-item').forEach(item => {
-            item.style.display = isExpanded ? 'none' : 'block';
-            item.classList.toggle('hidden-item');
-          });
-          
-          this.textContent = isExpanded ? 'Show More' : 'Show Less';
-          this.dataset.expanded = !isExpanded;
-        });
-      });
-
-      document.querySelectorAll('.filter-checkbox').forEach(checkbox => {
-        checkbox.addEventListener('change', applyFilters);
-      });
-
-      document.getElementById('price-min').addEventListener('input', applyFilters);
-      document.getElementById('price-max').addEventListener('input', applyFilters);
-      document.getElementById('in-stock-filter').addEventListener('change', applyFilters);
-      document.getElementById('sort-filter').addEventListener('change', applyFilters);
-    }
-
-    // APPLY FILTERS AND SORT
-    function applyFilters() {
-      // Reset pagination when filters change
-      currentPage = 1;
-
-      const priceMin = parseFloat(document.getElementById('price-min').value) || 0;
-      const priceMax = parseFloat(document.getElementById('price-max').value) || Infinity;
-      const inStockOnly = document.getElementById('in-stock-filter').checked;
-      const onSaleOnly = document.getElementById('on-sale-filter').checked;
-      const sortBy = document.getElementById('sort-filter').value;
-
-      selectedCalibers = Array.from(document.querySelectorAll('.caliber-checkbox:checked')).map(cb => cb.value);
-      selectedCapacities = Array.from(document.querySelectorAll('.capacity-checkbox:checked')).map(cb => cb.value);
-      selectedBrands = Array.from(document.querySelectorAll('.brand-checkbox:checked')).map(cb => cb.value);
-
-      filteredProducts = allProducts.filter(product => {
-        const price = product.displayPrice ?? product.msrp ?? 0;
-        const msrp = product.msrp ?? 0;
-        const isOnSale = price < msrp;
-        const matchesPrice = price >= priceMin && price <= priceMax;
-        const matchesStock = !inStockOnly || product.inventory === undefined || product.inventory > 0;
-        const matchesSale = !onSaleOnly || isOnSale;
-        const matchesCaliber = selectedCalibers.length === 0 || (product.calibre && selectedCalibers.includes(product.calibre));
-        const matchesCapacity = selectedCapacities.length === 0 || (product.capacity && selectedCapacities.includes(product.capacity));
-        const matchesBrand = selectedBrands.length === 0 || (product.brand && selectedBrands.includes(product.brand));
-        
-        return matchesPrice && matchesStock && matchesSale && matchesCaliber && matchesCapacity && matchesBrand;
-      });
-
-      if (sortBy === 'price-low') {
-        filteredProducts.sort((a, b) => (a.displayPrice ?? a.msrp ?? 0) - (b.displayPrice ?? b.msrp ?? 0));
-      } else if (sortBy === 'price-high') {
-        filteredProducts.sort((a, b) => (b.displayPrice ?? b.msrp ?? 0) - (a.displayPrice ?? a.msrp ?? 0));
-      } else if (sortBy === 'name') {
-        filteredProducts.sort((a, b) => a.name.localeCompare(b.name));
-      }
-
-      document.getElementById('product-count').textContent = filteredProducts.length;
-      document.getElementById('total-count').textContent = allProducts.length;
-
-      renderProducts();
-    }
-
-    // RENDER PRODUCTS
-    function renderProducts() {
-      if (currentView === 'grid') {
-        renderGridView();
-      } else {
-        renderListView();
-      }
-    }
-
-    // RENDER GRID VIEW
-    function renderGridView() {
-      const container = document.getElementById('grid-view');
-      
-      if (filteredProducts.length === 0) {
-        container.innerHTML = '<div style="grid-column: 1 / -1; text-align: center; padding: 2rem; color: #999;">No products found matching your filters.</div>';
-        return;
-      }
-
-      container.innerHTML = filteredProducts.map(product => `
-        <div class="product-card" onclick="location.href='../product-detail.html?id=${product.id}&category=magazines';" style="cursor: pointer;">
-          <div class="product-image">
-            ${product.image 
-              ? `<img src="${product.image}" alt="${product.name}" onerror="this.parentElement.innerHTML='<div class=&quot;product-image-placeholder&quot;><i class=&quot;fas fa-box&quot;></i></div>'">` 
-              : `<div class="product-image-placeholder"><i class="fas fa-box"></i></div>`
-            }
-          </div>
-          <div class="product-info">
-            <div class="product-brand">${product.brand || 'Unknown'}</div>
-            <div class="product-name">${product.name}</div>
-            <div class="product-pricing">
-              <div class="product-price">$${(product.displayPrice ?? product.msrp ?? 0).toFixed(2)}</div>
-              <div class="product-stock ${product.inventory > 0 ? 'stock-in' : 'stock-out'}">
-                ${product.inventory > 0 ? 'In Stock' : 'Out of Stock'}
-              </div>
-            </div>
-            <button class="product-btn" onclick="event.stopPropagation(); addToCart('${product.id}', '${product.name.replace(/'/g, "\\'")}', ${product.displayPrice ?? product.msrp ?? 0})">
-              <i class="fas fa-cart-plus"></i> Add to Cart
-            </button>
-          </div>
-        </div>
-      `).join('');
-    }
-
-    // RENDER LIST VIEW
-    function renderListView() {
-      const tbody = document.getElementById('list-body');
-      
-      if (filteredProducts.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="5" style="padding: 2rem; text-align: center; color: #999;">No products found matching your filters.</td></tr>';
-        return;
-      }
-
-      tbody.innerHTML = filteredProducts.map(product => `
-        <tr style="cursor: pointer;" onclick="location.href='../product-detail.html?id=${product.id}&category=magazines';">
-          <td>
-            <div class="product-name-list">${product.name}</div>
-            <div style="font-size: 0.85rem; color: #999; margin-top: 0.3rem;">${product.brand || 'Unknown'}</div>
-          </td>
-          <td>${product.brand || '-'}</td>
-          <td style="text-align: center;">
-            <div class="product-price-list">$${(product.displayPrice ?? product.msrp ?? 0).toFixed(2)}</div>
-          </td>
-          <td style="text-align: center;">
-            <span style="padding: 0.3rem 0.6rem; border-radius: 3px; ${product.inventory > 0 ? 'background: #e8f5e9; color: #2e7d32;' : 'background: #ffebee; color: #c62828;'} font-weight: 600; font-size: 0.85rem;">
-              ${product.inventory > 0 ? 'In Stock' : 'Out'}
-            </span>
-          </td>
-          <td style="text-align: center;">
-            <button class="product-btn" style="width: auto; padding: 0.6rem 1rem; font-size: 0.85rem;" onclick="event.stopPropagation(); addToCart('${product.id}', '${product.name.replace(/'/g, "\\'")}', ${product.displayPrice ?? product.msrp ?? 0})">
-              <i class="fas fa-cart-plus"></i> Add
-            </button>
-          </td>
-        </tr>
-      `).join('');
-    }
-
-    // ADD TO CART (placeholder)
-    function addToCart(id, name, price) {
-      alert(`Added "${name}" ($${price.toFixed(2)}) to cart!\n\n(Cart functionality coming soon)`);
-    }
-
-    // LOAD ON PAGE READY
-    document.addEventListener('DOMContentLoaded', function() {
-      loadProducts();
-
-      document.getElementById('view-grid').addEventListener('click', function() {
-        currentView = 'grid';
-        document.getElementById('grid-view').style.display = 'grid';
-        document.getElementById('list-view').style.display = 'none';
-        this.style.background = 'var(--color-primary)';
-        this.style.color = '#fff';
-        document.getElementById('view-list').style.background = '#ddd';
-        document.getElementById('view-list').style.color = '#333';
-      });
-
-      document.getElementById('view-list').addEventListener('click', function() {
-        currentView = 'list';
-        document.getElementById('grid-view').style.display = 'none';
-        document.getElementById('list-view').style.display = 'block';
-        this.style.background = 'var(--color-primary)';
-        this.style.color = '#fff';
-        document.getElementById('view-grid').style.background = '#ddd';
-        document.getElementById('view-grid').style.color = '#333';
-      });
-
-      document.getElementById('clear-filters').addEventListener('click', function() {
-        document.querySelectorAll('.filter-checkbox').forEach(cb => cb.checked = false);
-        document.getElementById('price-min').value = '';
-        document.getElementById('price-max').value = '';
-        document.getElementById('in-stock-filter').checked = false;
-        document.getElementById('sort-filter').value = 'newest';
-        applyFilters();
-      });
-    });
-  </script>
+  <!-- Cart functionality -->
+  <script src="../scripts/cart.js"></script>
 
 </body>
 </html>

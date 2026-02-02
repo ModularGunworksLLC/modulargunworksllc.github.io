@@ -1,8 +1,8 @@
-name: Modular Gunworks — Full Sync Pipeline
+name: Modular Gunworks — Product Sync (every 4 hours)
 
 on:
   schedule:
-    # Runs every 4 hours (UTC): 12 AM, 4 AM, 8 AM, 12 PM, 4 PM, 8 PM
+    # Every 4 hours (UTC): 12 AM, 4 AM, 8 AM, 12 PM, 4 PM, 8 PM
     - cron: "0 0,4,8,12,16,20 * * *"
   workflow_dispatch:
 
@@ -14,90 +14,47 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # ------------------------------
-      # CHECKOUT REPO
-      # ------------------------------
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      # ------------------------------
-      # SETUP NODE
-      # ------------------------------
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
 
-      # ------------------------------
-      # INSTALL DEPENDENCIES
-      # ------------------------------
       - name: Install dependencies
         run: npm install
 
-      # ------------------------------
-      # SET ENVIRONMENT VARIABLES
-      # ------------------------------
-      - name: Set environment variables
+      # sync-products.js expects API_SID and API_TOKEN (from .env locally)
+      - name: Set API credentials
         run: |
-          echo "CHATTANOOGA_SID=${{ secrets.CHATTANOOGA_SID }}" >> $GITHUB_ENV
-          echo "CHATTANOOGA_TOKEN=${{ secrets.CHATTANOOGA_TOKEN }}" >> $GITHUB_ENV
+          echo "API_SID=${{ secrets.CHATTANOOGA_SID }}" >> $GITHUB_ENV
+          echo "API_TOKEN=${{ secrets.CHATTANOOGA_TOKEN }}" >> $GITHUB_ENV
 
-      # ------------------------------
-      # STEP 1 — BUILD FROM XLSX
-      # ------------------------------
-      - name: Build products from XLSX
-        run: node scripts/build-products-from-xlsx.js
+      - name: Sync products from Chattanooga API
+        run: node scripts/sync-products.js
 
-      # ------------------------------
-      # STEP 2 — UPDATE FROM API
-      # ------------------------------
-      - name: Update products from API
-        run: node scripts/update-products-from-api.js
-
-      # ------------------------------
-      # STEP 3 — UPDATE IMAGE MANIFEST (incremental)
-      # ------------------------------
-      - name: Update image manifest
-        run: node scripts/update-image-manifest.js
-
-      # ------------------------------
-      # STEP 4 — VALIDATE CATEGORY PAGES
-      # ------------------------------
-      - name: Validate category pages
-        run: node scripts/category-page-validator.js
-
-      # ------------------------------
-      # STEP 5 — CHECK FOR CHANGES
-      # ------------------------------
       - name: Check for changes
         id: check_changes
         run: |
-          if git diff --quiet; then
+          if git diff --quiet data/products/mapped-products/; then
             echo "has_changes=false" >> $GITHUB_OUTPUT
           else
             echo "has_changes=true" >> $GITHUB_OUTPUT
           fi
 
-      # ------------------------------
-      # STEP 6 — COMMIT & PUSH
-      # ------------------------------
-      - name: Commit and push changes
+      - name: Commit and push product updates
         if: steps.check_changes.outputs.has_changes == 'true'
         run: |
           git config --global user.name "Modular Gunworks Bot"
           git config --global user.email "bot@modulargunworks.com"
-          git add data/products/*.json
-          git add data/chattanooga-image-cdn-manifest.json
-          git add data/missing-images.log
-          git commit -m "Automated sync: $(date -u)"
+          git add data/products/mapped-products/
+          git commit -m "Auto sync: products updated $(date -u +%Y-%m-%dT%H:%MZ)"
           git push origin main
 
-      # ------------------------------
-      # STEP 7 — LOG STATUS
-      # ------------------------------
-      - name: Log sync status
+      - name: Log status
         run: |
-          echo "✅ Full ingestion pipeline completed successfully"
-          echo "📦 Products updated, images resolved, categories validated"
+          echo "✅ Product sync workflow finished"
+          echo "📦 Changes pushed to repo; GitHub Pages will serve updated product data"
