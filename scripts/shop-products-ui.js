@@ -75,6 +75,168 @@
     return m ? m[1] + 'rd' : '';
   }
 
+  // --- Gear / Optics / Outdoors / Reloading / Gun Parts: derived types ---
+  function extractGearType(name) {
+    const typePatterns = {
+      'Holster': ['holster', 'holsters'],
+      'Vest': ['vest', 'carrier', 'plate carrier'],
+      'Backpack': ['backpack', 'pack', 'tactical pack'],
+      'Pouch': ['pouch', 'pouches', 'mag pouch'],
+      'Sling': ['sling', 'strap'],
+      'Plate Carrier': ['plate', 'plate carrier'],
+      'Belt': ['belt', 'tactical belt'],
+      'Flashlight': ['flashlight', 'light', 'torch'],
+      'Knife': ['knife', 'blade'],
+      'Tool': ['tool', 'multi-tool']
+    };
+    const nameLower = (name || '').toLowerCase();
+    for (const [type, patterns] of Object.entries(typePatterns)) {
+      for (const pattern of patterns) {
+        if (nameLower.includes(pattern)) return type;
+      }
+    }
+    return 'Other Gear';
+  }
+
+  function extractOpticsType(name) {
+    const typePatterns = {
+      'Red Dot': ['red dot', 'holosun', 'eotech'],
+      'Scope': ['scope', 'riflescope'],
+      'Iron Sights': ['iron sight', 'iron sights', 'irons'],
+      'Magnifier': ['magnifier', '3x', '5x'],
+      'Holographic': ['holographic', 'hologram']
+    };
+    const nameLower = (name || '').toLowerCase();
+    for (const [type, patterns] of Object.entries(typePatterns)) {
+      for (const pattern of patterns) {
+        if (nameLower.includes(pattern)) return type;
+      }
+    }
+    return 'Other Optics';
+  }
+
+  function extractOutdoorsType(productName) {
+    const name = (productName || '').toLowerCase();
+    if (name.includes('knife') || name.includes('blade') || name.includes('fixed')) return 'Knife';
+    if (name.includes('flashlight') || name.includes('light') || name.includes('torch')) return 'Flashlight';
+    if (name.includes('water') || name.includes('filter') || name.includes('hydration')) return 'Water';
+    if (name.includes('food') || name.includes('ration') || name.includes('bar') || name.includes('nutrition')) return 'Food';
+    if (name.includes('rope') || name.includes('paracord') || name.includes('cordage')) return 'Rope';
+    if (name.includes('kit') || name.includes('set') || name.includes('pack')) return 'Kit';
+    if (name.includes('first aid') || name.includes('medical') || name.includes('trauma')) return 'Medical';
+    if (name.includes('fire') || name.includes('starter') || name.includes('match')) return 'Fire Starter';
+    if (name.includes('tent') || name.includes('shelter') || name.includes('tarp')) return 'Shelter';
+    if (name.includes('backpack') || name.includes('bag') || name.includes('pack')) return 'Backpack';
+    if (name.includes('compass') || name.includes('map')) return 'Navigation';
+    if (name.includes('whistle')) return 'Whistle';
+    return 'Other';
+  }
+
+  function extractOutdoorsAmmoType(productName) {
+    const name = (productName || '').toLowerCase();
+    if (name.includes('.22') || name.includes('rimfire') || name.includes('lr')) return 'Rimfire';
+    if (name.includes('shotgun') || name.includes('12ga') || name.includes('20ga') || name.includes('410')) return 'Shotgun';
+    if (name.includes('hunting') || name.includes('rifle') || name.includes('magnum') || name.includes('winchester')) return 'Hunting';
+    return 'Other';
+  }
+
+  function extractReloadingType(productName) {
+    const name = (productName || '').toLowerCase();
+    if (name.includes('powder')) return 'Powder';
+    if (name.includes('primer') || name.includes('cap')) return 'Primers';
+    if (name.includes('bullet') || name.includes('projectile')) return 'Bullets';
+    if (name.includes('case') || name.includes('brass')) return 'Cases';
+    if (name.includes('press') || name.includes('loader')) return 'Press';
+    if (name.includes('die')) return 'Dies';
+    if (name.includes('scale') || name.includes('balance')) return 'Scale';
+    if (name.includes('tumbler') || name.includes('polisher')) return 'Tumbler';
+    if (name.includes('trimmer') || name.includes('trim')) return 'Trimmer';
+    if (name.includes('calipers') || name.includes('measure')) return 'Calipers';
+    if (name.includes('press plate') || name.includes('shell holder')) return 'Accessories';
+    return 'Other';
+  }
+
+  function extractReloadingCaliber(productName) {
+    const calibers = [
+      '9mm', '9x19', '.38 Special', '.357 Magnum', '.44 Magnum', '.45 ACP', '.45 Colt',
+      '.40 S&W', '10mm', '.380', '.32 ACP', '.22 LR', '.22-250', '.223', '5.56', '.243 Win',
+      '6.5 Creedmoor', '.270 Win', '.308 Win', '7.62', '.30-06', '7.62x39', '.300 Win Mag',
+      '.338 Lapua', '.375 H&H', '.458 Win'
+    ];
+    const name = (productName || '').toLowerCase();
+    for (const cal of calibers) {
+      if (name.includes(cal.toLowerCase())) return cal;
+    }
+    return '';
+  }
+
+  function extractGunPartsType(name) {
+    const types = [
+      'Upper', 'Lower', 'Bcg', 'Bolt Carrier', 'Trigger', 'Stock', 'Handguard',
+      'Barrel', 'Gas', 'Fcg', 'Rail', 'Muzzle', 'Buffer'
+    ];
+    const nameLower = (name || '').toLowerCase();
+    for (const type of types) {
+      if (nameLower.includes(type.toLowerCase())) return type;
+    }
+    return '';
+  }
+
+  function extractGunPartsCaliber(name) {
+    const calibers = ['9mm', '.40', '.45', '10mm', '5.56', '.308', '7.62', '12ga', '.22'];
+    const nameLower = (name || '').toLowerCase();
+    for (const cal of calibers) {
+      if (nameLower.includes(cal.toLowerCase())) return cal;
+    }
+    return '';
+  }
+
+  function normalizeProductFields(product) {
+    return {
+      ...product,
+      manufacturer: product.manufacturer || product.brand || '',
+      caliber: product.caliber || product.calibre || ''
+    };
+  }
+
+  function enrichGearProducts(products) {
+    return products.map(p => ({
+      ...p,
+      type: p.type || extractGearType(p.name)
+    }));
+  }
+
+  function enrichOpticsProducts(products) {
+    return products.map(p => ({
+      ...p,
+      type: p.type || extractOpticsType(p.name)
+    }));
+  }
+
+  function enrichOutdoorsProducts(products) {
+    return products.map(p => ({
+      ...p,
+      type: p.type || extractOutdoorsType(p.name),
+      ammoType: p.ammoType || extractOutdoorsAmmoType(p.name)
+    }));
+  }
+
+  function enrichReloadingProducts(products) {
+    return products.map(p => ({
+      ...p,
+      type: p.type || extractReloadingType(p.name),
+      caliber: p.caliber || extractReloadingCaliber(p.name)
+    }));
+  }
+
+  function enrichGunPartsProducts(products) {
+    return products.map(p => ({
+      ...p,
+      type: p.type || extractGunPartsType(p.name),
+      caliber: p.caliber || extractGunPartsCaliber(p.name)
+    }));
+  }
+
   function enrichMagazineProducts(products) {
     return products.map(p => ({
       ...p,
@@ -126,17 +288,27 @@
     const pageCategory = getPageCategory();
     const hasAmmo = document.getElementById('caliber-list') && (pageCategory === 'ammunition' || document.getElementById('bullet-type-list'));
     const hasMagazine = document.getElementById('capacity-list') || (document.getElementById('caliber-list') && pageCategory === 'magazines');
-    let enriched = products;
+    let enriched = products.map(normalizeProductFields);
+    if (pageCategory === 'gear') enriched = enrichGearProducts(enriched);
+    else if (pageCategory === 'optics') enriched = enrichOpticsProducts(enriched);
+    else if (pageCategory === 'outdoors') enriched = enrichOutdoorsProducts(enriched);
+    else if (pageCategory === 'reloading') enriched = enrichReloadingProducts(enriched);
+    else if (pageCategory === 'gun-parts') enriched = enrichGunPartsProducts(enriched);
+
     if (hasAmmo) enriched = enrichAmmoProducts(enriched);
     else if (hasMagazine) enriched = enrichMagazineProducts(enriched);
 
     const categories = unique(enriched.flatMap(p => [p.category, p.subcategory].filter(Boolean)));
-    const types = unique(enriched.map(p => p.subcategory || p.category).filter(Boolean));
+    const types = unique(enriched.map(p => p.type || p.subcategory || p.category).filter(Boolean));
     const brands = unique(enriched.map(p => p.manufacturer).filter(Boolean));
 
     if (document.getElementById('category-list')) populateFilterList('category-list', categories, 'category-checkbox');
     if (document.getElementById('type-list')) populateFilterList('type-list', types, 'type-checkbox');
     if (document.getElementById('brand-list')) populateFilterList('brand-list', brands, 'brand-checkbox');
+    if (document.getElementById('ammo-type-list')) {
+      const ammoTypes = unique(enriched.map(p => p.ammoType).filter(Boolean));
+      populateFilterList('ammo-type-list', ammoTypes, 'ammo-type-checkbox');
+    }
 
     if (hasAmmo) {
       const calibers = unique(enriched.map(p => p.caliber).filter(Boolean));
@@ -151,6 +323,10 @@
       populateFilterList('capacity-list', capacities, 'capacity-checkbox');
     }
     if (hasMagazine && document.getElementById('caliber-list') && !hasAmmo) {
+      const calibers = unique(enriched.map(p => p.caliber).filter(Boolean));
+      populateFilterList('caliber-list', calibers, 'caliber-checkbox');
+    }
+    if (!hasAmmo && !hasMagazine && document.getElementById('caliber-list')) {
       const calibers = unique(enriched.map(p => p.caliber).filter(Boolean));
       populateFilterList('caliber-list', calibers, 'caliber-checkbox');
     }
@@ -201,12 +377,17 @@
 
     const selectedTypes = getSelectedFilterValues('type-checkbox');
     if (selectedTypes.length) {
-      result = result.filter(p => selectedTypes.includes(p.subcategory || p.category));
+      result = result.filter(p => selectedTypes.includes(p.type || p.subcategory || p.category));
     }
 
     const selectedBrands = getSelectedFilterValues('brand-checkbox');
     if (selectedBrands.length) {
       result = result.filter(p => selectedBrands.includes(p.manufacturer));
+    }
+
+    const selectedAmmoTypes = getSelectedFilterValues('ammo-type-checkbox');
+    if (selectedAmmoTypes.length && result[0] && 'ammoType' in result[0]) {
+      result = result.filter(p => selectedAmmoTypes.includes(p.ammoType));
     }
 
     const selectedCalibers = getSelectedFilterValues('caliber-checkbox');
