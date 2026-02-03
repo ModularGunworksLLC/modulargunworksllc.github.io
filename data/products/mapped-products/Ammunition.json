@@ -2242,7 +2242,7 @@
   {
     "SKU": "BX21522",
     "Item Name": "BARNES VOR-TX AMMO 243WIN 80GR TTSX BT",
-    "Quantity In Stock": "47",
+    "Quantity In Stock": "45",
     "Price": "41.09",
     "UPC": "716876024384",
     "Web Item Name": "Barnes VOR-TX Rifle Ammunition .243 Win 80 gr TSXBT 3350 fps 20/ct",
@@ -2494,7 +2494,7 @@
   {
     "SKU": "BX21538",
     "Item Name": "BARNES VOR-TX AMMO 300MAG 180GR TTSX BT",
-    "Quantity In Stock": "26",
+    "Quantity In Stock": "24",
     "Price": "54.89",
     "UPC": "716876030088",
     "Web Item Name": "Barnes VOR-TX Rifle Ammunition .300 Win Mag 180 gr TTSXBT 2960 fps - 20/box",
@@ -2522,7 +2522,7 @@
   {
     "SKU": "BX21539",
     "Item Name": "BARNES VOR-TX AMMO 300ULTRA MAG 180GR TTSX BT",
-    "Quantity In Stock": "13",
+    "Quantity In Stock": "11",
     "Price": "72.99",
     "UPC": "716876030286",
     "Web Item Name": "Barnes VOR-TX Rifle Ammunition .300 RUM 180 gr TTSXBT 3250 fps 20/ct",
@@ -4762,7 +4762,7 @@
   {
     "SKU": "FA510",
     "Item Name": "FEDERAL  22 LR HV LIGHTNING 40GR SOLID CHAMPION AMMO 50RD",
-    "Quantity In Stock": "1885",
+    "Quantity In Stock": "1875",
     "Price": "3.79",
     "UPC": "029465056186",
     "Web Item Name": "Federal Champion Target SLD Rimfire Ammunition .22 LR 40 gr 1240 fps 50/ct",
@@ -5518,7 +5518,7 @@
   {
     "SKU": "FA770BTL250",
     "Item Name": "FEDERAL 17 HMR 17GR SPEER TNT 250 CT BOTTLE 2AMMO 50RD",
-    "Quantity In Stock": "321",
+    "Quantity In Stock": "310",
     "Price": "52.49",
     "UPC": "604544650792",
     "Web Item Name": "Federal Premium V-Shok BYOB Rimfire Ammunition .17 HMR 17 gr HP 2530 fps 250/ct",
@@ -7086,7 +7086,7 @@
   {
     "SKU": "FAAE38S3",
     "Item Name": "FEDERAL 38 SUPER 115GR JHP 1130 FPS (125 POWER FACTOR) AMMO 50RD",
-    "Quantity In Stock": "55",
+    "Quantity In Stock": "54",
     "Price": "33.49",
     "UPC": "029465061579",
     "Web Item Name": "American Eagle Handgun Ammunition .38 Super (+P) 115 gr JHP 1130 fps 50/box",
@@ -9746,7 +9746,7 @@
   {
     "SKU": "FAC9115A250",
     "Item Name": "FEDERAL 9MM LUGER 115GR FMJ AMMO 250RD",
-    "Quantity In Stock": "309",
+    "Quantity In Stock": "308",
     "Price": "59.89",
     "UPC": "604544687439",
     "Web Item Name": "Federal Champion Training Handgun Ammunition 9mm Luger 115 gr FMJ 1125fps 250/ct Bulk",
@@ -9774,7 +9774,7 @@
   {
     "SKU": "FAC9115A500",
     "Item Name": "FEDERAL 9MM LUGER 115GR FMJ 500RD BULKPACK",
-    "Quantity In Stock": "0",
+    "Quantity In Stock": "725",
     "Price": "117.99",
     "UPC": "604544679083",
     "Web Item Name": "Federal Champion Training Handgun Ammunition 9mm Luger 115 gr FMJ 1125fps 500/ct (Bulk)",
@@ -10166,7 +10166,7 @@
   {
     "SKU": "FAF270WSMFS1",
     "Item Name": "FUSION 270 WIN SHORT MAG 150GR AMMO 20RD",
-    "Quantity In Stock": "358",
+    "Quantity In Stock": "355",
     "Price": "52.91",
     "UPC": "029465097882",
     "Web Item Name": "Federal Fusion Rifle Ammunition .270 WSM 150 gr BTSP 3060 fps - 20/ct",
@@ -11986,7 +11986,7 @@
   {
     "SKU": "FAGM308M",
     "Item Name": "FEDERAL 308 WIN 168GR SIERRA MATCHKING BTHP AMMO 20RD",
-    "Quantity In Stock": "216",
+    "Quantity In Stock": "213",
     "Price": "34.99",
     "UPC": "029465089337",
     "Web Item Name": "Federal Premium Gold Medal Sierra Matchking Rifle Ammunition .308 Win 168 gr BTHP 2650 fps 20/ct",
@@ -12322,7 +12322,7 @@
   {
     "SKU": "FAGM65CRD1",
     "Item Name": "FEDERAL 6.5 CREEDMOOR 140GR GOLD MEDAL SMK AMMO 20RD",
-    "Quantity In Stock": "58",
+    "Quantity In Stock": "56",
     "Price": "33.99",
     "UPC": "604544630312",
     "Web Item Name": "Federal Gold Medal Rifle Ammunition 6.5 Creedmoor 140 gr SMK 2675 fps 20/ct",
@@ -13058,7 +13058,7 @@
     "Drop Ship Flag": "1",
     "Drop Ship Price": "7.99",
     "Category": "Rimfire Ammunition",
-    "Ship Weight": "0.3700",
+    "Ship Weight": "0.3500",
     "Image Location": "https://media.chattanoogashooting.com/images/product/FAPD22L1/FAPD22L1.jpg?w=110&h=110&q=2",
     "Manufacturer": "Federal Cartridge Co.",
     "Manufacturer Item Number": "PD22L1",
@@ -14142,7 +14142,7 @@
   {
     "SKU": "FRFR100",
     "Item Name": "AMMO 223 REM 55 GR FMJ 20 rounds",
-    "Quantity In Stock": "3997",
+    "Quantity In Stock": "3957",
     "Price": "8.69",
     "UPC": "090255711264",
     "Web Item Name": "Hornady Frontier Rifle Ammunition .223 Rem 55 gr FMJ 20/ct",
@@ -14506,7 +14506,7 @@
   {
     "SKU": "FRFR2005",
     "Item Name": "FRONTIER 5.56 NATO 55 GR FMJ (XM193) (50 RD  ORIENTED) ammo",
-    "Quantity In Stock": "218",
+    "Quantity In Stock": "207",
     "Price": "24.29",
     "UPC": "090255715248",
     "Web Item Name": "Hornady Frontier Rifle Ammunition XM193 5.56mm NATO 55 gr FMJ 3240 fps 50/ct",
@@ -14954,7 +14954,7 @@
   {
     "SKU": "FRFR400C",
     "Item Name": "AMMO 300 BLACKOUT 125gr FMJ 200RD (10 boxes of 20RD)",
-    "Quantity In Stock": "7",
+    "Quantity In Stock": "6",
     "Price": "194.99",
     "UPC": "10090255713975",
     "Web Item Name": "Frontier Rifle Ammo .300 BLK 125 gr FMJ 2175 fps 200/ct (10 Boxes of 20/rd)",
@@ -15374,7 +15374,7 @@
   {
     "SKU": "GB8698779967284",
     "Item Name": "Sterling Steel Case 7.62x39 123gr FMJ 20rd Box",
-    "Quantity In Stock": "1150",
+    "Quantity In Stock": "1145",
     "Price": "11.99",
     "UPC": "8698779967284",
     "Web Item Name": "Global Ordnance Sterling Steel Case Rifle Ammunition 7.62x39mm 123gr FMJ 2362 fps 20/ct",
@@ -15934,7 +15934,7 @@
   {
     "SKU": "HEHSM10mm9N20",
     "Item Name": "HSM Bear Load 10mm Auto 200 gr Hard Lead RNFP 20 Rnd/Box Ammo",
-    "Quantity In Stock": "74",
+    "Quantity In Stock": "64",
     "Price": "15.89",
     "UPC": "810742026400",
     "Web Item Name": "HSM Bear Load Hard Cast Handgun Ammunition 10mm Auto 200gr RNFP 1041 fps 20/ct",
@@ -16522,7 +16522,7 @@
   {
     "SKU": "HEHSM3220Win1N",
     "Item Name": "HSM Cowboy Action 32-20 Winchester 115 gr Soft Lead RNFP 50 Rnd/Box Ammo",
-    "Quantity In Stock": "198",
+    "Quantity In Stock": "197",
     "Price": "36.19",
     "UPC": "837306004896",
     "Web Item Name": "HSM Cowboy Action Rifle Ammunition .32-20 Win 115gr RNFP 850 fps 50/ct",
@@ -17054,7 +17054,7 @@
   {
     "SKU": "HEHSM38551N",
     "Item Name": "HSM Cowboy Action 38-55 Winchester 240 gr Hard Lead RNFP 20 Rnd/Box Ammo",
-    "Quantity In Stock": "92",
+    "Quantity In Stock": "88",
     "Price": "28.99",
     "UPC": "837306004926",
     "Web Item Name": "HSM Cowboy Action Hard Cast Rifle Ammunition .38-55 Win 240gr RNFP 1325 fps 20/ct",
@@ -17474,7 +17474,7 @@
   {
     "SKU": "HEHSM457012N",
     "Item Name": "HSM Bear Load 45-70 Govt 430 gr Hard Lead RNFP Gas Check 20 Rnd/Box Ammo",
-    "Quantity In Stock": "20",
+    "Quantity In Stock": "17",
     "Price": "43.49",
     "UPC": "837306003592",
     "Web Item Name": "HSM Bear Load Hard Cast Handgun Ammunition 45-70 Govt 430gr RNFP Gas Check 1801 fps 20/ct",
@@ -17586,7 +17586,7 @@
   {
     "SKU": "HEHSM45C2N",
     "Item Name": "HSM Cowboy Action 45 Colt 200 gr Hard Lead RNFP 50 Rnd/Box Ammo",
-    "Quantity In Stock": "99",
+    "Quantity In Stock": "95",
     "Price": "38.39",
     "UPC": "837306005527",
     "Web Item Name": "HSM Cowboy Action Hard Cast Handgun Ammunition 45 Colt 200gr RNFP 750 fps 50/ct",
@@ -18062,7 +18062,7 @@
   {
     "SKU": "IVLABC070",
     "Item Name": "Bear Country 10mm 70GR 20 RDS",
-    "Quantity In Stock": "24",
+    "Quantity In Stock": "14",
     "Price": "27.99",
     "UPC": "732388964482",
     "Web Item Name": "Liberty Bear Country Handgun 10mm Auto 70gr Solid 2100 fps 20/cts",
@@ -18426,7 +18426,7 @@
   {
     "SKU": "IVLACD9014",
     "Item Name": "Civil Defense 9mm +P 50GR Copper Mono Frag HP Lead Free 20RD",
-    "Quantity In Stock": "307",
+    "Quantity In Stock": "287",
     "Price": "27.29",
     "UPC": "696859105623",
     "Web Item Name": "Liberty Civil Defense Handgun Ammunition 9mm (+P) 50gr SCHP 2000 fps 20/ct",
@@ -19938,7 +19938,7 @@
   {
     "SKU": "NH611140020",
     "Item Name": "NXD 9mm 65gr 20RDS AMMO",
-    "Quantity In Stock": "352",
+    "Quantity In Stock": "349",
     "Price": "11.29",
     "UPC": "810036150170",
     "Web Item Name": "Norma NXD Handgun Ammunition 9mm Luger 65gr NXD 1730 fps 20/ct",
@@ -22122,7 +22122,7 @@
   {
     "SKU": "NO40110",
     "Item Name": "Nosler WCA-270 Win 130g SB SP (20ct) Ammo",
-    "Quantity In Stock": "571",
+    "Quantity In Stock": "568",
     "Price": "24.49",
     "UPC": "054041401104",
     "Web Item Name": "Nosler Whitetail Country Rifle Ammunition .270 Win 130gr SP 3060 fps 20/ct",
@@ -22150,7 +22150,7 @@
   {
     "SKU": "NO40110",
     "Item Name": "Nosler WCA-270 Win 130g SB SP (20ct) Ammo",
-    "Quantity In Stock": "571",
+    "Quantity In Stock": "568",
     "Price": "24.49",
     "UPC": "054041401104",
     "Web Item Name": "Nosler Whitetail Country Rifle Ammunition .270 Win 130gr SP 3060 fps 20/ct",
@@ -22178,7 +22178,7 @@
   {
     "SKU": "NO40110",
     "Item Name": "Nosler WCA-270 Win 130g SB SP (20ct) Ammo",
-    "Quantity In Stock": "571",
+    "Quantity In Stock": "568",
     "Price": "24.49",
     "UPC": "054041401104",
     "Web Item Name": "Nosler Whitetail Country Rifle Ammunition .270 Win 130gr SP 3060 fps 20/ct",
@@ -22206,7 +22206,7 @@
   {
     "SKU": "NO40110",
     "Item Name": "Nosler WCA-270 Win 130g SB SP (20ct) Ammo",
-    "Quantity In Stock": "571",
+    "Quantity In Stock": "568",
     "Price": "24.49",
     "UPC": "054041401104",
     "Web Item Name": "Nosler Whitetail Country Rifle Ammunition .270 Win 130gr SP 3060 fps 20/ct",
@@ -22234,7 +22234,7 @@
   {
     "SKU": "NO40110",
     "Item Name": "Nosler WCA-270 Win 130g SB SP (20ct) Ammo",
-    "Quantity In Stock": "571",
+    "Quantity In Stock": "568",
     "Price": "24.49",
     "UPC": "054041401104",
     "Web Item Name": "Nosler Whitetail Country Rifle Ammunition .270 Win 130gr SP 3060 fps 20/ct",
@@ -22262,7 +22262,7 @@
   {
     "SKU": "NO40110",
     "Item Name": "Nosler WCA-270 Win 130g SB SP (20ct) Ammo",
-    "Quantity In Stock": "571",
+    "Quantity In Stock": "568",
     "Price": "24.49",
     "UPC": "054041401104",
     "Web Item Name": "Nosler Whitetail Country Rifle Ammunition .270 Win 130gr SP 3060 fps 20/ct",
@@ -22290,7 +22290,7 @@
   {
     "SKU": "NO40110",
     "Item Name": "Nosler WCA-270 Win 130g SB SP (20ct) Ammo",
-    "Quantity In Stock": "571",
+    "Quantity In Stock": "568",
     "Price": "24.49",
     "UPC": "054041401104",
     "Web Item Name": "Nosler Whitetail Country Rifle Ammunition .270 Win 130gr SP 3060 fps 20/ct",
@@ -22318,7 +22318,7 @@
   {
     "SKU": "NO40110",
     "Item Name": "Nosler WCA-270 Win 130g SB SP (20ct) Ammo",
-    "Quantity In Stock": "571",
+    "Quantity In Stock": "568",
     "Price": "24.49",
     "UPC": "054041401104",
     "Web Item Name": "Nosler Whitetail Country Rifle Ammunition .270 Win 130gr SP 3060 fps 20/ct",
@@ -22346,7 +22346,7 @@
   {
     "SKU": "NO40110",
     "Item Name": "Nosler WCA-270 Win 130g SB SP (20ct) Ammo",
-    "Quantity In Stock": "571",
+    "Quantity In Stock": "568",
     "Price": "24.49",
     "UPC": "054041401104",
     "Web Item Name": "Nosler Whitetail Country Rifle Ammunition .270 Win 130gr SP 3060 fps 20/ct",
@@ -22374,7 +22374,7 @@
   {
     "SKU": "NO40110",
     "Item Name": "Nosler WCA-270 Win 130g SB SP (20ct) Ammo",
-    "Quantity In Stock": "571",
+    "Quantity In Stock": "568",
     "Price": "24.49",
     "UPC": "054041401104",
     "Web Item Name": "Nosler Whitetail Country Rifle Ammunition .270 Win 130gr SP 3060 fps 20/ct",
@@ -22402,7 +22402,7 @@
   {
     "SKU": "NO40110",
     "Item Name": "Nosler WCA-270 Win 130g SB SP (20ct) Ammo",
-    "Quantity In Stock": "571",
+    "Quantity In Stock": "568",
     "Price": "24.49",
     "UPC": "054041401104",
     "Web Item Name": "Nosler Whitetail Country Rifle Ammunition .270 Win 130gr SP 3060 fps 20/ct",
@@ -22430,7 +22430,7 @@
   {
     "SKU": "NO40110",
     "Item Name": "Nosler WCA-270 Win 130g SB SP (20ct) Ammo",
-    "Quantity In Stock": "571",
+    "Quantity In Stock": "568",
     "Price": "24.49",
     "UPC": "054041401104",
     "Web Item Name": "Nosler Whitetail Country Rifle Ammunition .270 Win 130gr SP 3060 fps 20/ct",
@@ -22458,7 +22458,7 @@
   {
     "SKU": "NO40110",
     "Item Name": "Nosler WCA-270 Win 130g SB SP (20ct) Ammo",
-    "Quantity In Stock": "571",
+    "Quantity In Stock": "568",
     "Price": "24.49",
     "UPC": "054041401104",
     "Web Item Name": "Nosler Whitetail Country Rifle Ammunition .270 Win 130gr SP 3060 fps 20/ct",
@@ -22486,7 +22486,7 @@
   {
     "SKU": "NO40110",
     "Item Name": "Nosler WCA-270 Win 130g SB SP (20ct) Ammo",
-    "Quantity In Stock": "571",
+    "Quantity In Stock": "568",
     "Price": "24.49",
     "UPC": "054041401104",
     "Web Item Name": "Nosler Whitetail Country Rifle Ammunition .270 Win 130gr SP 3060 fps 20/ct",
@@ -24782,7 +24782,7 @@
   {
     "SKU": "NO40137",
     "Item Name": "Nosler ASP-38 Special 125g JHP 20ct",
-    "Quantity In Stock": "149",
+    "Quantity In Stock": "147",
     "Price": "16.99",
     "UPC": "054041401371",
     "Web Item Name": "Nosler ASP Handgun Ammunition .38 Spl 125gr JHP 930 fps 20/ct",
@@ -24810,7 +24810,7 @@
   {
     "SKU": "NO40137",
     "Item Name": "Nosler ASP-38 Special 125g JHP 20ct",
-    "Quantity In Stock": "149",
+    "Quantity In Stock": "147",
     "Price": "16.99",
     "UPC": "054041401371",
     "Web Item Name": "Nosler ASP Handgun Ammunition .38 Spl 125gr JHP 930 fps 20/ct",
@@ -28086,7 +28086,7 @@
   {
     "SKU": "NO51277",
     "Item Name": "ASP-45 ACP 230gr JHP Match Grade Handgun Ammunition (20 ct.)",
-    "Quantity In Stock": "972",
+    "Quantity In Stock": "966",
     "Price": "13.49",
     "UPC": "054041512770",
     "Web Item Name": "Nosler ASP Suppressor Ready Handgun Ammunition .45 ACP 230gr JHP 850 fps 20/ct",
@@ -28114,7 +28114,7 @@
   {
     "SKU": "NO51277",
     "Item Name": "ASP-45 ACP 230gr JHP Match Grade Handgun Ammunition (20 ct.)",
-    "Quantity In Stock": "972",
+    "Quantity In Stock": "966",
     "Price": "13.49",
     "UPC": "054041512770",
     "Web Item Name": "Nosler ASP Suppressor Ready Handgun Ammunition .45 ACP 230gr JHP 850 fps 20/ct",
@@ -28422,7 +28422,7 @@
   {
     "SKU": "NO51286",
     "Item Name": "ASP-9mm Luger 124gr JHP Match Grade Handgun Ammunition (20 ct.)",
-    "Quantity In Stock": "1673",
+    "Quantity In Stock": "1665",
     "Price": "13.49",
     "UPC": "054041512862",
     "Web Item Name": "Nosler Match Grade Handgun Ammo 9mm Luger 124 gr JHP 1150 fps 20/ct",
@@ -28450,7 +28450,7 @@
   {
     "SKU": "NO51286",
     "Item Name": "ASP-9mm Luger 124gr JHP Match Grade Handgun Ammunition (20 ct.)",
-    "Quantity In Stock": "1673",
+    "Quantity In Stock": "1665",
     "Price": "13.49",
     "UPC": "054041512862",
     "Web Item Name": "Nosler Match Grade Handgun Ammo 9mm Luger 124 gr JHP 1150 fps 20/ct",
@@ -35926,7 +35926,7 @@
   {
     "SKU": "OQPP300BF",
     "Item Name": "PRIVI 300 Blackout AAC FPJ 125gr 20RD BOX",
-    "Quantity In Stock": "255",
+    "Quantity In Stock": "235",
     "Price": "15.29",
     "UPC": "8605003812425",
     "Web Item Name": "PPU Standard Rifle Ammunition .300 AAC Blackout 125 gr FMJ 1340 fps 20/ct",
@@ -37354,7 +37354,7 @@
   {
     "SKU": "OQPPD32A",
     "Item Name": "PRIVI .32 Auto JHP 71G 50 RDS Ammo",
-    "Quantity In Stock": "24",
+    "Quantity In Stock": "22",
     "Price": "20.49",
     "UPC": "8605003813033",
     "Web Item Name": "PRIVI .32 Auto JHP 71G 50 RDS Ammo",
@@ -37410,7 +37410,7 @@
   {
     "SKU": "OQPPD380A",
     "Item Name": "PRIVI .380 Auto JHP 94gr 50BX Ammo",
-    "Quantity In Stock": "0",
+    "Quantity In Stock": "1",
     "Price": "20.49",
     "UPC": "8605003813057",
     "Web Item Name": "PPU Handgun Ammunition .380 ACP 94 gr JHP 951 fps 951 fps 50/ct",
@@ -37774,7 +37774,7 @@
   {
     "SKU": "OQPPH380AF",
     "Item Name": "PRIVI 380 AUTOFMJ 94gr 50BX",
-    "Quantity In Stock": "0",
+    "Quantity In Stock": "1",
     "Price": "16.69",
     "UPC": "8605003813040",
     "Web Item Name": "PPU Handgun Ammunition .380 ACP 94 gr FMJ 951 fps 951 fps 50/ct",
@@ -38810,7 +38810,7 @@
   {
     "SKU": "PJP223055FC",
     "Item Name": "Patriot Sports .223 55gr FMJ 1000 Round Case",
-    "Quantity In Stock": "221",
+    "Quantity In Stock": "202",
     "Price": "374.99",
     "UPC": "850053775079",
     "Web Item Name": "Patriot Sports Rifle Ammunition .223 Rem 55gr FMJ 3280 fps 1000/ct(50-20ct Boxes)",
@@ -38838,7 +38838,7 @@
   {
     "SKU": "PJP223055FC",
     "Item Name": "Patriot Sports .223 55gr FMJ 1000 Round Case",
-    "Quantity In Stock": "221",
+    "Quantity In Stock": "202",
     "Price": "374.99",
     "UPC": "850053775079",
     "Web Item Name": "Patriot Sports Rifle Ammunition .223 Rem 55gr FMJ 3280 fps 1000/ct(50-20ct Boxes)",
@@ -38978,7 +38978,7 @@
   {
     "SKU": "PJP9MM124FC",
     "Item Name": "Patriot Sports 9mm 124gr FMJ Brass Case 1000 Round Case",
-    "Quantity In Stock": "41",
+    "Quantity In Stock": "39",
     "Price": "219.99",
     "UPC": "",
     "Web Item Name": "Patriot Sports Brass Case Handgun Ammunition 9mm Luger 124gr FMJ 1148 fps 1000/ct (Case of 20-50/ct Boxes)",
@@ -39006,7 +39006,7 @@
   {
     "SKU": "PJP9MM124FC",
     "Item Name": "Patriot Sports 9mm 124gr FMJ Brass Case 1000 Round Case",
-    "Quantity In Stock": "41",
+    "Quantity In Stock": "39",
     "Price": "219.99",
     "UPC": "",
     "Web Item Name": "Patriot Sports Brass Case Handgun Ammunition 9mm Luger 124gr FMJ 1148 fps 1000/ct (Case of 20-50/ct Boxes)",
@@ -39034,7 +39034,7 @@
   {
     "SKU": "PJP9MM124FC",
     "Item Name": "Patriot Sports 9mm 124gr FMJ Brass Case 1000 Round Case",
-    "Quantity In Stock": "41",
+    "Quantity In Stock": "39",
     "Price": "219.99",
     "UPC": "",
     "Web Item Name": "Patriot Sports Brass Case Handgun Ammunition 9mm Luger 124gr FMJ 1148 fps 1000/ct (Case of 20-50/ct Boxes)",
@@ -39062,7 +39062,7 @@
   {
     "SKU": "PJP9MM124FC",
     "Item Name": "Patriot Sports 9mm 124gr FMJ Brass Case 1000 Round Case",
-    "Quantity In Stock": "41",
+    "Quantity In Stock": "39",
     "Price": "219.99",
     "UPC": "",
     "Web Item Name": "Patriot Sports Brass Case Handgun Ammunition 9mm Luger 124gr FMJ 1148 fps 1000/ct (Case of 20-50/ct Boxes)",
@@ -39090,7 +39090,7 @@
   {
     "SKU": "PJP9MM124FC",
     "Item Name": "Patriot Sports 9mm 124gr FMJ Brass Case 1000 Round Case",
-    "Quantity In Stock": "41",
+    "Quantity In Stock": "39",
     "Price": "219.99",
     "UPC": "",
     "Web Item Name": "Patriot Sports Brass Case Handgun Ammunition 9mm Luger 124gr FMJ 1148 fps 1000/ct (Case of 20-50/ct Boxes)",
@@ -39118,7 +39118,7 @@
   {
     "SKU": "PJP9MM124FC",
     "Item Name": "Patriot Sports 9mm 124gr FMJ Brass Case 1000 Round Case",
-    "Quantity In Stock": "41",
+    "Quantity In Stock": "39",
     "Price": "219.99",
     "UPC": "",
     "Web Item Name": "Patriot Sports Brass Case Handgun Ammunition 9mm Luger 124gr FMJ 1148 fps 1000/ct (Case of 20-50/ct Boxes)",
@@ -39146,7 +39146,7 @@
   {
     "SKU": "PJP9MM124FC",
     "Item Name": "Patriot Sports 9mm 124gr FMJ Brass Case 1000 Round Case",
-    "Quantity In Stock": "41",
+    "Quantity In Stock": "39",
     "Price": "219.99",
     "UPC": "",
     "Web Item Name": "Patriot Sports Brass Case Handgun Ammunition 9mm Luger 124gr FMJ 1148 fps 1000/ct (Case of 20-50/ct Boxes)",
@@ -39174,7 +39174,7 @@
   {
     "SKU": "PJP9MM124FC",
     "Item Name": "Patriot Sports 9mm 124gr FMJ Brass Case 1000 Round Case",
-    "Quantity In Stock": "41",
+    "Quantity In Stock": "39",
     "Price": "219.99",
     "UPC": "",
     "Web Item Name": "Patriot Sports Brass Case Handgun Ammunition 9mm Luger 124gr FMJ 1148 fps 1000/ct (Case of 20-50/ct Boxes)",
@@ -42310,7 +42310,7 @@
   {
     "SKU": "RT27842",
     "Item Name": "REMINGTON 308 WIN 150GR CORE-LOKT PSP AMMO 20RD",
-    "Quantity In Stock": "486",
+    "Quantity In Stock": "483",
     "Price": "27.99",
     "UPC": "047700056005",
     "Web Item Name": "Remington Core-Lokt Rifle Ammunition .308 Win 150 gr PSP 2820 fps 20/ct",
@@ -42898,7 +42898,7 @@
   {
     "SKU": "RT28364",
     "Item Name": "REMINGTON 25-20 WIN 86GR CORE-LOKT PSP AMMO 50RD",
-    "Quantity In Stock": "57",
+    "Quantity In Stock": "52",
     "Price": "70.49",
     "UPC": "047700052304",
     "Web Item Name": "Remington Core-Lokt Rifle Ammunition .25-20 Win 86 gr PSP 1460 fps 50/ct",
@@ -43402,7 +43402,7 @@
   {
     "SKU": "RTR20017",
     "Item Name": "REMINGTON 32 H&R MAGNUM 85GR JHP HTP AMMO 20RD",
-    "Quantity In Stock": "0",
+    "Quantity In Stock": "2",
     "Price": "23.99",
     "UPC": "047700422602",
     "Web Item Name": "Remington HTP Handgun Ammunition .32 H&H Mag 85gr JHP 1120 fps 20/ct",
@@ -44942,7 +44942,7 @@
   {
     "SKU": "TLPTGB380B",
     "Item Name": "MAXXTECH .380 ACP 95GR FMJ 50RD BRASS CASE",
-    "Quantity In Stock": "581",
+    "Quantity In Stock": "418",
     "Price": "14.49",
     "UPC": "3877000251674",
     "Web Item Name": "Maxxtech Brass Case Handgun Ammunition .380 ACP 95 gr FMJ",
@@ -44970,7 +44970,7 @@
   {
     "SKU": "TLPTGB45B",
     "Item Name": "MAXXTECH 45 ACP 230GR FMJ 50RD BRASS CASE",
-    "Quantity In Stock": "1498",
+    "Quantity In Stock": "1455",
     "Price": "18.29",
     "UPC": "3877000251735",
     "Web Item Name": "Maxxtech Brass Casefire Handgun Ammunition .45 ACP 230 gr FMJ 50/ct",
@@ -44998,7 +44998,7 @@
   {
     "SKU": "TLPTGB912B",
     "Item Name": "MAXXTECH 9MM 124GR FMJ 50RD BRASS CASE",
-    "Quantity In Stock": "924",
+    "Quantity In Stock": "923",
     "Price": "11.39",
     "UPC": "3877000606221",
     "Web Item Name": "MAXXTech Handgun Ammunition 9mm Luger 124gr FMJ 1126 fps 50/ct",
@@ -45054,7 +45054,7 @@
   {
     "SKU": "TLPTGB912BC1000",
     "Item Name": "MAXXTECH 9MM 124GR FMJ BRASS 1000 ROUNDS",
-    "Quantity In Stock": "37",
+    "Quantity In Stock": "38",
     "Price": "219.99",
     "UPC": "",
     "Web Item Name": "MAXXTech Handgun Ammunition 9mm Luger 124gr FMJ 1126 fps 1000/ct (20-50/ct Boxes)",
@@ -45082,7 +45082,7 @@
   {
     "SKU": "TLPTGB9MMB",
     "Item Name": "MAXXTECH 9MM 115GR FMJ 50RD BRASS CASE",
-    "Quantity In Stock": "376",
+    "Quantity In Stock": "374",
     "Price": "11.39",
     "UPC": "3877000251476",
     "Web Item Name": "Maxxtech Brass Casefire Handgun Ammunition 9mm Luger 115 gr FMJ 50/ct",
@@ -45138,7 +45138,7 @@
   {
     "SKU": "TLPTGB9MMBC1000",
     "Item Name": "MAXXTECH 9MM 115GR FMJ BRASS 1000 ROUNDS",
-    "Quantity In Stock": "39",
+    "Quantity In Stock": "38",
     "Price": "219.99",
     "UPC": "",
     "Web Item Name": "MaxxTech Handgun Ammunition 9mm Luger 115 gr FMJ 1150 fps 1000/ct (20 Boxes 50/ct)",
@@ -46734,7 +46734,7 @@
   {
     "SKU": "WN22LR555HP",
     "Item Name": "WIN .22 LR 36GR CP HP 555 RDS BULK",
-    "Quantity In Stock": "27",
+    "Quantity In Stock": "26",
     "Price": "34.19",
     "UPC": "020892102477",
     "Web Item Name": "Winchester .22 LR Bulk Pack Rimfire Ammunition .22 LR 36 gr CPHP 555/ct",
@@ -48162,7 +48162,7 @@
   {
     "SKU": "WNSBST2506A",
     "Item Name": "WIN BLLSTC SLVERTP 25-06 85GR 20/RD",
-    "Quantity In Stock": "52",
+    "Quantity In Stock": "50",
     "Price": "34.69",
     "UPC": "020892210721",
     "Web Item Name": "Winchester Ballistic Silvertip Rifle Ammunition .25-06 Rem 85 gr. PT 3470 fps 20/ct",
@@ -48190,7 +48190,7 @@
   {
     "SKU": "WNSBST2506A",
     "Item Name": "WIN BLLSTC SLVERTP 25-06 85GR 20/RD",
-    "Quantity In Stock": "52",
+    "Quantity In Stock": "50",
     "Price": "34.69",
     "UPC": "020892210721",
     "Web Item Name": "Winchester Ballistic Silvertip Rifle Ammunition .25-06 Rem 85 gr. PT 3470 fps 20/ct",
@@ -48974,7 +48974,7 @@
   {
     "SKU": "WNSG9W",
     "Item Name": "9mm Service Grade 115gr FMJ 50 RD Box",
-    "Quantity In Stock": "56",
+    "Quantity In Stock": "55",
     "Price": "12.89",
     "UPC": "020892225190",
     "Web Item Name": "Winchester Service Grade Handgun Ammunition 9mm Luger 115 gr. FMJ 1300 fps 50/ct",
@@ -49002,7 +49002,7 @@
   {
     "SKU": "WNSG9W",
     "Item Name": "9mm Service Grade 115gr FMJ 50 RD Box",
-    "Quantity In Stock": "56",
+    "Quantity In Stock": "55",
     "Price": "12.89",
     "UPC": "020892225190",
     "Web Item Name": "Winchester Service Grade Handgun Ammunition 9mm Luger 115 gr. FMJ 1300 fps 50/ct",
@@ -49030,7 +49030,7 @@
   {
     "SKU": "WNSG9W",
     "Item Name": "9mm Service Grade 115gr FMJ 50 RD Box",
-    "Quantity In Stock": "56",
+    "Quantity In Stock": "55",
     "Price": "12.89",
     "UPC": "020892225190",
     "Web Item Name": "Winchester Service Grade Handgun Ammunition 9mm Luger 115 gr. FMJ 1300 fps 50/ct",
@@ -49058,7 +49058,7 @@
   {
     "SKU": "WNSG9W",
     "Item Name": "9mm Service Grade 115gr FMJ 50 RD Box",
-    "Quantity In Stock": "56",
+    "Quantity In Stock": "55",
     "Price": "12.89",
     "UPC": "020892225190",
     "Web Item Name": "Winchester Service Grade Handgun Ammunition 9mm Luger 115 gr. FMJ 1300 fps 50/ct",
@@ -52782,7 +52782,7 @@
   {
     "SKU": "WNWM193200",
     "Item Name": "Lake City 5.56mm M193 55gr FMJ 200 RD",
-    "Quantity In Stock": "157",
+    "Quantity In Stock": "134",
     "Price": "97.99",
     "UPC": "020892224421",
     "Web Item Name": "Winchester USA Lake City M193 Rifle Ammunition 5.56mm 55 gr. FMJ 3240 fps 200/ct",
@@ -52838,7 +52838,7 @@
   {
     "SKU": "WNWM193300C",
     "Item Name": "Lake City 5.56mm M193 55gr FMJ 300 Round Plastic Can",
-    "Quantity In Stock": "8",
+    "Quantity In Stock": "7",
     "Price": "162.59",
     "UPC": "020892226852",
     "Web Item Name": "Winchester Lake City M193 Rifle Ammunition 5.56mm 55 gr. FMJ 3270 fps 300/ct (Polymer Ammo Can)",
@@ -54938,7 +54938,7 @@
   {
     "SKU": "WNX270SCLF",
     "Item Name": "270 WSM COPPER IMPACT 130 GR LEAD FREE 20 Rounds",
-    "Quantity In Stock": "24",
+    "Quantity In Stock": "21",
     "Price": "57.89",
     "UPC": "020892227897",
     "Web Item Name": "Winchester Copper Impact Rifle Ammunition 270 WSM 130 gr. PT 3215 fps 20/ct",
@@ -54994,7 +54994,7 @@
   {
     "SKU": "WNX270WSM",
     "Item Name": "WIN 270WSM 150GR PP",
-    "Quantity In Stock": "41",
+    "Quantity In Stock": "39",
     "Price": "51.19",
     "UPC": "020892213395",
     "Web Item Name": "Winchester Super-X Power Point Rifle Ammunition .270 WSM 150 gr. PSP 3150 fps 20/ct",
@@ -56814,7 +56814,7 @@
   {
     "SKU": "XI501663",
     "Item Name": "AMMO ELITE V 45ACP 185GR JHP 20RD BX",
-    "Quantity In Stock": "0",
+    "Quantity In Stock": "20",
     "Price": "20.49",
     "UPC": "798681501663",
     "Web Item Name": "Sig Elite V-Crown Handgun Ammunition  .45 ACP 185 gr JHP 995 fps 20/ct",
@@ -56842,7 +56842,7 @@
   {
     "SKU": "XI501663",
     "Item Name": "AMMO ELITE V 45ACP 185GR JHP 20RD BX",
-    "Quantity In Stock": "0",
+    "Quantity In Stock": "20",
     "Price": "20.49",
     "UPC": "798681501663",
     "Web Item Name": "Sig Elite V-Crown Handgun Ammunition  .45 ACP 185 gr JHP 995 fps 20/ct",
@@ -56870,7 +56870,7 @@
   {
     "SKU": "XI501663",
     "Item Name": "AMMO ELITE V 45ACP 185GR JHP 20RD BX",
-    "Quantity In Stock": "0",
+    "Quantity In Stock": "20",
     "Price": "20.49",
     "UPC": "798681501663",
     "Web Item Name": "Sig Elite V-Crown Handgun Ammunition  .45 ACP 185 gr JHP 995 fps 20/ct",
@@ -58102,7 +58102,7 @@
   {
     "SKU": "XIE300H1SBR20",
     "Item Name": "Sig AMMO 300BLK 120GR SBR SOLID COPPER BOX/20",
-    "Quantity In Stock": "5",
+    "Quantity In Stock": "0",
     "Price": "27.02",
     "UPC": "798681594214",
     "Web Item Name": "Sig Sauer SBR Elite Performance Copper Hunting Rifle Ammunition .300 BLK 120gr HP 1897 fps 20/ct",
@@ -58130,7 +58130,7 @@
   {
     "SKU": "XIE300H1SBR20",
     "Item Name": "Sig AMMO 300BLK 120GR SBR SOLID COPPER BOX/20",
-    "Quantity In Stock": "5",
+    "Quantity In Stock": "0",
     "Price": "27.02",
     "UPC": "798681594214",
     "Web Item Name": "Sig Sauer SBR Elite Performance Copper Hunting Rifle Ammunition .300 BLK 120gr HP 1897 fps 20/ct",
@@ -58158,7 +58158,7 @@
   {
     "SKU": "XIE300H1SBR20",
     "Item Name": "Sig AMMO 300BLK 120GR SBR SOLID COPPER BOX/20",
-    "Quantity In Stock": "5",
+    "Quantity In Stock": "0",
     "Price": "27.02",
     "UPC": "798681594214",
     "Web Item Name": "Sig Sauer SBR Elite Performance Copper Hunting Rifle Ammunition .300 BLK 120gr HP 1897 fps 20/ct",
@@ -58186,7 +58186,7 @@
   {
     "SKU": "XIE300H1SBR20",
     "Item Name": "Sig AMMO 300BLK 120GR SBR SOLID COPPER BOX/20",
-    "Quantity In Stock": "5",
+    "Quantity In Stock": "0",
     "Price": "27.02",
     "UPC": "798681594214",
     "Web Item Name": "Sig Sauer SBR Elite Performance Copper Hunting Rifle Ammunition .300 BLK 120gr HP 1897 fps 20/ct",
@@ -60650,7 +60650,7 @@
   {
     "SKU": "YMAC403N",
     "Item Name": "ARM 40SW 180GR JHP Ammo 20 rounds",
-    "Quantity In Stock": "6",
+    "Quantity In Stock": "4",
     "Price": "11.99",
     "UPC": "812285021843",
     "Web Item Name": "Armscor Handgun Ammunition .40 S&W 180 gr JHP 950 fps 20/ct",
@@ -61490,7 +61490,7 @@
   {
     "SKU": "ZYSB300BLKXA",
     "Item Name": "S&B eXergy Blue Solid Copper 300 Blackout 110gr 20/RD",
-    "Quantity In Stock": "521",
+    "Quantity In Stock": "518",
     "Price": "16.79",
     "UPC": "754908512720",
     "Web Item Name": "Sellier & Bellot eXergy Blue Rifle Ammunition .300 Blackout 110gr 2215 fps 20/ct",
@@ -61910,7 +61910,7 @@
   {
     "SKU": "ZYSB32SWLA",
     "Item Name": "32 S & W LONG NP LRN 100 GR",
-    "Quantity In Stock": "31",
+    "Quantity In Stock": "28",
     "Price": "25.99",
     "UPC": "754908500048",
     "Web Item Name": "Sellier & Bellot Pistol & Revolver Ammo .32 S&W Long 100 gr LRN 50/Box",
@@ -62246,7 +62246,7 @@
   {
     "SKU": "ZYSB380XA",
     "Item Name": "S&B XRG Defense Solid Copper HP 380 ACP 77gr 25/RD",
-    "Quantity In Stock": "201",
+    "Quantity In Stock": "188",
     "Price": "11.79",
     "UPC": "754908501090",
     "Web Item Name": "Sellier & Bellot XRG Defense Handgun Ammunition 380 ACP 77gr HP 1116 fps 25/ct",
@@ -63514,7 +63514,7 @@
     "Drop Ship Flag": "1",
     "Drop Ship Price": "20.49",
     "Category": "Rifle Ammunition",
-    "Ship Weight": "1.3300",
+    "Ship Weight": "1.3000",
     "Image Location": "https://media.chattanoogashooting.com/images/product/ZYSB857JRSA/ZYSB857JRSA.jpg?w=110&h=110&q=2",
     "Manufacturer": "Mag-Tech/Sellier- Bellot",
     "Manufacturer Item Number": "SB857JRSA",
