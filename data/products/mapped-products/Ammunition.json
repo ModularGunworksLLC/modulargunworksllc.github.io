@@ -8738,7 +8738,7 @@
   {
     "SKU": "FAAE9N1",
     "Item Name": "FEDERAL 9MM LUGER 124GR TOTAL METAL JACKET AMMO 50RD",
-    "Quantity In Stock": "191",
+    "Quantity In Stock": "171",
     "Price": "25.99",
     "UPC": "029465093532",
     "Web Item Name": "American Eagle IRT Handgun Ammunition 9mm Luger 124 gr. TMJ 1120 fps 50/ct",
@@ -9970,7 +9970,7 @@
   {
     "SKU": "FAF224VLKMSR1",
     "Item Name": "FUSION 224 VALKYRIE 90GR AMMO 20RD",
-    "Quantity In Stock": "121",
+    "Quantity In Stock": "119",
     "Price": "30.49",
     "UPC": "604544630305",
     "Web Item Name": "Federal Fusion Rifle Ammunition .224 Valkyrie 90 gr SP 2700 20/ct",
@@ -18202,7 +18202,7 @@
   {
     "SKU": "IVLACD10032",
     "Item Name": "Civil Defense 10mm Auto 60GR Copper Mono Frag HP Lead Free 20RD",
-    "Quantity In Stock": "44",
+    "Quantity In Stock": "49",
     "Price": "33.09",
     "UPC": "748252054982",
     "Web Item Name": "Liberty Civil Defense Handgun Ammunition 10mm Auto 60 gr SCHP 2400 fps 20/ct",
@@ -18258,7 +18258,7 @@
   {
     "SKU": "IVLACD357SIG053",
     "Item Name": "Civil Defense .357 SIG 50GR Copper Mono Frag HP Lead Free 20RD",
-    "Quantity In Stock": "9",
+    "Quantity In Stock": "13",
     "Price": "28.29",
     "UPC": "748252888631",
     "Web Item Name": "Civil Defense .357 SIG 50GR Copper Mono Frag HP Lead Free 20RD",
@@ -18286,7 +18286,7 @@
   {
     "SKU": "IVLACD380023",
     "Item Name": "Civil Defense .380 Auto 50GR Copper Mono Frag HP Lead Free 20RD",
-    "Quantity In Stock": "33",
+    "Quantity In Stock": "43",
     "Price": "27.69",
     "UPC": "696859105654",
     "Web Item Name": "Liberty Civil Defense Handgun Ammunition .380 Auto 50 gr SCHP 1500 fps 20/ct",
@@ -18314,7 +18314,7 @@
   {
     "SKU": "IVLACD38025",
     "Item Name": "Civil Defense .38 Special 50GR Copper Mono Frag HP Lead Free 20RD",
-    "Quantity In Stock": "9",
+    "Quantity In Stock": "14",
     "Price": "28.69",
     "UPC": "748252232113",
     "Web Item Name": "Liberty Civil Defense Handgun Ammunition .38 Spl 50 gr SCHP 1500 fps 20/ct",
@@ -18370,7 +18370,7 @@
   {
     "SKU": "IVLACD45013",
     "Item Name": "Civil Defense .45 ACP +P 78GR Copper Mono Frag HP Lead Free 20RD",
-    "Quantity In Stock": "76",
+    "Quantity In Stock": "90",
     "Price": "31.19",
     "UPC": "696859105609",
     "Web Item Name": "Liberty Civil Defense Handgun Ammunition .45 ACP (+P) 78 gr 1900 fps SCHP 20/ct",
@@ -18426,7 +18426,7 @@
   {
     "SKU": "IVLACD9014",
     "Item Name": "Civil Defense 9mm +P 50GR Copper Mono Frag HP Lead Free 20RD",
-    "Quantity In Stock": "277",
+    "Quantity In Stock": "307",
     "Price": "27.29",
     "UPC": "696859105623",
     "Web Item Name": "Liberty Civil Defense Handgun Ammunition 9mm (+P) 50gr SCHP 2000 fps 20/ct",
@@ -18734,7 +18734,7 @@
   {
     "SKU": "IVLAUL380055",
     "Item Name": "Ultra-Light .380ACP 50gr Copper Mono.Frag HP 20RD",
-    "Quantity In Stock": "28",
+    "Quantity In Stock": "43",
     "Price": "28.39",
     "UPC": "696859085444",
     "Web Item Name": "Ultra-Light Ammunition .380 ACP 50gr Copper Mono Frag HP 20/rd",
@@ -37942,7 +37942,7 @@
   {
     "SKU": "OQPPH38SW",
     "Item Name": "PRIVI 38 S&W LRN 145GR 50 RDS",
-    "Quantity In Stock": "49",
+    "Quantity In Stock": "47",
     "Price": "25.29",
     "UPC": "8605003813125",
     "Web Item Name": "PPU Handgun Ammunition .38 S&W 145 gr LRN 689 fps 50/ct",
@@ -39202,7 +39202,7 @@
   {
     "SKU": "QD000009",
     "Item Name": "G2R 9MM RIP 92gr 20RD",
-    "Quantity In Stock": "127",
+    "Quantity In Stock": "174",
     "Price": "35.99",
     "UPC": "863552000009",
     "Web Item Name": "G2 Research R.I.P. Handgun Ammunition 9mm Luger 92 gr HP 1250 fps 20/ct",
@@ -39314,7 +39314,7 @@
   {
     "SKU": "QD006018",
     "Item Name": "G2R RIP 10MM 115gr 20 RD BOX",
-    "Quantity In Stock": "28",
+    "Quantity In Stock": "39",
     "Price": "39.49",
     "UPC": "851412006018",
     "Web Item Name": "G2 Research R.I.P. Handgun Ammunition 10mm Auto 115 gr 1220 fps 20/ct",
@@ -39398,7 +39398,7 @@
   {
     "SKU": "QDG00618",
     "Item Name": "G2 TELOS .38 SPECIAL +P 20RD BOX",
-    "Quantity In Stock": "8",
+    "Quantity In Stock": "20",
     "Price": "20.99",
     "UPC": "851412006186",
     "Web Item Name": "G2 Telos Handgun Ammunition .38 Spl(+P) 105 gr Frangible 1170 fps 20/ct",
@@ -39510,7 +39510,7 @@
   {
     "SKU": "QDG00626",
     "Item Name": "G2 TELOS .357 MAG 20RD BOX",
-    "Quantity In Stock": "24",
+    "Quantity In Stock": "36",
     "Price": "20.99",
     "UPC": "851412006261",
     "Web Item Name": "G2 TELOS .357 MAG 20RD BOX",
@@ -42394,7 +42394,7 @@
   {
     "SKU": "RT27852",
     "Item Name": "REMINGTON 35 REM 200GR CORE-LOKT SP AMMO 20RD",
-    "Quantity In Stock": "399",
+    "Quantity In Stock": "395",
     "Price": "46.99",
     "UPC": "047700057101",
     "Web Item Name": "Remington Core-Lokt Rifle Ammunition .35 Rem 200 gr SP 2080 fps 20/ct",
@@ -44942,7 +44942,7 @@
   {
     "SKU": "TLPTGB380B",
     "Item Name": "MAXXTECH .380 ACP 95GR FMJ 50RD BRASS CASE",
-    "Quantity In Stock": "587",
+    "Quantity In Stock": "581",
     "Price": "14.49",
     "UPC": "3877000251674",
     "Web Item Name": "Maxxtech Brass Case Handgun Ammunition .380 ACP 95 gr FMJ",
