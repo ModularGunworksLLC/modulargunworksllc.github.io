@@ -361,6 +361,58 @@
       margin-bottom: 1.5rem;
     }
 
+    .ammo-verification-block {
+      background: #f8f9fa;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      padding: 1.25rem;
+      margin-bottom: 1rem;
+    }
+    .ammo-verification-notice {
+      font-size: 0.95rem;
+      color: #333;
+      margin-bottom: 1rem;
+      line-height: 1.5;
+    }
+    .ammo-verification-checkboxes {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    .ammo-checkbox-label {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.5rem;
+      font-size: 0.9rem;
+      color: #444;
+      cursor: pointer;
+    }
+    .ammo-checkbox-label a {
+      color: var(--color-primary);
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .ammo-checkbox-label a:hover {
+      text-decoration: underline;
+    }
+    .ammo-checkbox {
+      margin-top: 0.2rem;
+      flex-shrink: 0;
+    }
+    .ammo-verification-hint {
+      font-size: 0.85rem;
+      color: #666;
+      margin-top: 0.75rem;
+      margin-bottom: 0;
+    }
+
+    .shipping-threshold-note {
+      font-size: 0.85rem;
+      color: #2e7d32;
+      margin: -0.25rem 0 0.5rem 0;
+      padding: 0;
+    }
+
     /* RESPONSIVE */
     @media (max-width: 600px) {
       .cart-item {
@@ -399,8 +451,8 @@
 
     <div class="header-middle-row">
       <div class="header-left-links">
-        <a href="#account">Account</a>
-        <a href="#help">Help</a>
+        <a href="../order-status.html">Account</a>
+        <a href="../help.html">Help</a>
         <a href="cart.html" style="color: var(--color-primary); font-weight: 700;"><i class="fas fa-shopping-cart"></i> Cart <span class="cart-count-badge" style="background: var(--color-primary); color: #fff; padding: 2px 6px; border-radius: 10px; font-size: 0.75rem; display: none;">0</span></a>
       </div>
 
@@ -448,6 +500,14 @@
   <!-- CART SCRIPT -->
   <script src="../scripts/cart.js"></script>
   <script>
+    // Industry-standard shipping: flat rate under threshold, free over threshold
+    var SHIPPING_FLAT_RATE = 12.99;
+    var FREE_SHIPPING_THRESHOLD = 99;
+
+    function getShipping(subtotal) {
+      return subtotal >= FREE_SHIPPING_THRESHOLD ? 0 : SHIPPING_FLAT_RATE;
+    }
+
     function renderCart() {
       const cart = MGWCart.get();
       const container = document.getElementById('cart-content');
@@ -472,6 +532,11 @@
 
       const itemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
       const subtotal = MGWCart.getTotal();
+      const shipping = getShipping(subtotal);
+      const totalWithShipping = subtotal + shipping;
+      const cartHasAmmo = cart.some(item => item.category && String(item.category).toLowerCase() === 'ammunition');
+      const cartHasFirearm = cart.some(item => item.category && String(item.category).toLowerCase() === 'firearms');
+      const needsVerification = cartHasAmmo || cartHasFirearm;
       
       countText.textContent = `${itemCount} item${itemCount !== 1 ? 's' : ''} in your cart`;
       clearBtn.style.display = 'block';
@@ -523,16 +588,44 @@
             </div>
             <div class="cart-summary-row">
               <span class="summary-label">Shipping</span>
-              <span class="summary-value">Calculated at checkout</span>
+              <span class="summary-value">${shipping === 0 ? 'Free' : '$' + shipping.toFixed(2)}</span>
             </div>
+            ${shipping > 0 ? `<p class="shipping-threshold-note">Free shipping on orders over $${FREE_SHIPPING_THRESHOLD}</p>` : ''}
             <div class="cart-summary-row total">
               <span class="summary-label">Estimated Total</span>
-              <span class="summary-value">$${subtotal.toFixed(2)}</span>
+              <span class="summary-value">$${totalWithShipping.toFixed(2)}</span>
             </div>
             <div class="checkout-note">
               <i class="fas fa-lock"></i>
               Secure checkout powered by PayPal
             </div>
+            ${needsVerification ? `
+            <div class="ammo-verification-block" id="verification-block">
+              <div class="ammo-verification-notice">
+                ${cartHasFirearm
+                  ? `<strong>Your cart contains firearms.</strong> Federal law requires all firearms to be transferred through a licensed FFL. You must be 21+ for handguns/receivers and 18+ for rifles/shotguns. Out-of-state: firearms ship only to an FFL in your state of residence. Alabama residents: transfer at our Alabama location or your chosen Alabama FFL after completing federal forms and background checks.`
+                  : `<strong>Your cart contains ammunition.</strong> Federal law requires you to be 18+ for rifle/shotgun ammo and 21+ for handgun/other ammo. By proceeding, you confirm you meet the applicable age requirement.`
+                }
+              </div>
+              <div class="ammo-verification-checkboxes">
+                <label class="ammo-checkbox-label">
+                  <input type="checkbox" id="ammo-age-confirm" class="ammo-checkbox"> Yes, I am 21 or older
+                </label>
+                <label class="ammo-checkbox-label">
+                  <input type="checkbox" id="ammo-state-ack" class="ammo-checkbox"> I have read and acknowledge the <a href="../state-restrictions.html" target="_blank" rel="noopener">State Ammunition &amp; Firearm Restrictions</a> and understand that I am responsible for complying with my state's laws.
+                </label>
+                ${cartHasFirearm ? `
+                <label class="ammo-checkbox-label">
+                  <input type="checkbox" id="firearm-ffl-ack" class="ammo-checkbox"> I understand this firearm purchase requires an FFL transfer and that I cannot receive it directly at my home.
+                </label>
+                <label class="ammo-checkbox-label">
+                  <input type="checkbox" id="firearm-rules-ack" class="ammo-checkbox"> I have read and acknowledge the <a href="../firearm-transfer-guide.html" target="_blank" rel="noopener">Federal &amp; State Firearm Transfer Guide</a> and confirm I am of legal age and eligible to purchase.
+                </label>
+                ` : ''}
+              </div>
+              <p class="ammo-verification-hint" id="ammo-verification-hint">${cartHasFirearm ? 'Please confirm all four items above to enable checkout.' : 'Please confirm both items above to enable checkout.'}</p>
+            </div>
+            ` : ''}
             <div id="paypal-button-container"></div>
             <a href="ammunition.html" class="continue-shopping">
               <i class="fas fa-arrow-left"></i> Continue Shopping
@@ -541,15 +634,17 @@
         </div>
       `;
 
-      // Initialize PayPal buttons
-      initPayPal(cart, subtotal);
+      // Initialize PayPal: pass subtotal, shipping, and total (subtotal + shipping)
+      initPayPal(cart, subtotal, shipping, totalWithShipping, needsVerification, cartHasFirearm);
     }
 
-    function initPayPal(cart, total) {
+    function initPayPal(cart, subtotal, shipping, total, requireVerification, requireFirearmVerification) {
       const container = document.getElementById('paypal-button-container');
       if (!container) return;
 
-      paypal.Buttons({
+      function renderButtons() {
+        container.innerHTML = '';
+        paypal.Buttons({
         style: {
           layout: 'vertical',
           color: 'gold',
@@ -569,17 +664,18 @@
             category: 'PHYSICAL_GOODS'
           }));
 
+          var breakdown = {
+            item_total: { currency_code: 'USD', value: subtotal.toFixed(2) }
+          };
+          if (shipping > 0) {
+            breakdown.shipping = { currency_code: 'USD', value: shipping.toFixed(2) };
+          }
           return actions.order.create({
             purchase_units: [{
               amount: {
                 value: total.toFixed(2),
                 currency_code: 'USD',
-                breakdown: {
-                  item_total: {
-                    currency_code: 'USD',
-                    value: total.toFixed(2)
-                  }
-                }
+                breakdown: breakdown
               },
               items: items
             }],
@@ -594,10 +690,33 @@
           return actions.order.capture().then((orderData) => {
             console.log('Order completed:', orderData);
             
-            // Send order notification
-            const orderSummary = cart.map(item => 
+            const orderSummaryText = cart.map(item => 
               `${item.quantity}× ${item.name} ($${(item.price * item.quantity).toFixed(2)})`
             ).join('\n');
+            const buyerEmail = orderData.payer?.email_address || 'Not provided';
+            const cartHadAmmo = cart.some(item => item.category && String(item.category).toLowerCase() === 'ammunition');
+            const cartHadFirearm = cart.some(item => item.category && String(item.category).toLowerCase() === 'firearms');
+
+            // Send order notification (including age/firearm verification audit when applicable)
+            fetch('/api/send-order-email', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                orderId: orderData.id,
+                productName: 'Cart order',
+                quantity: cart.reduce((s, i) => s + i.quantity, 0),
+                totalAmount: total.toFixed(2),
+                buyerEmail: buyerEmail,
+                category: 'Cart',
+                orderSummary: orderSummaryText,
+                ageVerified: cartHadAmmo ? true : undefined,
+                stateRestrictionsAcknowledged: cartHadAmmo ? true : undefined,
+                minAgeConfirmed: cartHadAmmo ? 21 : undefined,
+                firearmTransferAcknowledged: cartHadFirearm ? true : undefined,
+                federalStateFirearmRulesAcknowledged: cartHadFirearm ? true : undefined,
+                minFirearmAgeConfirmed: cartHadFirearm ? 21 : undefined
+              })
+            }).then(res => res.json()).then(d => { if (d.success) console.log('Order email sent'); }).catch(err => console.error('Order email error:', err));
 
             // Clear cart after successful purchase
             MGWCart.clear();
@@ -609,6 +728,7 @@
                 <h2>Order Confirmed!</h2>
                 <p>Thank you for your purchase! Your order ID is: <strong>${orderData.id}</strong></p>
                 <p style="font-size: 0.9rem; color: #666;">A confirmation has been sent to your PayPal email.</p>
+                <p style="font-size: 0.9rem; color: #666;">Save this order ID to <a href="../order-status.html">check your order status</a> anytime.</p>
                 <a href="ammunition.html" class="shop-now-btn" style="margin-top: 1rem;">
                   <i class="fas fa-shopping-bag"></i> Continue Shopping
                 </a>
@@ -626,6 +746,31 @@
           console.log('Payment cancelled');
         }
       }).render('#paypal-button-container');
+      }
+
+      if (requireVerification) {
+        container.innerHTML = '<p class="ammo-verification-hint" style="margin:0;">' + (requireFirearmVerification ? 'Confirm all four items above to enable checkout.' : 'Confirm both items above to enable checkout.') + '</p>';
+        const ageCheck = document.getElementById('ammo-age-confirm');
+        const stateCheck = document.getElementById('ammo-state-ack');
+        const fflCheck = document.getElementById('firearm-ffl-ack');
+        const rulesCheck = document.getElementById('firearm-rules-ack');
+        const hint = document.getElementById('ammo-verification-hint');
+        function checkAll() {
+          const ammoOk = ageCheck && stateCheck && ageCheck.checked && stateCheck.checked;
+          const firearmOk = !requireFirearmVerification || (fflCheck && rulesCheck && fflCheck.checked && rulesCheck.checked);
+          if (ammoOk && firearmOk) {
+            container.innerHTML = '';
+            renderButtons();
+            if (hint) hint.textContent = '';
+          }
+        }
+        if (ageCheck) ageCheck.addEventListener('change', checkAll);
+        if (stateCheck) stateCheck.addEventListener('change', checkAll);
+        if (fflCheck) fflCheck.addEventListener('change', checkAll);
+        if (rulesCheck) rulesCheck.addEventListener('change', checkAll);
+      } else {
+        renderButtons();
+      }
     }
 
     function updateQuantity(sku, newQty) {

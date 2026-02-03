@@ -43,6 +43,8 @@ function normalizeVendorProduct(vendor) {
   const map = priceOrNull(vendor["MAP"]);
   const price = priceOrNull(vendor["Price"]);
   const displayPrice = msrp ?? map ?? price ?? null;
+  const category = normalizeCategoryValue(vendor.mappedCategory?.top);
+  const isFirearmCategory = (category || "").toLowerCase() === "firearms";
   return {
     sku: vendor["SKU"] ?? "",
     name: vendor["Item Name"] ?? "",
@@ -56,9 +58,11 @@ function normalizeVendorProduct(vendor) {
     inventory: toNumber(vendor["Quantity In Stock"]) ?? 0,
     dropShip: toBooleanFromFlag(vendor["Drop Ship Flag"]),
     dropShipPrice: toNumber(vendor["Drop Ship Price"]),
-    category: normalizeCategoryValue(vendor.mappedCategory?.top),
+    category: category,
     subcategory: normalizeCategoryValue(vendor.mappedCategory?.sub),
     rawCategory: vendor["Category"] ?? "",
+    isFirearm: isFirearmCategory,
+    minFirearmAge: isFirearmCategory ? 21 : undefined,
     shipWeight: toNumber(vendor["Ship Weight"]),
     image: toHighResImageUrl(vendor["Image Location"] ?? vendor["image"] ?? "", 500),
     imageLocation: vendor["Image Location"] ?? "",

@@ -1,9 +1,28 @@
 const express = require('express');
 const path = require('path');
+const fs = require('fs');
 const cors = require('cors');
 const nodemailer = require('nodemailer');
 const app = express();
 const PORT = 3000;
+
+const ORDERS_FILE = path.join(__dirname, 'data', 'orders.json');
+
+function readOrders() {
+  try {
+    const data = fs.readFileSync(ORDERS_FILE, 'utf8');
+    return JSON.parse(data);
+  } catch (e) {
+    if (e.code === 'ENOENT') return [];
+    throw e;
+  }
+}
+
+function writeOrders(orders) {
+  const dir = path.dirname(ORDERS_FILE);
+  if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
+  fs.writeFileSync(ORDERS_FILE, JSON.stringify(orders, null, 2), 'utf8');
+}
 
 // Gmail configuration
 const transporter = nodemailer.createTransport({
@@ -80,22 +99,43 @@ app.get('/', (req, res) => {
 // Order email endpoint
 app.post('/api/send-order-email', async (req, res) => {
   try {
-    const { orderId, productName, quantity, totalAmount, buyerEmail, category } = req.body;
+    const { orderId, productName, quantity, totalAmount, buyerEmail, category, orderSummary, ageVerified, stateRestrictionsAcknowledged, minAgeConfirmed, firearmTransferAcknowledged, federalStateFirearmRulesAcknowledged, minFirearmAgeConfirmed } = req.body;
 
     // Validate required fields
-    if (!orderId || !productName || !quantity || !totalAmount) {
+    if (!orderId || !totalAmount) {
       return res.status(400).json({ success: false, error: 'Missing required fields' });
     }
+
+    const productSection = orderSummary
+      ? `<p><strong>Order details:</strong></p><pre style="white-space:pre-wrap;font-size:12px;">${(orderSummary || '').replace(/</g, '&lt;')}</pre>`
+      : `<p><strong>Product:</strong> ${productName || 'N/A'}</p><p><strong>Quantity:</strong> ${quantity || 'N/A'}</p>`;
+    const ammoAuditSection = (ageVerified || stateRestrictionsAcknowledged || minAgeConfirmed) ? `
+      <p><strong>Ammunition age verification (audit):</strong></p>
+      <ul>
+        <li>Age verified: ${ageVerified ? 'Yes' : 'No'}</li>
+        <li>State restrictions acknowledged: ${stateRestrictionsAcknowledged ? 'Yes' : 'No'}</li>
+        <li>Min age confirmed: ${minAgeConfirmed ? minAgeConfirmed + '+' : 'N/A'}</li>
+      </ul>
+    ` : '';
+    const firearmAuditSection = (firearmTransferAcknowledged || federalStateFirearmRulesAcknowledged || minFirearmAgeConfirmed) ? `
+      <p><strong>Firearm transfer verification (audit):</strong></p>
+      <ul>
+        <li>FFL transfer acknowledged: ${firearmTransferAcknowledged ? 'Yes' : 'No'}</li>
+        <li>Federal/state firearm rules acknowledged: ${federalStateFirearmRulesAcknowledged ? 'Yes' : 'No'}</li>
+        <li>Min firearm age confirmed: ${minFirearmAgeConfirmed ? minFirearmAgeConfirmed + '+' : 'N/A'}</li>
+      </ul>
+    ` : '';
 
     const emailContent = `
       <h2>New Order Received</h2>
       <p><strong>Order ID:</strong> ${orderId}</p>
-      <p><strong>Product:</strong> ${productName}</p>
-      <p><strong>Category:</strong> ${category || 'Ammunition'}</p>
-      <p><strong>Quantity:</strong> ${quantity}</p>
+      ${productSection}
+      <p><strong>Category:</strong> ${category || 'General'}</p>
       <p><strong>Total Amount:</strong> $${parseFloat(totalAmount).toFixed(2)}</p>
       <p><strong>Buyer Email:</strong> ${buyerEmail || 'Not provided'}</p>
       <p><strong>Order Date:</strong> ${new Date().toLocaleString()}</p>
+      ${ammoAuditSection}
+      ${firearmAuditSection}
       <hr>
       <p>This order has been processed through PayPal.</p>
     `;
@@ -107,10 +147,51 @@ app.post('/api/send-order-email', async (req, res) => {
       html: emailContent
     });
 
+    // Save order for status lookup (orderId, buyerEmail, orderDate, status, trackingNumber, shippedDate)
+    const orders = readOrders();
+    orders.push({
+      orderId: String(orderId).trim(),
+      buyerEmail: (buyerEmail || '').trim().toLowerCase(),
+      orderDate: new Date().toISOString(),
+      status: 'Received',
+      trackingNumber: null,
+      shippedDate: null
+    });
+    writeOrders(orders);
+
     res.json({ success: true, message: 'Order email sent successfully' });
   } catch (error) {
     console.error('Email error:', error);
     res.status(500).json({ success: false, error: 'Failed to send email' });
+  }
+});
+
+// Order status lookup (by order ID + email)
+app.post('/api/order-status', (req, res) => {
+  try {
+    const { orderId, email } = req.body || {};
+    const id = String(orderId || '').trim();
+    const em = String(email || '').trim().toLowerCase();
+    if (!id || !em) {
+      return res.status(400).json({ success: false, found: false, error: 'Order ID and email are required.' });
+    }
+    const orders = readOrders();
+    const order = orders.find(o => o.orderId === id && o.buyerEmail === em);
+    if (!order) {
+      return res.json({ success: true, found: false, message: 'No order found. Check your order ID and email.' });
+    }
+    res.json({
+      success: true,
+      found: true,
+      orderId: order.orderId,
+      status: order.status || 'Received',
+      orderDate: order.orderDate,
+      trackingNumber: order.trackingNumber || null,
+      shippedDate: order.shippedDate || null
+    });
+  } catch (error) {
+    console.error('Order status error:', error);
+    res.status(500).json({ success: false, found: false, error: 'Lookup failed.' });
   }
 });
 

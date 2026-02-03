@@ -37,16 +37,32 @@
     }
     .search-form {
       display: flex;
+      flex-wrap: wrap;
       gap: 0.5rem;
       margin-bottom: 1rem;
     }
     .search-form input {
       flex: 1;
+      min-width: 140px;
       padding: 0.8rem;
       border: 1px solid #ddd;
       border-radius: 4px;
       font-size: 1rem;
     }
+    .order-result-card {
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      padding: 1.25rem;
+      text-align: left;
+    }
+    .order-result-card h3 { margin-bottom: 0.75rem; color: #181a1b; }
+    .order-result-card p { margin: 0.35rem 0; color: #555; }
+    .order-result-card .status-badge { display: inline-block; padding: 0.25rem 0.6rem; border-radius: 4px; font-weight: 600; font-size: 0.9rem; margin-top: 0.25rem; }
+    .order-result-card .status-received { background: #e3f2fd; color: #1565c0; }
+    .order-result-card .status-processing { background: #fff3e0; color: #e65100; }
+    .order-result-card .status-shipped { background: #e8f5e9; color: #2e7d32; }
+    .order-result-notfound { background: #ffebee; border-color: #ef5350; padding: 1rem; border-radius: 8px; color: #c62828; }
     .search-form button {
       padding: 0.8rem 1.5rem;
       background: #b22222;
@@ -92,8 +108,8 @@
     <!-- Middle Row: Account Links (Left) + Search (Center) -->
     <div class="header-middle-row">
       <div class="header-left-links">
-        <a href="#account">Account</a>
-        <a href="#help">Help</a>
+        <a href="order-status.html">Account</a>
+        <a href="help.html">Help</a>
         <a href="shop/cart.html">Cart</a>
       </div>
 
@@ -129,12 +145,14 @@
     
     <div class="order-lookup">
       <h2>Track Your Order</h2>
-      <p style="color: #666; margin-bottom: 1.5rem;">Enter your order number to check the status of your purchase.</p>
-      <div class="search-form">
-        <input type="text" placeholder="Enter order number..." id="order-input">
-        <button onclick="searchOrder()">Search</button>
-      </div>
-      <p style="color: #999; font-size: 0.9rem;">You can find your order number in your confirmation email.</p>
+      <p style="color: #666; margin-bottom: 1.5rem;">Enter your order ID and the email you used at checkout to see your order status.</p>
+      <form id="order-status-form" class="search-form" onsubmit="searchOrder(event)">
+        <input type="text" placeholder="Order ID" id="order-input" required>
+        <input type="email" placeholder="Email (used at checkout)" id="email-input" required>
+        <button type="submit">Look up</button>
+      </form>
+      <p style="color: #999; font-size: 0.9rem;">Your order ID appears on the confirmation screen after checkout and in your PayPal receipt email.</p>
+      <div id="order-result" style="margin-top: 1.5rem; display: none;"></div>
     </div>
 
     <div class="info-box">
@@ -173,6 +191,8 @@
           <li><a href="privacy.html">Privacy</a></li>
           <li><a href="returns.html">Returns</a></li>
           <li><a href="order-status.html">Order Status</a></li>
+          <li><a href="state-restrictions.html">State Restrictions</a></li>
+          <li><a href="firearm-transfer-guide.html">Firearm Transfer Guide</a></li>
         </ul>
       </div>
       <div class="footer-section">
@@ -189,12 +209,49 @@
   </footer>
 
   <script>
-    function searchOrder() {
-      const orderNumber = document.getElementById('order-input').value.trim();
-      if (orderNumber) {
-        alert('Order search functionality coming soon. Order: ' + orderNumber);
-        // In the future, implement actual order lookup
+    function searchOrder(e) {
+      if (e) e.preventDefault();
+      const orderId = document.getElementById('order-input').value.trim();
+      const email = document.getElementById('email-input').value.trim();
+      const resultEl = document.getElementById('order-result');
+      if (!orderId || !email) {
+        resultEl.style.display = 'block';
+        resultEl.innerHTML = '<p class="order-result-notfound">Please enter both order ID and email.</p>';
+        return;
       }
+      resultEl.style.display = 'block';
+      resultEl.innerHTML = '<p style="color:#666;">Looking up order…</p>';
+      fetch('/api/order-status', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ orderId: orderId, email: email })
+      })
+        .then(function (res) { return res.json(); })
+        .then(function (data) {
+          if (data.found) {
+            var statusClass = 'status-received';
+            if (data.status === 'Processing') statusClass = 'status-processing';
+            if (data.status === 'Shipped') statusClass = 'status-shipped';
+            var dateStr = data.orderDate ? new Date(data.orderDate).toLocaleDateString() : '—';
+            var html = '<div class="order-result-card">' +
+              '<h3>Order ' + (data.orderId || orderId) + '</h3>' +
+              '<p><strong>Status:</strong> <span class="status-badge ' + statusClass + '">' + (data.status || 'Received') + '</span></p>' +
+              '<p><strong>Order date:</strong> ' + dateStr + '</p>';
+            if (data.trackingNumber) {
+              html += '<p><strong>Tracking:</strong> ' + data.trackingNumber + '</p>';
+            }
+            if (data.shippedDate) {
+              html += '<p><strong>Shipped:</strong> ' + new Date(data.shippedDate).toLocaleDateString() + '</p>';
+            }
+            html += '</div>';
+            resultEl.innerHTML = html;
+          } else {
+            resultEl.innerHTML = '<p class="order-result-notfound">' + (data.message || 'No order found. Check your order ID and email (the one you used at checkout).') + '</p>';
+          }
+        })
+        .catch(function () {
+          resultEl.innerHTML = '<p class="order-result-notfound">Unable to look up order. If you\'re not on our local server, order lookup may not be available—please contact us with your order ID and email.</p>';
+        });
     }
   </script>
 

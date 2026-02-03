@@ -3,27 +3,25 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Gunsmithing services coming soon at Modular Gunworks LLC in Huntsville, Alabama.">
-  <meta name="robots" content="noindex, follow">
-  <title>Gunsmithing - Coming Soon - Modular Gunworks LLC</title>
+  <title>Help - Modular Gunworks LLC</title>
+  <link rel="icon" type="image/png" href="favicon.png">
   <link rel="stylesheet" href="styles/design-system.css">
   <link rel="stylesheet" href="styles/components.css">
   <link rel="stylesheet" href="styles/layout.css">
   <link rel="stylesheet" href="styles/age-gate.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link rel="icon" type="image/png" href="favicon.png">
   <style>
-    :root { --color-primary: #b22222; --color-accent: #1a2c4b; --color-bg-dark: #181a1b; }
-    main { max-width: 700px; margin: 0 auto; padding: 4rem 2rem; text-align: center; }
-    .coming-soon-hero { background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); border-radius: 16px; padding: 3rem 2rem; margin-bottom: 2rem; }
-    .coming-soon-hero .icon { font-size: 4rem; color: var(--color-accent); margin-bottom: 1rem; }
-    .coming-soon-hero h1 { font-size: 2rem; color: var(--color-bg-dark); margin-bottom: 1rem; }
-    .coming-soon-hero p { color: #666; margin-bottom: 1.5rem; line-height: 1.6; }
-    .badge { display: inline-flex; align-items: center; gap: 0.5rem; background: #fff3cd; color: #856404; padding: 0.75rem 1.25rem; border-radius: 8px; font-weight: 600; font-size: 0.9rem; }
-    .cta-link { display: inline-block; background: var(--color-primary); color: #fff; padding: 0.75rem 1.5rem; border-radius: 8px; text-decoration: none; font-weight: 600; margin-top: 1rem; }
-    .cta-link:hover { background: #8b1a1a; color: #fff; }
+    main { max-width: 900px; margin: 0 auto; padding: 3rem 2rem; }
+    .page-title { font-size: 2rem; color: #181a1b; margin-bottom: 0.5rem; }
+    .page-intro { color: #666; line-height: 1.6; margin-bottom: 2rem; }
+    .help-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.25rem; margin-top: 1.5rem; }
+    .help-card { background: #fff; border: 1px solid #e0e0e0; border-radius: 8px; padding: 1.25rem; transition: box-shadow 0.2s; }
+    .help-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+    .help-card a { display: flex; align-items: center; gap: 0.75rem; color: #181a1b; text-decoration: none; font-weight: 600; }
+    .help-card a:hover { color: #b22222; }
+    .help-card i { font-size: 1.5rem; color: #b22222; width: 2rem; text-align: center; }
+    .help-card p { margin: 0.5rem 0 0 2.25rem; font-size: 0.9rem; color: #666; font-weight: normal; line-height: 1.4; }
   </style>
-  <script src="scripts/age-gate.js"></script>
 </head>
 <body>
   <header id="site-header">
@@ -42,7 +40,7 @@
       </div>
       <form class="search-bar" action="#" method="get">
         <input type="text" placeholder="Search ammo, gear, optics...">
-        <button type="submit" title="Search"><i class="fas fa-search"></i></button>
+        <button type="submit">Search</button>
       </form>
     </div>
     <nav class="category-nav">
@@ -61,13 +59,34 @@
   </header>
 
   <main>
-    <div class="coming-soon-hero">
-      <div class="icon"><i class="fas fa-wrench"></i></div>
-      <h1>Gunsmithing — Coming Soon</h1>
-      <p>Professional gunsmithing services require a Federal Firearms License (FFL). We are not currently offering gunsmithing or other FFL-required services. For updates on when these services may become available, see our Services page.</p>
-      <span class="badge"><i class="fas fa-hourglass-half"></i> Not yet available</span>
-      <br>
-      <a href="services.html" class="cta-link">View Services page</a>
+    <h1 class="page-title">Help</h1>
+    <p class="page-intro">Find answers, track your order, or get in touch. Choose a topic below.</p>
+
+    <div class="help-grid">
+      <div class="help-card">
+        <a href="faq.html"><i class="fas fa-question-circle"></i> FAQ</a>
+        <p>Common questions about orders, shipping, returns, and more.</p>
+      </div>
+      <div class="help-card">
+        <a href="contact.html"><i class="fas fa-envelope"></i> Contact Us</a>
+        <p>Phone, email, or message. We're here to help.</p>
+      </div>
+      <div class="help-card">
+        <a href="order-status.html"><i class="fas fa-truck"></i> Order Status</a>
+        <p>Look up your order with your order ID and email.</p>
+      </div>
+      <div class="help-card">
+        <a href="returns.html"><i class="fas fa-undo"></i> Returns</a>
+        <p>Return policy and how to start a return.</p>
+      </div>
+      <div class="help-card">
+        <a href="state-restrictions.html"><i class="fas fa-map"></i> State Restrictions</a>
+        <p>State-by-state ammunition and firearm rules.</p>
+      </div>
+      <div class="help-card">
+        <a href="firearm-transfer-guide.html"><i class="fas fa-file-alt"></i> Firearm Transfer Guide</a>
+        <p>Federal and state FFL transfer information.</p>
+      </div>
     </div>
   </main>
 
@@ -119,5 +138,7 @@
       <p>All firearm sales comply with federal, state, and local laws. FFL required for applicable items.</p>
     </div>
   </footer>
+
+  <script src="scripts/age-gate.js"></script>
 </body>
 </html>
