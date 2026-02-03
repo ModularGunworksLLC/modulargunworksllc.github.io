@@ -496,6 +496,10 @@
     const INITIAL_ITEMS_SHOWN = 10;
     let currentView = 'grid';
     // GLOBAL STATE
+    let filteredProducts = [];
+    let selectedTypes = [];
+    let selectedCalibers = [];
+    let selectedBrands = [];
 
     // EXTRACT FUNCTIONS FOR GUN PARTS
     function extractPartType(name) {
@@ -519,6 +523,13 @@
     }
 
     // ...product loading logic removed...
+    (function () {
+      var prev = window.onProductsLoaded;
+      window.onProductsLoaded = function (products) {
+        if (typeof prev === 'function') prev(products);
+        try { initializeFilters(); applyFilters(); } catch (e) { console.error(e); }
+      };
+    })();
 
     // INITIALIZE FILTERS
     function initializeFilters() {

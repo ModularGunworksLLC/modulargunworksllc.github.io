@@ -292,6 +292,9 @@
     const INITIAL_ITEMS_SHOWN = 10;
     let currentView = 'grid';
     // GLOBAL STATE
+    let filteredProducts = [];
+    let selectedTypes = [];
+    let selectedBrands = [];
 
     // EXTRACT TYPE FROM PRODUCT NAME
     function extractType(name) {
@@ -319,7 +322,7 @@
       try {
         if (window.allProducts && window.allProducts.length >= 0) {
           initializeFilters();
-          renderProducts();
+          applyFilters();
         }
       } catch (e) {
         console.error('loadProducts:', e);
@@ -329,7 +332,7 @@
       var prev = window.onProductsLoaded;
       window.onProductsLoaded = function (products) {
         if (typeof prev === 'function') prev(products);
-        try { initializeFilters(); renderProducts(); } catch (e) { console.error(e); }
+        try { initializeFilters(); applyFilters(); } catch (e) { console.error(e); }
       };
     })();
 
