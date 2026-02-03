@@ -2438,7 +2438,7 @@
   {
     "SKU": "DNLZ6XNBLK",
     "Item Name": "Dead Air Lazarus 6 6MM Silencer w/ Xeno& 1/2-28 Xeno 3Prong",
-    "Quantity In Stock": "3",
+    "Quantity In Stock": "2",
     "Price": "739.00",
     "UPC": "810128162623",
     "Web Item Name": "Dead Air Lazarus 6 Xeno 3 Prong Suppressor 6mm 1/2-28 Thread Black",
@@ -2466,7 +2466,7 @@
   {
     "SKU": "DNLZ6XNFDE",
     "Item Name": "Dead Air Lazarus 6 FDE 6MM Silencer w/ Xeno & 1/2-28 Xeno 3Prong",
-    "Quantity In Stock": "2",
+    "Quantity In Stock": "1",
     "Price": "739.00",
     "UPC": "810128162630",
     "Web Item Name": "Dead Air Lazarus 6 Xeno 3 Prong Suppressor 6mm 1/2-28 Thread FDE",
@@ -2746,7 +2746,7 @@
   {
     "SKU": "DNNOMAD30",
     "Item Name": "Dead Air Nomad-30 7.62mm Silencer w/ Direct Thread 5/8-24 HUB Mount",
-    "Quantity In Stock": "92",
+    "Quantity In Stock": "91",
     "Price": "649.00",
     "UPC": "810128160087",
     "Web Item Name": "Dead Air Nomad-30 Direct Thread Suppressor 7.62mm(.30Cal) Stainless Steel Black Finish",
@@ -2774,7 +2774,7 @@
   {
     "SKU": "DNNOMAD30",
     "Item Name": "Dead Air Nomad-30 7.62mm Silencer w/ Direct Thread 5/8-24 HUB Mount",
-    "Quantity In Stock": "92",
+    "Quantity In Stock": "91",
     "Price": "649.00",
     "UPC": "810128160087",
     "Web Item Name": "Dead Air Nomad-30 Direct Thread Suppressor 7.62mm(.30Cal) Stainless Steel Black Finish",
@@ -12378,7 +12378,7 @@
   {
     "SKU": "RGOBS0009",
     "Item Name": "Rugged Obsidian9 Suppressor",
-    "Quantity In Stock": "2",
+    "Quantity In Stock": "0",
     "Price": "520.00",
     "UPC": "859383006549",
     "Web Item Name": "Rugged Obsidian9 ADAPT Modular Direct Thread Suppressor 9mm Luger Black",
@@ -12434,7 +12434,7 @@
   {
     "SKU": "RGOBSFDE45",
     "Item Name": "Rugged Obsidian45 FDE Suppressor",
-    "Quantity In Stock": "27",
+    "Quantity In Stock": "26",
     "Price": "574.00",
     "UPC": "859383006624",
     "Web Item Name": "Rugged Obsidian45 ADAPT Modular Direct Thread Suppressor 45 Auto FDE",
@@ -12462,7 +12462,7 @@
   {
     "SKU": "RGOBSFDE9",
     "Item Name": "Rugged Obsidian9 FDE Suppressor",
-    "Quantity In Stock": "23",
+    "Quantity In Stock": "19",
     "Price": "520.00",
     "UPC": "859383006600",
     "Web Item Name": "Rugged Obsidian9 ADAPT Modular Direct Thread Suppressor 9mm Luger - FDE",
@@ -12490,7 +12490,7 @@
   {
     "SKU": "RGOCU22",
     "Item Name": "Rugged Oculus22 Suppressor",
-    "Quantity In Stock": "1",
+    "Quantity In Stock": "0",
     "Price": "343.00",
     "UPC": "859383006457",
     "Web Item Name": "Rugged Oculus22 ADAPT Modular Direct Thread Suppressor .22LR  Black",
@@ -13302,7 +13302,7 @@
   {
     "SKU": "RLR85852",
     "Item Name": "REMINGTON 783  SYN COMPACT 243 WIN 20IN",
-    "Quantity In Stock": "7",
+    "Quantity In Stock": "6",
     "Price": "427.99",
     "UPC": "810070684464",
     "Web Item Name": "REMINGTON 783  SYN COMPACT 243 WIN 20IN",
@@ -14226,7 +14226,7 @@
   {
     "SKU": "SW14172",
     "Item Name": "M&P FPC Blk 22LR 16.25'' Barrel 10rds",
-    "Quantity In Stock": "46",
+    "Quantity In Stock": "44",
     "Price": "431.00",
     "UPC": "22188901849",
     "Web Item Name": "S&W M&P FPC 22 Rifle .22 LR 10rd Magazines(3) 16.25'' Threaded Barrel Black Finish",
@@ -14254,7 +14254,7 @@
   {
     "SKU": "SW14172",
     "Item Name": "M&P FPC Blk 22LR 16.25'' Barrel 10rds",
-    "Quantity In Stock": "46",
+    "Quantity In Stock": "44",
     "Price": "431.00",
     "UPC": "22188901849",
     "Web Item Name": "S&W M&P FPC 22 Rifle .22 LR 10rd Magazines(3) 16.25'' Threaded Barrel Black Finish",
@@ -14282,7 +14282,7 @@
   {
     "SKU": "SW14172",
     "Item Name": "M&P FPC Blk 22LR 16.25'' Barrel 10rds",
-    "Quantity In Stock": "46",
+    "Quantity In Stock": "44",
     "Price": "431.00",
     "UPC": "22188901849",
     "Web Item Name": "S&W M&P FPC 22 Rifle .22 LR 10rd Magazines(3) 16.25'' Threaded Barrel Black Finish",
@@ -14310,7 +14310,7 @@
   {
     "SKU": "SW14172",
     "Item Name": "M&P FPC Blk 22LR 16.25'' Barrel 10rds",
-    "Quantity In Stock": "46",
+    "Quantity In Stock": "44",
     "Price": "431.00",
     "UPC": "22188901849",
     "Web Item Name": "S&W M&P FPC 22 Rifle .22 LR 10rd Magazines(3) 16.25'' Threaded Barrel Black Finish",
@@ -14338,7 +14338,7 @@
   {
     "SKU": "SW14172",
     "Item Name": "M&P FPC Blk 22LR 16.25'' Barrel 10rds",
-    "Quantity In Stock": "46",
+    "Quantity In Stock": "44",
     "Price": "431.00",
     "UPC": "22188901849",
     "Web Item Name": "S&W M&P FPC 22 Rifle .22 LR 10rd Magazines(3) 16.25'' Threaded Barrel Black Finish",
@@ -14366,7 +14366,7 @@
   {
     "SKU": "SW14172",
     "Item Name": "M&P FPC Blk 22LR 16.25'' Barrel 10rds",
-    "Quantity In Stock": "46",
+    "Quantity In Stock": "44",
     "Price": "431.00",
     "UPC": "22188901849",
     "Web Item Name": "S&W M&P FPC 22 Rifle .22 LR 10rd Magazines(3) 16.25'' Threaded Barrel Black Finish",
@@ -16522,7 +16522,7 @@
   {
     "SKU": "WY2844176",
     "Item Name": "PDP Compact Pro SD Optic Ready 4.6in .9MM PISTOL",
-    "Quantity In Stock": "13",
+    "Quantity In Stock": "12",
     "Price": "769.00",
     "UPC": "723364216176",
     "Web Item Name": "PDP Compact Pro SD Optic Ready 4.6in .9MM PISTOL",
@@ -17474,7 +17474,7 @@
   {
     "SKU": "YCRI4330N",
     "Item Name": "BFT74 Core Rifle Cal. 5.45x39mm 30rd Mag 16.25'' Brl Maple Furniture",
-    "Quantity In Stock": "21",
+    "Quantity In Stock": "20",
     "Price": "729.99",
     "UPC": "787450720633",
     "Web Item Name": "Century Arms BFT74 Core Rifle 5.45x39mm 30rd Mag 16.25'' Barrel Maple Furniture",
@@ -17502,7 +17502,7 @@
   {
     "SKU": "YCRI4330N",
     "Item Name": "BFT74 Core Rifle Cal. 5.45x39mm 30rd Mag 16.25'' Brl Maple Furniture",
-    "Quantity In Stock": "21",
+    "Quantity In Stock": "20",
     "Price": "729.99",
     "UPC": "787450720633",
     "Web Item Name": "Century Arms BFT74 Core Rifle 5.45x39mm 30rd Mag 16.25'' Barrel Maple Furniture",

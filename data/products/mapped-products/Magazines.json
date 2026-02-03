@@ -198,7 +198,7 @@
   {
     "SKU": "AB10223ALBMO",
     "Item Name": "ASC AR15 MAGAZINE .223 BLK ALUM W/ORANGE FOLLOWER 10/RD",
-    "Quantity In Stock": "39",
+    "Quantity In Stock": "37",
     "Price": "11.19",
     "UPC": "818805011509",
     "Web Item Name": "ASC AR Family Rifle Magazine Orange Follower .223 Remington Black Aluminum 10/rd",
@@ -254,7 +254,7 @@
   {
     "SKU": "AB10223SSBMO",
     "Item Name": "ASC AR15 MAGAZINE .223 BLK STS W/ORNG FOLLOWER 10/RD",
-    "Quantity In Stock": "51",
+    "Quantity In Stock": "49",
     "Price": "11.69",
     "UPC": "818805011714",
     "Web Item Name": "ASC AR Family Rifle Magazine Orange Follower .223 Remington Black Stainless Steel 10/rd",
@@ -1878,7 +1878,7 @@
   {
     "SKU": "AD556MOD3BLK30",
     "Item Name": "Amend2 AR-15 5.56/.223 30-Round Black Magazine Mod-3 Model",
-    "Quantity In Stock": "22",
+    "Quantity In Stock": "0",
     "Price": "8.79",
     "UPC": "799947619771",
     "Web Item Name": "Amend2 Mod-3 Model AR-15 Rifle Magazine Black 5.56/.223 30/rd",
@@ -1906,7 +1906,7 @@
   {
     "SKU": "AD556MOD3BLK30",
     "Item Name": "Amend2 AR-15 5.56/.223 30-Round Black Magazine Mod-3 Model",
-    "Quantity In Stock": "22",
+    "Quantity In Stock": "0",
     "Price": "8.79",
     "UPC": "799947619771",
     "Web Item Name": "Amend2 Mod-3 Model AR-15 Rifle Magazine Black 5.56/.223 30/rd",
@@ -1934,7 +1934,7 @@
   {
     "SKU": "AD556MOD3BLK30",
     "Item Name": "Amend2 AR-15 5.56/.223 30-Round Black Magazine Mod-3 Model",
-    "Quantity In Stock": "22",
+    "Quantity In Stock": "0",
     "Price": "8.79",
     "UPC": "799947619771",
     "Web Item Name": "Amend2 Mod-3 Model AR-15 Rifle Magazine Black 5.56/.223 30/rd",
@@ -5042,7 +5042,7 @@
   {
     "SKU": "BV90001",
     "Item Name": "93 22MAG/17HMR 5RD MAGAZINE BLUE",
-    "Quantity In Stock": "52",
+    "Quantity In Stock": "51",
     "Price": "18.99",
     "UPC": "062654900013",
     "Web Item Name": "Savage Arms 93 Series Rifle Magazine .22 Mag .17 HMR 5/rd Black",
@@ -5070,7 +5070,7 @@
   {
     "SKU": "BV90001",
     "Item Name": "93 22MAG/17HMR 5RD MAGAZINE BLUE",
-    "Quantity In Stock": "52",
+    "Quantity In Stock": "51",
     "Price": "18.99",
     "UPC": "062654900013",
     "Web Item Name": "Savage Arms 93 Series Rifle Magazine .22 Mag .17 HMR 5/rd Black",
@@ -5378,7 +5378,7 @@
   {
     "SKU": "BV90020",
     "Item Name": "BMAG SERIES 17 WSM 8 SHOT MAGAZINE",
-    "Quantity In Stock": "20",
+    "Quantity In Stock": "16",
     "Price": "20.49",
     "UPC": "011356900203",
     "Web Item Name": "Savage B.MAG Rotary Rifle Magazine .17 WSM 8/rd Black",
@@ -6470,7 +6470,7 @@
   {
     "SKU": "EHGLK17BLK",
     "Item Name": "ETS Glock 17 17RD 9MM Mag Black Bagged w/ UPC",
-    "Quantity In Stock": "107",
+    "Quantity In Stock": "106",
     "Price": "15.39",
     "UPC": "854094005720",
     "Web Item Name": "Elite Tactical Systems Glock Handgun Magazine for Glock 17 9mm Luger 17/rd (BULK)",
@@ -6498,7 +6498,7 @@
   {
     "SKU": "EHGLK17BLK",
     "Item Name": "ETS Glock 17 17RD 9MM Mag Black Bagged w/ UPC",
-    "Quantity In Stock": "107",
+    "Quantity In Stock": "106",
     "Price": "15.39",
     "UPC": "854094005720",
     "Web Item Name": "Elite Tactical Systems Glock Handgun Magazine for Glock 17 9mm Luger 17/rd (BULK)",
@@ -6526,7 +6526,7 @@
   {
     "SKU": "EHGLK17BLK",
     "Item Name": "ETS Glock 17 17RD 9MM Mag Black Bagged w/ UPC",
-    "Quantity In Stock": "107",
+    "Quantity In Stock": "106",
     "Price": "15.39",
     "UPC": "854094005720",
     "Web Item Name": "Elite Tactical Systems Glock Handgun Magazine for Glock 17 9mm Luger 17/rd (BULK)",
@@ -6610,7 +6610,7 @@
   {
     "SKU": "EHGLK18G2",
     "Item Name": "ETS GLOCK 18 32RD 9MM MAG- FITS GLOCK 17 19 26 34 (LENGTH 200MM)",
-    "Quantity In Stock": "0",
+    "Quantity In Stock": "2",
     "Price": "16.29",
     "UPC": "850016478283",
     "Web Item Name": "Elite Tactical Systems Glock Handgun Magazine 9mm AR/PCC 32/rd Clear",
@@ -6638,7 +6638,7 @@
   {
     "SKU": "EHGLK18G2",
     "Item Name": "ETS GLOCK 18 32RD 9MM MAG- FITS GLOCK 17 19 26 34 (LENGTH 200MM)",
-    "Quantity In Stock": "0",
+    "Quantity In Stock": "2",
     "Price": "16.29",
     "UPC": "850016478283",
     "Web Item Name": "Elite Tactical Systems Glock Handgun Magazine 9mm AR/PCC 32/rd Clear",
@@ -6750,7 +6750,7 @@
   {
     "SKU": "EHGLK19BLK",
     "Item Name": "ETS Glock 19 15RD 9MM Mag Black Bagged w/UPC",
-    "Quantity In Stock": "210",
+    "Quantity In Stock": "209",
     "Price": "15.39",
     "UPC": "854094005744",
     "Web Item Name": "Elite Tactical Systems Glock Handgun Magazine for Glock 19 9mm Luger 15/rd (BULK)",
@@ -6778,7 +6778,7 @@
   {
     "SKU": "EHGLK19BLK",
     "Item Name": "ETS Glock 19 15RD 9MM Mag Black Bagged w/UPC",
-    "Quantity In Stock": "210",
+    "Quantity In Stock": "209",
     "Price": "15.39",
     "UPC": "854094005744",
     "Web Item Name": "Elite Tactical Systems Glock Handgun Magazine for Glock 19 9mm Luger 15/rd (BULK)",
@@ -7674,7 +7674,7 @@
   {
     "SKU": "EHSMKGLK18G2B",
     "Item Name": "ETS FITS GLOCK 17181919X263445 - 32RD GEN 2 9MM MAG BLK BAGGED W/UPC",
-    "Quantity In Stock": "1965",
+    "Quantity In Stock": "1954",
     "Price": "7.83",
     "UPC": "810127170353",
     "Web Item Name": "Elite Tactical Systems Carbon Smoke Gen 2 Handgun Magazine for Glock 17 9mm Luger 32/rd Bulk",
@@ -7702,7 +7702,7 @@
   {
     "SKU": "EHSMKGLK18G2B",
     "Item Name": "ETS FITS GLOCK 17181919X263445 - 32RD GEN 2 9MM MAG BLK BAGGED W/UPC",
-    "Quantity In Stock": "1965",
+    "Quantity In Stock": "1954",
     "Price": "7.83",
     "UPC": "810127170353",
     "Web Item Name": "Elite Tactical Systems Carbon Smoke Gen 2 Handgun Magazine for Glock 17 9mm Luger 32/rd Bulk",
@@ -7730,7 +7730,7 @@
   {
     "SKU": "EHSMKGLK18G2B",
     "Item Name": "ETS FITS GLOCK 17181919X263445 - 32RD GEN 2 9MM MAG BLK BAGGED W/UPC",
-    "Quantity In Stock": "1965",
+    "Quantity In Stock": "1954",
     "Price": "7.83",
     "UPC": "810127170353",
     "Web Item Name": "Elite Tactical Systems Carbon Smoke Gen 2 Handgun Magazine for Glock 17 9mm Luger 32/rd Bulk",
@@ -7758,7 +7758,7 @@
   {
     "SKU": "EHSMKGLK18G2B",
     "Item Name": "ETS FITS GLOCK 17181919X263445 - 32RD GEN 2 9MM MAG BLK BAGGED W/UPC",
-    "Quantity In Stock": "1965",
+    "Quantity In Stock": "1954",
     "Price": "7.83",
     "UPC": "810127170353",
     "Web Item Name": "Elite Tactical Systems Carbon Smoke Gen 2 Handgun Magazine for Glock 17 9mm Luger 32/rd Bulk",
@@ -7870,7 +7870,7 @@
   {
     "SKU": "EHSMKGLK2118",
     "Item Name": "ETS FITS GLOCK� 21 30 41 - 18RD .45 MAG CARBON SMOKE",
-    "Quantity In Stock": "21",
+    "Quantity In Stock": "19",
     "Price": "9.89",
     "UPC": "850016478634",
     "Web Item Name": "Elite Tactical Systems Carbon Smoke Handgun Magazine for Glock 21 .45 Mag 18/rd",
@@ -8094,7 +8094,7 @@
   {
     "SKU": "EHSMKGLK43X",
     "Item Name": "ETS FITS  GLOCK� 43X 48 - 10RD 9MM MAG CARBON SMOKE",
-    "Quantity In Stock": "45",
+    "Quantity In Stock": "44",
     "Price": "8.69",
     "UPC": "850016478603",
     "Web Item Name": "Elite Tactical Systems Carbon Smoke Handgun Magazine for Glock 43x/48 9mm Luger 10/rd",
@@ -9886,7 +9886,7 @@
   {
     "SKU": "FY0050422BLK",
     "Item Name": "F17 20 ROUND MAGAZINE",
-    "Quantity In Stock": "9",
+    "Quantity In Stock": "8",
     "Price": "46.99",
     "UPC": "818725011320",
     "Web Item Name": "Franklin Armory F17 Magazine .17 WSM 20/rd",
@@ -10082,7 +10082,7 @@
   {
     "SKU": "GB850003223063",
     "Item Name": "Global Ordnance Magazine Glock Type 33rd 9mm Black",
-    "Quantity In Stock": "34",
+    "Quantity In Stock": "0",
     "Price": "11.24",
     "UPC": "850003223063",
     "Web Item Name": "Global Ordnance Handgun Magazine for Glock 9mm Luger 33/rd",
@@ -10110,7 +10110,7 @@
   {
     "SKU": "GB850003223063",
     "Item Name": "Global Ordnance Magazine Glock Type 33rd 9mm Black",
-    "Quantity In Stock": "34",
+    "Quantity In Stock": "0",
     "Price": "11.24",
     "UPC": "850003223063",
     "Web Item Name": "Global Ordnance Handgun Magazine for Glock 9mm Luger 33/rd",
@@ -10950,7 +10950,7 @@
   {
     "SKU": "GL33387",
     "Item Name": "G43 9MM 6rd MAGAZINE (BULK)",
-    "Quantity In Stock": "308",
+    "Quantity In Stock": "306",
     "Price": "19.59",
     "UPC": "757106324966",
     "Web Item Name": "Glock Handgun Magazine for G43 9mm Luger 6/rd BULK",
@@ -11426,7 +11426,7 @@
   {
     "SKU": "GL47358",
     "Item Name": "Mag 9mm 33rd (FDE mag floor plate FDE follower orange)",
-    "Quantity In Stock": "8",
+    "Quantity In Stock": "0",
     "Price": "29.49",
     "UPC": "757106325512",
     "Web Item Name": "Glock Handgun Magazine for Glock 17/34 FDE 9mm Luger 33/rd BULK",
@@ -11454,7 +11454,7 @@
   {
     "SKU": "GL47358",
     "Item Name": "Mag 9mm 33rd (FDE mag floor plate FDE follower orange)",
-    "Quantity In Stock": "8",
+    "Quantity In Stock": "0",
     "Price": "29.49",
     "UPC": "757106325512",
     "Web Item Name": "Glock Handgun Magazine for Glock 17/34 FDE 9mm Luger 33/rd BULK",
@@ -11622,7 +11622,7 @@
   {
     "SKU": "GL47462",
     "Item Name": "9mm 33rd OD Magazine (Pkg)",
-    "Quantity In Stock": "168",
+    "Quantity In Stock": "149",
     "Price": "29.49",
     "UPC": "764503027383",
     "Web Item Name": "Glock Gen5 Factory Handgun Magazine for G17 G17L G19 G19X G26 G34 OD Green 9mm Luger 33/rd Pkg",
@@ -11762,7 +11762,7 @@
   {
     "SKU": "GL47575",
     "Item Name": "Mag G43X/G48 10rd Bulk",
-    "Quantity In Stock": "1486",
+    "Quantity In Stock": "1484",
     "Price": "19.99",
     "UPC": "757106325543",
     "Web Item Name": "Glock Handgun Magazine G43X/G48 9mm 10/rd (BULK)",
@@ -12014,7 +12014,7 @@
   {
     "SKU": "GL74058",
     "Item Name": "G20 10MM 10RD MAGAZINE PACKAGED FLOOR PLATE 03 ORANGE FOLLOWER",
-    "Quantity In Stock": "67",
+    "Quantity In Stock": "63",
     "Price": "19.99",
     "UPC": "764503056222",
     "Web Item Name": "Glock Factory Handgun Magazine for G20 Black with Orange Follower 10mm Auto 10/rd Pkg",
@@ -12350,7 +12350,7 @@
   {
     "SKU": "GLMF06782",
     "Item Name": "G26 9mm (10+2) 12RD MAGAZINE BULK",
-    "Quantity In Stock": "13",
+    "Quantity In Stock": "12",
     "Price": "20.99",
     "UPC": "",
     "Web Item Name": "Glock Factory Original Glock 26 Handgun Magazine Black Polymer 9mm Luger 10/rd +2 (BULK)",
@@ -12630,7 +12630,7 @@
   {
     "SKU": "GLMF10023",
     "Item Name": "G23 .40SW 10RD MAGAZINE PACKAGE",
-    "Quantity In Stock": "20",
+    "Quantity In Stock": "19",
     "Price": "19.99",
     "UPC": "764503100239",
     "Web Item Name": "Glock Factory Original Glock 23 Magazine .40 S&W Black Polymer 10/rd Pkg'd",
@@ -14338,7 +14338,7 @@
   {
     "SKU": "HZ50249835",
     "Item Name": "H&K V9A1 K 10RD Mag",
-    "Quantity In Stock": "3",
+    "Quantity In Stock": "0",
     "Price": "36.00",
     "UPC": "642230271913",
     "Web Item Name": "H&K VP9A1 K Handgun Magazine 9mm Luger 10/rd",
@@ -14366,7 +14366,7 @@
   {
     "SKU": "HZ50249835",
     "Item Name": "H&K V9A1 K 10RD Mag",
-    "Quantity In Stock": "3",
+    "Quantity In Stock": "0",
     "Price": "36.00",
     "UPC": "642230271913",
     "Web Item Name": "H&K VP9A1 K Handgun Magazine 9mm Luger 10/rd",
@@ -16382,7 +16382,7 @@
   {
     "SKU": "KUKCIMZ015",
     "Item Name": "KCI USA M14 20RD Magazine",
-    "Quantity In Stock": "5",
+    "Quantity In Stock": "4",
     "Price": "11.89",
     "UPC": "KUKCIMZ0151",
     "Web Item Name": "KCI USA M14 Rifle Magazine .308 Win 20/rd",
@@ -16690,7 +16690,7 @@
   {
     "SKU": "KUKCIMZ025",
     "Item Name": "KCI USA M1 CARBINE 15RD MAGAZINE",
-    "Quantity In Stock": "14",
+    "Quantity In Stock": "12",
     "Price": "10.39",
     "UPC": "851586008245",
     "Web Item Name": "KCI USA M1 Carbine Magazine .30 Carbine 15/rd Black",
@@ -16718,7 +16718,7 @@
   {
     "SKU": "KUKCIMZ025",
     "Item Name": "KCI USA M1 CARBINE 15RD MAGAZINE",
-    "Quantity In Stock": "14",
+    "Quantity In Stock": "12",
     "Price": "10.39",
     "UPC": "851586008245",
     "Web Item Name": "KCI USA M1 Carbine Magazine .30 Carbine 15/rd Black",
@@ -16746,7 +16746,7 @@
   {
     "SKU": "KUKCIMZ025",
     "Item Name": "KCI USA M1 CARBINE 15RD MAGAZINE",
-    "Quantity In Stock": "14",
+    "Quantity In Stock": "12",
     "Price": "10.39",
     "UPC": "851586008245",
     "Web Item Name": "KCI USA M1 Carbine Magazine .30 Carbine 15/rd Black",
@@ -16774,7 +16774,7 @@
   {
     "SKU": "KUKCIMZ026",
     "Item Name": "KCI USA CARBINE 30RD MAGAZINE",
-    "Quantity In Stock": "78",
+    "Quantity In Stock": "76",
     "Price": "12.39",
     "UPC": "851586008252",
     "Web Item Name": "KCI USA M1 Carbine Magazine .30 Carbine 30/rd Black",
@@ -16802,7 +16802,7 @@
   {
     "SKU": "KUKCIMZ026",
     "Item Name": "KCI USA CARBINE 30RD MAGAZINE",
-    "Quantity In Stock": "78",
+    "Quantity In Stock": "76",
     "Price": "12.39",
     "UPC": "851586008252",
     "Web Item Name": "KCI USA M1 Carbine Magazine .30 Carbine 30/rd Black",
@@ -16830,7 +16830,7 @@
   {
     "SKU": "KUKCIMZ026",
     "Item Name": "KCI USA CARBINE 30RD MAGAZINE",
-    "Quantity In Stock": "78",
+    "Quantity In Stock": "76",
     "Price": "12.39",
     "UPC": "851586008252",
     "Web Item Name": "KCI USA M1 Carbine Magazine .30 Carbine 30/rd Black",
@@ -18314,7 +18314,7 @@
   {
     "SKU": "KZT10PACKED",
     "Item Name": "MAGAZINE STICK - 20 ROUNDS .45 CAL.",
-    "Quantity In Stock": "1",
+    "Quantity In Stock": "0",
     "Price": "53.79",
     "UPC": "602686210720",
     "Web Item Name": "Auto Ordnance Thompson Long Gun Rifle Magazine .45 ACP 20/rd",
@@ -19210,7 +19210,7 @@
   {
     "SKU": "MYMGWPPK32FRB",
     "Item Name": "MEC-GAR WALTHER PPK .32 ACP 7RD HT BLUE MAGAZINE",
-    "Quantity In Stock": "17",
+    "Quantity In Stock": "16",
     "Price": "20.59",
     "UPC": "765595111509",
     "Web Item Name": "Mec-Gar Handgun Magazine Walther PPK .32 ACP HT Blued 7/rd",
@@ -19266,7 +19266,7 @@
   {
     "SKU": "MYMGWPPK32STB",
     "Item Name": "MEC-GAR WALTHER PPK .32 ACP 7RD HT BLUE MAGAZINE",
-    "Quantity In Stock": "15",
+    "Quantity In Stock": "14",
     "Price": "18.59",
     "UPC": "765595111400",
     "Web Item Name": "Mec-Gar Walther PPK Handgun Magazine .32 ACP HT Blued 7/rd",
@@ -20778,7 +20778,7 @@
   {
     "SKU": "RJ20100380",
     "Item Name": "FN 509C 9MM Mag 15RD FDE",
-    "Quantity In Stock": "2",
+    "Quantity In Stock": "0",
     "Price": "40.00",
     "UPC": "845737010409",
     "Web Item Name": "FN 509C Handgun Magazine FDE with Pinky Extension 9mm Luger 15/rd",
@@ -20834,7 +20834,7 @@
   {
     "SKU": "RJ20100478",
     "Item Name": "FN 509 LS EDGE 9MM MAG 17RD GREY",
-    "Quantity In Stock": "9",
+    "Quantity In Stock": "0",
     "Price": "64.00",
     "UPC": "845737012267",
     "Web Item Name": "FN 509 LS Edge Handgun Magazine Grey 9mm Luger 17/rd",
@@ -21534,7 +21534,7 @@
   {
     "SKU": "SD80048009",
     "Item Name": "Turkish Style 10RD Magazine Nickel",
-    "Quantity In Stock": "192",
+    "Quantity In Stock": "191",
     "Price": "18.79",
     "UPC": "723551443811",
     "Web Item Name": "SDS Imports Tokarev Shotgun Magazine 12 ga 10/rd",
@@ -21702,7 +21702,7 @@
   {
     "SKU": "SD80065002",
     "Item Name": "Mac 5 MAC 5K  30 rd metal Magazines",
-    "Quantity In Stock": "34",
+    "Quantity In Stock": "30",
     "Price": "30.29",
     "UPC": "723551446508",
     "Web Item Name": "SDS Imports Mac 5K Handgun Magazine 9mm Luger 30/rd",
@@ -22514,7 +22514,7 @@
   {
     "SKU": "SW19440",
     "Item Name": "SW MAG M&P 9MM 17RD PKG",
-    "Quantity In Stock": "156",
+    "Quantity In Stock": "152",
     "Price": "32.79",
     "UPC": "022188127942",
     "Web Item Name": "Smith & Wesson M&P9 Magazine 9mm Luger Black 17/rd",
@@ -22578,7 +22578,7 @@
     "Drop Ship Flag": "0",
     "Drop Ship Price": "0.00",
     "Category": "Handgun Magazines",
-    "Ship Weight": "0.2500",
+    "Ship Weight": "0.3500",
     "Image Location": "https://media.chattanoogashooting.com/images/product/SW194420000/SW194420000_1.jpg?w=110&h=110&q=2",
     "Manufacturer": "Smith & Wesson Inc.",
     "Manufacturer Item Number": "194420000",
@@ -23074,7 +23074,7 @@
   {
     "SKU": "SW19924",
     "Item Name": "SW MAG M&P 15-22 22LR 10RD SHORT PKG",
-    "Quantity In Stock": "50",
+    "Quantity In Stock": "48",
     "Price": "19.59",
     "UPC": "022188143362",
     "Web Item Name": "Smith & Wesson M&P15-22 Magazine Black Polymer .22 LR 10/rd",
@@ -23102,7 +23102,7 @@
   {
     "SKU": "SW19925",
     "Item Name": "SW MAG SD9/SD9VE 9MM 16RD PKG",
-    "Quantity In Stock": "5",
+    "Quantity In Stock": "2",
     "Price": "32.79",
     "UPC": "022188144291",
     "Web Item Name": "Smith & Wesson SD9/SD9VE Magazine 9mm Stainless Steel 16/rd pkg",
@@ -24726,7 +24726,7 @@
   {
     "SKU": "TX358003000",
     "Item Name": "Accessory Magazine TX22 COMPACT 13  RDS",
-    "Quantity In Stock": "10",
+    "Quantity In Stock": "2",
     "Price": "19.79",
     "UPC": "725327939542",
     "Web Item Name": "Taurus TX22 Compact Handgun Magazine Black .22 LR 13/rd",
@@ -26042,7 +26042,7 @@
   {
     "SKU": "UR90463",
     "Item Name": "RUGER MAGAZINE 10-22 10/22 STD BX-15 15RD 22LR",
-    "Quantity In Stock": "118",
+    "Quantity In Stock": "109",
     "Price": "19.54",
     "UPC": "736676904631",
     "Web Item Name": "Ruger Rifle Magazine for 10/22 Black .22LR 15/rds",
@@ -26910,7 +26910,7 @@
   {
     "SKU": "UR90731",
     "Item Name": "Security-380 380 Auto 15-Round Magazine 2-Pack",
-    "Quantity In Stock": "9",
+    "Quantity In Stock": "0",
     "Price": "40.94",
     "UPC": "736676907311",
     "Web Item Name": "Ruger Security 380 Handgun Magazine 380 Auto 15/rd Black 2/ct",
@@ -27050,7 +27050,7 @@
   {
     "SKU": "UR90736",
     "Item Name": "Ruger LCP MAX 12-Round 380 Auto Magazine Value 2-Pack",
-    "Quantity In Stock": "94",
+    "Quantity In Stock": "92",
     "Price": "40.94",
     "UPC": "736676907366",
     "Web Item Name": "Ruger LCP MAX 380 Handgun Magazine Black .380 ACP 12/rd 2 Pack",
@@ -29038,7 +29038,7 @@
   {
     "SKU": "WY2796546",
     "Item Name": "P99 MAG 9MM 20RD",
-    "Quantity In Stock": "6",
+    "Quantity In Stock": "7",
     "Price": "29.49",
     "UPC": "723364200557",
     "Web Item Name": "Walther P99 Extended Magazine 9mm Black 20/rd",
@@ -29178,7 +29178,7 @@
   {
     "SKU": "WY2807785",
     "Item Name": "PPS M2 MAGAZINE 9MM 6RD",
-    "Quantity In Stock": "20",
+    "Quantity In Stock": "19",
     "Price": "27.37",
     "UPC": "723364210464",
     "Web Item Name": "Walther PPS M2 Magazine 9mm Luger Black Stainless 6/rd",
@@ -30606,7 +30606,7 @@
   {
     "SKU": "XI583614",
     "Item Name": "MAGAZINE 365 9 SUBCOMPACT 10 RD FINGER EXTENSION",
-    "Quantity In Stock": "10",
+    "Quantity In Stock": "9",
     "Price": "40.00",
     "UPC": "798681583614",
     "Web Item Name": "Sig Sauer P365 Micro Compact Handgun Magazine with Finger Extension 9mm Luger 10/rd",
@@ -30942,7 +30942,7 @@
   {
     "SKU": "XI660254",
     "Item Name": "SIG Magazine P365 X-MACRO 9mm 17RD Black",
-    "Quantity In Stock": "407",
+    "Quantity In Stock": "405",
     "Price": "45.50",
     "UPC": "798681660254",
     "Web Item Name": "Sig Sauer P365 X-MACRO Handgun Magazine Black 9mm Luger 17/rd",
@@ -30970,7 +30970,7 @@
   {
     "SKU": "XI660254",
     "Item Name": "SIG Magazine P365 X-MACRO 9mm 17RD Black",
-    "Quantity In Stock": "407",
+    "Quantity In Stock": "405",
     "Price": "45.50",
     "UPC": "798681660254",
     "Web Item Name": "Sig Sauer P365 X-MACRO Handgun Magazine Black 9mm Luger 17/rd",
@@ -30998,7 +30998,7 @@
   {
     "SKU": "XI660254",
     "Item Name": "SIG Magazine P365 X-MACRO 9mm 17RD Black",
-    "Quantity In Stock": "407",
+    "Quantity In Stock": "405",
     "Price": "45.50",
     "UPC": "798681660254",
     "Web Item Name": "Sig Sauer P365 X-MACRO Handgun Magazine Black 9mm Luger 17/rd",
@@ -31026,7 +31026,7 @@
   {
     "SKU": "XI660254",
     "Item Name": "SIG Magazine P365 X-MACRO 9mm 17RD Black",
-    "Quantity In Stock": "407",
+    "Quantity In Stock": "405",
     "Price": "45.50",
     "UPC": "798681660254",
     "Web Item Name": "Sig Sauer P365 X-MACRO Handgun Magazine Black 9mm Luger 17/rd",
@@ -31054,7 +31054,7 @@
   {
     "SKU": "XI660254",
     "Item Name": "SIG Magazine P365 X-MACRO 9mm 17RD Black",
-    "Quantity In Stock": "407",
+    "Quantity In Stock": "405",
     "Price": "45.50",
     "UPC": "798681660254",
     "Web Item Name": "Sig Sauer P365 X-MACRO Handgun Magazine Black 9mm Luger 17/rd",
@@ -31082,7 +31082,7 @@
   {
     "SKU": "XI660254",
     "Item Name": "SIG Magazine P365 X-MACRO 9mm 17RD Black",
-    "Quantity In Stock": "407",
+    "Quantity In Stock": "405",
     "Price": "45.50",
     "UPC": "798681660254",
     "Web Item Name": "Sig Sauer P365 X-MACRO Handgun Magazine Black 9mm Luger 17/rd",
@@ -31110,7 +31110,7 @@
   {
     "SKU": "XI660254",
     "Item Name": "SIG Magazine P365 X-MACRO 9mm 17RD Black",
-    "Quantity In Stock": "407",
+    "Quantity In Stock": "405",
     "Price": "45.50",
     "UPC": "798681660254",
     "Web Item Name": "Sig Sauer P365 X-MACRO Handgun Magazine Black 9mm Luger 17/rd",
@@ -32034,7 +32034,7 @@
   {
     "SKU": "XZ112055190",
     "Item Name": "Browning Magazine BM STD 22LR 10RD",
-    "Quantity In Stock": "23",
+    "Quantity In Stock": "20",
     "Price": "26.49",
     "UPC": "023614025290",
     "Web Item Name": "Browning Buck Mark Handgun and Rifle Magazine Black .22 LR 10/rd",
@@ -32146,7 +32146,7 @@
   {
     "SKU": "YCMA1196A",
     "Item Name": "US PALM AK30 BANANA MAG LTD ED. W/ STEEL LATCH AND CAGE W/ PATCH",
-    "Quantity In Stock": "10",
+    "Quantity In Stock": "9",
     "Price": "18.39",
     "UPC": "787450680197",
     "Web Item Name": "Century Arms US Palm AK30 Banana Special Edition Rifle Magazine Banana Yellow 7.62x39 Soviet AK-47 30/rd",
@@ -32174,7 +32174,7 @@
   {
     "SKU": "YCMA1196A",
     "Item Name": "US PALM AK30 BANANA MAG LTD ED. W/ STEEL LATCH AND CAGE W/ PATCH",
-    "Quantity In Stock": "10",
+    "Quantity In Stock": "9",
     "Price": "18.39",
     "UPC": "787450680197",
     "Web Item Name": "Century Arms US Palm AK30 Banana Special Edition Rifle Magazine Banana Yellow 7.62x39 Soviet AK-47 30/rd",
@@ -32202,7 +32202,7 @@
   {
     "SKU": "YCMA1196A",
     "Item Name": "US PALM AK30 BANANA MAG LTD ED. W/ STEEL LATCH AND CAGE W/ PATCH",
-    "Quantity In Stock": "10",
+    "Quantity In Stock": "9",
     "Price": "18.39",
     "UPC": "787450680197",
     "Web Item Name": "Century Arms US Palm AK30 Banana Special Edition Rifle Magazine Banana Yellow 7.62x39 Soviet AK-47 30/rd",
@@ -32230,7 +32230,7 @@
   {
     "SKU": "YCMA1196A",
     "Item Name": "US PALM AK30 BANANA MAG LTD ED. W/ STEEL LATCH AND CAGE W/ PATCH",
-    "Quantity In Stock": "10",
+    "Quantity In Stock": "9",
     "Price": "18.39",
     "UPC": "787450680197",
     "Web Item Name": "Century Arms US Palm AK30 Banana Special Edition Rifle Magazine Banana Yellow 7.62x39 Soviet AK-47 30/rd",
@@ -32258,7 +32258,7 @@
   {
     "SKU": "YCMA1196A",
     "Item Name": "US PALM AK30 BANANA MAG LTD ED. W/ STEEL LATCH AND CAGE W/ PATCH",
-    "Quantity In Stock": "10",
+    "Quantity In Stock": "9",
     "Price": "18.39",
     "UPC": "787450680197",
     "Web Item Name": "Century Arms US Palm AK30 Banana Special Edition Rifle Magazine Banana Yellow 7.62x39 Soviet AK-47 30/rd",
@@ -32286,7 +32286,7 @@
   {
     "SKU": "YCMA1196A",
     "Item Name": "US PALM AK30 BANANA MAG LTD ED. W/ STEEL LATCH AND CAGE W/ PATCH",
-    "Quantity In Stock": "10",
+    "Quantity In Stock": "9",
     "Price": "18.39",
     "UPC": "787450680197",
     "Web Item Name": "Century Arms US Palm AK30 Banana Special Edition Rifle Magazine Banana Yellow 7.62x39 Soviet AK-47 30/rd",
@@ -32314,7 +32314,7 @@
   {
     "SKU": "YCMA1196A",
     "Item Name": "US PALM AK30 BANANA MAG LTD ED. W/ STEEL LATCH AND CAGE W/ PATCH",
-    "Quantity In Stock": "10",
+    "Quantity In Stock": "9",
     "Price": "18.39",
     "UPC": "787450680197",
     "Web Item Name": "Century Arms US Palm AK30 Banana Special Edition Rifle Magazine Banana Yellow 7.62x39 Soviet AK-47 30/rd",
@@ -33126,7 +33126,7 @@
   {
     "SKU": "YCPACN0200",
     "Item Name": "CANIK STANDARD ALUMINUM +3 MAGAZINE EXT TP9 ELITE ELITE COMBAT METE SF/PRO",
-    "Quantity In Stock": "14",
+    "Quantity In Stock": "12",
     "Price": "15.69",
     "UPC": "787450716315",
     "Web Item Name": "Canik Magazine Extension for Select Models 3/rd Black",
@@ -33350,7 +33350,7 @@
   {
     "SKU": "YHCLP9C",
     "Item Name": "HI-POINT MAGAZINE 9MM & 380 8/RD",
-    "Quantity In Stock": "46",
+    "Quantity In Stock": "42",
     "Price": "13.49",
     "UPC": "752334000248",
     "Web Item Name": "Hi-Point 380/C9 Magazine 9mm & .380 ACP 8/rd",
@@ -33378,7 +33378,7 @@
   {
     "SKU": "YHCLP9C",
     "Item Name": "HI-POINT MAGAZINE 9MM & 380 8/RD",
-    "Quantity In Stock": "46",
+    "Quantity In Stock": "42",
     "Price": "13.49",
     "UPC": "752334000248",
     "Web Item Name": "Hi-Point 380/C9 Magazine 9mm & .380 ACP 8/rd",
@@ -33406,7 +33406,7 @@
   {
     "SKU": "YHCLP9C",
     "Item Name": "HI-POINT MAGAZINE 9MM & 380 8/RD",
-    "Quantity In Stock": "46",
+    "Quantity In Stock": "42",
     "Price": "13.49",
     "UPC": "752334000248",
     "Web Item Name": "Hi-Point 380/C9 Magazine 9mm & .380 ACP 8/rd",
@@ -33434,7 +33434,7 @@
   {
     "SKU": "YHCLP9C",
     "Item Name": "HI-POINT MAGAZINE 9MM & 380 8/RD",
-    "Quantity In Stock": "46",
+    "Quantity In Stock": "42",
     "Price": "13.49",
     "UPC": "752334000248",
     "Web Item Name": "Hi-Point 380/C9 Magazine 9mm & .380 ACP 8/rd",
@@ -34218,7 +34218,7 @@
   {
     "SKU": "ZMBER04",
     "Item Name": "PROMAG BERETTA 21A BOBCAT .22 LR 7RD BLUE STEEL MAGAZINE",
-    "Quantity In Stock": "7",
+    "Quantity In Stock": "6",
     "Price": "14.99",
     "UPC": "708279000829",
     "Web Item Name": "ProMag Beretta 21A Magazine .22 LR Blued Steel 7/rd",
@@ -34470,7 +34470,7 @@
   {
     "SKU": "ZMMOSA1",
     "Item Name": "Mossberg 715T .22LR 25rd Blue Steel / Polymer",
-    "Quantity In Stock": "10",
+    "Quantity In Stock": "9",
     "Price": "15.49",
     "UPC": "708279013980",
     "Web Item Name": "Promag Mossberg 715T Rifle Magazine .22LR 25/rd",
@@ -34666,7 +34666,7 @@
   {
     "SKU": "ZMRM10",
     "Item Name": "PROMAG AR-15 5.56MM ROLLER FOLLOWER 10RD BLK POLYMER MAGAZINE",
-    "Quantity In Stock": "86",
+    "Quantity In Stock": "84",
     "Price": "8.09",
     "UPC": "708279013621",
     "Web Item Name": "ProMag AR-15 Roller Follower Magazine 5.56mm 10/rd Black Polymer",
@@ -35170,7 +35170,7 @@
   {
     "SKU": "ZMRUG13",
     "Item Name": "PROMAG RUGER LCP .380 ACP  6RD BLUE STEEL MAGAZINE",
-    "Quantity In Stock": "20",
+    "Quantity In Stock": "19",
     "Price": "14.99",
     "UPC": "708279009006",
     "Web Item Name": "Promag Ruger LCP Handgun Magazine Blued Steel .380ACP 6/rd",
@@ -35198,7 +35198,7 @@
   {
     "SKU": "ZMRUG14",
     "Item Name": "PROMAG RUGER LCP .380 ACP 10RD BLUE STEEL MAGAZINE",
-    "Quantity In Stock": "55",
+    "Quantity In Stock": "54",
     "Price": "17.09",
     "UPC": "708279009013",
     "Web Item Name": "ProMag Ruger LCP Magazine .380 ACP Blued Steel 10/rd",
@@ -36122,7 +36122,7 @@
   {
     "SKU": "ZMRUGA50",
     "Item Name": "RUGER MAX-9 9MM (20) RD BLUE STEEL",
-    "Quantity In Stock": "27",
+    "Quantity In Stock": "26",
     "Price": "18.49",
     "UPC": "708279017049",
     "Web Item Name": "ProMag Ruger Max-9 Handgun Magazine 9mm Luger 20/rd",
@@ -37298,7 +37298,7 @@
   {
     "SKU": "ZMSKSS30",
     "Item Name": "PROMAG SKS 7.62X39MM 30RD BLUE STEEL  MAGAZINE",
-    "Quantity In Stock": "8",
+    "Quantity In Stock": "7",
     "Price": "25.09",
     "UPC": "708279009181",
     "Web Item Name": "ProMag SKS Magazine 7.62x39mm Blued Steel 30/rd",
@@ -37886,7 +37886,7 @@
   {
     "SKU": "ZMSMI30",
     "Item Name": "PROMAG S & W SHIELD .40 S&W 7RD BLUE STEEL MAGAZINE",
-    "Quantity In Stock": "2",
+    "Quantity In Stock": "0",
     "Price": "16.39",
     "UPC": "708279012075",
     "Web Item Name": "PROMAG S & W SHIELD .40 S&W 7RD BLUE STEEL MAGAZINE",
@@ -38054,7 +38054,7 @@
   {
     "SKU": "ZMSMI37",
     "Item Name": "PROMAG SMITH & WESSON SHIELD .45 ACP (10) RD BLUE STEEL",
-    "Quantity In Stock": "2",
+    "Quantity In Stock": "1",
     "Price": "18.89",
     "UPC": "708279015137",
     "Web Item Name": "Promag Smith & Wesson Shield .45 ACP Pistol Magazine Blue Steel 10/rd",
@@ -39342,7 +39342,7 @@
   {
     "SKU": "ZMTAUA11",
     "Item Name": "TAURUS P T111 G2 9MM (20) RD BLUE STEEL",
-    "Quantity In Stock": "14",
+    "Quantity In Stock": "13",
     "Price": "19.89",
     "UPC": "708279015854",
     "Web Item Name": "ProMag Taurus PT-111 G2 Handgun Magazine 9mm Luger 20/rd",
@@ -39426,7 +39426,7 @@
   {
     "SKU": "ZMTAUA7",
     "Item Name": "PROMAG TAURUS PT 111 G2 9MM 32RD BLUE STEEL MAGAZINE",
-    "Quantity In Stock": "106",
+    "Quantity In Stock": "105",
     "Price": "22.79",
     "UPC": "708279013522",
     "Web Item Name": "Promag Taurus PT-111 G2 Magazine 9mm Blued Steel 32/rd",
@@ -39958,7 +39958,7 @@
   {
     "SKU": "ZZMAG1182BLK",
     "Item Name": "MAGPUL PMAG 20 AR 300 GEN 3 BK",
-    "Quantity In Stock": "46",
+    "Quantity In Stock": "45",
     "Price": "12.04",
     "UPC": "840815132233",
     "Web Item Name": "Magpul PMAG 20 AR 300 B Gen M3 Rifle Magazine 300 AAC BLK 20/rd",
@@ -39986,7 +39986,7 @@
   {
     "SKU": "ZZMAG1182BLK",
     "Item Name": "MAGPUL PMAG 20 AR 300 GEN 3 BK",
-    "Quantity In Stock": "46",
+    "Quantity In Stock": "45",
     "Price": "12.04",
     "UPC": "840815132233",
     "Web Item Name": "Magpul PMAG 20 AR 300 B Gen M3 Rifle Magazine 300 AAC BLK 20/rd",
@@ -40014,7 +40014,7 @@
   {
     "SKU": "ZZMAG1182BLK",
     "Item Name": "MAGPUL PMAG 20 AR 300 GEN 3 BK",
-    "Quantity In Stock": "46",
+    "Quantity In Stock": "45",
     "Price": "12.04",
     "UPC": "840815132233",
     "Web Item Name": "Magpul PMAG 20 AR 300 B Gen M3 Rifle Magazine 300 AAC BLK 20/rd",
@@ -40770,7 +40770,7 @@
   {
     "SKU": "ZZMAG291BLK",
     "Item Name": "MAGPUL PMAG M3 7.62 20RD BLK",
-    "Quantity In Stock": "48",
+    "Quantity In Stock": "43",
     "Price": "17.33",
     "UPC": "873750008509",
     "Web Item Name": "Magpul PMAG 20 LR/SR GEN M3 Rifle Magazine Black Fits DPMS/SR25/LaRue OBR 7.62X51mm NATO 20/rd",
