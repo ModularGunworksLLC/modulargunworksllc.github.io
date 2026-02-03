@@ -532,7 +532,10 @@
       
       for (const category of categories) {
         try {
-          const fileCategory = category.charAt(0).toUpperCase() + category.slice(1).replace(/-/g, '_');
+          const parts = category.replace(/-/g, '_').split('_').filter(Boolean);
+          const fileCategory = parts.map(function (p) {
+            return p.charAt(0).toUpperCase() + p.slice(1).toLowerCase();
+          }).join('_');
           const response = await fetch(`../data/products/mapped-products/${fileCategory}.json`);
           if (!response.ok) continue;
           const data = await response.json();

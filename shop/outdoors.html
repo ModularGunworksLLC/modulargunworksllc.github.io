@@ -322,11 +322,24 @@
       return 'Other';
     }
 
-    // Load products from JSON
+    // Load products (load-products.js sets window.allProducts and calls onProductsLoaded)
     async function loadProducts() {
       try {
-        // ...product loading logic removed...
+        if (window.allProducts && window.allProducts.length >= 0) {
+          initializeFilters();
+          renderProducts();
+        }
+      } catch (e) {
+        console.error('loadProducts:', e);
+      }
     }
+    (function () {
+      var prev = window.onProductsLoaded;
+      window.onProductsLoaded = function (products) {
+        if (typeof prev === 'function') prev(products);
+        try { initializeFilters(); renderProducts(); } catch (e) { console.error(e); }
+      };
+    })();
 
     // Initialize Filter Options
     function initializeFilters() {

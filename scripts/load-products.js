@@ -164,7 +164,12 @@ function getBrandRank(manufacturer) {
 
 function getCategoryFileName() {
   const page = window.location.pathname.split('/').pop().replace('.html', '');
-  return page.charAt(0).toUpperCase() + page.slice(1).replace(/[- ]/g, '_') + '.json';
+  // Match repo filenames: e.g. gun-parts -> Gun_Parts.json, ammunition -> Ammunition.json
+  const parts = page.replace(/[- ]/g, '_').split('_').filter(Boolean);
+  const fileName = parts.map(function (p) {
+    return p.charAt(0).toUpperCase() + p.slice(1).toLowerCase();
+  }).join('_') + '.json';
+  return fileName;
 }
 
 // --- Main loader with normalization ---
