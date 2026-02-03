@@ -294,6 +294,16 @@
     const INITIAL_ITEMS_SHOWN = 10;
     let currentView = 'grid';
     let allProducts = [];
+    let filteredProducts = [];
+    let selectedFilters = {
+      type: [],
+      ammoType: [],
+      price: [0, Infinity],
+      brand: [],
+      stock: false,
+      sale: false,
+      sort: 'newest'
+    };
 
     // Extract Type from Product Name (Knife, Flashlight, Water, Food, Rope, Kit, etc.)
     function extractType(productName) {
@@ -326,8 +336,9 @@
     async function loadProducts() {
       try {
         if (window.allProducts && window.allProducts.length >= 0) {
+          allProducts = window.allProducts || [];
           initializeFilters();
-          renderProducts();
+          applyFilters();
         }
       } catch (e) {
         console.error('loadProducts:', e);
@@ -337,7 +348,11 @@
       var prev = window.onProductsLoaded;
       window.onProductsLoaded = function (products) {
         if (typeof prev === 'function') prev(products);
-        try { initializeFilters(); renderProducts(); } catch (e) { console.error(e); }
+        try {
+          allProducts = Array.isArray(products) ? products : (window.allProducts || []);
+          initializeFilters();
+          applyFilters();
+        } catch (e) { console.error(e); }
       };
     })();
 
