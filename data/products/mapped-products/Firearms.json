@@ -2634,7 +2634,7 @@
   {
     "SKU": "DNMOJAVE45FDE",
     "Item Name": "Dead Air Mojave 45 Auto Silencer FDE",
-    "Quantity In Stock": "2",
+    "Quantity In Stock": "1",
     "Price": "799.00",
     "UPC": "810128162616",
     "Web Item Name": "Dead Air Mojave 45 Auto Direct Thread Suppressor - 45 Auto FDE Full Auto Rated",
@@ -2718,7 +2718,7 @@
   {
     "SKU": "DNMOJAVE9SIL",
     "Item Name": "Dead Air Mojave 9 Silver Modular 9mm Silencer w/ 1/2-28 piston",
-    "Quantity In Stock": "17",
+    "Quantity In Stock": "16",
     "Price": "799.00",
     "UPC": "810128161473",
     "Web Item Name": "Dead Air Mojave 9 Modular Silencer 9mm Luger 1/2-28 Piston Silver",
@@ -2970,7 +2970,7 @@
   {
     "SKU": "DNNOMADTIXCDTFDE",
     "Item Name": "Dead Air Nomad-Ti XC FDE 7.62mm Silencer w/Direct Thread 5/8-24 HUB Mount",
-    "Quantity In Stock": "11",
+    "Quantity In Stock": "7",
     "Price": "799.00",
     "UPC": "810128162302",
     "Web Item Name": "Dead Air Nomad-Ti XC Silencer w/Direct Thread 5/8-24 HUB Mount 7.62mm(.30 Cal) FDE",
@@ -3026,7 +3026,7 @@
   {
     "SKU": "DNNOMADTIXCXENOBLK",
     "Item Name": "Dead Air Nomad-Ti XC Black 7.62mm Silencer w/Xeno Adapt&DA124 Omni Brake",
-    "Quantity In Stock": "19",
+    "Quantity In Stock": "12",
     "Price": "835.00",
     "UPC": "810128162326",
     "Web Item Name": "Dead Air Nomad-Ti XC Silencer w/Xeno Adapter -7.62mm 9.30 (Cal) Black w/DA124 Omni Brake",
@@ -3082,7 +3082,7 @@
   {
     "SKU": "DNNOMADTIXCXENOSIL",
     "Item Name": "Dead Air Nomad-Ti XC Silver 7.62mm Silencer w/Xeno Adapt&DA124 Omni Brake",
-    "Quantity In Stock": "17",
+    "Quantity In Stock": "15",
     "Price": "835.00",
     "UPC": "810128162340",
     "Web Item Name": "Dead Air Nomad-Ti XC Silencer w/Xeno Adapter -7.62mm 9.30 (Cal) Silver w/DA124 Omni Brake",
@@ -11454,7 +11454,7 @@
   {
     "SKU": "RGP5122",
     "Item Name": "Rugged Mustang22 Suppressor",
-    "Quantity In Stock": "4",
+    "Quantity In Stock": "0",
     "Price": "310.00",
     "UPC": "859383006839",
     "Web Item Name": "Rugged Mustang22 ADAPT Direct Thread Suppressor - .22Lr Black",
@@ -12491,12 +12491,12 @@
     "SKU": "SDTBP12M",
     "Item Name": "Semi-Auto 12 Gauge BullPup Style Magazine Fed Shotgun- Trident Finish",
     "Quantity In Stock": "0",
-    "Price": "197.49",
+    "Price": "219.99",
     "UPC": "723551440339",
     "Web Item Name": "SDS Imports Tokarev TBP-12 Semi-Auto 12 Gauge BullPup Style Magazine Fed Shotgun- Trident Finish",
     "Web Item Description": "Semi-Auto 12 Gauge BullPup Style Magazine Fed Shotgun- Trident Finish",
     "Drop Ship Flag": "1",
-    "Drop Ship Price": "197.49",
+    "Drop Ship Price": "219.99",
     "Category": "Shotguns",
     "Ship Weight": "9.6000",
     "Image Location": "https://media.chattanoogashooting.com/images/product/SDTBP12M/SDTBP12M.jpg?w=110&h=110&q=2",
@@ -17296,7 +17296,7 @@
     "MAP": "199.00",
     "MSRP": "",
     "Available Drop Ship Delivery Options": "next_day_air|second_day_air",
-    "Allocated Item?": "No",
+    "Allocated Item?": "Yes",
     "mappedCategory": {
       "top": "Firearms",
       "sub": "Handguns"
@@ -17324,7 +17324,7 @@
     "MAP": "199.00",
     "MSRP": "",
     "Available Drop Ship Delivery Options": "next_day_air|second_day_air",
-    "Allocated Item?": "No",
+    "Allocated Item?": "Yes",
     "mappedCategory": {
       "top": "Firearms",
       "sub": "Handguns"
@@ -17352,7 +17352,7 @@
     "MAP": "199.00",
     "MSRP": "",
     "Available Drop Ship Delivery Options": "next_day_air|second_day_air",
-    "Allocated Item?": "No",
+    "Allocated Item?": "Yes",
     "mappedCategory": {
       "top": "Firearms",
       "sub": "Handguns"
@@ -17380,7 +17380,7 @@
     "MAP": "199.00",
     "MSRP": "",
     "Available Drop Ship Delivery Options": "next_day_air|second_day_air",
-    "Allocated Item?": "No",
+    "Allocated Item?": "Yes",
     "mappedCategory": {
       "top": "Firearms",
       "sub": "Handguns"
@@ -17408,7 +17408,7 @@
     "MAP": "199.00",
     "MSRP": "",
     "Available Drop Ship Delivery Options": "next_day_air|second_day_air",
-    "Allocated Item?": "No",
+    "Allocated Item?": "Yes",
     "mappedCategory": {
       "top": "Firearms",
       "sub": "Handguns"
@@ -21187,7 +21187,7 @@
   {
     "SKU": "XISLH762TIQD",
     "Item Name": "SIG SUPPRESSOR SLH 7.62MM TI QD",
-    "Quantity In Stock": "11",
+    "Quantity In Stock": "10",
     "Price": "649.99",
     "UPC": "798681642557",
     "Web Item Name": "Sig Sauer SLH QD Rifle Suppressor 7.62 Black",
