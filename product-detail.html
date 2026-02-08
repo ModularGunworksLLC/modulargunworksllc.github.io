@@ -433,13 +433,13 @@
     }
 
     // Normalize vendor row (mapped-products JSON) to product shape.
+    // Display price: MSRP if present, else MAP only. Price is dealer cost and must not be shown to retail.
     function normalizeVendorRow(row) {
       const num = v => (v != null && v !== '' && !isNaN(Number(v))) ? Number(v) : null;
       const rawImage = row['Image Location'] || row.image || '';
       const msrp = priceOrNull(row.MSRP);
       const map = priceOrNull(row.MAP);
-      const price = priceOrNull(row.Price);
-      const displayPrice = msrp ?? map ?? price ?? null;
+      const displayPrice = msrp ?? map ?? null;
       return {
         sku: row.SKU || row.sku || '',
         name: row['Item Name'] || row['Web Item Name'] || row.name || '',
@@ -520,9 +520,7 @@
     // RENDER PRODUCT
     function renderProduct(product, category) {
       const displayPrice = product.displayPrice ?? 0;
-      const sellPrice = product.price ?? 0;
       const inStock = product.inventory > 0;
-      const hasDiscount = sellPrice > 0 && sellPrice < displayPrice;
 
       const productHTML = `
         <div class="product-detail-container">
@@ -542,9 +540,8 @@
             <h1 class="product-detail-title">${product.name}</h1>
             <div class="product-detail-brand">${product.brand || 'Unknown Brand'}</div>
 
-            <!-- PRICING (display = MSRP → MAP → Price) -->
+            <!-- PRICING (display = MSRP if present, else MAP; Price is dealer cost, never shown to retail) -->
             <div class="product-detail-price">$${displayPrice.toFixed(2)}</div>
-            ${hasDiscount ? `<div class="product-detail-retail">Your price: $${sellPrice.toFixed(2)}</div>` : ''}
 
             <!-- STOCK STATUS -->
             <div class="product-detail-stock ${inStock ? 'stock-in' : 'stock-out'}">
@@ -647,8 +644,8 @@
         hintEl.style.display = 'flex';
       }
 
-      // Charge sell price when set, else display price (MSRP/MAP)
-      const amountToCharge = (product.price != null && product.price > 0) ? product.price : displayPrice;
+      // Charge customer display price only (MSRP or MAP). Price is dealer cost and must not be used.
+      const amountToCharge = displayPrice;
       initializePayPalButtons(product, amountToCharge);
     }
 

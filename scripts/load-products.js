@@ -36,13 +36,12 @@ function priceOrNull(value) {
 }
 
 // --- Core normalizer: vendor → UI product ---
-// Display price: MSRP ?? MAP ?? Price (prefer MSRP/MAP; use Price when vendor doesn't provide them). Never use custom/call/quote.
+// Display price: MSRP if present, else MAP only. Price is dealer cost and must not be used for display or inclusion.
 
 function normalizeVendorProduct(vendor) {
   const msrp = priceOrNull(vendor["MSRP"]);
   const map = priceOrNull(vendor["MAP"]);
-  const price = priceOrNull(vendor["Price"]);
-  const displayPrice = msrp ?? map ?? price ?? null;
+  const displayPrice = msrp ?? map ?? null;
   const category = normalizeCategoryValue(vendor.mappedCategory?.top);
   const isFirearmCategory = (category || "").toLowerCase() === "firearms";
   return {
@@ -190,7 +189,7 @@ async function loadProducts() {
     const vendorProducts = await res.json();
     const list = Array.isArray(vendorProducts) ? vendorProducts : (vendorProducts.products || vendorProducts.items || []);
     const normalized = list.map(normalizeVendorProduct);
-    // List products that have any valid price (MSRP, MAP, or Price). Excludes custom/call/quote.
+    // Only list products that have MSRP or MAP (never use Price/dealer cost for display or inclusion).
     let products = normalized.filter(p => p.displayPrice != null && p.displayPrice > 0);
     // Sort by brand priority so top-name brands appear first when the page loads.
     products = products.slice().sort((a, b) => {

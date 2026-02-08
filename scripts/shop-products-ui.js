@@ -421,7 +421,7 @@
     const min = parseFloat(filterInputs.priceMin?.value) || 0;
     const max = parseFloat(filterInputs.priceMax?.value) || Infinity;
     result = result.filter(p => {
-      const dp = p.displayPrice ?? p.price;
+      const dp = p.displayPrice ?? 0;
       return dp >= min && dp <= max;
     });
 
