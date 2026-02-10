@@ -226,7 +226,7 @@
   {
     "SKU": "AB10223SSBMB",
     "Item Name": "ASC AR15 MAGAZINE .223 BLK STS W/BLK FOLLOWER 10RD",
-    "Quantity In Stock": "14",
+    "Quantity In Stock": "12",
     "Price": "11.69",
     "UPC": "818805010632",
     "Web Item Name": "ASC AR-15/M4/M16 Rifle Magazine Stainless Steel .223/5.56 10/rd",
@@ -5210,7 +5210,7 @@
   {
     "SKU": "BV90008",
     "Item Name": "MK II SERIES 22 LR / 17 MACH 2 10 SHOT MAGAZINE",
-    "Quantity In Stock": "25",
+    "Quantity In Stock": "24",
     "Price": "30.49",
     "UPC": "062654900082",
     "Web Item Name": "Savage Arms Mark II Series Rifle Magazine .22 LR .17 Mach 2 10/rd Silver",
@@ -5238,7 +5238,7 @@
   {
     "SKU": "BV90008",
     "Item Name": "MK II SERIES 22 LR / 17 MACH 2 10 SHOT MAGAZINE",
-    "Quantity In Stock": "25",
+    "Quantity In Stock": "24",
     "Price": "30.49",
     "UPC": "062654900082",
     "Web Item Name": "Savage Arms Mark II Series Rifle Magazine .22 LR .17 Mach 2 10/rd Silver",
@@ -6442,7 +6442,7 @@
   {
     "SKU": "CXSP573421RP",
     "Item Name": "Colt Magazine Delta Elite Stainless 10mm 8rd",
-    "Quantity In Stock": "59",
+    "Quantity In Stock": "57",
     "Price": "35.00",
     "UPC": "098289900302",
     "Web Item Name": "Colt Delta Elite Handgun Magazine Stainless Steel 10mm Auto 8/rd",
@@ -7422,7 +7422,7 @@
   {
     "SKU": "DP12004",
     "Item Name": "CZ MAGAZINE 452/453/455 22LR 10RD POLY",
-    "Quantity In Stock": "172",
+    "Quantity In Stock": "168",
     "Price": "28.60",
     "UPC": "806703120041",
     "Web Item Name": "CZ-USA CZ452/453/455/513/512 Magazine .22 LR Black Polymer 10/rd ",
@@ -14898,7 +14898,7 @@
   {
     "SKU": "KTPMR36",
     "Item Name": "PMR30 MAGAZINE 22WMR 30/RD",
-    "Quantity In Stock": "31",
+    "Quantity In Stock": "30",
     "Price": "29.29",
     "UPC": "640832001723",
     "Web Item Name": "Kel-Tec PMR30/CMR30 Handgun Magazine .22 Magnum 30/rd",
@@ -15206,7 +15206,7 @@
   {
     "SKU": "MV95422",
     "Item Name": "Mossberg MC2sc Extended Magazine 14 RD Black",
-    "Quantity In Stock": "10",
+    "Quantity In Stock": "8",
     "Price": "28.19",
     "UPC": "015813954228",
     "Web Item Name": "Mossberg MC2sc double Stack Extended Magazine 9mm Luger 14rd Black",
@@ -15234,7 +15234,7 @@
   {
     "SKU": "MV95423",
     "Item Name": "Mossberg MC2sc Extended Magazine 11 RD Black",
-    "Quantity In Stock": "1",
+    "Quantity In Stock": "0",
     "Price": "28.19",
     "UPC": "015813954235",
     "Web Item Name": "Mossberg MC2sc Double Stack Flush Fit Magazine 9mm Luger 11rd Black",
@@ -15318,7 +15318,7 @@
   {
     "SKU": "MV95426",
     "Item Name": "Mossberg MC2C MAGAZINE 14 RD FLUSH 9 MM",
-    "Quantity In Stock": "3",
+    "Quantity In Stock": "2",
     "Price": "26.09",
     "UPC": "015813954266",
     "Web Item Name": "Mossberg MC2C Double Stack Handgun Magazine Black 9mm Luger 14/rd",
@@ -15346,7 +15346,7 @@
   {
     "SKU": "MV95427",
     "Item Name": "Mossberg MC2C MAGAZINE 16 RD EXTENDED 9 MM",
-    "Quantity In Stock": "18",
+    "Quantity In Stock": "16",
     "Price": "26.09",
     "UPC": "015813954273",
     "Web Item Name": "Mossberg MC2C Double Stack Handgun Magazine Black 9mm Luger 16/rd",
@@ -15542,7 +15542,7 @@
   {
     "SKU": "MYBRHP15B",
     "Item Name": "MEC-GAR BROWNING HP 9MM 15RD HT BLUE MAGAZINE",
-    "Quantity In Stock": "108",
+    "Quantity In Stock": "106",
     "Price": "19.79",
     "UPC": "765595440067",
     "Web Item Name": "Mec-Gar Browning Handgun Magazine HP Flush Fit Blued Steel 9mm Luger 15/rd",
@@ -16578,7 +16578,7 @@
   {
     "SKU": "MYMGCZ7517AFC",
     "Item Name": "MEC-GAR CZ 75B 85B SP-01 9MM 17RD HT AFC MAGAZINE",
-    "Quantity In Stock": "58",
+    "Quantity In Stock": "54",
     "Price": "22.69",
     "UPC": "765595515505",
     "Web Item Name": "MEC-GAR CZ 75B 85B SP-01 Shadow & Shadow2 Handgun Magazine HT AFC Steel 9mm Luger 17/rd",
@@ -16802,7 +16802,7 @@
   {
     "SKU": "MYMGG191800A",
     "Item Name": "Mec-Gar 9mm 18RD Anti-Friction Magazine for Glock G19",
-    "Quantity In Stock": "89",
+    "Quantity In Stock": "85",
     "Price": "15.79",
     "UPC": "765595900202",
     "Web Item Name": "Mec-Gar Glock 19 Handgun Magazine Anti-Friction 9mm Luger 18/rd",
@@ -18006,7 +18006,7 @@
   {
     "SKU": "RJ20100682",
     "Item Name": "FvsN Mag 20rd",
-    "Quantity In Stock": "0",
+    "Quantity In Stock": "19",
     "Price": "35.00",
     "UPC": "845737015459",
     "Web Item Name": "FN Five-SeveN MRD Handgun Magazine 5.7x28mm FN 20/rd",
@@ -18024,7 +18024,7 @@
     "MAP": "35.00",
     "MSRP": "",
     "Available Drop Ship Delivery Options": "economy|next_day_air|second_day_air|ground",
-    "Allocated Item?": "Yes",
+    "Allocated Item?": "No",
     "mappedCategory": {
       "top": "Magazines",
       "sub": "Handgun Magazines"
@@ -18651,12 +18651,12 @@
     "SKU": "SD80056010",
     "Item Name": "Tisas PX 5.7 20rd magazine",
     "Quantity In Stock": "0",
-    "Price": "24.27",
+    "Price": "30.29",
     "UPC": "723551449448",
     "Web Item Name": "Tisas PX 5.7 Handgun Magazine Black 5.7x28mm 20/rd",
     "Web Item Description": "<p>High-quality replacement/spare magazines for your Tisas PX 5.7 pistols. 20rd. Capacity.</p>",
     "Drop Ship Flag": "1",
-    "Drop Ship Price": "24.27",
+    "Drop Ship Price": "30.29",
     "Category": "Handgun Magazines",
     "Ship Weight": "0.2390",
     "Image Location": "https://media.chattanoogashooting.com/images/product/SD80056010/SD80056010-1.jpg?w=110&h=110&q=2",
@@ -18679,12 +18679,12 @@
     "SKU": "SD80056010",
     "Item Name": "Tisas PX 5.7 20rd magazine",
     "Quantity In Stock": "0",
-    "Price": "24.27",
+    "Price": "30.29",
     "UPC": "723551449448",
     "Web Item Name": "Tisas PX 5.7 Handgun Magazine Black 5.7x28mm 20/rd",
     "Web Item Description": "<p>High-quality replacement/spare magazines for your Tisas PX 5.7 pistols. 20rd. Capacity.</p>",
     "Drop Ship Flag": "1",
-    "Drop Ship Price": "24.27",
+    "Drop Ship Price": "30.29",
     "Category": "Handgun Magazines",
     "Ship Weight": "0.2390",
     "Image Location": "https://media.chattanoogashooting.com/images/product/SD80056010/SD80056010-2.jpg?w=110&h=110&q=2",
@@ -18734,7 +18734,7 @@
   {
     "SKU": "SKLWS1",
     "Item Name": "Seecamp .32 6 Round Magazine",
-    "Quantity In Stock": "16",
+    "Quantity In Stock": "14",
     "Price": "31.19",
     "UPC": "850015531064",
     "Web Item Name": "Seecamp .32 Spare Handgun Magazine .32 Cal 6/rd",
@@ -18762,7 +18762,7 @@
   {
     "SKU": "SKLWS1",
     "Item Name": "Seecamp .32 6 Round Magazine",
-    "Quantity In Stock": "16",
+    "Quantity In Stock": "14",
     "Price": "31.19",
     "UPC": "850015531064",
     "Web Item Name": "Seecamp .32 Spare Handgun Magazine .32 Cal 6/rd",
@@ -18790,7 +18790,7 @@
   {
     "SKU": "SKLWS1",
     "Item Name": "Seecamp .32 6 Round Magazine",
-    "Quantity In Stock": "16",
+    "Quantity In Stock": "14",
     "Price": "31.19",
     "UPC": "850015531064",
     "Web Item Name": "Seecamp .32 Spare Handgun Magazine .32 Cal 6/rd",
@@ -18818,7 +18818,7 @@
   {
     "SKU": "SKLWS2",
     "Item Name": "Seecamp .380 6 Round Magazine",
-    "Quantity In Stock": "3",
+    "Quantity In Stock": "1",
     "Price": "31.19",
     "UPC": "850015531071",
     "Web Item Name": "Seecamp .380 Spare Handgun Magazine .380 Cal 6/rd",
@@ -18846,7 +18846,7 @@
   {
     "SKU": "SKLWS2",
     "Item Name": "Seecamp .380 6 Round Magazine",
-    "Quantity In Stock": "3",
+    "Quantity In Stock": "1",
     "Price": "31.19",
     "UPC": "850015531071",
     "Web Item Name": "Seecamp .380 Spare Handgun Magazine .380 Cal 6/rd",
@@ -20162,7 +20162,7 @@
   {
     "SKU": "SW19927",
     "Item Name": "SW MAG SD40/SD40VE 40SW 14RD PKG",
-    "Quantity In Stock": "26",
+    "Quantity In Stock": "25",
     "Price": "32.79",
     "UPC": "022188144314",
     "Web Item Name": "Smith & Wesson SD40/SD40VE Magazine .40 S&W Stainless Steel 14/rd",
@@ -21562,7 +21562,7 @@
   {
     "SKU": "TX358002600",
     "Item Name": "TAURUS MAGAZINE G3-G3TAC 9MM 17 RDS",
-    "Quantity In Stock": "9",
+    "Quantity In Stock": "1",
     "Price": "28.49",
     "UPC": "725327938194",
     "Web Item Name": "Taurus Handgun Magazine for G3 G3X and G3 Tac 9mm 17/rd",
@@ -23046,7 +23046,7 @@
   {
     "SKU": "UR90005",
     "Item Name": "RUGER MAGAZINE 10-22 10/22 STD 10/RND 22LR",
-    "Quantity In Stock": "415",
+    "Quantity In Stock": "411",
     "Price": "14.94",
     "UPC": "736676900053",
     "Web Item Name": "Ruger BX-1 Rifle Magazine for Black 10/22 .22LR 10/rds",
@@ -23214,7 +23214,7 @@
   {
     "SKU": "UR90035",
     "Item Name": "RUGER MAGAZINE MINI-14 30/RND 223REM",
-    "Quantity In Stock": "567",
+    "Quantity In Stock": "566",
     "Price": "32.24",
     "UPC": "736676900350",
     "Web Item Name": "Ruger Rifle Magazine for Mini-14 .223 Rem 30rds Black",
@@ -23942,7 +23942,7 @@
   {
     "SKU": "UR90333",
     "Item Name": "RUGER MAGAZINE LCP 6/RND BLUE 380AUTO W/FINGER EXTENSION FLOORPLATE",
-    "Quantity In Stock": "96",
+    "Quantity In Stock": "94",
     "Price": "23.04",
     "UPC": "736676903337",
     "Web Item Name": "Ruger Handgun Magazine w/Extended Floorplate for LCP .380 Auto 6/rds Black",
@@ -24278,7 +24278,7 @@
   {
     "SKU": "UR90361",
     "Item Name": "RUGER MAGAZINE 10-22 10/22 STD BX-25 25RD 22LR",
-    "Quantity In Stock": "849",
+    "Quantity In Stock": "843",
     "Price": "22.44",
     "UPC": "736676903610",
     "Web Item Name": "Ruger BX-25 Rifle Magazine Black for 10/22 .22LR 25/rds",
@@ -25174,7 +25174,7 @@
   {
     "SKU": "UR90451",
     "Item Name": "RUGER MAGAZINE 10-22 10/22 22LR 10RD 3 Pack",
-    "Quantity In Stock": "419",
+    "Quantity In Stock": "415",
     "Price": "33.94",
     "UPC": "736676904518",
     "Web Item Name": "Ruger BX-1 Rifle Magazine Black for 10/22 .22LR 10/rd 3/ct",
@@ -25286,7 +25286,7 @@
   {
     "SKU": "UR90585",
     "Item Name": "RUGER MAGAZINE 17 HMR / 22 WMR 15RD",
-    "Quantity In Stock": "135",
+    "Quantity In Stock": "133",
     "Price": "20.14",
     "UPC": "736676905850",
     "Web Item Name": "Ruger BX-15 Magnum Rifle Magazine Black .17 HMR/.22 WMR 15/rd",
@@ -25706,7 +25706,7 @@
   {
     "SKU": "UR90644",
     "Item Name": "RUGER MAGAZINE LCP II VALUE 2 PACK 6RD 380 AUTO",
-    "Quantity In Stock": "202",
+    "Quantity In Stock": "200",
     "Price": "35.74",
     "UPC": "736676906444",
     "Web Item Name": "Ruger Handgun Magazine for LCP II 2-Pack .380 Auto 6rds Black",
@@ -28702,7 +28702,7 @@
   {
     "SKU": "XI583621BULK",
     "Item Name": "MAGAZINE 365 9 SUBCOMPACT 12 RD-BULK",
-    "Quantity In Stock": "90",
+    "Quantity In Stock": "89",
     "Price": "38.00",
     "UPC": "XI583621BULK1",
     "Web Item Name": "Sig Sauer P365/X/XL Handgun Magazine 9mm Luger 12/rd",
@@ -28730,7 +28730,7 @@
   {
     "SKU": "XI583621BULK",
     "Item Name": "MAGAZINE 365 9 SUBCOMPACT 12 RD-BULK",
-    "Quantity In Stock": "90",
+    "Quantity In Stock": "89",
     "Price": "38.00",
     "UPC": "XI583621BULK1",
     "Web Item Name": "Sig Sauer P365/X/XL Handgun Magazine 9mm Luger 12/rd",
@@ -28758,7 +28758,7 @@
   {
     "SKU": "XI583621BULK",
     "Item Name": "MAGAZINE 365 9 SUBCOMPACT 12 RD-BULK",
-    "Quantity In Stock": "90",
+    "Quantity In Stock": "89",
     "Price": "38.00",
     "UPC": "XI583621BULK1",
     "Web Item Name": "Sig Sauer P365/X/XL Handgun Magazine 9mm Luger 12/rd",
@@ -29542,7 +29542,7 @@
   {
     "SKU": "XI8900844",
     "Item Name": "Sig Magazine P365X Carry Legion 9mm 17rd Black",
-    "Quantity In Stock": "5",
+    "Quantity In Stock": "3",
     "Price": "45.50",
     "UPC": "798681661848",
     "Web Item Name": "Sig Sauer P365X Carry Legion Handgun Magazine Black 9mm Luger 17/rd",
@@ -29570,7 +29570,7 @@
   {
     "SKU": "XI8900844",
     "Item Name": "Sig Magazine P365X Carry Legion 9mm 17rd Black",
-    "Quantity In Stock": "5",
+    "Quantity In Stock": "3",
     "Price": "45.50",
     "UPC": "798681661848",
     "Web Item Name": "Sig Sauer P365X Carry Legion Handgun Magazine Black 9mm Luger 17/rd",
@@ -29598,7 +29598,7 @@
   {
     "SKU": "XI8900844",
     "Item Name": "Sig Magazine P365X Carry Legion 9mm 17rd Black",
-    "Quantity In Stock": "5",
+    "Quantity In Stock": "3",
     "Price": "45.50",
     "UPC": "798681661848",
     "Web Item Name": "Sig Sauer P365X Carry Legion Handgun Magazine Black 9mm Luger 17/rd",
@@ -29626,7 +29626,7 @@
   {
     "SKU": "XI8900844",
     "Item Name": "Sig Magazine P365X Carry Legion 9mm 17rd Black",
-    "Quantity In Stock": "5",
+    "Quantity In Stock": "3",
     "Price": "45.50",
     "UPC": "798681661848",
     "Web Item Name": "Sig Sauer P365X Carry Legion Handgun Magazine Black 9mm Luger 17/rd",
@@ -30662,7 +30662,7 @@
   {
     "SKU": "YCMA1120A",
     "Item Name": "US Palm AK30R 7.62x39 PolyCarb/Clear Black 30 Round Magazine",
-    "Quantity In Stock": "51",
+    "Quantity In Stock": "44",
     "Price": "11.49",
     "UPC": "787450631052",
     "Web Item Name": "Century Arms US Palm AK30R Rifle Magazine Clear/Black Polycarbonate 7.62x39 30/rd",
@@ -31446,7 +31446,7 @@
   {
     "SKU": "YCMA692A",
     "Item Name": "US Palm AK30 7.62x39 Black 30 Round Mag w/Stainless Steel Latch Cage",
-    "Quantity In Stock": "64",
+    "Quantity In Stock": "59",
     "Price": "15.99",
     "UPC": "787450532892",
     "Web Item Name": "Century Arms US Palm AK30R Rifle Magazine Black 7.62x39mm 30/rd",
@@ -32816,6 +32816,34 @@
     "image": "https://media.chattanoogashooting.com/images/product/ZMREMA2/ZMREMA2.jpg?w=500&h=500&q=2"
   },
   {
+    "SKU": "ZMREMA5",
+    "Item Name": "PRO MAG REMINGTON 760 30-06 (15)RD BLU STL",
+    "Quantity In Stock": "0",
+    "Price": "25.69",
+    "UPC": "708279017094",
+    "Web Item Name": "ProMag Remington 760 Rifle Magazine 30-06 15/rd",
+    "Web Item Description": "<p><strong>Features:</strong></p><ul>\t<li>15-round magazine</li>\t<li>Fits&nbsp;Remington&nbsp;Model 760 30-06 rifle</li>\t<li>Magazine body constructed of heat treated steel with black oxide finish</li>\t<li>Injection molded magazine follower</li>\t<li>Magazine spring formed from heat treated chrome silicone wire</li>\t<li>Made in the USA&nbsp;</li></ul>",
+    "Drop Ship Flag": "1",
+    "Drop Ship Price": "25.69",
+    "Category": "Rifle Magazines",
+    "Ship Weight": "0.0000",
+    "Image Location": "https://media.chattanoogashooting.com/images/product/ZMREMA5/ZMREMA5-1.jpg?w=110&h=110&q=2",
+    "Manufacturer": "Promag Mfg. Inc.",
+    "Manufacturer Item Number": "REM-A5",
+    "Length": "",
+    "Width": "",
+    "Height": "",
+    "MAP": "",
+    "MSRP": "",
+    "Available Drop Ship Delivery Options": "economy|next_day_air|second_day_air|ground",
+    "Allocated Item?": "No",
+    "mappedCategory": {
+      "top": "Magazines",
+      "sub": "Rifle Magazines"
+    },
+    "image": "https://media.chattanoogashooting.com/images/product/ZMREMA5/ZMREMA5-1.jpg?w=500&h=500&q=2"
+  },
+  {
     "SKU": "ZMRM10",
     "Item Name": "PROMAG AR-15 5.56MM ROLLER FOLLOWER 10RD BLK POLYMER MAGAZINE",
     "Quantity In Stock": "68",
@@ -33014,7 +33042,7 @@
   {
     "SKU": "ZMRM5",
     "Item Name": "PROMAG AR-15 5.56MM ROLLER FOLLOWER 5RD BLK POLYMER MAGAZINE",
-    "Quantity In Stock": "73",
+    "Quantity In Stock": "68",
     "Price": "8.09",
     "UPC": "708279013614",
     "Web Item Name": "ProMag AR-15 Roller Follower Magazine Black Polymer 5.56mm 5/rd",
@@ -33066,6 +33094,62 @@
       "sub": "Rifle Magazines"
     },
     "image": "https://media.chattanoogashooting.com/images/product/ZMRM5FDE/ZMRM5FDE.jpg?w=500&h=500&q=2"
+  },
+  {
+    "SKU": "ZMRMT30",
+    "Item Name": "PRO MAG AR-15 5.56MM (30)RD ROLLER FOLLOWER TRANSPARENT PLYMR",
+    "Quantity In Stock": "0",
+    "Price": "11.49",
+    "UPC": "708279017223",
+    "Web Item Name": "ProMag AR-15 Rifle Magazine Transparent Polymer 5.56mm 30/rd",
+    "Web Item Description": "<p><strong>Features:</strong></p><ul>\t<li>30-round magazine</li>\t<li>Fits AR-15&nbsp;5.56mm rifles</li>\t<li>Magazine body constructed of a proprietary DuPont&nbsp;Zytel&nbsp;based polymer</li>\t<li>Patented anti-tilt Roller follower</li>\t<li>Magazine spring formed from heat treated chrome silicon wire</li>\t<li>Made in USA</li></ul>",
+    "Drop Ship Flag": "1",
+    "Drop Ship Price": "11.49",
+    "Category": "Rifle Magazines",
+    "Ship Weight": "0.0000",
+    "Image Location": "https://media.chattanoogashooting.com/images/product/ZMRMT30/ZMRMT30-1.jpg?w=110&h=110&q=2",
+    "Manufacturer": "Promag Mfg. Inc.",
+    "Manufacturer Item Number": "RMT-30",
+    "Length": "",
+    "Width": "",
+    "Height": "",
+    "MAP": "",
+    "MSRP": "",
+    "Available Drop Ship Delivery Options": "economy|next_day_air|second_day_air|ground",
+    "Allocated Item?": "No",
+    "mappedCategory": {
+      "top": "Magazines",
+      "sub": "Rifle Magazines"
+    },
+    "image": "https://media.chattanoogashooting.com/images/product/ZMRMT30/ZMRMT30-1.jpg?w=500&h=500&q=2"
+  },
+  {
+    "SKU": "ZMRMT30",
+    "Item Name": "PRO MAG AR-15 5.56MM (30)RD ROLLER FOLLOWER TRANSPARENT PLYMR",
+    "Quantity In Stock": "0",
+    "Price": "11.49",
+    "UPC": "708279017223",
+    "Web Item Name": "ProMag AR-15 Rifle Magazine Transparent Polymer 5.56mm 30/rd",
+    "Web Item Description": "<p><strong>Features:</strong></p><ul>\t<li>30-round magazine</li>\t<li>Fits AR-15&nbsp;5.56mm rifles</li>\t<li>Magazine body constructed of a proprietary DuPont&nbsp;Zytel&nbsp;based polymer</li>\t<li>Patented anti-tilt Roller follower</li>\t<li>Magazine spring formed from heat treated chrome silicon wire</li>\t<li>Made in USA</li></ul>",
+    "Drop Ship Flag": "1",
+    "Drop Ship Price": "11.49",
+    "Category": "Rifle Magazines",
+    "Ship Weight": "0.0000",
+    "Image Location": "https://media.chattanoogashooting.com/images/product/ZMRMT30/ZMRMT30-2.jpg?w=110&h=110&q=2",
+    "Manufacturer": "Promag Mfg. Inc.",
+    "Manufacturer Item Number": "RMT-30",
+    "Length": "",
+    "Width": "",
+    "Height": "",
+    "MAP": "",
+    "MSRP": "",
+    "Available Drop Ship Delivery Options": "economy|next_day_air|second_day_air|ground",
+    "Allocated Item?": "No",
+    "mappedCategory": {
+      "top": "Magazines",
+      "sub": "Rifle Magazines"
+    },
+    "image": "https://media.chattanoogashooting.com/images/product/ZMRMT30/ZMRMT30-2.jpg?w=500&h=500&q=2"
   },
   {
     "SKU": "ZMRUG03",
@@ -33322,7 +33406,7 @@
   {
     "SKU": "ZMRUG13",
     "Item Name": "PROMAG RUGER LCP .380 ACP  6RD BLUE STEEL MAGAZINE",
-    "Quantity In Stock": "19",
+    "Quantity In Stock": "17",
     "Price": "14.99",
     "UPC": "708279009006",
     "Web Item Name": "Promag Ruger LCP Handgun Magazine Blued Steel .380ACP 6/rd",
@@ -33350,7 +33434,7 @@
   {
     "SKU": "ZMRUG14",
     "Item Name": "PROMAG RUGER LCP .380 ACP 10RD BLUE STEEL MAGAZINE",
-    "Quantity In Stock": "49",
+    "Quantity In Stock": "48",
     "Price": "17.09",
     "UPC": "708279009013",
     "Web Item Name": "ProMag Ruger LCP Magazine .380 ACP Blued Steel 10/rd",
@@ -33434,7 +33518,7 @@
   {
     "SKU": "ZMRUG17",
     "Item Name": "PROMAG RUGER LC9 9MM 10RD BLUE STEEL MAGAZINE",
-    "Quantity In Stock": "24",
+    "Quantity In Stock": "23",
     "Price": "17.39",
     "UPC": "708279011412",
     "Web Item Name": "Promag Steel Handgun Magazine Ruger LC9 9mm Blued Steel 10/rd",
@@ -33994,7 +34078,7 @@
   {
     "SKU": "ZMRUGA25",
     "Item Name": "PROMAG RUGER MINI-14 .223  (42) RD BLACK POLYMER MAGAZINE",
-    "Quantity In Stock": "14",
+    "Quantity In Stock": "13",
     "Price": "14.69",
     "UPC": "708279011146",
     "Web Item Name": "Promag Black Polymer Rifle Magazine for Ruger Mini-14 .223 Rem 42rd Black",
@@ -34022,7 +34106,7 @@
   {
     "SKU": "ZMRUGA25",
     "Item Name": "PROMAG RUGER MINI-14 .223  (42) RD BLACK POLYMER MAGAZINE",
-    "Quantity In Stock": "14",
+    "Quantity In Stock": "13",
     "Price": "14.69",
     "UPC": "708279011146",
     "Web Item Name": "Promag Black Polymer Rifle Magazine for Ruger Mini-14 .223 Rem 42rd Black",
@@ -34244,6 +34328,90 @@
     "image": "https://media.chattanoogashooting.com/images/product/ZMRUGA46/ZMRUGA46-1.jpg?w=500&h=500&q=2"
   },
   {
+    "SKU": "ZMRUGA49",
+    "Item Name": "PRO MAG RUGER MAX-9 9MM (12)RD BLU STL MAG",
+    "Quantity In Stock": "0",
+    "Price": "15.09",
+    "UPC": "708279017384",
+    "Web Item Name": "ProMag Ruger Max-9 Handgun Magazine 9mm Luger 12/rd",
+    "Web Item Description": "<p><strong>Features:</strong></p><ul>\t<li>12-round magazine</li>\t<li>Fits&nbsp;Ruger&nbsp;Max-9 9mm pistol</li>\t<li>Magazine body constructed of heat treated steel with black oxide finish</li>\t<li>Injection molded magazine follower</li>\t<li>Magazine spring formed from heat treated chrome silicon wire&nbsp;</li>\t<li>Made in USA</li></ul>",
+    "Drop Ship Flag": "1",
+    "Drop Ship Price": "15.09",
+    "Category": "Handgun Magazines",
+    "Ship Weight": "0.0000",
+    "Image Location": "https://media.chattanoogashooting.com/images/product/ZMRUGA49/ZMRUGA49-1.jpg?w=110&h=110&q=2",
+    "Manufacturer": "Promag Mfg. Inc.",
+    "Manufacturer Item Number": "RUG-A49",
+    "Length": "",
+    "Width": "",
+    "Height": "",
+    "MAP": "",
+    "MSRP": "",
+    "Available Drop Ship Delivery Options": "economy|next_day_air|second_day_air|ground",
+    "Allocated Item?": "No",
+    "mappedCategory": {
+      "top": "Magazines",
+      "sub": "Handgun Magazines"
+    },
+    "image": "https://media.chattanoogashooting.com/images/product/ZMRUGA49/ZMRUGA49-1.jpg?w=500&h=500&q=2"
+  },
+  {
+    "SKU": "ZMRUGA49",
+    "Item Name": "PRO MAG RUGER MAX-9 9MM (12)RD BLU STL MAG",
+    "Quantity In Stock": "0",
+    "Price": "15.09",
+    "UPC": "708279017384",
+    "Web Item Name": "ProMag Ruger Max-9 Handgun Magazine 9mm Luger 12/rd",
+    "Web Item Description": "<p><strong>Features:</strong></p><ul>\t<li>12-round magazine</li>\t<li>Fits&nbsp;Ruger&nbsp;Max-9 9mm pistol</li>\t<li>Magazine body constructed of heat treated steel with black oxide finish</li>\t<li>Injection molded magazine follower</li>\t<li>Magazine spring formed from heat treated chrome silicon wire&nbsp;</li>\t<li>Made in USA</li></ul>",
+    "Drop Ship Flag": "1",
+    "Drop Ship Price": "15.09",
+    "Category": "Handgun Magazines",
+    "Ship Weight": "0.0000",
+    "Image Location": "https://media.chattanoogashooting.com/images/product/ZMRUGA49/ZMRUGA49-2.jpg?w=110&h=110&q=2",
+    "Manufacturer": "Promag Mfg. Inc.",
+    "Manufacturer Item Number": "RUG-A49",
+    "Length": "",
+    "Width": "",
+    "Height": "",
+    "MAP": "",
+    "MSRP": "",
+    "Available Drop Ship Delivery Options": "economy|next_day_air|second_day_air|ground",
+    "Allocated Item?": "No",
+    "mappedCategory": {
+      "top": "Magazines",
+      "sub": "Handgun Magazines"
+    },
+    "image": "https://media.chattanoogashooting.com/images/product/ZMRUGA49/ZMRUGA49-2.jpg?w=500&h=500&q=2"
+  },
+  {
+    "SKU": "ZMRUGA49",
+    "Item Name": "PRO MAG RUGER MAX-9 9MM (12)RD BLU STL MAG",
+    "Quantity In Stock": "0",
+    "Price": "15.09",
+    "UPC": "708279017384",
+    "Web Item Name": "ProMag Ruger Max-9 Handgun Magazine 9mm Luger 12/rd",
+    "Web Item Description": "<p><strong>Features:</strong></p><ul>\t<li>12-round magazine</li>\t<li>Fits&nbsp;Ruger&nbsp;Max-9 9mm pistol</li>\t<li>Magazine body constructed of heat treated steel with black oxide finish</li>\t<li>Injection molded magazine follower</li>\t<li>Magazine spring formed from heat treated chrome silicon wire&nbsp;</li>\t<li>Made in USA</li></ul>",
+    "Drop Ship Flag": "1",
+    "Drop Ship Price": "15.09",
+    "Category": "Handgun Magazines",
+    "Ship Weight": "0.0000",
+    "Image Location": "https://media.chattanoogashooting.com/images/product/ZMRUGA49/ZMRUGA49-3.jpg?w=110&h=110&q=2",
+    "Manufacturer": "Promag Mfg. Inc.",
+    "Manufacturer Item Number": "RUG-A49",
+    "Length": "",
+    "Width": "",
+    "Height": "",
+    "MAP": "",
+    "MSRP": "",
+    "Available Drop Ship Delivery Options": "economy|next_day_air|second_day_air|ground",
+    "Allocated Item?": "No",
+    "mappedCategory": {
+      "top": "Magazines",
+      "sub": "Handgun Magazines"
+    },
+    "image": "https://media.chattanoogashooting.com/images/product/ZMRUGA49/ZMRUGA49-3.jpg?w=500&h=500&q=2"
+  },
+  {
     "SKU": "ZMRUGA5",
     "Item Name": "PROMAG RUGER P93 / P95 9MM 15RD BLUE STEEL MAGAZINE",
     "Quantity In Stock": "3",
@@ -34298,6 +34466,62 @@
       "sub": "Handgun Magazines"
     },
     "image": "https://media.chattanoogashooting.com/images/product/ZMRUGA50/ZMRUGA50-1.jpg?w=500&h=500&q=2"
+  },
+  {
+    "SKU": "ZMRUGA52",
+    "Item Name": "PRO MAG RUGER LCP MAX .380 ACP (12)RD BLU STL MAG",
+    "Quantity In Stock": "0",
+    "Price": "16.79",
+    "UPC": "708279017216",
+    "Web Item Name": "ProMag Ruger LCP Max Handgun Magazine .380 ACP 12/rd",
+    "Web Item Description": "<p><strong>Features:</strong></p><ul>\t<li>12-round extended magazine</li>\t<li>Fits Ruger&nbsp;LCP&nbsp;MAX .380 ACP pistol</li>\t<li>Magazine body constructed of heat treated steel with black oxide finish</li>\t<li>Injection molded magazine follower</li>\t<li>Magazine spring formed from heat treated music wire</li>\t<li>Made in USA</li></ul>",
+    "Drop Ship Flag": "1",
+    "Drop Ship Price": "16.79",
+    "Category": "Handgun Magazines",
+    "Ship Weight": "0.0000",
+    "Image Location": "https://media.chattanoogashooting.com/images/product/ZMRUGA52/ZMRUGA52-1.jpg?w=110&h=110&q=2",
+    "Manufacturer": "Promag Mfg. Inc.",
+    "Manufacturer Item Number": "RUG-A52",
+    "Length": "",
+    "Width": "",
+    "Height": "",
+    "MAP": "",
+    "MSRP": "",
+    "Available Drop Ship Delivery Options": "economy|next_day_air|second_day_air|ground",
+    "Allocated Item?": "No",
+    "mappedCategory": {
+      "top": "Magazines",
+      "sub": "Handgun Magazines"
+    },
+    "image": "https://media.chattanoogashooting.com/images/product/ZMRUGA52/ZMRUGA52-1.jpg?w=500&h=500&q=2"
+  },
+  {
+    "SKU": "ZMRUGA52",
+    "Item Name": "PRO MAG RUGER LCP MAX .380 ACP (12)RD BLU STL MAG",
+    "Quantity In Stock": "0",
+    "Price": "16.79",
+    "UPC": "708279017216",
+    "Web Item Name": "ProMag Ruger LCP Max Handgun Magazine .380 ACP 12/rd",
+    "Web Item Description": "<p><strong>Features:</strong></p><ul>\t<li>12-round extended magazine</li>\t<li>Fits Ruger&nbsp;LCP&nbsp;MAX .380 ACP pistol</li>\t<li>Magazine body constructed of heat treated steel with black oxide finish</li>\t<li>Injection molded magazine follower</li>\t<li>Magazine spring formed from heat treated music wire</li>\t<li>Made in USA</li></ul>",
+    "Drop Ship Flag": "1",
+    "Drop Ship Price": "16.79",
+    "Category": "Handgun Magazines",
+    "Ship Weight": "0.0000",
+    "Image Location": "https://media.chattanoogashooting.com/images/product/ZMRUGA52/ZMRUGA52-2.jpg?w=110&h=110&q=2",
+    "Manufacturer": "Promag Mfg. Inc.",
+    "Manufacturer Item Number": "RUG-A52",
+    "Length": "",
+    "Width": "",
+    "Height": "",
+    "MAP": "",
+    "MSRP": "",
+    "Available Drop Ship Delivery Options": "economy|next_day_air|second_day_air|ground",
+    "Allocated Item?": "No",
+    "mappedCategory": {
+      "top": "Magazines",
+      "sub": "Handgun Magazines"
+    },
+    "image": "https://media.chattanoogashooting.com/images/product/ZMRUGA52/ZMRUGA52-2.jpg?w=500&h=500&q=2"
   },
   {
     "SKU": "ZMRUGA6",
@@ -35422,7 +35646,7 @@
   {
     "SKU": "ZMSKSA5",
     "Item Name": "PROMAG SKS 7.62X39MM 20RD BLK POLYMER MAGAZINE",
-    "Quantity In Stock": "13",
+    "Quantity In Stock": "12",
     "Price": "13.19",
     "UPC": "708279009822",
     "Web Item Name": "ProMag SKS Magazine 7.62x39mm Black Polymer 20/rd",
@@ -36486,7 +36710,7 @@
   {
     "SKU": "ZMSMIA20",
     "Item Name": "Pro Mag SMITH & WESSON SD9 9MM (32) RD BLUE STEEL",
-    "Quantity In Stock": "84",
+    "Quantity In Stock": "81",
     "Price": "24.39",
     "UPC": "708279013393",
     "Web Item Name": "Promag Smith & Wesson SD9 Handgun Magazine Black 9mm Luger 32/rd",
@@ -37100,6 +37324,62 @@
     "image": "https://media.chattanoogashooting.com/images/product/ZMSPRA21/ZMSPRA21-1.jpg?w=500&h=500&q=2"
   },
   {
+    "SKU": "ZMSPRA22",
+    "Item Name": "PRO MAG SPRINGFIELD PRODIGY / EAA 2311 / 2011 9MM (20)RD BLU STL",
+    "Quantity In Stock": "0",
+    "Price": "19.39",
+    "UPC": "708279017186",
+    "Web Item Name": "ProMag Springfield Armory Prodigy 2011/EAA 2311 Handgun Magazine 9mm Luger 20/rd",
+    "Web Item Description": "<p><strong>Features:</strong></p><ul>\t<li>20-round magazine</li>\t<li>Fits Springfield Armory&nbsp;Prodigy&nbsp;/ 2011 / EAA 2311 9mm pistols</li>\t<li>Magazine body constructed of heat treated steel with black oxide finish</li>\t<li>Injection molded magazine follower</li>\t<li>Magazine spring formed from heat treated chrome silicone wire&nbsp;</li>\t<li>Made in USA</li></ul>",
+    "Drop Ship Flag": "1",
+    "Drop Ship Price": "19.39",
+    "Category": "Handgun Magazines",
+    "Ship Weight": "0.0000",
+    "Image Location": "https://media.chattanoogashooting.com/images/product/ZMSPRA22/ZMSPRA22-1.jpg?w=110&h=110&q=2",
+    "Manufacturer": "Promag Mfg. Inc.",
+    "Manufacturer Item Number": "SPR-A22",
+    "Length": "",
+    "Width": "",
+    "Height": "",
+    "MAP": "",
+    "MSRP": "",
+    "Available Drop Ship Delivery Options": "economy|next_day_air|second_day_air|ground",
+    "Allocated Item?": "No",
+    "mappedCategory": {
+      "top": "Magazines",
+      "sub": "Handgun Magazines"
+    },
+    "image": "https://media.chattanoogashooting.com/images/product/ZMSPRA22/ZMSPRA22-1.jpg?w=500&h=500&q=2"
+  },
+  {
+    "SKU": "ZMSPRA22",
+    "Item Name": "PRO MAG SPRINGFIELD PRODIGY / EAA 2311 / 2011 9MM (20)RD BLU STL",
+    "Quantity In Stock": "0",
+    "Price": "19.39",
+    "UPC": "708279017186",
+    "Web Item Name": "ProMag Springfield Armory Prodigy 2011/EAA 2311 Handgun Magazine 9mm Luger 20/rd",
+    "Web Item Description": "<p><strong>Features:</strong></p><ul>\t<li>20-round magazine</li>\t<li>Fits Springfield Armory&nbsp;Prodigy&nbsp;/ 2011 / EAA 2311 9mm pistols</li>\t<li>Magazine body constructed of heat treated steel with black oxide finish</li>\t<li>Injection molded magazine follower</li>\t<li>Magazine spring formed from heat treated chrome silicone wire&nbsp;</li>\t<li>Made in USA</li></ul>",
+    "Drop Ship Flag": "1",
+    "Drop Ship Price": "19.39",
+    "Category": "Handgun Magazines",
+    "Ship Weight": "0.0000",
+    "Image Location": "https://media.chattanoogashooting.com/images/product/ZMSPRA22/ZMSPRA22-2.jpg?w=110&h=110&q=2",
+    "Manufacturer": "Promag Mfg. Inc.",
+    "Manufacturer Item Number": "SPR-A22",
+    "Length": "",
+    "Width": "",
+    "Height": "",
+    "MAP": "",
+    "MSRP": "",
+    "Available Drop Ship Delivery Options": "economy|next_day_air|second_day_air|ground",
+    "Allocated Item?": "No",
+    "mappedCategory": {
+      "top": "Magazines",
+      "sub": "Handgun Magazines"
+    },
+    "image": "https://media.chattanoogashooting.com/images/product/ZMSPRA22/ZMSPRA22-2.jpg?w=500&h=500&q=2"
+  },
+  {
     "SKU": "ZMSPRA3",
     "Item Name": "PROMAG SPRINGFIELD XD-9 9MM 32RD BLUE STEEL MAGAZINE",
     "Quantity In Stock": "0",
@@ -37550,7 +37830,7 @@
   {
     "SKU": "ZMTAUA6",
     "Item Name": "PROMAG TAURUS PT 111 G2 9MM (15) RD BLUE STEEL MAGAZINE",
-    "Quantity In Stock": "7",
+    "Quantity In Stock": "5",
     "Price": "17.09",
     "UPC": "708279013515",
     "Web Item Name": "Promag Taurus PT-111 G2 Handgun Magazine 9mm 15/rd",
@@ -38110,7 +38390,7 @@
   {
     "SKU": "ZZMAG1182BLK",
     "Item Name": "MAGPUL PMAG 20 AR 300 GEN 3 BK",
-    "Quantity In Stock": "17",
+    "Quantity In Stock": "12",
     "Price": "12.04",
     "UPC": "840815132233",
     "Web Item Name": "Magpul PMAG 20 AR 300 B Gen M3 Rifle Magazine 300 AAC BLK 20/rd",
@@ -38138,7 +38418,7 @@
   {
     "SKU": "ZZMAG1182BLK",
     "Item Name": "MAGPUL PMAG 20 AR 300 GEN 3 BK",
-    "Quantity In Stock": "17",
+    "Quantity In Stock": "12",
     "Price": "12.04",
     "UPC": "840815132233",
     "Web Item Name": "Magpul PMAG 20 AR 300 B Gen M3 Rifle Magazine 300 AAC BLK 20/rd",
@@ -38166,7 +38446,7 @@
   {
     "SKU": "ZZMAG1182BLK",
     "Item Name": "MAGPUL PMAG 20 AR 300 GEN 3 BK",
-    "Quantity In Stock": "17",
+    "Quantity In Stock": "12",
     "Price": "12.04",
     "UPC": "840815132233",
     "Web Item Name": "Magpul PMAG 20 AR 300 B Gen M3 Rifle Magazine 300 AAC BLK 20/rd",
@@ -38362,7 +38642,7 @@
   {
     "SKU": "ZZMAG1417ODT",
     "Item Name": "Magpul TMAG 30 AR/M4 Gen M3 OD Translucent",
-    "Quantity In Stock": "2519",
+    "Quantity In Stock": "2517",
     "Price": "18.09",
     "UPC": "840815147626",
     "Web Item Name": "Magpul TMAG 30 AR/M4 Gen 3 Rifle Magazine OD Green Transparent 5.56/.223 30/rd",
@@ -38390,7 +38670,7 @@
   {
     "SKU": "ZZMAG1417ODT",
     "Item Name": "Magpul TMAG 30 AR/M4 Gen M3 OD Translucent",
-    "Quantity In Stock": "2519",
+    "Quantity In Stock": "2517",
     "Price": "18.09",
     "UPC": "840815147626",
     "Web Item Name": "Magpul TMAG 30 AR/M4 Gen 3 Rifle Magazine OD Green Transparent 5.56/.223 30/rd",
@@ -38418,7 +38698,7 @@
   {
     "SKU": "ZZMAG1417ODT",
     "Item Name": "Magpul TMAG 30 AR/M4 Gen M3 OD Translucent",
-    "Quantity In Stock": "2519",
+    "Quantity In Stock": "2517",
     "Price": "18.09",
     "UPC": "840815147626",
     "Web Item Name": "Magpul TMAG 30 AR/M4 Gen 3 Rifle Magazine OD Green Transparent 5.56/.223 30/rd",
@@ -38874,7 +39154,7 @@
     "Drop Ship Flag": "1",
     "Drop Ship Price": "17.33",
     "Category": "Rifle Magazines",
-    "Ship Weight": "0.4250",
+    "Ship Weight": "0.4000",
     "Image Location": "https://media.chattanoogashooting.com/images/product/ZZMAG233BLK/ZZMAG233BLK_1.jpg?w=110&h=110&q=2",
     "Manufacturer": "Magpul Accessories",
     "Manufacturer Item Number": "MGMPI233BLK",
@@ -38922,7 +39202,7 @@
   {
     "SKU": "ZZMAG291BLK",
     "Item Name": "MAGPUL PMAG M3 7.62 20RD BLK",
-    "Quantity In Stock": "8",
+    "Quantity In Stock": "7",
     "Price": "17.33",
     "UPC": "873750008509",
     "Web Item Name": "Magpul PMAG 20 LR/SR GEN M3 Rifle Magazine Black Fits DPMS/SR25/LaRue OBR 7.62X51mm NATO 20/rd",
