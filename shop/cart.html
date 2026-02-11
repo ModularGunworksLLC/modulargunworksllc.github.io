@@ -465,6 +465,7 @@
     <nav class="category-nav">
       <a href="ammunition.html">Ammunition</a>
       <a href="magazines.html">Magazines</a>
+      <a href="guns.html">Firearms</a>
       <a href="gun-parts.html">Gun Parts</a>
       <a href="gear.html">Gear</a>
       <a href="optics.html">Optics</a>
@@ -535,7 +536,7 @@
       const shipping = getShipping(subtotal);
       const totalWithShipping = subtotal + shipping;
       const cartHasAmmo = cart.some(item => item.category && String(item.category).toLowerCase() === 'ammunition');
-      const cartHasFirearm = cart.some(item => item.category && String(item.category).toLowerCase() === 'firearms');
+      const cartHasFirearm = cart.some(item => { const c = (item.category || '').toLowerCase(); return c === 'firearms' || c === 'guns'; });
       const needsVerification = cartHasAmmo || cartHasFirearm;
       
       countText.textContent = `${itemCount} item${itemCount !== 1 ? 's' : ''} in your cart`;
@@ -603,7 +604,7 @@
             <div class="ammo-verification-block" id="verification-block">
               <div class="ammo-verification-notice">
                 ${cartHasFirearm
-                  ? `<strong>Your cart contains firearms.</strong> Federal law requires all firearms to be transferred through a licensed FFL. You must be 21+ for handguns/receivers and 18+ for rifles/shotguns. Out-of-state: firearms ship only to an FFL in your state of residence. Alabama residents: transfer at a licensed Alabama FFL of your choice (we plan to offer transfers at our location once we are licensed).`
+                  ? `<strong>Your cart contains firearms.</strong> Federal law requires all firearms to be transferred through a licensed FFL. You must be 21+ for handguns/receivers and 18+ for rifles/shotguns. Out-of-state: firearms ship only to an FFL in your state of residence. Alabama residents: we offer transfers at our Huntsville location, or you may use another licensed Alabama FFL of your choice.`
                   : `<strong>Your cart contains ammunition.</strong> Federal law requires you to be 18+ for rifle/shotgun ammo and 21+ for handgun/other ammo. By proceeding, you confirm you meet the applicable age requirement.`
                 }
               </div>
@@ -695,7 +696,7 @@
             ).join('\n');
             const buyerEmail = orderData.payer?.email_address || 'Not provided';
             const cartHadAmmo = cart.some(item => item.category && String(item.category).toLowerCase() === 'ammunition');
-            const cartHadFirearm = cart.some(item => item.category && String(item.category).toLowerCase() === 'firearms');
+            const cartHadFirearm = cart.some(item => { const c = (item.category || '').toLowerCase(); return c === 'firearms' || c === 'guns'; });
 
             // Send order notification (including age/firearm verification audit when applicable)
             fetch('/api/send-order-email', {

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://www.paypal.com https://www.sandbox.paypal.com; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; img-src 'self' data: https:; frame-src https://www.paypal.com https://www.sandbox.paypal.com;">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://www.paypal.com https://www.sandbox.paypal.com; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; font-src 'self' https://cdnjs.cloudflare.com; img-src 'self' data: https:; connect-src 'self' https://www.paypal.com https://www.sandbox.paypal.com https://*.paypal.com; frame-src https://www.paypal.com https://www.sandbox.paypal.com;">
   <meta name="description" content="Product details - Modular Gunworks LLC">
   <meta name="author" content="Modular Gunworks LLC">
   <meta name="theme-color" content="#181a1b">
@@ -374,6 +374,7 @@
     <nav class="category-nav">
       <a href="shop/ammunition.html">Ammunition</a>
       <a href="shop/magazines.html">Magazines</a>
+      <a href="shop/guns.html">Firearms</a>
       <a href="shop/gun-parts.html">Gun Parts</a>
       <a href="shop/gear.html">Gear</a>
       <a href="shop/optics.html">Optics</a>
@@ -478,7 +479,11 @@
       }
 
       try {
-        const fileCategory = category.charAt(0).toUpperCase() + category.slice(1).replace(/-/g, '_');
+        // Guns category uses Firearms.json (no Guns.json file)
+        const categoryLower = (category || '').toLowerCase();
+        const fileCategory = categoryLower === 'guns'
+          ? 'Firearms'
+          : category.charAt(0).toUpperCase() + category.slice(1).replace(/-/g, '_');
         const mappedUrl = `./data/products/mapped-products/${fileCategory}.json`;
         const response = await fetch(mappedUrl);
         if (!response.ok) throw new Error('Failed to load product data');

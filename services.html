@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Services coming soon at Modular Gunworks LLC in Huntsville, Alabama. We are working on bringing professional gunsmithing, FFL transfers, and related services online.">
-  <meta name="keywords" content="gun shop Huntsville AL, services coming soon, maintenance, optics">
+  <meta name="description" content="Professional gunsmithing, FFL transfers, maintenance, and optics installation at Modular Gunworks LLC in Huntsville, Alabama. Licensed FFL.">
+  <meta name="keywords" content="gun shop Huntsville AL, FFL transfers, gunsmithing, maintenance, optics">
   <meta name="author" content="Modular Gunworks LLC">
   <meta name="theme-color" content="#181a1b" media="(prefers-color-scheme: dark)">
   
@@ -25,43 +25,8 @@
     main { max-width: 1400px; margin: 0 auto; padding: 3rem 2rem; }
     .page-title { font-size: 2.5rem; color: var(--color-bg-dark); margin-bottom: 3rem; text-align: center; }
     
-    /* FFL Notice Banner */
-    .ffl-notice {
-      background: linear-gradient(135deg, #fff3cd 0%, #ffe69c 100%);
-      border-left: 5px solid #ff9800;
-      padding: 2rem;
-      border-radius: 8px;
-      margin-bottom: 3rem;
-      box-shadow: 0 2px 8px rgba(255, 152, 0, 0.15);
-    }
-    
-    .ffl-notice h2 {
-      color: #e65100;
-      margin-bottom: 0.8rem;
-      font-size: 1.4rem;
-      display: flex;
-      align-items: center;
-      gap: 0.8rem;
-    }
-    
-    .ffl-notice i { font-size: 1.6rem; }
-    
-    .ffl-notice p {
-      color: #bf360c;
-      line-height: 1.7;
-      margin-bottom: 1rem;
-      font-weight: 500;
-    }
-    
-    .ffl-notice a {
-      color: #bf360c;
-      text-decoration: underline;
-      font-weight: 600;
-    }
-    
-    .ffl-notice a:hover { color: #e65100; }
-    
-    .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-bottom: 4rem; }
+    .services-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 3rem; max-width: 900px; margin-left: auto; margin-right: auto; }
+    @media (max-width: 768px) { .services-grid { grid-template-columns: 1fr; } }
     
     .service-card {
       background: #fafafa;
@@ -77,55 +42,15 @@
     
     .service-card:hover { transform: translateY(-4px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
     
-    .service-card.coming-soon {
-      background: #f0f0f0;
-      opacity: 0.75;
-      border-left-color: #ccc;
-    }
-    
-    .coming-soon-badge {
-      position: absolute;
-      top: 1rem;
-      right: 1rem;
-      background: linear-gradient(135deg, #ff9800 0%, #f57c00 100%);
-      color: #fff;
-      padding: 0.5rem 1rem;
-      border-radius: 20px;
-      font-size: 0.75rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      box-shadow: 0 2px 8px rgba(255, 152, 0, 0.3);
-    }
-    
-    .service-card h2 { font-size: 1.8rem; color: var(--color-bg-dark); margin-bottom: 2.5rem; font-weight: 600; }
+    .service-card h2 { font-size: 1.6rem; color: var(--color-bg-dark); margin-bottom: 1.25rem; font-weight: 600; }
     .service-card i { margin-right: 0.5rem; color: var(--color-primary); }
-    .service-card.coming-soon h2 { color: #999; }
-    .service-card.coming-soon i { color: #ccc; }
-    
     .service-card p { color: #666; line-height: 1.6; margin-bottom: 1.5rem; flex-grow: 1; }
-    .service-card.coming-soon p { color: #888; }
     
     .service-cta { display: inline-block; background: var(--color-primary); color: #fff; padding: 0.7rem 1.5rem; border-radius: 4px; text-decoration: none; font-weight: 600; transition: background 0.3s; cursor: pointer; border: none; }
     .service-cta:hover { background: #8b1a1a; }
     
-    .service-cta.disabled {
-      background: #ccc;
-      color: #666;
-      cursor: not-allowed;
-      pointer-events: none;
-    }
-    
-    .contact-info-notice {
-      display: inline-block;
-      background: #f5f5f5;
-      color: #666;
-      padding: 0.7rem 1.5rem;
-      border-radius: 4px;
-      font-weight: 600;
-      font-size: 0.9rem;
-      border: 2px solid #ddd;
-    }
+    .services-contact { text-align: center; margin-top: 2rem; padding-top: 2rem; border-top: 1px solid #e0e0e0; }
+    .services-contact p { color: #555; margin-bottom: 1rem; }
   </style>
 
   <script src="scripts/age-gate.js"></script>
@@ -158,6 +83,7 @@
     <nav class="category-nav">
       <a href="shop/ammunition.html">Ammunition</a>
       <a href="shop/magazines.html">Magazines</a>
+      <a href="shop/guns.html">Firearms</a>
       <a href="shop/gun-parts.html">Gun Parts</a>
       <a href="shop/gear.html">Gear</a>
       <a href="shop/optics.html">Optics</a>
@@ -175,43 +101,24 @@
 
   <main>
     <h1 class="page-title">Our Services</h1>
-    
-    <!-- FFL Notice Banner -->
-    <div class="ffl-notice">
-      <h2><i class="fas fa-hourglass-half"></i> Services Coming Soon</h2>
-      <p><strong>We're excited to announce that professional gunsmithing, FFL transfers, maintenance & repair, and optics installation services are coming to Modular Gunworks LLC!</strong></p>
-      <p>These specialized services require a Federal Firearms License (FFL). We are currently in the process of obtaining our FFL and expect to launch these services in early 2026. We appreciate your patience as we work to bring you the highest quality service.</p>
-      <p><strong>Want to stay updated?</strong> Contact us at <a href="mailto:modulargunworks@gmail.com">modulargunworks@gmail.com</a> or call <a href="tel:+12563843852">(256) 384-3852</a> to express interest or learn more about our timeline.</p>
-    </div>
 
     <div class="services-grid">
-      <div class="service-card coming-soon">
-        <div class="coming-soon-badge">Coming Soon</div>
-        <h2><i class="fas fa-wrench"></i> Gunsmithing Services</h2>
-        <p>Expert gunsmithing services for all types of firearms. From basic maintenance and cleaning to custom builds and modifications, our skilled gunsmiths will handle every project with precision and care.</p>
-        <span class="contact-info-notice"><i class="fas fa-envelope"></i> Contact us to express interest</span>
+      <div class="service-card">
+        <h2><i class="fas fa-wrench"></i> Gunsmithing &amp; Basic Services</h2>
+        <p>Cleaning (field strip &amp; deep clean), inspection and function checks, optics mounting and bore sight, and simple sight installation. We keep your firearms in top condition and are working toward full gunsmith certification to expand what we can do.</p>
+        <a href="gunsmithing.html" class="service-cta">See pricing &amp; details</a>
       </div>
 
-      <div class="service-card coming-soon">
-        <div class="coming-soon-badge">Coming Soon</div>
+      <div class="service-card">
         <h2><i class="fas fa-file-alt"></i> FFL Transfers</h2>
-        <p>Expanding into FFL transfer services is a key goal for us. Once we are licensed, we plan to offer professional transfer services for firearms purchased elsewhere, handling compliance paperwork so your firearms are transferred legally and safely.</p>
-        <span class="contact-info-notice"><i class="fas fa-envelope"></i> Contact us to express interest</span>
+        <p>We are a licensed FFL and offer professional transfer services for firearms purchased online or from out-of-state sellers. We handle the compliance paperwork so your firearms are transferred legally and safely.</p>
+        <a href="ffl-transfers.html" class="service-cta">Transfer info &amp; fees</a>
       </div>
+    </div>
 
-      <div class="service-card coming-soon">
-        <div class="coming-soon-badge">Coming Soon</div>
-        <h2><i class="fas fa-tools"></i> Maintenance & Repair</h2>
-        <p>Keep your firearms in top condition with our professional maintenance and repair services. We will use quality parts and proven techniques to ensure your weapons function reliably.</p>
-        <span class="contact-info-notice"><i class="fas fa-envelope"></i> Contact us to express interest</span>
-      </div>
-
-      <div class="service-card coming-soon">
-        <div class="coming-soon-badge">Coming Soon</div>
-        <h2><i class="fas fa-search"></i> Optics Installation</h2>
-        <p>Professional optics mounting and sighting-in services. Whether it's a red dot, scope, or iron sights, we will ensure perfect alignment and optimal performance.</p>
-        <span class="contact-info-notice"><i class="fas fa-envelope"></i> Contact us to express interest</span>
-      </div>
+    <div class="services-contact">
+      <p>For scheduling or other questions, contact us.</p>
+      <a href="contact.html" class="service-cta">Contact us</a>
     </div>
   </main>
 
@@ -222,6 +129,7 @@
         <ul>
           <li><a href="shop/ammunition.html">Ammunition</a></li>
           <li><a href="shop/magazines.html">Magazines</a></li>
+          <li><a href="shop/guns.html">Firearms</a></li>
           <li><a href="shop/gun-parts.html">Gun Parts</a></li>
           <li><a href="shop/gear.html">Gear</a></li>
           <li><a href="shop/optics.html">Optics</a></li>
@@ -264,7 +172,7 @@
 
     <div class="footer-bottom">
       <p>© 2026 Modular Gunworks LLC. All rights reserved. | Veteran-Owned Business in Huntsville, Alabama</p>
-      <p>We are working toward offering firearm sales and transfers in compliance with federal, state, and local laws.</p>
+      <p>We are a licensed FFL and offer firearm sales and transfers in compliance with federal, state, and local laws.</p>
     </div>
   </footer>
 

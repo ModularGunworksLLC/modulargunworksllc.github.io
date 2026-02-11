@@ -36,12 +36,13 @@ function priceOrNull(value) {
 }
 
 // --- Core normalizer: vendor → UI product ---
-// Display price: MSRP if present, else MAP only. Price is dealer cost and must not be used for display or inclusion.
+// Display price: MSRP if present, else MAP, else Price (dealer cost) as fallback so products without MSRP/MAP still show.
 
 function normalizeVendorProduct(vendor) {
   const msrp = priceOrNull(vendor["MSRP"]);
   const map = priceOrNull(vendor["MAP"]);
-  const displayPrice = msrp ?? map ?? null;
+  const price = priceOrNull(vendor["Price"]);
+  const displayPrice = msrp ?? map ?? price ?? null;
   const category = normalizeCategoryValue(vendor.mappedCategory?.top);
   const isFirearmCategory = (category || "").toLowerCase() === "firearms";
   return {
@@ -159,10 +160,26 @@ function getBrandRank(manufacturer) {
   return i >= 0 ? i : 9999;
 }
 
+// --- Firearms: exclude suppressors and NFA items (not offered for sale) ---
+
+function isSuppressorOrNFAProduct(p) {
+  const sub = (p.subcategory || '').toLowerCase();
+  const rawCat = (p.rawCategory || '').toLowerCase();
+  const name = (p.name || '').toLowerCase();
+  if (sub === 'suppressors' || rawCat.includes('suppressors')) return true;
+  const nfaPhrases = [
+    ' sbr ', ' sbs ', ' aow ', ' machine gun ', ' destructive device ', ' nfa ',
+    'short barrel rifle', 'short barrel shotgun'
+  ];
+  return nfaPhrases.some(phrase => name.includes(phrase));
+}
+
 // --- Existing logic: determine which file to load ---
 
 function getCategoryFileName() {
   const page = window.location.pathname.split('/').pop().replace('.html', '');
+  // Firearms category uses Firearms.json (page is guns.html)
+  if (page === 'guns') return 'Firearms.json';
   // Match repo filenames: e.g. gun-parts -> Gun_Parts.json, ammunition -> Ammunition.json
   const parts = page.replace(/[- ]/g, '_').split('_').filter(Boolean);
   const fileName = parts.map(function (p) {
@@ -189,8 +206,12 @@ async function loadProducts() {
     const vendorProducts = await res.json();
     const list = Array.isArray(vendorProducts) ? vendorProducts : (vendorProducts.products || vendorProducts.items || []);
     const normalized = list.map(normalizeVendorProduct);
-    // Only list products that have MSRP or MAP (never use Price/dealer cost for display or inclusion).
+    // Only list products that have a display price (MSRP, MAP, or Price fallback).
     let products = normalized.filter(p => p.displayPrice != null && p.displayPrice > 0);
+    // Firearms page: do not list suppressors or other NFA items (not offered for sale).
+    if (fileName === 'Firearms.json') {
+      products = products.filter(p => !isSuppressorOrNFAProduct(p));
+    }
     // Sort by brand priority so top-name brands appear first when the page loads.
     products = products.slice().sort((a, b) => {
       const rankA = getBrandRank(a.manufacturer);

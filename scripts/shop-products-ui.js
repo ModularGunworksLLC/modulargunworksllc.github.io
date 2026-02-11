@@ -298,7 +298,11 @@
     if (hasAmmo) enriched = enrichAmmoProducts(enriched);
     else if (hasMagazine) enriched = enrichMagazineProducts(enriched);
 
-    const categories = unique(enriched.flatMap(p => [p.category, p.subcategory].filter(Boolean)));
+    let categories = unique(enriched.flatMap(p => [p.category, p.subcategory].filter(Boolean)));
+    // On ammunition page, don't show "Ammunition" in category filter (redundant); only show subcategories (e.g. Handgun, Rifle, Rimfire Ammunition).
+    if (pageCategory === 'ammunition' && document.getElementById('category-list')) {
+      categories = categories.filter(c => (c || '').toLowerCase() !== 'ammunition');
+    }
     const types = unique(enriched.map(p => p.type || p.subcategory || p.category).filter(Boolean));
     const brands = unique(enriched.map(p => p.manufacturer).filter(Boolean));
 
@@ -554,7 +558,7 @@
         const content = this.nextElementSibling;
         const icon = this.querySelector('i');
         if (!content) return;
-        const isVisible = content.style.display !== 'none';
+        const isVisible = window.getComputedStyle(content).display !== 'none';
         content.style.display = isVisible ? 'none' : 'block';
         if (icon) icon.style.transform = isVisible ? 'rotate(0deg)' : 'rotate(180deg)';
       });

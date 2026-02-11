@@ -3,9 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Gunsmithing services coming soon at Modular Gunworks LLC in Huntsville, Alabama.">
-  <meta name="robots" content="noindex, follow">
-  <title>Gunsmithing - Coming Soon - Modular Gunworks LLC</title>
+  <meta name="description" content="Professional gunsmithing services at Modular Gunworks LLC in Huntsville, Alabama. Licensed FFL gunsmithing, maintenance, and repair.">
+  <title>Gunsmithing - Modular Gunworks LLC</title>
   <link rel="stylesheet" href="styles/design-system.css">
   <link rel="stylesheet" href="styles/components.css">
   <link rel="stylesheet" href="styles/layout.css">
@@ -14,12 +13,21 @@
   <link rel="icon" type="image/png" href="favicon.png">
   <style>
     :root { --color-primary: #b22222; --color-accent: #1a2c4b; --color-bg-dark: #181a1b; }
-    main { max-width: 700px; margin: 0 auto; padding: 4rem 2rem; text-align: center; }
-    .coming-soon-hero { background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); border-radius: 16px; padding: 3rem 2rem; margin-bottom: 2rem; }
-    .coming-soon-hero .icon { font-size: 4rem; color: var(--color-accent); margin-bottom: 1rem; }
-    .coming-soon-hero h1 { font-size: 2rem; color: var(--color-bg-dark); margin-bottom: 1rem; }
-    .coming-soon-hero p { color: #666; margin-bottom: 1.5rem; line-height: 1.6; }
-    .badge { display: inline-flex; align-items: center; gap: 0.5rem; background: #fff3cd; color: #856404; padding: 0.75rem 1.25rem; border-radius: 8px; font-weight: 600; font-size: 0.9rem; }
+    main { max-width: 700px; margin: 0 auto; padding: 4rem 2rem; }
+    .page-hero { background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); border-radius: 16px; padding: 2.5rem 2rem; margin-bottom: 2rem; text-align: center; }
+    .page-hero .icon { font-size: 3rem; color: var(--color-accent); margin-bottom: 0.75rem; }
+    .page-hero h1 { font-size: 1.75rem; color: var(--color-bg-dark); margin-bottom: 0.5rem; }
+    .page-hero p { color: #555; margin-bottom: 1rem; line-height: 1.6; text-align: left; }
+    .page-hero .note { font-size: 0.9rem; color: #666; margin-top: 1rem; text-align: left; }
+    .badge { display: inline-flex; align-items: center; gap: 0.5rem; background: #2e7d32; color: #fff; padding: 0.5rem 1rem; border-radius: 8px; font-weight: 600; font-size: 0.85rem; }
+    .section { margin-bottom: 2rem; text-align: left; }
+    .section h2 { font-size: 1.25rem; color: var(--color-bg-dark); margin-bottom: 1rem; }
+    .price-table { width: 100%; border-collapse: collapse; background: #fff; border: 1px solid #e0e0e0; border-radius: 8px; overflow: hidden; }
+    .price-table th, .price-table td { padding: 0.75rem 1rem; text-align: left; border-bottom: 1px solid #e0e0e0; }
+    .price-table th { background: #f5f5f5; font-weight: 600; color: var(--color-bg-dark); }
+    .price-table tr:last-child td { border-bottom: none; }
+    .price-table .price { font-weight: 700; color: var(--color-primary); white-space: nowrap; }
+    .section p { color: #555; line-height: 1.6; font-size: 0.95rem; margin-bottom: 0.5rem; }
     .cta-link { display: inline-block; background: var(--color-primary); color: #fff; padding: 0.75rem 1.5rem; border-radius: 8px; text-decoration: none; font-weight: 600; margin-top: 1rem; }
     .cta-link:hover { background: #8b1a1a; color: #fff; }
   </style>
@@ -48,6 +56,7 @@
     <nav class="category-nav">
       <a href="shop/ammunition.html">Ammunition</a>
       <a href="shop/magazines.html">Magazines</a>
+      <a href="shop/guns.html">Firearms</a>
       <a href="shop/gun-parts.html">Gun Parts</a>
       <a href="shop/gear.html">Gear</a>
       <a href="shop/optics.html">Optics</a>
@@ -61,14 +70,54 @@
   </header>
 
   <main>
-    <div class="coming-soon-hero">
+    <div class="page-hero">
       <div class="icon"><i class="fas fa-wrench"></i></div>
-      <h1>Gunsmithing — Coming Soon</h1>
-      <p>Professional gunsmithing services require a Federal Firearms License (FFL). We are not currently offering gunsmithing or other FFL-required services. For updates on when these services may become available, see our Services page.</p>
-      <span class="badge"><i class="fas fa-hourglass-half"></i> Not yet available</span>
-      <br>
-      <a href="services.html" class="cta-link">View Services page</a>
+      <h1>Basic Firearm Services</h1>
+      <p>We offer basic firearm services at competitive prices—cleaning, inspection, optics mounting, and simple sight installation. We're working toward full gunsmith certification to expand what we can do for you.</p>
+      <p class="note">All work is performed at our Huntsville location. Call or email to schedule.</p>
+      <span class="badge"><i class="fas fa-check-circle"></i> Available now</span>
     </div>
+
+    <div class="section">
+      <h2>Service pricing</h2>
+      <table class="price-table">
+        <thead>
+          <tr>
+            <th>Service</th>
+            <th>Price</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Field strip &amp; clean</td>
+            <td class="price">$30</td>
+          </tr>
+          <tr>
+            <td>Deep clean</td>
+            <td class="price">$80</td>
+          </tr>
+          <tr>
+            <td>Basic inspection / function check</td>
+            <td class="price">$30</td>
+          </tr>
+          <tr>
+            <td>Optics mount + bore sight (scope or red dot)</td>
+            <td class="price">$40</td>
+          </tr>
+          <tr>
+            <td>Bore sight only</td>
+            <td class="price">$15</td>
+          </tr>
+          <tr>
+            <td>Simple sight installation (dovetail / screw-on)</td>
+            <td class="price">$35</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>Prices may vary for unusual or complex firearms. We do not currently offer trigger work, barrel work, or NFA services.</p>
+    </div>
+
+    <p style="text-align: center; margin-top: 1.5rem;"><a href="contact.html" class="cta-link">Contact us / Schedule</a></p>
   </main>
 
   <footer>
@@ -78,6 +127,7 @@
         <ul>
           <li><a href="shop/ammunition.html">Ammunition</a></li>
           <li><a href="shop/magazines.html">Magazines</a></li>
+          <li><a href="shop/guns.html">Firearms</a></li>
           <li><a href="shop/gun-parts.html">Gun Parts</a></li>
           <li><a href="shop/gear.html">Gear</a></li>
           <li><a href="shop/optics.html">Optics</a></li>
@@ -116,7 +166,7 @@
     </div>
     <div class="footer-bottom">
       <p>© 2026 Modular Gunworks LLC. All rights reserved. | Veteran-Owned Business in Huntsville, Alabama</p>
-      <p>We are working toward offering firearm sales and transfers in compliance with federal, state, and local laws.</p>
+      <p>We are a licensed FFL and offer firearm sales and transfers in compliance with federal, state, and local laws.</p>
     </div>
   </footer>
 </body>
