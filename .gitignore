@@ -1,2 +1,7 @@
 # Order data (stored locally when using serve.js; do not commit)
 data/orders.json
+
+# Environment and secrets (never commit)
+.env
+.env.*
+!.env.example
