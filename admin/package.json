@@ -1,0 +1,17 @@
+{
+  "name": "modular-gunworks-admin",
+  "version": "1.0.0",
+  "description": "Product catalog admin - multi-source, primary listing, merge to master",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2"
+  }
+}
