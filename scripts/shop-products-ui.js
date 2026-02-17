@@ -458,6 +458,14 @@
     return `${base}?sku=${encodeURIComponent(product.sku || '')}&category=${encodeURIComponent(category)}`;
   }
 
+  function parseRoundCount(product) {
+    const n = product.roundCount ?? product.quantity ?? product.rounds;
+    if (n != null && !isNaN(n) && n > 0) return Number(n);
+    const name = (product.name || '') + ' ' + (product.description || '');
+    const match = name.match(/\b(\d+)\s*(?:rd|rds|round|rounds)\b/i);
+    return match ? parseInt(match[1], 10) : null;
+  }
+
   function renderProductCard(product) {
     const url = productDetailUrl(product);
     const displayPrice = product.displayPrice ?? 0;
@@ -467,6 +475,12 @@
     const nameEsc = (product.name || '').replace(/'/g, "\\'").replace(/"/g, '&quot;');
     const imgEsc = (product.image || '').replace(/'/g, "\\'").replace(/"/g, '&quot;');
     const category = getPageCategory();
+    const roundCount = parseRoundCount(product);
+    const cpr = roundCount && roundCount > 0 && priceNum > 0 ? (priceNum / roundCount).toFixed(2) : null;
+    const priceBar = roundCount
+      ? (cpr ? roundCount + ' rds / $' + cpr + '/rd' : roundCount + ' rds')
+      : '';
+    const sku = (product.sku || '').trim();
     const imgHtml = product.image
       ? '<img src="' + (product.image.replace(/"/g, '&quot;')) + '" alt="' + escapeHtml(product.name || '') + '" loading="lazy">'
       : '<div class="product-image-placeholder"><i class="fas fa-box"></i></div>';
@@ -478,8 +492,10 @@
           '<div class="product-name">' + escapeHtml(product.name || '') + '</div>' +
           '<div class="product-pricing">' +
             '<div class="product-price">$' + price + '</div>' +
+            (priceBar ? '<div class="product-price-bar">' + escapeHtml(priceBar) + '</div>' : '') +
             '<div class="product-stock ' + (inStock ? 'stock-in' : 'stock-out') + '">' + (inStock ? 'In Stock' : 'Out of Stock') + '</div>' +
           '</div>' +
+          (sku ? '<div class="product-sku">' + escapeHtml(sku) + '</div>' : '') +
         '</div>' +
       '</a>' +
       '<button class="product-btn" onclick="event.preventDefault(); event.stopPropagation(); addToCart(\'' + (product.sku || '').replace(/'/g, "\\'") + '\', \'' + nameEsc + '\', ' + priceNum + ', 1, \'' + imgEsc + '\', \'' + category + '\')">' +
