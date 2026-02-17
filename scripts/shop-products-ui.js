@@ -23,8 +23,10 @@
 
   function getPageCategory() {
     const path = window.location.pathname || '';
-    const name = path.split('/').pop() || '';
-    return name.replace(/\.html$/i, '') || 'ammunition';
+    const name = (path.split('/').pop() || '').replace(/\.html$/i, '');
+    if (name === 'sale') return 'sale';
+    if (name === 'brand-products') return 'brand-products';
+    return name || 'ammunition';
   }
 
   // --- Ammo: derive caliber, bulletType, grainWeight from name ---
@@ -71,8 +73,8 @@
 
   // --- Magazines: derive caliber + capacity from name ---
   function extractCapacity(name) {
-    const m = (name || '').match(/(\d+)\s*(?:rd|round|capacity|\/)/i);
-    return m ? m[1] + 'rd' : '';
+    const m = (name || '').match(/(\d+)\s*(?:rd|rds|round|rounds|capacity|\/)/i);
+    return m ? m[1] + ' rd' : '';
   }
 
   // --- Gear / Optics / Outdoors / Reloading / Gun Parts: derived types ---
@@ -286,22 +288,31 @@
 
   function setupFilterPopulations(products) {
     const pageCategory = getPageCategory();
+    const isSale = pageCategory === 'sale';
+    const isBrandProducts = pageCategory === 'brand-products';
     const hasAmmo = document.getElementById('caliber-list') && (pageCategory === 'ammunition' || document.getElementById('bullet-type-list'));
     const hasMagazine = document.getElementById('capacity-list') || (document.getElementById('caliber-list') && pageCategory === 'magazines');
     let enriched = products.map(normalizeProductFields);
-    if (pageCategory === 'gear') enriched = enrichGearProducts(enriched);
-    else if (pageCategory === 'optics') enriched = enrichOpticsProducts(enriched);
-    else if (pageCategory === 'outdoors') enriched = enrichOutdoorsProducts(enriched);
-    else if (pageCategory === 'reloading') enriched = enrichReloadingProducts(enriched);
-    else if (pageCategory === 'gun-parts') enriched = enrichGunPartsProducts(enriched);
+    if (!isSale && !isBrandProducts) {
+      if (pageCategory === 'gear') enriched = enrichGearProducts(enriched);
+      else if (pageCategory === 'optics') enriched = enrichOpticsProducts(enriched);
+      else if (pageCategory === 'outdoors') enriched = enrichOutdoorsProducts(enriched);
+      else if (pageCategory === 'reloading') enriched = enrichReloadingProducts(enriched);
+      else if (pageCategory === 'gun-parts') enriched = enrichGunPartsProducts(enriched);
+      if (hasAmmo) enriched = enrichAmmoProducts(enriched);
+      else if (hasMagazine) enriched = enrichMagazineProducts(enriched);
+    }
 
-    if (hasAmmo) enriched = enrichAmmoProducts(enriched);
-    else if (hasMagazine) enriched = enrichMagazineProducts(enriched);
-
-    let categories = unique(enriched.flatMap(p => [p.category, p.subcategory].filter(Boolean)));
-    // On ammunition page, don't show "Ammunition" in category filter (redundant); only show subcategories (e.g. Handgun, Rifle, Rimfire Ammunition).
-    if (pageCategory === 'ammunition' && document.getElementById('category-list')) {
-      categories = categories.filter(c => (c || '').toLowerCase() !== 'ammunition');
+    let categories;
+    if (isSale) {
+      categories = unique(enriched.map(p => p.categoryDisplay || p.sourceCategory).filter(Boolean));
+    } else if (isBrandProducts) {
+      categories = unique(enriched.map(p => (p.category || p.sourceCategorySlug || '').replace(/_/g, ' ').replace(/___/g, ' & ')).filter(Boolean));
+    } else {
+      categories = unique(enriched.flatMap(p => [p.category, p.subcategory].filter(Boolean)));
+      if (pageCategory === 'ammunition' && document.getElementById('category-list')) {
+        categories = categories.filter(c => (c || '').toLowerCase() !== 'ammunition');
+      }
     }
     const types = unique(enriched.map(p => p.type || p.subcategory || p.category).filter(Boolean));
     const brands = unique(enriched.map(p => p.manufacturer).filter(Boolean));
@@ -374,9 +385,19 @@
 
     const selectedCategories = getSelectedFilterValues('category-checkbox');
     if (selectedCategories.length) {
-      result = result.filter(p =>
-        selectedCategories.includes(p.category) || selectedCategories.includes(p.subcategory)
-      );
+      const pageCategory = getPageCategory();
+      if (pageCategory === 'sale') {
+        result = result.filter(p => selectedCategories.includes(p.categoryDisplay || p.sourceCategory));
+      } else if (pageCategory === 'brand-products') {
+        result = result.filter(p => {
+          const cat = (p.category || p.sourceCategorySlug || '').replace(/_/g, ' ').replace(/___/g, ' & ');
+          return selectedCategories.includes(cat);
+        });
+      } else {
+        result = result.filter(p =>
+          selectedCategories.includes(p.category) || selectedCategories.includes(p.subcategory)
+        );
+      }
     }
 
     const selectedTypes = getSelectedFilterValues('type-checkbox');
@@ -414,7 +435,7 @@
       result = result.filter(p => selectedCapacities.includes(p.capacity));
     }
 
-    if (document.getElementById('on-sale-filter')?.checked) {
+    if (document.getElementById('on-sale-filter')?.checked && getPageCategory() !== 'sale') {
       result = result.filter(p => {
         const sellPrice = p.price ?? 0;
         const listPrice = p.displayPrice ?? 0;
@@ -447,14 +468,24 @@
     if (sortVal === 'price-low') result.sort((a, b) => getDisplayPrice(a) - getDisplayPrice(b));
     else if (sortVal === 'price-high') result.sort((a, b) => getDisplayPrice(b) - getDisplayPrice(a));
     else if (sortVal === 'name') result.sort((a, b) => (a.name || '').localeCompare(b.name || ''));
-    else result = result; // newest / default: keep load order (top brands first from load-products.js)
+    else if (sortVal === 'discount') {
+      result.sort((a, b) => {
+        const dA = (a.discount != null && !isNaN(a.discount)) ? a.discount : 0;
+        const dB = (b.discount != null && !isNaN(b.discount)) ? b.discount : 0;
+        if (dB !== dA) return dB - dA;
+        return (a.name || '').localeCompare(b.name || '');
+      });
+    } else result = result; // newest / default: keep load order (top brands first from load-products.js)
 
     return result;
   }
 
   function productDetailUrl(product) {
-    const category = getPageCategory();
+    const pageCategory = getPageCategory();
     const base = window.location.pathname.includes('/shop/') ? '../product-detail.html' : 'product-detail.html';
+    let category = pageCategory;
+    if (pageCategory === 'sale' && (product.sourceCategory != null)) category = product.sourceCategory;
+    else if (pageCategory === 'brand-products' && (product.sourceCategorySlug != null)) category = product.sourceCategorySlug;
     return `${base}?sku=${encodeURIComponent(product.sku || '')}&category=${encodeURIComponent(category)}`;
   }
 
@@ -475,30 +506,50 @@
     const nameEsc = (product.name || '').replace(/'/g, "\\'").replace(/"/g, '&quot;');
     const imgEsc = (product.image || '').replace(/'/g, "\\'").replace(/"/g, '&quot;');
     const category = getPageCategory();
-    const roundCount = parseRoundCount(product);
+    const isSale = category === 'sale';
+    const isAmmo = category === 'ammunition';
+    const isMagazines = category === 'magazines';
+    const roundCount = isAmmo ? parseRoundCount(product) : null;
     const cpr = roundCount && roundCount > 0 && priceNum > 0 ? (priceNum / roundCount).toFixed(2) : null;
-    const priceBar = roundCount
+    const priceBar = isAmmo && roundCount
       ? (cpr ? roundCount + ' rds / $' + cpr + '/rd' : roundCount + ' rds')
+      : '';
+    const capacityStr = (product.capacity || (isMagazines ? extractCapacity(product.name) : '')).toString().trim();
+    const caliberStr = (product.caliber || (isMagazines ? extractCaliber(product.name) : '')).toString().trim();
+    const magazineBar = isMagazines && (capacityStr || caliberStr)
+      ? [capacityStr, caliberStr].filter(Boolean).join(' \u00B7 ')
       : '';
     const sku = (product.sku || '').trim();
     const imgHtml = product.image
       ? '<img src="' + (product.image.replace(/"/g, '&quot;')) + '" alt="' + escapeHtml(product.name || '') + '" loading="lazy">'
       : '<div class="product-image-placeholder"><i class="fas fa-box"></i></div>';
+    const saleBadge = isSale && (product.discount > 0 || product.isMapOnly)
+      ? '<div class="sale-badge">' + (product.isMapOnly ? 'Great Price' : (product.discount + '% OFF')) + '</div>'
+      : '';
+    const saleRegularPrice = isSale && product.regularPrice != null && product.regularPrice > 0 && !product.isMapOnly
+      ? '<span class="product-regular-price">$' + Number(product.regularPrice).toFixed(2) + '</span>'
+      : '';
+    const detailCategory = (product.sourceCategory || product.sourceCategorySlug || category);
+    const brandLine = isSale
+      ? (product.categoryDisplay || product.sourceCategory || product.manufacturer || '')
+      : (product.manufacturer || 'Unknown');
     return '<div class="product-card">' +
       '<a href="' + url + '" class="product-card-link" style="text-decoration: none; color: inherit; display: flex; flex-direction: column; flex: 1;">' +
-        '<div class="product-image">' + imgHtml + '</div>' +
+        '<div class="product-image">' + imgHtml + saleBadge + '</div>' +
         '<div class="product-info">' +
-          '<div class="product-brand">' + (escapeHtml(product.manufacturer || '') || 'Unknown') + '</div>' +
+          (isMagazines && sku ? '<div class="product-sku product-sku-above">' + escapeHtml(sku) + '</div>' : '') +
+          '<div class="product-brand">' + escapeHtml(brandLine) + '</div>' +
           '<div class="product-name">' + escapeHtml(product.name || '') + '</div>' +
+          (magazineBar ? '<div class="product-magazine-bar">' + escapeHtml(magazineBar) + '</div>' : '') +
           '<div class="product-pricing">' +
-            '<div class="product-price">$' + price + '</div>' +
+            (isSale ? '<span class="product-sale-price">$' + price + '</span> ' + saleRegularPrice : '<div class="product-price">$' + price + '</div>') +
             (priceBar ? '<div class="product-price-bar">' + escapeHtml(priceBar) + '</div>' : '') +
             '<div class="product-stock ' + (inStock ? 'stock-in' : 'stock-out') + '">' + (inStock ? 'In Stock' : 'Out of Stock') + '</div>' +
           '</div>' +
-          (sku ? '<div class="product-sku">' + escapeHtml(sku) + '</div>' : '') +
+          (sku && !isMagazines ? '<div class="product-sku">' + escapeHtml(sku) + '</div>' : '') +
         '</div>' +
       '</a>' +
-      '<button class="product-btn" onclick="event.preventDefault(); event.stopPropagation(); addToCart(\'' + (product.sku || '').replace(/'/g, "\\'") + '\', \'' + nameEsc + '\', ' + priceNum + ', 1, \'' + imgEsc + '\', \'' + category + '\')">' +
+      '<button class="product-btn" onclick="event.preventDefault(); event.stopPropagation(); addToCart(\'' + (product.sku || '').replace(/'/g, "\\'") + '\', \'' + nameEsc + '\', ' + priceNum + ', 1, \'' + imgEsc + '\', \'' + detailCategory + '\')">' +
         '<i class="fas fa-cart-plus"></i> Add to Cart' +
       '</button>' +
     '</div>';
@@ -543,18 +594,20 @@
       } else {
         const category = getPageCategory();
         const rows = products.map(p => {
-        const dp = p.displayPrice ?? 0;
-        const priceNum = (dp != null && !isNaN(dp)) ? dp : 0;
+          const dp = p.displayPrice ?? 0;
+          const priceNum = (dp != null && !isNaN(dp)) ? dp : 0;
           const price = priceNum.toFixed(2);
           const url = productDetailUrl(p);
           const imgEsc = (p.image || '').replace(/'/g, "\\'");
+          const detailCat = p.sourceCategory || p.sourceCategorySlug || category;
+          const secondCol = category === 'sale' ? (p.categoryDisplay || p.sourceCategory || '') : (p.manufacturer || '');
           return `
             <tr>
               <td><a href="${url}" style="color: var(--color-bg-dark, #181a1b); font-weight: 600;">${escapeHtml(p.name || '')}</a></td>
-              <td>${escapeHtml(p.manufacturer || '')}</td>
+              <td>${escapeHtml(secondCol)}</td>
               <td class="product-price-list">$${price}</td>
               <td><span class="${p.inventory > 0 ? 'stock-in' : 'stock-out'}">${p.inventory > 0 ? 'In Stock' : 'Out of Stock'}</span></td>
-              <td><button type="button" class="product-btn" style="padding: 0.4rem 0.8rem;" onclick="addToCart('${(p.sku || '').replace(/'/g, "\\'")}', '${(p.name || '').replace(/'/g, "\\'")}', ${priceNum}, 1, '${imgEsc}', '${category}')"><i class="fas fa-cart-plus"></i> Add</button></td>
+              <td><button type="button" class="product-btn" style="padding: 0.4rem 0.8rem;" onclick="addToCart('${(p.sku || '').replace(/'/g, "\\'")}', '${(p.name || '').replace(/'/g, "\\'")}', ${priceNum}, 1, '${imgEsc}', '${detailCat}')"><i class="fas fa-cart-plus"></i> Add</button></td>
             </tr>`;
         }).join('');
         listBody.innerHTML = rows;
@@ -612,7 +665,7 @@
         if (filterInputs.priceMax) filterInputs.priceMax.value = '';
         if (filterInputs.inStock) filterInputs.inStock.checked = false;
         if (filterInputs.onSale) filterInputs.onSale.checked = false;
-        if (filterInputs.sort) filterInputs.sort.value = 'price-low';
+        if (filterInputs.sort) filterInputs.sort.value = (getPageCategory() === 'sale' ? 'discount' : 'price-low');
         if (filterInputs.search) filterInputs.search.value = '';
         currentPage = 1;
         updateView();

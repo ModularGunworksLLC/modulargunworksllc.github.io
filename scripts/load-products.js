@@ -174,6 +174,167 @@ function isSuppressorOrNFAProduct(p) {
   return nfaPhrases.some(phrase => name.includes(phrase));
 }
 
+// --- Loader mode: single category vs sale vs brand-products ---
+
+function getLoaderMode() {
+  const path = (window.location.pathname || '').split('/').pop() || '';
+  if (path === 'sale.html' || path === 'sale') return 'sale';
+  if (path === 'brand-products.html' || path === 'brand-products') return 'brand';
+  return 'single';
+}
+
+function getBrandFromUrl() {
+  const params = new URLSearchParams(window.location.search || '');
+  const brand = params.get('brand') || '';
+  return brand ? decodeURIComponent(brand).trim() : '';
+}
+
+// File name -> URL slug for product-detail category param
+var SALE_CATEGORIES = [
+  { file: 'Ammunition.json', slug: 'ammunition' },
+  { file: 'Magazines.json', slug: 'magazines' },
+  { file: 'Gun_Parts.json', slug: 'gun-parts' },
+  { file: 'Gear.json', slug: 'gear' },
+  { file: 'Optics.json', slug: 'optics' },
+  { file: 'Reloading.json', slug: 'reloading' },
+  { file: 'Outdoors.json', slug: 'outdoors' }
+];
+
+var BRAND_CATEGORIES = [
+  { file: 'Ammunition.json', slug: 'ammunition' },
+  { file: 'Magazines.json', slug: 'magazines' },
+  { file: 'Gun_Parts.json', slug: 'gun-parts' },
+  { file: 'Gear.json', slug: 'gear' },
+  { file: 'Optics.json', slug: 'optics' },
+  { file: 'Reloading.json', slug: 'reloading' },
+  { file: 'Outdoors.json', slug: 'outdoors' },
+  { file: 'Firearms.json', slug: 'guns' },
+  { file: 'Knives.json', slug: 'knives' },
+  { file: 'Clothing___Footwear.json', slug: 'clothing___footwear' }
+];
+
+function categoryDisplayFromSlug(slug) {
+  return (slug || '').split('-').map(function (w) { return w.charAt(0).toUpperCase() + w.slice(1); }).join(' ');
+}
+
+// --- Sale: fetch active.json, then each category; merge sale items (Price < MSRP/MAP + MAP-only) ---
+
+async function loadSaleProducts() {
+  let activeData = {};
+  try {
+    const activeRes = await fetch('../data/products/active.json');
+    if (activeRes.ok) activeData = await activeRes.json();
+  } catch (e) {
+    console.warn('active.json not loaded:', e);
+  }
+
+  const skusInSale = new Set();
+  const allSale = [];
+
+  for (const cat of SALE_CATEGORIES) {
+    try {
+      const res = await fetch('../data/products/mapped-products/' + cat.file);
+      if (!res.ok) continue;
+      const data = await res.json();
+      const list = Array.isArray(data) ? data : (data.products || data.items || []);
+      const categoryPage = cat.slug;
+
+      for (const row of list) {
+        if (row.hidden) continue;
+        const sku = (row.SKU || row.sku || '').toString();
+        const isActive = activeData[sku] && activeData[sku].page === categoryPage;
+        const regularPrice = priceOrNull(row.MSRP) ?? priceOrNull(row.MAP);
+        if (regularPrice == null) continue;
+        const sellPrice = priceOrNull(row.Price);
+        const displayPrice = (sellPrice != null && sellPrice < regularPrice) ? sellPrice : (priceOrNull(row.MAP) ?? priceOrNull(row.MSRP));
+        const isTraditionalSale = isActive && displayPrice != null && displayPrice > 0 && displayPrice < regularPrice;
+        const isMapOnly = priceOrNull(row.MAP) != null && priceOrNull(row.MSRP) == null && !skusInSale.has(sku);
+        if (!isTraditionalSale && !isMapOnly) continue;
+
+        const normalized = normalizeVendorProduct(row);
+        if (!normalized.displayPrice || normalized.displayPrice <= 0) continue;
+
+        const regular = isTraditionalSale ? regularPrice : (priceOrNull(row.MAP) ?? regularPrice);
+        const discount = regular > 0 ? Math.round(((regular - (normalized.displayPrice || 0)) / regular) * 100) : 0;
+        skusInSale.add(sku);
+        allSale.push({
+          ...normalized,
+          regularPrice: regular,
+          discount: isMapOnly ? 0 : discount,
+          sourceCategory: cat.slug,
+          categoryDisplay: categoryDisplayFromSlug(cat.slug),
+          isMapOnly: !!isMapOnly
+        });
+      }
+    } catch (e) {
+      console.error('Sale load ' + cat.file + ':', e);
+    }
+  }
+
+  allSale.sort((a, b) => {
+    if (a.discount > 0 && b.discount === 0) return -1;
+    if (a.discount === 0 && b.discount > 0) return 1;
+    if (a.discount > 0 && b.discount > 0) return b.discount - a.discount;
+    return (a.name || '').localeCompare(b.name || '');
+  });
+
+  window.allProducts = allSale;
+  if (typeof onProductsLoaded === 'function') onProductsLoaded(allSale);
+}
+
+// --- Brand: fetch all category files, merge, filter by ?brand= ---
+
+function productMatchesBrand(p, brandTrimmed) {
+  if (!brandTrimmed) return true;
+  const raw = (p.manufacturer || '').trim();
+  const displayName = getManufacturerDisplayName(raw);
+  if (displayName === brandTrimmed) return true;
+  const brandLower = brandTrimmed.toLowerCase();
+  if (raw.toLowerCase() === brandLower || raw.toLowerCase().includes(brandLower)) return true;
+  return false;
+}
+
+async function loadBrandProducts() {
+  const brand = getBrandFromUrl();
+  if (!brand) {
+    window.allProducts = [];
+    if (typeof onProductsLoaded === 'function') onProductsLoaded([]);
+    return;
+  }
+  const merged = [];
+
+  for (const cat of BRAND_CATEGORIES) {
+    try {
+      const res = await fetch('../data/products/mapped-products/' + cat.file);
+      if (!res.ok) continue;
+      const data = await res.json();
+      const list = Array.isArray(data) ? data : (data.products || data.items || []);
+      let normalized = list.map(normalizeVendorProduct);
+      normalized = normalized.filter(p => p.displayPrice != null && p.displayPrice > 0);
+      if (cat.file === 'Firearms.json') {
+        normalized = normalized.filter(p => !isSuppressorOrNFAProduct(p));
+      }
+      normalized.forEach(p => {
+        p.sourceCategorySlug = cat.slug;
+      });
+      merged.push(...normalized);
+    } catch (e) {
+      console.error('Brand load ' + cat.file + ':', e);
+    }
+  }
+
+  const products = brand ? merged.filter(p => productMatchesBrand(p, brand)) : merged;
+  products.sort((a, b) => {
+    const rankA = getBrandRank(a.manufacturer);
+    const rankB = getBrandRank(b.manufacturer);
+    if (rankA !== rankB) return rankA - rankB;
+    return (a.name || '').localeCompare(b.name || '');
+  });
+
+  window.allProducts = products;
+  if (typeof onProductsLoaded === 'function') onProductsLoaded(products);
+}
+
 // --- Existing logic: determine which file to load ---
 
 function getCategoryFileName() {
@@ -191,6 +352,28 @@ function getCategoryFileName() {
 // --- Main loader with normalization ---
 
 async function loadProducts() {
+  const mode = getLoaderMode();
+  if (mode === 'sale') {
+    try {
+      await loadSaleProducts();
+    } catch (e) {
+      window.allProducts = [];
+      if (typeof onProductsLoaded === 'function') onProductsLoaded([]);
+      console.error('Failed to load sale products:', e);
+    }
+    return;
+  }
+  if (mode === 'brand') {
+    try {
+      await loadBrandProducts();
+    } catch (e) {
+      window.allProducts = [];
+      if (typeof onProductsLoaded === 'function') onProductsLoaded([]);
+      console.error('Failed to load brand products:', e);
+    }
+    return;
+  }
+
   const fileName = getCategoryFileName();
   const url = `../data/products/mapped-products/${fileName}`;
 

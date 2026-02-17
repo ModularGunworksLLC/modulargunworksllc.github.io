@@ -5,3 +5,6 @@ data/orders.json
 .env
 .env.*
 !.env.example
+
+# Local admin tooling (not part of main/live site)
+admin/
