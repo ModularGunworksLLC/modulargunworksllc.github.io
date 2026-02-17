@@ -38,8 +38,8 @@
         <a href="help.html">Help</a>
         <a href="shop/cart.html">Cart</a>
       </div>
-      <form class="search-bar" action="#" method="get">
-        <input type="text" placeholder="Search ammo, gear, optics...">
+      <form class="search-bar" action="shop/search.html" method="get">
+        <input type="text" name="q" placeholder="Search ammo, gear, optics...">
         <button type="submit">Search</button>
       </form>
     </div>
@@ -56,7 +56,7 @@
       <a href="shop/sale.html">ON SALE</a>
       <a href="services.html">Services</a>
     </nav>
-    <div class="promo-bar">Veteran-Owned Business | Fast Shipping | Professional Service</div>
+    <div class="promo-bar">Free shipping on orders over $99 | Veteran-Owned Business | Fast Shipping | Professional Service</div>
   </header>
 
   <main>
@@ -138,6 +138,16 @@
           <li><a href="state-restrictions.html">State Restrictions</a></li>
           <li><a href="firearm-transfer-guide.html">Firearm Transfer Guide</a></li>
         </ul>
+      </div>
+      <div class="footer-section footer-newsletter">
+        <h3>Newsletter</h3>
+        <p class="newsletter-tagline">Get deals & restock alerts</p>
+        <form class="newsletter-form" action="#" method="post" data-newsletter-form>
+          <input type="hidden" name="_subject" value="Newsletter signup – Modular Gunworks">
+          <input type="text" name="firstName" placeholder="First name" aria-label="First name" required>
+          <input type="email" name="email" placeholder="Email" aria-label="Email" required>
+          <button type="submit">Sign up</button>
+        </form>
       </div>
       <div class="footer-section">
         <h3>Contact</h3>

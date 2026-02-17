@@ -180,6 +180,7 @@ function getLoaderMode() {
   const path = (window.location.pathname || '').split('/').pop() || '';
   if (path === 'sale.html' || path === 'sale') return 'sale';
   if (path === 'brand-products.html' || path === 'brand-products') return 'brand';
+  if (path === 'search.html' || path === 'search') return 'search';
   return 'single';
 }
 
@@ -335,6 +336,61 @@ async function loadBrandProducts() {
   if (typeof onProductsLoaded === 'function') onProductsLoaded(products);
 }
 
+// --- Search: ?q= across all BRAND_CATEGORIES ---
+function getSearchQuery() {
+  const params = new URLSearchParams(window.location.search || '');
+  const q = (params.get('q') || '').trim();
+  return q;
+}
+
+function productMatchesSearch(p, qLower) {
+  if (!qLower) return false;
+  const fields = [p.name, p.webName, p.description, p.manufacturer, p.sku].filter(Boolean);
+  return fields.some(function (val) { return String(val).toLowerCase().includes(qLower); });
+}
+
+async function loadSearchProducts() {
+  const q = getSearchQuery();
+  if (!q) {
+    window.allProducts = [];
+    if (typeof onProductsLoaded === 'function') onProductsLoaded([]);
+    return;
+  }
+  const qLower = q.toLowerCase();
+  const merged = [];
+
+  for (const cat of BRAND_CATEGORIES) {
+    try {
+      const res = await fetch('../data/products/mapped-products/' + cat.file);
+      if (!res.ok) continue;
+      const data = await res.json();
+      const list = Array.isArray(data) ? data : (data.products || data.items || []);
+      let normalized = list.map(normalizeVendorProduct);
+      normalized = normalized.filter(p => p.displayPrice != null && p.displayPrice > 0);
+      if (cat.file === 'Firearms.json') {
+        normalized = normalized.filter(p => !isSuppressorOrNFAProduct(p));
+      }
+      normalized.forEach(p => {
+        p.sourceCategorySlug = cat.slug;
+      });
+      merged.push(...normalized);
+    } catch (e) {
+      console.warn('Search load ' + cat.file + ':', e);
+    }
+  }
+
+  const products = merged.filter(p => productMatchesSearch(p, qLower));
+  products.sort((a, b) => {
+    const rankA = getBrandRank(a.manufacturer);
+    const rankB = getBrandRank(b.manufacturer);
+    if (rankA !== rankB) return rankA - rankB;
+    return (a.name || '').localeCompare(b.name || '');
+  });
+
+  window.allProducts = products;
+  if (typeof onProductsLoaded === 'function') onProductsLoaded(products);
+}
+
 // --- Existing logic: determine which file to load ---
 
 function getCategoryFileName() {
@@ -360,6 +416,16 @@ async function loadProducts() {
       window.allProducts = [];
       if (typeof onProductsLoaded === 'function') onProductsLoaded([]);
       console.error('Failed to load sale products:', e);
+    }
+    return;
+  }
+  if (mode === 'search') {
+    try {
+      await loadSearchProducts();
+    } catch (e) {
+      window.allProducts = [];
+      if (typeof onProductsLoaded === 'function') onProductsLoaded([]);
+      console.error('Failed to load search products:', e);
     }
     return;
   }

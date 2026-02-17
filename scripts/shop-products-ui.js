@@ -26,6 +26,7 @@
     const name = (path.split('/').pop() || '').replace(/\.html$/i, '');
     if (name === 'sale') return 'sale';
     if (name === 'brand-products') return 'brand-products';
+    if (name === 'search') return 'search';
     return name || 'ammunition';
   }
 
@@ -485,7 +486,7 @@
     const base = window.location.pathname.includes('/shop/') ? '../product-detail.html' : 'product-detail.html';
     let category = pageCategory;
     if (pageCategory === 'sale' && (product.sourceCategory != null)) category = product.sourceCategory;
-    else if (pageCategory === 'brand-products' && (product.sourceCategorySlug != null)) category = product.sourceCategorySlug;
+    else if ((pageCategory === 'brand-products' || pageCategory === 'search') && (product.sourceCategorySlug != null)) category = product.sourceCategorySlug;
     return `${base}?sku=${encodeURIComponent(product.sku || '')}&category=${encodeURIComponent(category)}`;
   }
 

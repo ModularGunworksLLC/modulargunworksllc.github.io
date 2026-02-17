@@ -62,6 +62,12 @@ Current site can stay static (e.g. GitHub Pages); frontend calls your Render API
 
 ---
 
+## Implemented (static site)
+
+- **Promo bar** – “Free shipping on orders over $99” added site-wide in the header promo bar.
+- **Newsletter signup** – Footer block “Get deals & restock alerts” with First Name + Email on all main pages. Form `action="#"` for now; replace with your Formspree form ID or Render API endpoint when ready (see “Mailing list” above).
+- **Product search** – Header search submits to `shop/search.html?q=...`. Search runs across all category JSONs (ammo, gear, optics, firearms, etc.) and shows the same product grid/list UI.
+
 ## Next Steps
 
 - Choose: mailing list only vs. mailing list + members.

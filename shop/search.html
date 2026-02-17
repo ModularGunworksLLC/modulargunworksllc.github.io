@@ -3,36 +3,28 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Shop products by brand at Modular Gunworks LLC">
+  <meta name="description" content="Search products at Modular Gunworks LLC - ammo, gear, optics, firearms, and more.">
+  <meta name="keywords" content="search, ammunition, gear, optics, firearms">
   <meta name="author" content="Modular Gunworks LLC">
   <meta name="theme-color" content="#181a1b">
 
-  <title>Brand Products - Modular Gunworks LLC</title>
+  <title>Search - Modular Gunworks LLC</title>
 
   <link rel="stylesheet" href="../styles/design-system.css">
   <link rel="stylesheet" href="../styles/components.css">
   <link rel="stylesheet" href="../styles/layout.css">
   <link rel="stylesheet" href="../styles/age-gate.css">
-  <link rel="stylesheet" href="../styles/product-tiles.css">
-  <link rel="stylesheet" href="../styles/gear.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="icon" type="image/png" href="../favicon.png">
-
-  <style>
-    .brand-header { margin-bottom: 1.5rem; }
-    .brand-header h1 { font-size: 2rem; color: var(--color-bg-dark); margin-bottom: 0.5rem; }
-    .brand-header p { color: #666; }
-    .back-link { display: inline-flex; align-items: center; gap: 0.5rem; color: var(--color-primary); text-decoration: none; font-weight: 600; margin-bottom: 1rem; }
-    .back-link:hover { text-decoration: underline; }
-  </style>
-
+  <link rel="stylesheet" href="../styles/gear.css">
+  <link rel="stylesheet" href="../styles/product-tiles.css">
   <script src="../scripts/age-gate.js"></script>
   <script src="../scripts/cart.js"></script>
   <script src="../scripts/load-products.js"></script>
   <script src="../scripts/shop-products-ui.js"></script>
 </head>
-<body>
 
+<body>
   <header id="site-header">
     <div class="header-top-row">
       <h1>MODULAR GUNWORKS LLC</h1>
@@ -48,7 +40,7 @@
         <a href="cart.html"><i class="fas fa-shopping-cart"></i> Cart <span class="cart-count-badge" style="background: var(--color-primary); color: #fff; padding: 2px 6px; border-radius: 10px; font-size: 0.75rem; display: none;">0</span></a>
       </div>
       <form class="search-bar" action="search.html" method="get">
-        <input type="text" name="q" placeholder="Search ammo, gear, optics...">
+        <input type="text" name="q" placeholder="Search ammo, gear, optics..." value="">
         <button type="submit" title="Search"><i class="fas fa-search"></i></button>
       </form>
     </div>
@@ -70,76 +62,13 @@
     </div>
   </header>
 
-  <main class="main-container">
-    <aside id="filters-sidebar" class="filters-sidebar">
-      <div class="filter-header">
-        <h3 class="filter-header-title">Filters</h3>
-        <button id="clear-filters" class="filter-header-btn">Clear All</button>
-      </div>
-      <div class="filter-stock-top" style="padding: 1rem 1.2rem; border-bottom: 1px solid #e0e0e0; background: #fafafa;">
-        <label class="filter-checkbox-label" style="display: flex; align-items: center; cursor: pointer; font-weight: 600; color: #333; gap: 0.6rem;">
-          <input type="checkbox" id="in-stock-filter" class="filter-checkbox" style="width: 18px; height: 18px; cursor: pointer;">
-          Show Only In Stock
-        </label>
-      </div>
-      <div class="filter-section">
-        <button class="filter-toggle" data-filter="category">
-          <span>Category</span>
-          <i class="fas fa-chevron-down"></i>
-        </button>
-        <div class="filter-content">
-          <input type="text" class="filter-search" placeholder="Search category..." data-filter="category">
-          <div id="category-list" class="filter-list"></div>
-          <button class="show-more-btn" data-filter="category">Show More</button>
-        </div>
-      </div>
-      <div class="filter-section">
-        <button class="filter-toggle" data-filter="price">
-          <span>Price</span>
-          <i class="fas fa-chevron-down"></i>
-        </button>
-        <div class="filter-content">
-          <div class="price-flex">
-            <input type="number" id="price-min" placeholder="$0" min="0">
-            <input type="number" id="price-max" placeholder="$999" min="0">
-          </div>
-        </div>
-      </div>
-      <div class="filter-section">
-        <button class="filter-toggle" data-filter="brand">
-          <span>Brand</span>
-          <i class="fas fa-chevron-down"></i>
-        </button>
-        <div class="filter-content">
-          <input type="text" class="filter-search" placeholder="Search brand..." data-filter="brand">
-          <div id="brand-list" class="filter-list"></div>
-          <button class="show-more-btn" data-filter="brand">Show More</button>
-        </div>
-      </div>
-      <div class="filter-section">
-        <button class="filter-toggle" data-filter="sort">
-          <span>Sort By</span>
-          <i class="fas fa-chevron-down"></i>
-        </button>
-        <div class="filter-content">
-          <select id="sort-filter" class="sort-select" title="Sort products by">
-            <option value="price-low">Price: Low to High</option>
-            <option value="price-high">Price: High to Low</option>
-            <option value="name">Product Name (A-Z)</option>
-          </select>
-        </div>
-      </div>
-    </aside>
-
-    <div class="content-area">
-      <a href="brands.html" class="back-link"><i class="fas fa-arrow-left"></i> Back to All Brands</a>
-      <div class="brand-header">
-        <h1 id="brand-title">Loading...</h1>
-        <p id="brand-subtitle"></p>
-      </div>
+  <main class="main-container" style="display: block;">
+    <div class="content-area" style="max-width: none;">
+      <h1 class="page-title">Search</h1>
+      <p class="page-subtitle" id="search-subtitle">Use the search bar above to find products.</p>
 
       <div class="controls-wrapper">
-        <input type="text" id="product-search" class="product-search" placeholder="Search by name, brand, SKU..." style="max-width: 280px; padding: 0.5rem 0.75rem; border: 1px solid #ddd; border-radius: 4px; font-size: 0.95rem;">
+        <input type="text" id="product-search" class="product-search" placeholder="Filter results by name, brand, SKU..." style="max-width: 280px; padding: 0.5rem 0.75rem; border: 1px solid #ddd; border-radius: 4px; font-size: 0.95rem;">
         <div class="product-count">
           Showing <span id="product-count">0</span> of <span id="total-count">0</span> products
         </div>
@@ -156,7 +85,7 @@
 
       <div id="grid-view" class="products-grid">
         <div class="loading-container">
-          <i class="fas fa-spinner fa-spin"></i> Loading products...
+          <i class="fas fa-spinner fa-spin"></i> Loading...
         </div>
       </div>
 
@@ -173,7 +102,7 @@
           </thead>
           <tbody id="list-body">
             <tr>
-              <td colspan="5" class="loading-text">Loading products...</td>
+              <td colspan="5" class="loading-text">Loading...</td>
             </tr>
           </tbody>
         </table>
@@ -186,14 +115,15 @@
       <div class="footer-section">
         <h3>Shop</h3>
         <ul>
-          <li><a href="../shop/ammunition.html">Ammunition</a></li>
-          <li><a href="../shop/magazines.html">Magazines</a></li>
-          <li><a href="../shop/gun-parts.html">Gun Parts</a></li>
-          <li><a href="../shop/gear.html">Gear</a></li>
-          <li><a href="../shop/optics.html">Optics</a></li>
-          <li><a href="../shop/reloading.html">Reloading</a></li>
-          <li><a href="../shop/outdoors.html">Outdoors</a></li>
-          <li><a href="../shop/brands.html">Brands</a></li>
+          <li><a href="ammunition.html">Ammunition</a></li>
+          <li><a href="magazines.html">Magazines</a></li>
+          <li><a href="guns.html">Firearms</a></li>
+          <li><a href="gun-parts.html">Gun Parts</a></li>
+          <li><a href="gear.html">Gear</a></li>
+          <li><a href="optics.html">Optics</a></li>
+          <li><a href="reloading.html">Reloading</a></li>
+          <li><a href="outdoors.html">Outdoors</a></li>
+          <li><a href="brands.html">Brands</a></li>
         </ul>
       </div>
       <div class="footer-section">
@@ -241,17 +171,23 @@
   </footer>
 
   <script>
-    (function () {
+    (function() {
       var params = new URLSearchParams(window.location.search || '');
-      var brand = params.get('brand') || '';
-      var titleEl = document.getElementById('brand-title');
-      var subtitleEl = document.getElementById('brand-subtitle');
-      if (titleEl) {
-        titleEl.textContent = brand ? decodeURIComponent(brand) : 'No brand specified';
-        if (brand) document.title = decodeURIComponent(brand) + ' - Modular Gunworks LLC';
+      var q = (params.get('q') || '').trim();
+      var sub = document.getElementById('search-subtitle');
+      var searchInput = document.querySelector('.search-bar input[name="q"]');
+      if (searchInput) searchInput.value = q;
+      if (q) {
+        sub.textContent = 'Results for “‘ + q.replace(/</g, '&lt;').replace(/"/g, '&quot;') + '"';
       }
-      if (subtitleEl && !brand) subtitleEl.textContent = 'Select a brand from the Brands page.';
     })();
+  </script>
+  <script>
+    document.querySelectorAll('[data-newsletter-form]').forEach(function(form) {
+      form.addEventListener('submit', function(e) {
+        if (form.getAttribute('action') === '#') { e.preventDefault(); alert('Thanks! Backend for the mailing list will be connected soon.'); }
+      });
+    });
   </script>
 </body>
 </html>
