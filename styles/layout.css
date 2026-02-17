@@ -297,6 +297,7 @@ footer {
   }
 
   .header-left-links {
+    position: static;
     width: 100%;
     justify-content: center;
   }
@@ -306,7 +307,8 @@ footer {
     gap: 1rem;
   }
 
-  .header-search {
+  .header-search,
+  .search-bar {
     width: 100%;
   }
 
@@ -319,7 +321,30 @@ footer {
   }
 
   #site-header {
-    max-height: 380px;
+    max-height: none;
+    overflow: visible;
+    background-attachment: scroll;
+    padding-top: 1rem;
+  }
+
+  .header-top-row {
+    padding: 0.75rem 1rem;
+  }
+
+  .header-top-row h1 {
+    font-size: 1.25rem;
+  }
+
+  .header-middle-row {
+    padding: 0.75rem 1rem;
+  }
+
+  .header-logo {
+    position: static;
+  }
+
+  .header-logo img {
+    height: 48px;
   }
 }
 
