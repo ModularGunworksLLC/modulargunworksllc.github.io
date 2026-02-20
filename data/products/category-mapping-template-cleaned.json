@@ -103,6 +103,14 @@
     "top": "Outdoors",
     "sub": "Airguns|Air Gun Accessories|Airgun Accessories"
   },
+  "Airguns|Air Gun Accessories|Airgun Rifles": {
+    "top": "Outdoors",
+    "sub": "Airguns|Air Gun Accessories|Airgun Rifles"
+  },
+  "Airguns|Air Gun Pellets & BBs": {
+    "top": "Outdoors",
+    "sub": "Air Gun Pellets & BBs"
+  },
   "Airguns|Air Gun Pellets & BBs|Pellets & BBs": {
     "top": "Outdoors",
     "sub": "Airguns|Air Gun Pellets & BBs|Pellets & BBs"
@@ -727,6 +735,10 @@
     "top": "Gear",
     "sub": "Cases Safes & Storage|Gun Safes & Cabinets"
   },
+  "Cases Safes & Storage|Shooting|Gun Safes & Cabinets": {
+    "top": "Gear",
+    "sub": "Gun Safes & Cabinets"
+  },
   "Cases Safes & Storage|Handgun Cases": {
     "top": "Gear",
     "sub": "Cases Safes & Storage|Handgun Cases"
@@ -819,9 +831,13 @@
     "top": "Gun Parts",
     "sub": "Charging Handles/Bolt Knobs"
   },
+  "Firearms|Charging Handles/Bolt Knobs": {
+    "top": "Gun Parts",
+    "sub": "Charging Handles/Bolt Knobs"
+  },
   "Chassis & Stocks": {
     "top": "Gun Parts",
-    "sub": "Chassis & Stocks"
+    "sub": "Gun Parts|Chassis & Stocks"
   },
   "Chassis & Stocks|Chassis & Stocks": {
     "top": "Gun Parts",
@@ -1034,6 +1050,10 @@
   "Dry Bags|Bags & Duffels|Range Bags|Handgun Cases": {
     "top": "Outdoors",
     "sub": "Dry Bags|Bags & Duffels|Range Bags|Handgun Cases"
+  },
+  "Dry Bags|Bags & Duffels|Range Bags|Packs & Bags": {
+    "top": "Gear",
+    "sub": "Packs & Bags"
   },
   "Dry Bags|Bags & Duffels|Range Bags|Shooting Rests": {
     "top": "Outdoors",
@@ -1314,6 +1334,10 @@
   "Gun Holsters|Holster Accessories": {
     "top": "Gear",
     "sub": "Gun Holsters|Holster Accessories"
+  },
+  "Gun Holsters|Magazine Holsters": {
+    "top": "Gear",
+    "sub": "Gun Holsters|Magazine Holsters"
   },
   "Gun Locks": {
     "top": "Gear",
@@ -2031,11 +2055,19 @@
     "top": "Outdoors",
     "sub": "Non Cellular Trail Cameras|Navigation & Observation"
   },
+  "Non Cellular Trail Cameras|Hunting": {
+    "top": "Outdoors",
+    "sub": "Non Cellular Trail Cameras|Hunting"
+  },
   "Oil & Lubricants": {
     "top": "Gear",
     "sub": "Oil & Lubricants"
   },
   "Optics": {
+    "top": "Optics",
+    "sub": "Optics"
+  },
+  "Optics|Optics": {
     "top": "Optics",
     "sub": "Optics"
   },
@@ -3063,6 +3095,22 @@
     "top": "Outdoors",
     "sub": "Shooting|Shooting Rests"
   },
+  "Shooting|Shooting": {
+    "top": "Gear",
+    "sub": "Shooting"
+  },
+  "Shooting|Gun Cleaning Mats": {
+    "top": "Gear",
+    "sub": "Gun Cleaning Mats"
+  },
+  "Shooting|Trigger Pull Gauges": {
+    "top": "Gear",
+    "sub": "Trigger Pull Gauges"
+  },
+  "Shooting|Holster Accessories": {
+    "top": "Gear",
+    "sub": "Holster Accessories"
+  },
   "Shooting|Sling Accessories": {
     "top": "Gear",
     "sub": "Shooting|Sling Accessories"
@@ -3214,6 +3262,22 @@
   "Slides|Triggers": {
     "top": "Gun Parts",
     "sub": "Slides|Triggers"
+  },
+  "Gun Parts|Slides": {
+    "top": "Gun Parts",
+    "sub": "Slides"
+  },
+  "Gun Parts|Gun Bluing": {
+    "top": "Gun Parts",
+    "sub": "Gun Bluing"
+  },
+  "Gun Parts|Screwdrivers & Torque Wrenches": {
+    "top": "Gun Parts",
+    "sub": "Screwdrivers & Torque Wrenches"
+  },
+  "Gun Parts|Shell Holders": {
+    "top": "Reloading",
+    "sub": "Shell Holders"
   },
   "Sling Accessories": {
     "top": "Gear",
@@ -3635,6 +3699,10 @@
     "top": "Outdoors",
     "sub": "Upland Vests|Hunting Packs"
   },
+  "Upland Vests|Shooting Vests": {
+    "top": "Outdoors",
+    "sub": "Shooting Vests"
+  },
   "Uppers": {
     "top": "Gun Parts",
     "sub": "Uppers"
@@ -3702,6 +3770,10 @@
   "Waist Packs|Packs & Bags": {
     "top": "Gear",
     "sub": "Waist Packs|Packs & Bags"
+  },
+  "Waist Packs|Cases Safes & Storage|Shooting|Packs & Bags": {
+    "top": "Gear",
+    "sub": "Packs & Bags"
   },
   "Water Bottles": {
     "top": "Outdoors",

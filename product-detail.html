@@ -603,8 +603,8 @@
               ${inStock ? `In Stock (${product.inventory} available)` : 'Out of Stock'}
             </div>
 
-            <!-- QUANTITY & CHECKOUT -->
-            <div style="margin-bottom: 1.5rem;">
+            <!-- QUANTITY & CHECKOUT (hidden when out of stock to avoid sell-then-cancel) -->
+            <div id="product-checkout-block" style="margin-bottom: 1.5rem; ${inStock ? '' : 'display: none;'}">
               <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
                 <label style="font-weight: 600; color: #333;">Quantity:</label>
                 <div class="quantity-selector">
@@ -616,10 +616,9 @@
               <div style="font-size: 0.9rem; color: #666; margin-bottom: 0.75rem;">
                 <i class="fas fa-lock" style="color: var(--color-primary);"></i> Secure checkout with PayPal
               </div>
+              <div id="paypal-button-container" style="margin-bottom: 2rem;"></div>
             </div>
-
-            <!-- PAYPAL BUTTONS -->
-            <div id="paypal-button-container" style="margin-bottom: 2rem;"></div>
+            ${!inStock ? '<div class="product-detail-stock stock-out" style="margin-top: 0.5rem;"><i class="fas fa-clock"></i> Check back later — we restock frequently.</div>' : ''}
 
             <!-- PRODUCT DETAILS (SKU, UPC, etc.) – compact like Chattanooga -->
             <div class="product-details-grid">
@@ -700,7 +699,7 @@
 
       // Charge customer display price only (MSRP or MAP). Price is dealer cost and must not be used.
       const amountToCharge = displayPrice;
-      initializePayPalButtons(product, amountToCharge);
+      if (inStock) initializePayPalButtons(product, amountToCharge);
     }
 
     // INITIALIZE PAYPAL BUTTONS

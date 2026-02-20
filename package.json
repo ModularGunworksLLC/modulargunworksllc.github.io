@@ -5,10 +5,11 @@
   "main": "serve.js",
   "scripts": {
     "start": "node serve.js",
-    "admin": "node scripts/admin-api.js",
+    "admin": "node admin/server.js",
     "sync": "node scripts/sync-products.js",
     "sync:schedule": "node scripts/sync-products.js --schedule",
-    "dev": "start cmd /k node serve.js && start cmd /k node scripts/admin-api.js"
+    "migrate:overrides": "node scripts/migrate-overrides-to-db.js",
+    "dev": "start cmd /k node serve.js && start cmd /k node admin/server.js"
   },
   "keywords": [
     "firearms",
@@ -23,6 +24,7 @@
     "dotenv": "^17.2.3",
     "express": "^4.22.1",
     "nodemailer": "^7.0.12",
+    "pg": "^8.18.0",
     "puppeteer": "^24.36.1"
   }
 }

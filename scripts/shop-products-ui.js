@@ -550,9 +550,9 @@
           (sku && !isMagazines ? '<div class="product-sku">' + escapeHtml(sku) + '</div>' : '') +
         '</div>' +
       '</a>' +
-      '<button class="product-btn" onclick="event.preventDefault(); event.stopPropagation(); addToCart(\'' + (product.sku || '').replace(/'/g, "\\'") + '\', \'' + nameEsc + '\', ' + priceNum + ', 1, \'' + imgEsc + '\', \'' + detailCategory + '\')">' +
-        '<i class="fas fa-cart-plus"></i> Add to Cart' +
-      '</button>' +
+      (inStock
+        ? '<button class="product-btn" onclick="event.preventDefault(); event.stopPropagation(); addToCart(\'' + (product.sku || '').replace(/'/g, "\\'") + '\', \'' + nameEsc + '\', ' + priceNum + ', 1, \'' + imgEsc + '\', \'' + detailCategory + '\')"><i class="fas fa-cart-plus"></i> Add to Cart</button>'
+        : '<button class="product-btn" disabled style="opacity: 0.6; cursor: not-allowed;"><i class="fas fa-times-circle"></i> Out of Stock</button>') +
     '</div>';
   }
 
@@ -608,7 +608,7 @@
               <td>${escapeHtml(secondCol)}</td>
               <td class="product-price-list">$${price}</td>
               <td><span class="${p.inventory > 0 ? 'stock-in' : 'stock-out'}">${p.inventory > 0 ? 'In Stock' : 'Out of Stock'}</span></td>
-              <td><button type="button" class="product-btn" style="padding: 0.4rem 0.8rem;" onclick="addToCart('${(p.sku || '').replace(/'/g, "\\'")}', '${(p.name || '').replace(/'/g, "\\'")}', ${priceNum}, 1, '${imgEsc}', '${detailCat}')"><i class="fas fa-cart-plus"></i> Add</button></td>
+              <td>${p.inventory > 0 ? '<button type="button" class="product-btn" style="padding: 0.4rem 0.8rem;" onclick="addToCart(\'' + (p.sku || '').replace(/'/g, "\\'") + '\', \'' + (p.name || '').replace(/'/g, "\\'") + '\', ' + priceNum + ', 1, \'' + imgEsc + '\', \'' + detailCat + '\')"><i class="fas fa-cart-plus"></i> Add</button>' : '<button type="button" class="product-btn" disabled style="opacity: 0.6; cursor: not-allowed; padding: 0.4rem 0.8rem;">Out</button>'}</td>
             </tr>`;
         }).join('');
         listBody.innerHTML = rows;

@@ -36,13 +36,13 @@ function priceOrNull(value) {
 }
 
 // --- Core normalizer: vendor → UI product ---
-// Display price: MSRP if present, else MAP, else Price (dealer cost) as fallback so products without MSRP/MAP still show.
+// Display price: override (from admin), then MSRP, then MAP. Only exclude products missing both MSRP and MAP (and no override).
 
 function normalizeVendorProduct(vendor) {
   const msrp = priceOrNull(vendor["MSRP"]);
   const map = priceOrNull(vendor["MAP"]);
-  const price = priceOrNull(vendor["Price"]);
-  const displayPrice = msrp ?? map ?? price ?? null;
+  const override = vendor["priceOverride"] != null ? priceOrNull(String(vendor["priceOverride"])) : null;
+  const displayPrice = override ?? msrp ?? map ?? null;
   const category = normalizeCategoryValue(vendor.mappedCategory?.top);
   const isFirearmCategory = (category || "").toLowerCase() === "firearms";
   return {
@@ -53,7 +53,7 @@ function normalizeVendorProduct(vendor) {
     price: toNumber(vendor["Price"]) ?? 0,
     msrp: toNumber(vendor["MSRP"]),
     map: toNumber(vendor["MAP"]),
-    displayPrice: displayPrice ?? 0,
+    displayPrice: displayPrice != null ? displayPrice : 0,
     upc: vendor["UPC"] ?? "",
     inventory: toNumber(vendor["Quantity In Stock"]) ?? 0,
     dropShip: toBooleanFromFlag(vendor["Drop Ship Flag"]),
@@ -254,6 +254,7 @@ async function loadSaleProducts() {
 
         const normalized = normalizeVendorProduct(row);
         if (!normalized.displayPrice || normalized.displayPrice <= 0) continue;
+        if ((normalized.inventory ?? 0) <= 0) continue; // don't list out-of-stock on sale
 
         const regular = isTraditionalSale ? regularPrice : (priceOrNull(row.MAP) ?? regularPrice);
         const discount = regular > 0 ? Math.round(((regular - (normalized.displayPrice || 0)) / regular) * 100) : 0;
@@ -311,7 +312,7 @@ async function loadBrandProducts() {
       const data = await res.json();
       const list = Array.isArray(data) ? data : (data.products || data.items || []);
       let normalized = list.map(normalizeVendorProduct);
-      normalized = normalized.filter(p => p.displayPrice != null && p.displayPrice > 0);
+      normalized = normalized.filter(p => p.displayPrice != null && p.displayPrice > 0 && (p.inventory ?? 0) > 0);
       if (cat.file === 'Firearms.json') {
         normalized = normalized.filter(p => !isSuppressorOrNFAProduct(p));
       }
@@ -366,7 +367,7 @@ async function loadSearchProducts() {
       const data = await res.json();
       const list = Array.isArray(data) ? data : (data.products || data.items || []);
       let normalized = list.map(normalizeVendorProduct);
-      normalized = normalized.filter(p => p.displayPrice != null && p.displayPrice > 0);
+      normalized = normalized.filter(p => p.displayPrice != null && p.displayPrice > 0 && (p.inventory ?? 0) > 0);
       if (cat.file === 'Firearms.json') {
         normalized = normalized.filter(p => !isSuppressorOrNFAProduct(p));
       }
@@ -455,8 +456,8 @@ async function loadProducts() {
     const vendorProducts = await res.json();
     const list = Array.isArray(vendorProducts) ? vendorProducts : (vendorProducts.products || vendorProducts.items || []);
     const normalized = list.map(normalizeVendorProduct);
-    // Only list products that have a display price (MSRP, MAP, or Price fallback).
-    let products = normalized.filter(p => p.displayPrice != null && p.displayPrice > 0);
+    // Only list products that have a list price (override, MSRP, or MAP) and are in stock.
+    let products = normalized.filter(p => p.displayPrice != null && p.displayPrice > 0 && (p.inventory ?? 0) > 0);
     // Firearms page: do not list suppressors or other NFA items (not offered for sale).
     if (fileName === 'Firearms.json') {
       products = products.filter(p => !isSuppressorOrNFAProduct(p));

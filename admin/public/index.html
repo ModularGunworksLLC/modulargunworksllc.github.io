@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin – Modular Gunworks</title>
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+  <div id="login-screen">
+    <div class="login-box">
+      <h1>Admin</h1>
+      <p>Modular Gunworks product management</p>
+      <form id="login-form">
+        <input type="password" id="login-password" placeholder="Password" autocomplete="current-password" required>
+        <button type="submit">Log in</button>
+      </form>
+      <p id="login-error" class="error"></p>
+    </div>
+  </div>
+
+  <div id="app" class="hidden">
+    <header class="admin-header">
+      <h1>Product admin</h1>
+      <div class="header-actions">
+        <span id="product-count"></span>
+        <button type="button" id="logout-btn">Log out</button>
+      </div>
+    </header>
+
+    <div class="view-tabs" role="tablist">
+      <button type="button" class="view-tab active" data-view="listed" role="tab" aria-selected="true">Listed on site</button>
+      <button type="button" class="view-tab" data-view="chattanooga" role="tab" aria-selected="false">Chattanooga</button>
+    </div>
+    <p class="view-tab-hint" id="view-tab-hint">Products currently visible on your live site. Use the Chattanooga tab to see the full feed and edit mapping.</p>
+
+    <div class="toolbar">
+      <input type="text" id="search" placeholder="Search by name, SKU, or brand…" class="search-input">
+      <select id="category-filter">
+        <option value="">All categories</option>
+      </select>
+      <select id="mapping-filter" title="Filter by mapping status">
+        <option value="">All products</option>
+        <option value="mapped">Mapped only</option>
+        <option value="unmapped">Unmapped only</option>
+      </select>
+      <label class="filter-check">
+        <input type="checkbox" id="filter-hidden"> Show hidden only
+      </label>
+    </div>
+
+    <div class="table-wrap">
+      <table class="product-table">
+        <thead>
+          <tr>
+            <th>Image</th>
+            <th>SKU</th>
+            <th>Name</th>
+            <th>Feed category</th>
+            <th>Site category</th>
+            <th>MAP</th>
+            <th>MSRP</th>
+            <th title="Wholesale rule: list price = MSRP first, then MAP. Never dealer/cost. Override (in Edit) overrides both when set.">Your price</th>
+            <th>Stock qty</th>
+            <th>Active</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="product-tbody"></tbody>
+      </table>
+    </div>
+
+    <div id="edit-modal" class="modal hidden">
+      <div class="modal-backdrop"></div>
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>Edit product</h2>
+          <button type="button" class="modal-close" aria-label="Close">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div class="edit-product-preview">
+            <div class="edit-image-wrap">
+              <img id="edit-image" src="" alt="">
+              <span id="edit-image-broken" class="edit-image-broken hidden">Image failed to load</span>
+            </div>
+            <div>
+              <strong id="edit-name"></strong>
+              <div>SKU: <span id="edit-sku"></span></div>
+            </div>
+          </div>
+          <div class="edit-image-fix">
+            <span class="edit-label">Image</span>
+            <div class="edit-image-url-row">
+              <input type="text" id="edit-image-url" readonly placeholder="Feed image URL" class="edit-image-url-input">
+            </div>
+            <div class="edit-image-buttons">
+              <button type="button" class="btn-secondary edit-image-btn" id="edit-image-highres">Use higher resolution</button>
+              <button type="button" class="btn-secondary edit-image-btn" id="edit-image-fix-ext">Try _1-1.jpg fix</button>
+              <button type="button" class="btn-secondary edit-image-btn" id="edit-image-try-sku">Try SKU.jpg</button>
+              <button type="button" class="btn-secondary edit-image-btn" id="edit-image-try-variant">Try variant _1-1-jpg.jpg</button>
+            </div>
+            <label class="edit-override-row">
+              <span class="edit-label">Override image URL (save to use on site)</span>
+              <input type="url" id="edit-image-override" placeholder="Paste or use a fix above, then Save" class="edit-image-url-input">
+            </label>
+          </div>
+          <div class="edit-fields">
+            <div id="edit-comparison" class="edit-comparison">
+              <div class="edit-comparison-row edit-on-site">
+                <span class="edit-label">Currently on live site</span>
+                <span id="edit-on-site-summary" class="edit-comparison-val">—</span>
+              </div>
+              <div class="edit-comparison-row edit-this-offer">
+                <span class="edit-label">This offer</span>
+                <span id="edit-this-offer-summary" class="edit-comparison-val">—</span>
+              </div>
+            </div>
+            <div class="edit-current-price">
+              <span class="edit-label">Feed prices (MSRP · MAP · Dealer cost)</span>
+              <span id="edit-current-price-val" class="edit-current-price-val"></span>
+            </div>
+            <p class="edit-hint edit-price-rule">List price to public: MSRP first; if no MSRP, use MAP. Dealer is cost only—never shown as list price (wholesale rules).</p>
+            <p id="edit-price-hint" class="edit-hint edit-price-hint"></p>
+            <label class="edit-override-row">
+              <span class="edit-label">Override price (use only when feed has no MSRP and no MAP)</span>
+              <input type="number" id="edit-price" step="0.01" min="0" placeholder="e.g. 29.99" class="edit-price-input">
+            </label>
+            <div class="edit-key-info" id="edit-key-info"></div>
+            <div class="edit-mapping">
+              <span class="edit-label">Category mapping</span>
+              <div class="edit-mapping-row">
+                <span class="edit-mapping-label">Feed category (wholesale):</span>
+                <span id="edit-feed-category" class="edit-mapping-val"></span>
+              </div>
+              <div class="edit-mapping-row">
+                <span class="edit-mapping-label">Mapped on site:</span>
+                <span id="edit-mapped-on-site" class="edit-mapping-val"></span>
+              </div>
+              <label class="edit-mapping-change">
+                <span class="edit-label">Change site category</span>
+                <select id="edit-site-category" class="edit-select">
+                  <option value="">— No mapping / Unmapped —</option>
+                </select>
+              </label>
+              <p class="edit-hint">Choose where this product appears. Next sync will apply. Leave unmapped to hide from site.</p>
+            </div>
+            <div class="edit-visibility">
+              <span class="edit-label">Visibility</span>
+              <label class="checkbox-label">
+                <input type="checkbox" id="edit-hidden"> Hide on site
+              </label>
+              <label class="checkbox-label">
+                <input type="checkbox" id="edit-force-show"> Always show on site
+              </label>
+            </div>
+          </div>
+          <details class="meta-details">
+            <summary>All metadata</summary>
+            <div id="edit-meta" class="meta-list"></div>
+            <div class="meta-list meta-list--raw">
+              <h4 class="meta-raw-title">All fields from API/feed</h4>
+              <p class="meta-raw-hint">Every key on this product object (feed + overrides).</p>
+              <div id="edit-meta-raw" class="meta-raw-list"></div>
+            </div>
+          </details>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn-secondary modal-cancel">Cancel</button>
+          <button type="button" class="btn-primary" id="edit-save">Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="admin.js"></script>
+</body>
+</html>
