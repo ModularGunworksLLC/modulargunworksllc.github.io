@@ -117,6 +117,19 @@
             background: #ff8822;
         }
 
+        .tab-btn {
+            padding: 8px 16px;
+            background: #333;
+            border: 1px solid #404040;
+            border-radius: 4px;
+            color: #fff;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 13px;
+        }
+        .tab-btn:hover { background: #404040; }
+        .tab-btn.active { background: #ff6600; border-color: #ff6600; }
+
         .admin-content {
             display: flex;
             height: calc(100vh - 70px);
@@ -328,6 +341,32 @@
             color: #ff6600;
             text-transform: uppercase;
             font-weight: 600;
+        }
+
+        .live-overview-list {
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .live-overview-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 12px;
+            background: #1a1a1a;
+            border-radius: 4px;
+            border: 1px solid #404040;
+            cursor: pointer;
+            font-size: 13px;
+        }
+        .live-overview-item:hover {
+            border-color: #ff6600;
+            background: #252525;
+        }
+        .live-overview-count {
+            font-weight: 700;
+            color: #ff6600;
         }
 
         .remove-btn {
@@ -660,17 +699,21 @@
     <div id="adminContainer" class="admin-container">
         <div class="admin-header">
             <h1>📦 Product Admin Panel</h1>
-            <button class="logout-btn" onclick="logout()">Logout</button>
+            <div style="display: flex; gap: 12px; align-items: center;">
+                <button class="tab-btn active" data-tab="products" onclick="switchTab('products')">Products</button>
+                <button class="tab-btn" data-tab="vendors" onclick="switchTab('vendors')">Vendors</button>
+                <button class="logout-btn" onclick="logout()">Logout</button>
+            </div>
         </div>
 
-        <div class="admin-content">
+        <div id="productsTab" class="admin-content">
             <div class="main-panel">
                 <div class="search-filters">
                     <!-- Primary Search -->
                     <div class="filter-row" style="border-bottom: 2px solid #ff6600; padding-bottom: 15px;">
                         <div class="filter-group" style="flex: 2;">
                             <label>🔍 Search Product</label>
-                            <input type="text" id="searchInput" placeholder="Product name..." onkeyup="applyFilters()" style="padding: 10px;">
+                            <input type="text" id="searchInput" placeholder="Product name..." style="padding: 10px;">
                         </div>
                     </div>
 
@@ -678,19 +721,19 @@
                     <div class="filter-row" style="gap: 10px;">
                         <div class="filter-group">
                             <label>Brand</label>
-                            <select id="brandFilter" onchange="applyFilters()">
+                            <select id="brandFilter" onchange="loadProducts()">
                                 <option value="">All Brands</option>
                             </select>
                         </div>
                         <div class="filter-group">
                             <label>Category</label>
-                            <select id="categoryFilter" onchange="applyFilters()">
+                            <select id="categoryFilter" onchange="loadProducts()">
                                 <option value="">All Categories</option>
                             </select>
                         </div>
                         <div class="filter-group">
                             <label>Stock Status</label>
-                            <select id="stockFilter" onchange="applyFilters()">
+                            <select id="stockFilter" onchange="loadProducts()">
                                 <option value="">All</option>
                                 <option value="in-stock">In Stock</option>
                                 <option value="out-of-stock">Out of Stock</option>
@@ -705,25 +748,25 @@
                         <div class="filter-row" style="margin-top: 15px; gap: 10px;">
                             <div class="filter-group">
                                 <label>Caliber</label>
-                                <select id="caliberFilter" onchange="applyFilters()">
+                                <select id="caliberFilter" onchange="loadProducts()">
                                     <option value="">All Calibers</option>
                                 </select>
                             </div>
                             <div class="filter-group">
                                 <label>Platform/Family</label>
-                                <select id="platformFilter" onchange="applyFilters()">
+                                <select id="platformFilter" onchange="loadProducts()">
                                     <option value="">All Platforms</option>
                                 </select>
                             </div>
                             <div class="filter-group">
                                 <label>Magazine Capacity</label>
-                                <select id="capacityFilter" onchange="applyFilters()">
+                                <select id="capacityFilter" onchange="loadProducts()">
                                     <option value="">All Capacities</option>
                                 </select>
                             </div>
                             <div class="filter-group">
                                 <label>Material</label>
-                                <select id="materialFilter" onchange="applyFilters()">
+                                <select id="materialFilter" onchange="loadProducts()">
                                     <option value="">All Materials</option>
                                 </select>
                             </div>
@@ -732,21 +775,21 @@
                         <div class="filter-row" style="margin-top: 10px; gap: 10px;">
                             <div class="filter-group">
                                 <label>Price Range: $<span id="priceRangeDisplay">0-$1000</span></label>
-                                <input type="range" id="priceFilter" min="0" max="1000" value="1000" onchange="updatePriceRangeDisplay(); applyFilters();" style="width: 100%;">
+                                <input type="range" id="priceFilter" min="0" max="1000" value="1000" onchange="updatePriceRangeDisplay(); loadProducts();" style="width: 100%;">
                             </div>
                         </div>
 
                         <div class="filter-row" style="margin-top: 10px; gap: 20px; flex-wrap: wrap;">
                             <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
-                                <input type="checkbox" id="serializationFilter" onchange="applyFilters()">
+                                <input type="checkbox" id="serializationFilter" onchange="loadProducts()">
                                 <span>🔫 Serialized/Firearms</span>
                             </label>
                             <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
-                                <input type="checkbox" id="dropShipFilter" onchange="applyFilters()">
+                                <input type="checkbox" id="dropShipFilter" onchange="loadProducts()">
                                 <span>📦 Drop-shipped</span>
                             </label>
                             <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
-                                <input type="checkbox" id="allocatedFilter" onchange="applyFilters()">
+                                <input type="checkbox" id="allocatedFilter" onchange="loadProducts()">
                                 <span>🔒 Show Allocated</span>
                             </label>
                         </div>
@@ -767,8 +810,69 @@
             </div>
 
             <div class="active-products-panel">
-                <div class="panel-header">✓ Active Products</div>
+                <div class="panel-header">📊 Live on Site</div>
+                <div id="liveOverview" class="live-overview-list"></div>
+                <div class="panel-header" style="border-top: 1px solid #404040;">🏷️ On Sale</div>
                 <div class="active-list" id="activeList"></div>
+            </div>
+        </div>
+
+        <!-- Vendors Tab -->
+        <div id="vendorsTab" class="admin-tab-content" style="display: none; padding: 30px;">
+            <h2 style="margin-bottom: 20px;">Vendors</h2>
+            <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+                <div style="flex: 1; min-width: 300px;">
+                    <h3 style="margin-bottom: 15px;">Add Vendor</h3>
+                    <form id="addVendorForm" onsubmit="addVendor(event)" style="display: flex; flex-direction: column; gap: 12px;">
+                        <input type="text" id="vendorName" placeholder="Vendor name" required style="padding: 10px; background: #333; border: 1px solid #404040; border-radius: 4px; color: #fff;">
+                        <select id="vendorType" style="padding: 10px; background: #333; border: 1px solid #404040; border-radius: 4px; color: #fff;" onchange="toggleVendorApiFields(this.value)">
+                            <option value="csv">CSV Import</option>
+                            <option value="api">API</option>
+                        </select>
+                        <div id="vendorApiConfig" style="display: none; padding: 12px; background: #1a1a1a; border-radius: 4px; border: 1px solid #404040; gap: 10px; flex-direction: column;" class="vendor-api-fields">
+                            <label style="font-size: 12px; color: #aaa;">API credentials (stored in config)</label>
+                            <input type="url" id="vendorApiUrl" placeholder="API base URL (e.g. https://api.vendor.com)" style="padding: 10px; background: #333; border: 1px solid #404040; border-radius: 4px; color: #fff;">
+                            <input type="text" id="vendorApiKey" placeholder="API Key / Token" style="padding: 10px; background: #333; border: 1px solid #404040; border-radius: 4px; color: #fff;">
+                            <input type="text" id="vendorApiSecret" placeholder="API Secret (optional)" style="padding: 10px; background: #333; border: 1px solid #404040; border-radius: 4px; color: #fff;">
+                            <select id="vendorAuthType" style="padding: 10px; background: #333; border: 1px solid #404040; border-radius: 4px; color: #fff;">
+                                <option value="header">Header (X-API-Key or Authorization)</option>
+                                <option value="query">Query param (?api_key=)</option>
+                                <option value="basic">Basic Auth</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="activate-btn">Add Vendor</button>
+                    </form>
+                </div>
+                <div style="flex: 1; min-width: 300px;">
+                    <h3 style="margin-bottom: 15px;">Existing Vendors</h3>
+                    <div id="vendorsList" class="vendors-list"></div>
+                </div>
+            </div>
+            <div style="margin-top: 30px; padding: 20px; background: #252525; border-radius: 8px; border: 1px solid #404040;">
+                <h3 style="margin-bottom: 15px;">Import from CSV</h3>
+                <p style="color: #999; font-size: 13px; margin-bottom: 15px;">Upload a CSV file to import products. Supports Chattanooga-style columns: SKU, Item Name, Price, MSRP, MAP, Category, Quantity In Stock, UPC, Image Location, Manufacturer, etc. Vendor category values are mapped to your 8 categories (ammunition, magazines, reloading, gun-parts, optics, gear, outdoors).</p>
+                <form id="csvImportForm" onsubmit="importCsv(event)" style="display: flex; flex-direction: column; gap: 12px;">
+                    <div>
+                        <label style="display: block; font-size: 12px; color: #aaa; margin-bottom: 6px;">Select vendor</label>
+                        <select id="csvVendorSelect" required style="padding: 10px; background: #333; border: 1px solid #404040; border-radius: 4px; color: #fff; width: 100%;">
+                            <option value="">— Choose vendor —</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label style="display: block; font-size: 12px; color: #aaa; margin-bottom: 6px;">CSV file</label>
+                        <input type="file" id="csvFileInput" accept=".csv" required style="padding: 10px; background: #333; border: 1px solid #404040; border-radius: 4px; color: #fff;">
+                    </div>
+                    <button type="submit" class="activate-btn" id="csvImportBtn">Import CSV</button>
+                </form>
+                <p id="csvImportStatus" style="margin-top: 12px; font-size: 13px; color: #999;"></p>
+            </div>
+            <div style="margin-top: 30px; padding: 20px; background: #252525; border-radius: 8px; border: 1px solid #404040;">
+                <h3 style="margin-bottom: 15px;">📊 Data Quality</h3>
+                <div id="dataQualityReport" style="color: #999; font-size: 13px;">Loading...</div>
+                <div style="margin-top: 12px; display: flex; gap: 10px;">
+                    <button class="activate-btn" style="padding: 8px 16px; font-size: 12px;" onclick="loadDataQuality()">Refresh</button>
+                    <button class="activate-btn" style="padding: 8px 16px; font-size: 12px; background: #404040;" onclick="recomputePrimary()">Recompute Primary Offers</button>
+                </div>
             </div>
         </div>
     </div>
@@ -784,16 +888,92 @@
         </div>
     </div>
 
+    <!-- Edit Product Modal -->
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <h2>Edit Product</h2>
+            <div class="modal-form">
+                <input type="hidden" id="editSku">
+                <div class="form-group">
+                    <label>Category</label>
+                    <select id="editCategory">
+                        <option value="ammunition">Ammunition</option>
+                        <option value="magazines">Magazines</option>
+                        <option value="reloading">Reloading</option>
+                        <option value="gun-parts">Gun Parts</option>
+                        <option value="optics">Optics</option>
+                        <option value="gear">Gear</option>
+                        <option value="outdoors">Outdoors</option>
+                        <option value="brands">Brands</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Cost ($)</label>
+                    <input type="number" id="editCost" step="0.01" min="0" placeholder="Vendor cost" style="padding: 10px; background: #333; border: 1px solid #404040; border-radius: 4px; color: #fff;">
+                </div>
+                <div class="form-group">
+                    <label>MSRP ($)</label>
+                    <input type="number" id="editMsrp" step="0.01" min="0" placeholder="e.g. 29.99" style="padding: 10px; background: #333; border: 1px solid #404040; border-radius: 4px; color: #fff;">
+                </div>
+                <div class="form-group">
+                    <label>MAP ($)</label>
+                    <input type="number" id="editMap" step="0.01" min="0" placeholder="e.g. 24.99" style="padding: 10px; background: #333; border: 1px solid #404040; border-radius: 4px; color: #fff;">
+                </div>
+                <div class="modal-buttons">
+                    <button class="modal-btn modal-btn-cancel" onclick="closeEditModal()">Cancel</button>
+                    <button class="modal-btn modal-btn-confirm" onclick="saveEdit()">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Vendor Modal -->
+    <div id="editVendorModal" class="modal">
+        <div class="modal-content">
+            <h2>Configure Vendor</h2>
+            <div class="modal-form">
+                <input type="hidden" id="editVendorId">
+                <div class="form-group">
+                    <label>Name</label>
+                    <input type="text" id="editVendorName" placeholder="Vendor name" required style="padding: 10px; background: #333; border: 1px solid #404040; border-radius: 4px; color: #fff; width: 100%;">
+                </div>
+                <div class="form-group">
+                    <label>Type</label>
+                    <select id="editVendorType" style="padding: 10px; background: #333; border: 1px solid #404040; border-radius: 4px; color: #fff; width: 100%;" onchange="toggleEditVendorApiFields(this.value)">
+                        <option value="csv">CSV Import</option>
+                        <option value="api">API</option>
+                    </select>
+                </div>
+                <div id="editVendorApiConfig" style="display: none;" class="form-group">
+                    <label>API credentials (stored securely in config)</label>
+                    <input type="url" id="editVendorApiUrl" placeholder="API base URL" style="padding: 10px; background: #333; border: 1px solid #404040; border-radius: 4px; color: #fff; width: 100%; margin-top: 6px;">
+                    <input type="text" id="editVendorApiKey" placeholder="API Key / Token" style="padding: 10px; background: #333; border: 1px solid #404040; border-radius: 4px; color: #fff; width: 100%; margin-top: 6px;">
+                    <input type="text" id="editVendorApiSecret" placeholder="API Secret (optional)" style="padding: 10px; background: #333; border: 1px solid #404040; border-radius: 4px; color: #fff; width: 100%; margin-top: 6px;">
+                    <select id="editVendorAuthType" style="padding: 10px; background: #333; border: 1px solid #404040; border-radius: 4px; color: #fff; width: 100%; margin-top: 6px;">
+                        <option value="header">Header (X-API-Key or Authorization)</option>
+                        <option value="query">Query param (?api_key=)</option>
+                        <option value="basic">Basic Auth</option>
+                    </select>
+                </div>
+                <div class="modal-buttons">
+                    <button class="modal-btn modal-btn-cancel" type="button" onclick="closeEditVendorModal()">Cancel</button>
+                    <button class="modal-btn modal-btn-confirm" type="button" onclick="saveEditVendor()">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Page Selection Modal -->
     <div id="pageModal" class="modal">
         <div class="modal-content">
-            <h2>Select Page for Product</h2>
+            <h2>Add to Page</h2>
             <div class="modal-form">
                 <div id="selectedProductInfo"></div>
                 <input type="hidden" id="isBatchActivate" value="false">
+                <input type="hidden" id="saleContextProductCost" value="">
                 <div class="form-group">
                     <label>Add to Page</label>
-                    <select id="pageSelect">
+                    <select id="pageSelect" onchange="toggleSalePriceFields(this.value)">
                         <option value="">-- Select a Page --</option>
                         <option value="ammunition">Ammunition</option>
                         <option value="magazines">Magazines</option>
@@ -805,6 +985,11 @@
                         <option value="brands">Brands</option>
                         <option value="sale">Sale</option>
                     </select>
+                </div>
+                <div id="salePriceSection" style="display: none;" class="form-group">
+                    <label>Sale Price ($) — see margin below</label>
+                    <input type="number" id="salePriceInput" step="0.01" min="0" placeholder="e.g. 24.99" oninput="updateSaleMarginPreview()" style="padding: 10px; background: #333; border: 1px solid #404040; border-radius: 4px; color: #fff; width: 100%;">
+                    <div id="marginPreview" style="font-size: 12px; color: #aaa; margin-top: 6px;"></div>
                 </div>
                 <div class="modal-buttons">
                     <button class="modal-btn modal-btn-cancel" onclick="closeModal()">Cancel</button>
@@ -850,6 +1035,7 @@
                     localStorage.setItem('adminAuth', authToken);
                     document.getElementById('loginScreen').style.display = 'none';
                     document.getElementById('adminContainer').style.display = 'flex';
+                    setupSearchDebounce();
                     loadProducts();
                     loadActiveProducts();
                 } else {
@@ -873,11 +1059,54 @@
             document.getElementById('loginError').textContent = msg;
         }
 
-        // Load Products
+        // Debounced search: refetch when user types (400ms delay)
+        function setupSearchDebounce() {
+            let timer;
+            const searchInput = document.getElementById('searchInput');
+            if (!searchInput) return;
+            searchInput.onkeyup = () => {
+                clearTimeout(timer);
+                timer = setTimeout(loadProducts, 400);
+            };
+        }
+
+        // Build search URL with current filter values (server-side filtering)
+        function buildSearchParams() {
+            const params = new URLSearchParams();
+            params.set('limit', '5000');
+            params.set('offset', '0');
+            const q = document.getElementById('searchInput')?.value?.trim() || '';
+            const category = document.getElementById('categoryFilter')?.value || '';
+            const brand = document.getElementById('brandFilter')?.value || '';
+            const stock = document.getElementById('stockFilter')?.value || '';
+            const caliber = document.getElementById('caliberFilter')?.value || '';
+            const platform = document.getElementById('platformFilter')?.value || '';
+            const capacity = document.getElementById('capacityFilter')?.value || '';
+            const maxPrice = document.getElementById('priceFilter')?.value || '';
+            const serialized = document.getElementById('serializationFilter')?.checked || false;
+            const dropShip = document.getElementById('dropShipFilter')?.checked || false;
+            if (q) params.set('q', q);
+            if (category) params.set('category', category);
+            if (brand) params.set('brand', brand);
+            if (stock === 'in-stock') params.set('inStock', '1');
+            if (stock === 'out-of-stock') params.set('stock', 'out-of-stock');
+            if (caliber) params.set('caliber', caliber);
+            if (platform) params.set('platform', platform);
+            if (capacity) params.set('capacity', capacity);
+            if (maxPrice && parseFloat(maxPrice) < 9999999) params.set('maxPrice', maxPrice);
+            if (serialized) params.set('serialized', '1');
+            if (dropShip) params.set('dropShip', '1');
+            return params;
+        }
+
+        // Load Products (passes filters to API for server-side filtering)
         async function loadProducts() {
+            const listEl = document.getElementById('productsList');
+            if (listEl) listEl.innerHTML = '<div class="loading">Loading products...</div>';
             try {
-                console.log('Loading products from:', `${API_BASE}/search?limit=5000`);
-                const response = await fetch(`${API_BASE}/search?limit=5000&offset=0`, {
+                const params = buildSearchParams();
+                const url = `${API_BASE}/search?${params.toString()}`;
+                const response = await fetch(url, {
                     headers: { 'Authorization': `Bearer ${authToken}` }
                 });
                 
@@ -886,21 +1115,21 @@
                 }
                 
                 const data = await response.json();
-                console.log('API Response:', data);
                 
                 allProducts = data.products || [];
-                console.log(`Loaded ${allProducts.length} products`);
+                filteredProducts = allProducts;
                 
-                // Load filter options from API
                 await loadFilterOptions();
-                applyFilters();
+                updateStats();
+                displayProducts();
             } catch (error) {
                 console.error('Error loading products:', error);
+                if (listEl) listEl.innerHTML = '<div class="loading" style="color:#f66">Failed: ' + error.message + '</div>';
                 showLoginError('Failed to load products: ' + error.message);
             }
         }
 
-        // Load Filter Options from API
+        // Load Filter Options from API (also includes liveOverview)
         async function loadFilterOptions() {
             try {
                 const response = await fetch(`${API_BASE}/filter-options`, {
@@ -938,6 +1167,11 @@
                     priceFilter.value = Math.ceil(options.priceRange.max);
                     updatePriceRangeDisplay();
                 }
+
+                // Populate Live on Site from filter-options (avoids separate live-overview 404)
+                if (options.liveOverview) {
+                    renderLiveOverview(options.liveOverview);
+                }
             } catch (error) {
                 console.error('Error loading filter options:', error);
             }
@@ -952,7 +1186,42 @@
             }
         }
 
-        // Load Active Products
+        // Live Overview: render counts per category (data from filter-options or live-overview)
+        const PLACEHOLDER_IMG = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Crect fill='%23333' width='100%25' height='100%25'/%3E%3Ctext fill='%23999' x='50%25' y='50%25' text-anchor='middle' dy='.3em' font-size='12'%3ENo image%3C/text%3E%3C/svg%3E";
+        function renderLiveOverview(data) {
+            const el = document.getElementById('liveOverview');
+            if (!el) return;
+            el.innerHTML = '';
+            const cats = data.byCategory || {};
+            const slugs = ['ammunition','magazines','reloading','gun-parts','optics','gear','outdoors','brands'];
+            slugs.forEach(slug => {
+                const c = cats[slug];
+                const count = c ? c.count : 0;
+                const item = document.createElement('div');
+                item.className = 'live-overview-item';
+                item.innerHTML = `<span>${(c && c.name) || slug}</span><span class="live-overview-count">${count}</span>`;
+                item.onclick = () => { document.getElementById('categoryFilter').value = slug; loadProducts(); };
+                el.appendChild(item);
+            });
+            const saleItem = document.createElement('div');
+            saleItem.className = 'live-overview-item';
+            saleItem.innerHTML = `<span>Sale</span><span class="live-overview-count">${data.saleCount || 0}</span>`;
+            saleItem.onclick = () => { document.getElementById('categoryFilter').value = 'sale'; loadProducts(); };
+            el.appendChild(saleItem);
+        }
+
+        async function loadLiveOverview() {
+            try {
+                const response = await fetch(`${API_BASE}/live-overview`, {
+                    headers: { 'Authorization': `Bearer ${authToken}` }
+                });
+                if (!response.ok) return;
+                const data = await response.json();
+                renderLiveOverview(data);
+            } catch (e) { /* live-overview optional; data comes from filter-options */ }
+        }
+
+        // Load Active Products (sale items only)
         async function loadActiveProducts() {
             try {
                 const response = await fetch(`${API_BASE}/active`, {
@@ -1034,7 +1303,7 @@
                 item.className = 'product-item';
                 item.innerHTML = `
                     <div class="product-thumbnail" onclick="showProductDetails('${product.id}')">
-                        <img src="${product.image}" alt="${product.name}" onerror="this.src='/images/products/placeholder.jpg'">
+                        <img src="${product.image || PLACEHOLDER_IMG}" alt="${(product.name || '').replace(/"/g, '&quot;')}" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22100%22 height=%22100%22%3E%3Crect fill=%22%23333%22 width=%22100%25%22 height=%22100%25%22/%3E%3Ctext fill=%22%23999%22 x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 dy=%22.3em%22 font-size=%2212%22%3ENo image%3C/text%3E%3C/svg%3E'">
                     </div>
                     <div style="display: flex; align-items: center; gap: 10px; flex: 1;">
                         <input type="checkbox" class="product-checkbox" value="${product.id}" data-name="${product.name.replace(/"/g, '&quot;')}">
@@ -1043,15 +1312,18 @@
                             <div class="product-details">
                                 <span>💰 $${(product.displayPrice ?? product.msrp ?? 0).toFixed(2)}</span>
                                 <span>📦 ${product.inventory} in stock</span>
+                                ${(product.price != null && product.price > 0) ? `<span style="color:#8f8">Cost $${Number(product.price).toFixed(2)}</span>` : ''}
+                                ${(product.price != null && product.price > 0 && (product.displayPrice ?? product.msrp) > 0) ? `<span style="color:#8f8">${Math.round(((product.displayPrice ?? product.msrp) - product.price) / (product.displayPrice ?? product.msrp) * 100)}% margin</span>` : ''}
                                 <span>🏷️ ${product.brand}</span>
                                 <span>📂 ${product.category}</span>
                             </div>
                         </div>
                     </div>
                     <div class="product-actions">
+                        <button class="activate-btn edit-product-btn" style="background: #404040; font-size: 11px;" data-sku="${(product.sku || '').replace(/"/g, '&quot;')}" data-category="${(product.category || '').replace(/"/g, '&quot;')}" data-cost="${product.price ?? ''}" data-msrp="${product.msrp ?? ''}" data-map="${product.map ?? ''}" title="Edit mapping & pricing">Edit</button>
                         <button class="activate-btn ${isActive ? 'active' : ''}" 
-                                onclick="selectProduct('${product.id}', '${product.name.replace(/'/g, "\\'")}')">
-                            ${isActive ? '✓ Active' : '+ Activate'}
+                                onclick="selectProduct('${product.id}', '${product.name.replace(/'/g, "\\'")}', ${product.price ?? 0})">
+                            ${isActive ? '✓ On Sale' : '+ Sale'}
                         </button>
                     </div>
                 `;
@@ -1064,6 +1336,10 @@
             // Add checkbox listeners
             document.querySelectorAll('.product-checkbox').forEach(cb => {
                 cb.addEventListener('change', updateBatchButtonState);
+            });
+            // Edit button delegates
+            document.querySelectorAll('.edit-product-btn').forEach(btn => {
+                btn.onclick = () => openEditModal(btn.dataset);
             });
         }
 
@@ -1084,17 +1360,43 @@
                 return;
             }
             document.getElementById('selectedProductInfo').textContent = `Activating ${checkboxes.length} products...`;
-            document.getElementById('pageSelect').value = '';
+            document.getElementById('pageSelect').value = 'sale';
             document.getElementById('isBatchActivate').value = 'true';
+            document.getElementById('saleContextProductCost').value = '';
+            document.getElementById('salePriceInput').value = '';
+            toggleSalePriceFields('sale');
             document.getElementById('pageModal').classList.add('active');
         }
 
-        // Select Product
-        function selectProduct(id, name) {
+        // Select Product (id=sku, name, cost for margin display)
+        function selectProduct(id, name, cost) {
             selectedProduct = id;
             document.getElementById('selectedProductInfo').textContent = `Product: ${name}`;
-            document.getElementById('pageSelect').value = activeProducts[id]?.page || '';
+            document.getElementById('pageSelect').value = 'sale';
+            document.getElementById('saleContextProductCost').value = cost || '';
+            document.getElementById('salePriceInput').value = '';
+            toggleSalePriceFields('sale');
             document.getElementById('pageModal').classList.add('active');
+        }
+
+        function toggleSalePriceFields(page) {
+            const sec = document.getElementById('salePriceSection');
+            if (sec) sec.style.display = page === 'sale' ? 'block' : 'none';
+            updateSaleMarginPreview();
+        }
+
+        function updateSaleMarginPreview() {
+            const cost = parseFloat(document.getElementById('saleContextProductCost')?.value || 0);
+            const salePrice = parseFloat(document.getElementById('salePriceInput')?.value || 0);
+            const el = document.getElementById('marginPreview');
+            if (!el) return;
+            if (cost > 0 && salePrice > 0) {
+                const marginPct = ((salePrice - cost) / salePrice * 100).toFixed(1);
+                const color = marginPct < 10 ? '#f66' : marginPct < 15 ? '#fa0' : '#6f6';
+                el.innerHTML = `Margin: <span style="color:${color}">${marginPct}%</span> — Profit: $${(salePrice - cost).toFixed(2)}`;
+            } else {
+                el.textContent = cost > 0 ? 'Enter sale price to see margin' : 'Cost unknown — add in Edit';
+            }
         }
 
         // Confirm Activate
@@ -1113,13 +1415,16 @@
                     const checkboxes = document.querySelectorAll('.product-checkbox:checked');
                     const productIds = Array.from(checkboxes).map(cb => cb.value);
                     
+                    const salePriceVal = page === 'sale' ? document.getElementById('salePriceInput')?.value : null;
+                    const body = { productIds, page };
+                    if (page === 'sale' && salePriceVal && !isNaN(parseFloat(salePriceVal))) body.salePrice = parseFloat(salePriceVal);
                     const response = await fetch(`${API_BASE}/batch-activate`, {
                         method: 'POST',
                         headers: { 
                             'Authorization': `Bearer ${authToken}`,
                             'Content-Type': 'application/json'
                         },
-                        body: JSON.stringify({ productIds, page })
+                        body: JSON.stringify(body)
                     });
                     
                     if (response.ok) {
@@ -1136,13 +1441,16 @@
                     }
                 } else {
                     // Single activate
+                    const salePriceVal = page === 'sale' ? document.getElementById('salePriceInput')?.value : null;
+                    const body = { productId: selectedProduct, page };
+                    if (page === 'sale' && salePriceVal && !isNaN(parseFloat(salePriceVal))) body.salePrice = parseFloat(salePriceVal);
                     const response = await fetch(`${API_BASE}/activate`, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
                             'Authorization': `Bearer ${authToken}`
                         },
-                        body: JSON.stringify({ productId: selectedProduct, page })
+                        body: JSON.stringify(body)
                     });
 
                     if (response.ok) {
@@ -1187,7 +1495,251 @@
             }
         }
 
-        // Display Active Products
+        // Tab switching
+        function switchTab(tab) {
+            document.querySelectorAll('.tab-btn').forEach(b => { b.classList.toggle('active', b.dataset.tab === tab); });
+            const productsEl = document.getElementById('productsTab');
+            const vendorsEl = document.getElementById('vendorsTab');
+            if (productsEl) productsEl.style.display = tab === 'products' ? 'flex' : 'none';
+            if (vendorsEl) vendorsEl.style.display = tab === 'vendors' ? 'block' : 'none';
+            if (tab === 'vendors') { loadVendors(); loadDataQuality(); }
+        }
+
+        // Vendors
+        async function loadVendors() {
+            try {
+                const response = await fetch(`${API_BASE}/vendors`, { headers: { 'Authorization': `Bearer ${authToken}` } });
+                if (!response.ok) throw new Error(response.status === 404 ? 'API may need restart' : response.statusText);
+                const vendors = await response.json();
+                const el = document.getElementById('vendorsList');
+                if (el) {
+                    const vendorData = {};
+                    el.innerHTML = vendors.length ? vendors.map(v => {
+                        vendorData[v.id] = v;
+                        const safeName = String(v.name || '').replace(/[<>"&]/g, c => ({ '<':'&lt;','>':'&gt;','"':'&quot;','&':'&amp;' })[c] || c);
+                        return `<div style="padding:10px;background:#1a1a1a;border-radius:4px;margin-bottom:8px;border:1px solid #404040;display:flex;justify-content:space-between;align-items:center;">${safeName} <span style="color:#999">(${v.type})</span><button type="button" class="activate-btn vendor-config-btn" style="padding:6px 12px;font-size:12px;" data-vendor-id="${v.id}">Configure</button></div>`;
+                    }).join('') : '<p style="color:#999">No vendors yet.</p>';
+                    el.querySelectorAll('.vendor-config-btn').forEach(btn => {
+                        btn.addEventListener('click', () => {
+                            const v = vendorData[parseInt(btn.dataset.vendorId, 10)];
+                            if (v) openEditVendorModal(v);
+                        });
+                    });
+                }
+                const sel = document.getElementById('csvVendorSelect');
+                if (sel) {
+                    while (sel.options.length > 1) sel.remove(1);
+                    vendors.forEach(v => {
+                        const opt = document.createElement('option');
+                        opt.value = v.id;
+                        opt.textContent = v.name;
+                        sel.appendChild(opt);
+                    });
+                }
+            } catch (e) {
+                console.error('loadVendors', e);
+                const el = document.getElementById('vendorsList');
+                if (el) el.innerHTML = '<p style="color:#f66">Failed to load. Restart API server: node scripts/api-server.js</p>';
+                const sel = document.getElementById('csvVendorSelect');
+                if (sel) { while (sel.options.length > 1) sel.remove(1); }
+            }
+        }
+
+        async function loadDataQuality() {
+            try {
+                const res = await fetch(`${API_BASE}/data-quality`, { headers: { 'Authorization': `Bearer ${authToken}` } });
+                if (!res.ok) throw new Error(res.statusText);
+                const d = await res.json();
+                const el = document.getElementById('dataQualityReport');
+                if (el) el.innerHTML = `
+                    Missing images: <strong>${d.missingImage ?? 0}</strong> &nbsp;|&nbsp;
+                    Missing cost: <strong>${d.missingCost ?? 0}</strong> &nbsp;|&nbsp;
+                    Primary out of stock: <strong>${d.noStock ?? 0}</strong> &nbsp;|&nbsp;
+                    Duplicate UPCs: <strong>${d.duplicateUpc ?? 0}</strong>
+                `;
+            } catch (e) {
+                const el = document.getElementById('dataQualityReport');
+                if (el) el.textContent = 'Unable to load. Restart API server (node scripts/api-server.js).';
+            }
+        }
+
+        async function recomputePrimary() {
+            try {
+                const res = await fetch(`${API_BASE}/recompute-primary`, { method: 'POST', headers: { 'Authorization': `Bearer ${authToken}` } });
+                if (res.ok) { showStatus('✓ Primary offers recomputed', 'success'); loadProducts(); } else showStatus('Failed', 'error');
+            } catch (e) { showStatus('Failed', 'error'); }
+        }
+
+        async function importCsv(ev) {
+            ev.preventDefault();
+            const vendorId = document.getElementById('csvVendorSelect')?.value;
+            const fileInput = document.getElementById('csvFileInput');
+            const statusEl = document.getElementById('csvImportStatus');
+            const btn = document.getElementById('csvImportBtn');
+            if (!vendorId || !fileInput?.files?.length) {
+                if (statusEl) statusEl.textContent = 'Select a vendor and CSV file.';
+                return;
+            }
+            try {
+                btn.disabled = true;
+                if (statusEl) statusEl.textContent = 'Reading file...';
+                const csvText = await fileInput.files[0].text();
+                if (statusEl) statusEl.textContent = 'Importing... (may take a minute)';
+                const response = await fetch(`${API_BASE}/import-csv`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${authToken}` },
+                    body: JSON.stringify({ vendorId: parseInt(vendorId, 10), csv: csvText })
+                });
+                const data = await response.json();
+                if (response.ok) {
+                    if (statusEl) statusEl.textContent = `✓ Imported ${data.imported || 0} products.`;
+                    showStatus(`✓ Imported ${data.imported || 0} products`, 'success');
+                    fileInput.value = '';
+                } else {
+                    if (statusEl) statusEl.textContent = data.error || 'Import failed';
+                    showStatus(data.error || 'Import failed', 'error');
+                }
+            } catch (e) {
+                if (statusEl) statusEl.textContent = 'Error: ' + e.message;
+                showStatus('Import failed', 'error');
+                console.error('importCsv', e);
+            } finally {
+                btn.disabled = false;
+            }
+        }
+
+        function toggleVendorApiFields(type) {
+            const el = document.getElementById('vendorApiConfig');
+            if (el) el.style.display = type === 'api' ? 'flex' : 'none';
+        }
+        function toggleEditVendorApiFields(type) {
+            const el = document.getElementById('editVendorApiConfig');
+            if (el) el.style.display = type === 'api' ? 'block' : 'none';
+        }
+        function openEditVendorModal(vendor) {
+            document.getElementById('editVendorId').value = vendor.id;
+            document.getElementById('editVendorName').value = vendor.name || '';
+            document.getElementById('editVendorType').value = vendor.type || 'csv';
+            const cfg = (vendor.config && typeof vendor.config === 'object') ? vendor.config : {};
+            document.getElementById('editVendorApiUrl').value = cfg.apiUrl || '';
+            document.getElementById('editVendorApiKey').value = cfg.apiKey || '';
+            document.getElementById('editVendorApiSecret').value = cfg.apiSecret || '';
+            document.getElementById('editVendorAuthType').value = cfg.authType || 'header';
+            toggleEditVendorApiFields(vendor.type || 'csv');
+            document.getElementById('editVendorModal').classList.add('active');
+        }
+        function closeEditVendorModal() {
+            document.getElementById('editVendorModal').classList.remove('active');
+        }
+        async function saveEditVendor() {
+            const id = document.getElementById('editVendorId').value;
+            const name = document.getElementById('editVendorName').value.trim();
+            const type = document.getElementById('editVendorType').value;
+            if (!name || !id) return;
+            const config = type === 'api' ? {
+                apiUrl: document.getElementById('editVendorApiUrl').value.trim(),
+                apiKey: document.getElementById('editVendorApiKey').value.trim(),
+                apiSecret: document.getElementById('editVendorApiSecret').value.trim(),
+                authType: document.getElementById('editVendorAuthType').value
+            } : {};
+            try {
+                const response = await fetch(`${API_BASE}/vendors/${id}`, {
+                    method: 'PATCH',
+                    headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${authToken}` },
+                    body: JSON.stringify({ name, type, config })
+                });
+                if (response.ok) {
+                    closeEditVendorModal();
+                    loadVendors();
+                    showStatus('✓ Vendor updated', 'success');
+                } else {
+                    const d = await response.json();
+                    showStatus(d.error || 'Failed', 'error');
+                }
+            } catch (e) {
+                showStatus('Failed to update vendor', 'error');
+            }
+        }
+        async function addVendor(ev) {
+            ev.preventDefault();
+            const name = document.getElementById('vendorName').value.trim();
+            const type = document.getElementById('vendorType').value;
+            if (!name) return;
+            const config = type === 'api' ? {
+                apiUrl: document.getElementById('vendorApiUrl').value.trim(),
+                apiKey: document.getElementById('vendorApiKey').value.trim(),
+                apiSecret: document.getElementById('vendorApiSecret').value.trim(),
+                authType: document.getElementById('vendorAuthType').value
+            } : {};
+            try {
+                const response = await fetch(`${API_BASE}/vendors`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${authToken}` },
+                    body: JSON.stringify({ name, type, config })
+                });
+                if (response.ok) {
+                    document.getElementById('vendorName').value = '';
+                    document.getElementById('vendorApiUrl').value = '';
+                    document.getElementById('vendorApiKey').value = '';
+                    document.getElementById('vendorApiSecret').value = '';
+                    toggleVendorApiFields('csv');
+                    document.getElementById('vendorType').value = 'csv';
+                    loadVendors();
+                    showStatus('✓ Vendor added', 'success');
+                } else {
+                    const d = await response.json();
+                    showStatus(d.error || 'Failed', 'error');
+                }
+            } catch (e) {
+                showStatus('Failed to add vendor', 'error');
+            }
+        }
+
+        // Edit Product modal
+        function openEditModal(dataset) {
+            if (!dataset) return;
+            document.getElementById('editSku').value = dataset.sku || '';
+            document.getElementById('editCategory').value = dataset.category || 'reloading';
+            document.getElementById('editCost').value = dataset.cost ?? '';
+            document.getElementById('editMsrp').value = dataset.msrp ?? '';
+            document.getElementById('editMap').value = dataset.map ?? '';
+            document.getElementById('editModal').classList.add('active');
+        }
+        function closeEditModal() { document.getElementById('editModal').classList.remove('active'); }
+
+        async function saveEdit() {
+            const sku = document.getElementById('editSku').value;
+            const category = document.getElementById('editCategory').value;
+            const costVal = document.getElementById('editCost').value;
+            const msrpVal = document.getElementById('editMsrp').value;
+            const mapVal = document.getElementById('editMap').value;
+            const cost = costVal === '' ? undefined : parseFloat(costVal);
+            const msrp = msrpVal === '' ? null : parseFloat(msrpVal);
+            const map = mapVal === '' ? null : parseFloat(mapVal);
+            try {
+                const body = { category };
+                if (cost !== undefined) body.cost = cost;
+                if (msrpVal !== '') body.msrp = msrp;
+                if (mapVal !== '') body.map = map;
+                const response = await fetch(`${API_BASE}/offers/${encodeURIComponent(sku)}`, {
+                    method: 'PATCH',
+                    headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${authToken}` },
+                    body: JSON.stringify(body)
+                });
+                if (response.ok) {
+                    closeEditModal();
+                    loadProducts();
+                    showStatus('✓ Product updated', 'success');
+                } else {
+                    const d = await response.json();
+                    showStatus(d.error || 'Update failed', 'error');
+                }
+            } catch (e) {
+                showStatus('Update failed', 'error');
+            }
+        }
+
+        // Display Active Products (Sale items)
         function displayActiveProducts() {
             const list = document.getElementById('activeList');
             const active = Object.entries(activeProducts);
@@ -1256,12 +1808,16 @@
             
             body.innerHTML = `
                 <div class="product-details-image">
-                    <img src="${product.image}" alt="${product.name}" onerror="this.src='/images/products/placeholder.jpg'">
+                    <img src="${product.image || PLACEHOLDER_IMG}" alt="${(product.name || '').replace(/"/g, '&quot;')}" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22100%22 height=%22100%22%3E%3Crect fill=%22%23333%22 width=%22100%25%22 height=%22100%25%22/%3E%3Ctext fill=%22%23999%22 x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 dy=%22.3em%22 font-size=%2212%22%3ENo image%3C/text%3E%3C/svg%3E'">
                 </div>
                 
                 <h3 style="margin-bottom: 15px; color: #fff;">${product.name}</h3>
                 
                 <div class="product-details-info">
+                    <div class="detail-item">
+                        <div class="detail-label">SKU</div>
+                        <div class="detail-value">${product.sku || product.id || '—'}</div>
+                    </div>
                     <div class="detail-item">
                         <div class="detail-label">Price</div>
                         <div class="detail-value">$${(product.displayPrice ?? product.msrp ?? 0).toFixed(2)}</div>

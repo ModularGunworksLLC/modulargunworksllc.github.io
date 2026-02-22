@@ -8,3 +8,10 @@ data/orders.json
 
 # Local admin tooling (not part of main/live site)
 admin/
+
+# Dependencies
+node_modules/
+
+# IDE / tooling
+.agents/
+skills-lock.json

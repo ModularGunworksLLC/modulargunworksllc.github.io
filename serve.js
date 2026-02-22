@@ -96,6 +96,10 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'index.html'));
 });
 
+// Redirect /sale and /sale.html to actual sale page
+app.get('/sale', (req, res) => res.redirect(301, '/shop/sale.html'));
+app.get('/sale.html', (req, res) => res.redirect(301, '/shop/sale.html'));
+
 // Order email endpoint
 app.post('/api/send-order-email', async (req, res) => {
   try {

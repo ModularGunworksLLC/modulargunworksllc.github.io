@@ -5,10 +5,18 @@
   "main": "serve.js",
   "scripts": {
     "start": "node serve.js",
-    "admin": "node scripts/admin-api.js",
+    "api": "node scripts/api-server.js",
+    "api:restart": "node scripts/kill-port-3001.js && node scripts/api-server.js",
+    "admin": "node scripts/api-server.js",
+    "db:schema": "node scripts/db/schema.js",
+    "db:seed": "node scripts/db/seed-categories.js",
+    "db:import": "node scripts/db/import-from-json.js",
+    "db:promote": "node scripts/db/promote-raw-to-curated.js",
     "sync": "node scripts/sync-products.js",
     "sync:schedule": "node scripts/sync-products.js --schedule",
-    "dev": "start cmd /k node serve.js && start cmd /k node scripts/admin-api.js"
+    "sync:neon": "node scripts/sync-chattanooga-to-neon.js",
+    "download-feed": "node scripts/download-product-feed-csv.js",
+    "dev": "start cmd /k node serve.js && start cmd /k node scripts/api-server.js"
   },
   "keywords": [
     "firearms",
@@ -23,6 +31,7 @@
     "dotenv": "^17.2.3",
     "express": "^4.22.1",
     "nodemailer": "^7.0.12",
+    "pg": "^8.18.0",
     "puppeteer": "^24.36.1"
   }
 }

@@ -36,7 +36,8 @@ function priceOrNull(value) {
 }
 
 // --- Core normalizer: vendor → UI product ---
-// Display price: MSRP if present, else MAP, else Price (dealer cost) as fallback so products without MSRP/MAP still show.
+// Customer-facing price: MSRP if present, else MAP, else Price (fallback when MAP/MSRP empty in static JSON).
+// Products with no valid price are excluded from display (displayPrice stays null).
 
 function normalizeVendorProduct(vendor) {
   const msrp = priceOrNull(vendor["MSRP"]);
@@ -53,7 +54,7 @@ function normalizeVendorProduct(vendor) {
     price: toNumber(vendor["Price"]) ?? 0,
     msrp: toNumber(vendor["MSRP"]),
     map: toNumber(vendor["MAP"]),
-    displayPrice: displayPrice ?? 0,
+    displayPrice: displayPrice,
     upc: vendor["UPC"] ?? "",
     inventory: toNumber(vendor["Quantity In Stock"]) ?? 0,
     dropShip: toBooleanFromFlag(vendor["Drop Ship Flag"]),
@@ -246,17 +247,17 @@ async function loadSaleProducts() {
         const isActive = activeData[sku] && activeData[sku].page === categoryPage;
         const regularPrice = priceOrNull(row.MSRP) ?? priceOrNull(row.MAP);
         if (regularPrice == null) continue;
-        const sellPrice = priceOrNull(row.Price);
-        const displayPrice = (sellPrice != null && sellPrice < regularPrice) ? sellPrice : (priceOrNull(row.MAP) ?? priceOrNull(row.MSRP));
-        const isTraditionalSale = isActive && displayPrice != null && displayPrice > 0 && displayPrice < regularPrice;
-        const isMapOnly = priceOrNull(row.MAP) != null && priceOrNull(row.MSRP) == null && !skusInSale.has(sku);
-        if (!isTraditionalSale && !isMapOnly) continue;
 
         const normalized = normalizeVendorProduct(row);
         if (!normalized.displayPrice || normalized.displayPrice <= 0) continue;
 
+        // Customer-facing price is always MSRP or MAP (never Price/cost). Sale = MAP below MSRP when both exist.
+        const isTraditionalSale = isActive && normalized.displayPrice < regularPrice;
+        const isMapOnly = priceOrNull(row.MAP) != null && priceOrNull(row.MSRP) == null && !skusInSale.has(sku);
+        if (!isTraditionalSale && !isMapOnly) continue;
+
         const regular = isTraditionalSale ? regularPrice : (priceOrNull(row.MAP) ?? regularPrice);
-        const discount = regular > 0 ? Math.round(((regular - (normalized.displayPrice || 0)) / regular) * 100) : 0;
+        const discount = isTraditionalSale && regular > 0 ? Math.round(((regular - normalized.displayPrice) / regular) * 100) : 0;
         skusInSale.add(sku);
         allSale.push({
           ...normalized,
@@ -391,13 +392,33 @@ async function loadSearchProducts() {
   if (typeof onProductsLoaded === 'function') onProductsLoaded(products);
 }
 
+// --- API base: use Neon backend when available ---
+function getApiBase() {
+  if (typeof window === 'undefined') return '';
+  if (window.__MGW_API_BASE__) return window.__MGW_API_BASE__;
+  if (window.location.hostname === 'localhost' && window.location.port === '3000') return 'http://localhost:3001';
+  return '';
+}
+
+async function fetchFromApi(queryParams) {
+  const base = getApiBase();
+  if (!base) return null;
+  const qs = new URLSearchParams(queryParams).toString();
+  try {
+    const res = await fetch(base + '/api/products?' + qs, { method: 'GET' });
+    if (!res.ok) return null;
+    const data = await res.json();
+    return Array.isArray(data) ? data : (data.products || data.items || []);
+  } catch (e) {
+    return null;
+  }
+}
+
 // --- Existing logic: determine which file to load ---
 
 function getCategoryFileName() {
   const page = window.location.pathname.split('/').pop().replace('.html', '');
-  // Firearms category uses Firearms.json (page is guns.html)
   if (page === 'guns') return 'Firearms.json';
-  // Match repo filenames: e.g. gun-parts -> Gun_Parts.json, ammunition -> Ammunition.json
   const parts = page.replace(/[- ]/g, '_').split('_').filter(Boolean);
   const fileName = parts.map(function (p) {
     return p.charAt(0).toUpperCase() + p.slice(1).toLowerCase();
@@ -405,10 +426,78 @@ function getCategoryFileName() {
   return fileName;
 }
 
-// --- Main loader with normalization ---
+function getCategorySlugFromPath() {
+  const page = (window.location.pathname || '').split('/').pop().replace(/\.html$/i, '');
+  return page || 'ammunition';
+}
+
+// --- Main loader: try API first, then fall back to JSON ---
 
 async function loadProducts() {
   const mode = getLoaderMode();
+  const apiBase = getApiBase();
+
+  if (apiBase) {
+    if (mode === 'sale') {
+      const products = await fetchFromApi({ category: 'sale' });
+      if (products !== null) {
+        window.allProducts = products;
+        if (typeof onProductsLoaded === 'function') onProductsLoaded(products);
+        return;
+      }
+    }
+    if (mode === 'search') {
+      const q = getSearchQuery();
+      if (q) {
+        const products = await fetchFromApi({ q: q });
+        if (products !== null) {
+          window.allProducts = products;
+          if (typeof onProductsLoaded === 'function') onProductsLoaded(products);
+          return;
+        }
+      } else {
+        window.allProducts = [];
+        if (typeof onProductsLoaded === 'function') onProductsLoaded([]);
+        return;
+      }
+    }
+    if (mode === 'brand') {
+      const brand = getBrandFromUrl();
+      if (brand) {
+        const products = await fetchFromApi({ brand: brand });
+        if (products !== null) {
+          window.allProducts = products;
+          if (typeof onProductsLoaded === 'function') onProductsLoaded(products);
+          return;
+        }
+      } else {
+        window.allProducts = [];
+        if (typeof onProductsLoaded === 'function') onProductsLoaded([]);
+        return;
+      }
+    }
+    if (mode === 'single') {
+      const slug = getCategorySlugFromPath();
+      const products = await fetchFromApi({ category: slug });
+      if (products !== null) {
+        let list = products;
+        if (slug === 'guns') {
+          list = list.filter(p => !isSuppressorOrNFAProduct(p));
+        }
+        list = list.slice().sort((a, b) => {
+          const rankA = getBrandRank(a.manufacturer);
+          const rankB = getBrandRank(b.manufacturer);
+          if (rankA !== rankB) return rankA - rankB;
+          return (a.name || '').localeCompare(b.name || '');
+        });
+        window.allProducts = list;
+        if (typeof onProductsLoaded === 'function') onProductsLoaded(list);
+        return;
+      }
+    }
+  }
+
+  // Fallback: original JSON/sync-based loading
   if (mode === 'sale') {
     try {
       await loadSaleProducts();
@@ -446,7 +535,6 @@ async function loadProducts() {
   try {
     const res = await fetch(url);
     if (!res.ok) {
-      // 404 or other error: show empty list (e.g. Magazines.json not created yet)
       window.allProducts = [];
       if (typeof onProductsLoaded === 'function') onProductsLoaded([]);
       return;
@@ -455,13 +543,10 @@ async function loadProducts() {
     const vendorProducts = await res.json();
     const list = Array.isArray(vendorProducts) ? vendorProducts : (vendorProducts.products || vendorProducts.items || []);
     const normalized = list.map(normalizeVendorProduct);
-    // Only list products that have a display price (MSRP, MAP, or Price fallback).
     let products = normalized.filter(p => p.displayPrice != null && p.displayPrice > 0);
-    // Firearms page: do not list suppressors or other NFA items (not offered for sale).
     if (fileName === 'Firearms.json') {
       products = products.filter(p => !isSuppressorOrNFAProduct(p));
     }
-    // Sort by brand priority so top-name brands appear first when the page loads.
     products = products.slice().sort((a, b) => {
       const rankA = getBrandRank(a.manufacturer);
       const rankB = getBrandRank(b.manufacturer);
@@ -470,11 +555,7 @@ async function loadProducts() {
     });
 
     window.allProducts = products;
-
-    if (typeof onProductsLoaded === 'function') {
-      onProductsLoaded(products);
-    }
-
+    if (typeof onProductsLoaded === 'function') onProductsLoaded(products);
   } catch (e) {
     window.allProducts = [];
     if (typeof onProductsLoaded === 'function') onProductsLoaded([]);

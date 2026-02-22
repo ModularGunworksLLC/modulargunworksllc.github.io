@@ -515,6 +515,12 @@
       };
     }
 
+    function getApiBase() {
+      if (window.__MGW_API_BASE__) return window.__MGW_API_BASE__;
+      if (window.location.hostname === 'localhost' && window.location.port === '3000') return 'http://localhost:3001';
+      return '';
+    }
+
     // LOAD PRODUCT
     async function loadProduct() {
       const productId = getQueryParam('id');
@@ -527,8 +533,29 @@
         return;
       }
 
+      const apiBase = getApiBase();
+      if (apiBase) {
+        try {
+          const url = apiBase + '/api/products/by-sku?sku=' + encodeURIComponent(lookup) + '&category=' + encodeURIComponent(category);
+          const res = await fetch(url);
+          if (res.ok) {
+            const product = await res.json();
+            if (product && (product.displayPrice == null || product.displayPrice <= 0)) {
+              document.getElementById('product-content').innerHTML = '<div class="error-message"><i class="fas fa-exclamation-circle"></i> This product has no valid price in our catalog. Please contact us for pricing.</div>';
+              return;
+            }
+            if (product) {
+              document.getElementById('back-link').href = `shop/${category}.html`;
+              renderProduct(product, category);
+              return;
+            }
+          }
+        } catch (e) {
+          console.warn('API fetch failed, falling back to JSON:', e);
+        }
+      }
+
       try {
-        // Guns category uses Firearms.json (no Guns.json file)
         const categoryLower = (category || '').toLowerCase();
         const fileCategory = categoryLower === 'guns'
           ? 'Firearms'
