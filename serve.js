@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const path = require('path');
 const fs = require('fs');
@@ -5,6 +6,9 @@ const cors = require('cors');
 const nodemailer = require('nodemailer');
 const app = express();
 const PORT = 3000;
+
+const GUNTAB_API_TOKEN = process.env.GUNTAB_API_TOKEN;
+const GUNTAB_SELLER_EMAIL = process.env.GUNTAB_SELLER_EMAIL || 'modulargunworks@gmail.com';
 
 const ORDERS_FILE = path.join(__dirname, 'data', 'orders.json');
 
@@ -73,7 +77,7 @@ app.use((req, res, next) => {
     "style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; " +
     "img-src 'self' data: https: http:; " +
     "font-src 'self' https://cdnjs.cloudflare.com https://fonts.googleapis.com https://fonts.gstatic.com; " +
-    "connect-src 'self' http://localhost:3001 https://www.paypal.com https://www.sandbox.paypal.com; " +
+    "connect-src 'self' http://localhost:3001 https://api.guntab.com https://www.paypal.com https://www.sandbox.paypal.com; " +
     "frame-src https://www.paypal.com https://www.sandbox.paypal.com; " +
     "frame-ancestors 'none'"
   );
@@ -192,6 +196,86 @@ app.post('/api/order-status', (req, res) => {
   } catch (error) {
     console.error('Order status error:', error);
     res.status(500).json({ success: false, found: false, error: 'Lookup failed.' });
+  }
+});
+
+// GunTab: map category to listing_type_id (GunTab API)
+function categoryToListingTypeId(category) {
+  const c = (category || '').toLowerCase();
+  if (c === 'ammunition') return 'ammunition_and_flammables';
+  if (c === 'magazines') return 'magazine';
+  if (c === 'guns' || c === 'firearms') return 'long_gun'; // default; handgun if product-specific
+  if (c === 'gun-parts' || c === 'gun parts') return 'other_non_regulated';
+  return 'other_non_regulated';
+}
+
+// Create GunTab invoice and return response_url for redirect
+app.post('/api/guntab-create-invoice', async (req, res) => {
+  if (!GUNTAB_API_TOKEN) {
+    return res.status(503).json({ success: false, error: 'GunTab is not configured. Contact support.' });
+  }
+
+  try {
+    const { items, merchandise_amount_cents, shipping_amount_cents, buyer_email, redirect_url } = req.body;
+
+    if (!items || !Array.isArray(items) || items.length === 0 || merchandise_amount_cents == null) {
+      return res.status(400).json({ success: false, error: 'Missing items or merchandise_amount_cents' });
+    }
+
+    const merchCents = Math.round(Number(merchandise_amount_cents) || 0);
+    const shipCents = Math.round(Number(shipping_amount_cents) || 0);
+
+    const baseUrl = `${req.protocol}://${req.get('host') || 'localhost:3000'}`;
+    const listings = items.map(it => ({
+      listing_type_id: categoryToListingTypeId(it.category),
+      quantity: Math.max(1, parseInt(it.quantity, 10) || 1),
+      title: (it.name || it.title || 'Item').substring(0, 200),
+      url: it.url || (it.sku && it.category
+        ? `${baseUrl}/product-detail.html?sku=${encodeURIComponent(it.sku)}&category=${encodeURIComponent(it.category)}`
+        : null)
+    }));
+
+    const payload = {
+      seller_email: GUNTAB_SELLER_EMAIL,
+      merchandise_amount_cents: String(merchCents),
+      shipping_amount_cents: String(shipCents),
+      listings,
+      service_fee_paid_by: 'seller',
+      payment_method_convenience_fee_paid_by: 'buyer'
+    };
+    if (buyer_email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(buyer_email)) {
+      payload.buyer_email = buyer_email;
+    }
+    if (redirect_url && typeof redirect_url === 'string' && redirect_url.startsWith('http')) {
+      payload.redirect_url = redirect_url;
+    } else {
+      payload.redirect_url = `${baseUrl}/order-status.html`;
+    }
+
+    const apiRes = await fetch('https://api.guntab.com/v1/invoices', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Token ${GUNTAB_API_TOKEN}`
+      },
+      body: JSON.stringify(payload)
+    });
+
+    const data = await apiRes.json();
+
+    if (!apiRes.ok) {
+      const errMsg = (data.errors && Array.isArray(data.errors)) ? data.errors.join('; ') : (data.error || 'GunTab API error');
+      return res.status(apiRes.status >= 500 ? 502 : 400).json({ success: false, error: errMsg });
+    }
+
+    if (!data.response_url) {
+      return res.status(502).json({ success: false, error: 'No checkout URL from GunTab' });
+    }
+
+    res.json({ success: true, response_url: data.response_url, invoice_id: data.id });
+  } catch (err) {
+    console.error('GunTab create-invoice error:', err);
+    res.status(500).json({ success: false, error: 'Failed to create checkout session' });
   }
 });
 

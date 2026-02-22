@@ -18,8 +18,8 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="icon" type="image/png" href="favicon.png">
   
-  <!-- PayPal SDK -->
-  <script src="https://www.paypal.com/sdk/js?client-id=AYd1GcwFQbrNbYKm2nYjeGLYy4Cfdh7aH3AtrjrtJHFgSLbUJC_8CHo-DXmNZXJqjqFIEsmIe-e02OPA&currency=USD"></script>
+  <!-- PayPal SDK disabled - 2A merchants cannot use PayPal for ammo/firearms per their policies -->
+  <!-- <script src="https://www.paypal.com/sdk/js?client-id=...&currency=USD"></script> -->
   
   <style>
     :root {
@@ -528,12 +528,22 @@
       }
 
       try {
-        // Guns category uses Firearms.json (no Guns.json file)
-        const categoryLower = (category || '').toLowerCase();
-        const fileCategory = categoryLower === 'guns'
-          ? 'Firearms'
-          : category.charAt(0).toUpperCase() + category.slice(1).replace(/-/g, '_');
-        const mappedUrl = `./data/products/mapped-products/${fileCategory}.json`;
+        // Category slug -> actual JSON filename (sync outputs: Gun_Parts.json, Clothing___Footwear.json, etc.)
+        const SLUG_TO_FILE = {
+          'ammunition': 'Ammunition.json',
+          'magazines': 'Magazines.json',
+          'gun-parts': 'Gun_Parts.json',
+          'gear': 'Gear.json',
+          'optics': 'Optics.json',
+          'reloading': 'Reloading.json',
+          'outdoors': 'Outdoors.json',
+          'guns': 'Firearms.json',
+          'knives': 'Knives.json',
+          'clothing___footwear': 'Clothing___Footwear.json'
+        };
+        const categoryKey = (category || '').toLowerCase();
+        const fileName = SLUG_TO_FILE[categoryKey] || (category.charAt(0).toUpperCase() + category.slice(1).replace(/-/g, '_') + '.json');
+        const mappedUrl = `./data/products/mapped-products/${fileName}`;
         const response = await fetch(mappedUrl);
         if (!response.ok) throw new Error('Failed to load product data');
 
@@ -614,11 +624,11 @@
                 </div>
               </div>
               <div style="font-size: 0.9rem; color: #666; margin-bottom: 0.75rem;">
-                <i class="fas fa-lock" style="color: var(--color-primary);"></i> Secure checkout with PayPal
+                <i class="fas fa-credit-card" style="color: var(--color-primary);"></i> Secure checkout with GunTab
               </div>
             </div>
 
-            <!-- PAYPAL BUTTONS -->
+            <!-- CHECKOUT (GunTab) -->
             <div id="paypal-button-container" style="margin-bottom: 2rem;"></div>
 
             <!-- PRODUCT DETAILS (SKU, UPC, etc.) – compact like Chattanooga -->
@@ -653,6 +663,10 @@
       `;
 
       document.getElementById('product-content').innerHTML = productHTML;
+
+      window._productData = product;
+      window._productDisplayPrice = displayPrice;
+      window._productCategory = category;
 
       // Product description (HTML from Chattanooga Web Item Description)
       const descWrap = document.getElementById('product-description-wrap');
@@ -698,101 +712,58 @@
         hintEl.style.display = 'flex';
       }
 
-      // Charge customer display price only (MSRP or MAP). Price is dealer cost and must not be used.
-      const amountToCharge = displayPrice;
-      initializePayPalButtons(product, amountToCharge);
+      // Show contact-to-order (PayPal disabled for 2A compliance - switching payment processor)
+      showContactToOrder();
     }
 
-    // INITIALIZE PAYPAL BUTTONS
-    function initializePayPalButtons(product, price) {
-      paypal.Buttons({
-        style: {
-          layout: 'vertical',
-          color: 'gold',
-          shape: 'rect',
-          label: 'paypal',
-          tagline: false
-        },
-        createOrder: (data, actions) => {
-          const quantity = parseInt(document.getElementById('quantity').value);
-          const itemPrice = parseFloat(price);
-          const totalAmount = (itemPrice * quantity).toFixed(2);
-
-          return actions.order.create({
-            purchase_units: [{
-              amount: {
-                value: totalAmount,
-                currency_code: 'USD',
-                breakdown: {
-                  item_total: {
-                    currency_code: 'USD',
-                    value: totalAmount
-                  }
-                }
-              },
-              items: [{
-                name: product.name,
-                unit_amount: {
-                  currency_code: 'USD',
-                  value: itemPrice.toFixed(2)
-                },
-                quantity: quantity.toString(),
-                sku: product.sku || product.id,
-                category: 'PHYSICAL_GOODS'
-              }]
-            }],
-            application_context: {
-              brand_name: 'Modular Gunworks LLC',
-              locale: 'en-US',
-              user_action: 'PAY_NOW',
-              return_url: window.location.href,
-              cancel_url: window.location.href
-            }
-          });
-        },
-        onApprove: (data, actions) => {
-          return actions.order.capture().then((orderData) => {
-            console.log('Order Details:', orderData);
-            
-            // Send order email to company
-            const buyerEmail = orderData.payer.email_address || 'Unknown';
-            const productName = document.querySelector('h1')?.textContent || 'Product';
-            const quantity = document.getElementById('quantity').value;
-            const totalAmount = orderData.purchase_units[0].amount.value;
-            const category = new URLSearchParams(window.location.search).get('category') || 'General';
-            
-            fetch('/api/send-order-email', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({
-                orderId: orderData.id,
-                productName: productName,
-                quantity: quantity,
-                totalAmount: totalAmount,
-                buyerEmail: buyerEmail,
-                category: category
-              })
+    // GunTab checkout for single product
+    function showContactToOrder() {
+      const container = document.getElementById('paypal-button-container');
+      if (!container) return;
+      const qty = parseInt(document.getElementById('quantity')?.value || '1', 10);
+      const displayPrice = window._productDisplayPrice ?? 0;
+      const subtotal = displayPrice * qty;
+      const SHIPPING_FLAT = 12.99;
+      const FREE_SHIPPING_THRESHOLD = 99;
+      const shipping = subtotal >= FREE_SHIPPING_THRESHOLD ? 0 : SHIPPING_FLAT;
+      container.innerHTML = `
+        <button id="guntab-checkout-btn" class="guntab-checkout-btn" style="width:100%; padding:1rem 1.5rem; background:var(--color-primary); color:#fff; border:none; border-radius:8px; font-weight:700; font-size:1.1rem; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:0.5rem;">
+          <i class="fas fa-lock"></i> Checkout with GunTab
+        </button>
+        <p style="font-size:0.8rem; color:#666; margin-top:0.5rem;">Secure payment • 2A-friendly</p>
+      `;
+      document.getElementById('guntab-checkout-btn').addEventListener('click', async () => {
+        const btn = document.getElementById('guntab-checkout-btn');
+        if (btn) { btn.disabled = true; btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Creating checkout...'; }
+        try {
+          const product = window._productData;
+          const items = [{
+            sku: product?.sku,
+            name: product?.name,
+            category: window._productCategory || 'other_non_regulated',
+            quantity: qty
+          }];
+          const res = await fetch('/api/guntab-create-invoice', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              items,
+              merchandise_amount_cents: Math.round(subtotal * 100),
+              shipping_amount_cents: Math.round(shipping * 100)
             })
-            .then(res => res.json())
-            .then(data => {
-              if (data.success) {
-                console.log('Order email sent successfully');
-              }
-            })
-            .catch(err => console.error('Email send error:', err));
-            
-            alert(`✓ Payment Successful!\n\nOrder ID: ${orderData.id}\n\nThank you for your purchase!\n\n(Order confirmation has been sent to your PayPal email)`);
           });
-        },
-        onError: (err) => {
-          console.error('PayPal Error:', err);
-          alert('❌ Payment Error: ' + err.message);
-        },
-        onCancel: () => {
-          console.log('Payment cancelled');
-          alert('Payment cancelled. You can try again anytime.');
+          const data = await res.json();
+          if (data.success && data.response_url) {
+            window.location.href = data.response_url;
+          } else {
+            alert(data.error || 'Checkout failed. Please try again or contact us at (256) 384-3852.');
+            if (btn) { btn.disabled = false; btn.innerHTML = '<i class="fas fa-lock"></i> Checkout with GunTab'; }
+          }
+        } catch (e) {
+          alert('Checkout failed. Please contact us at (256) 384-3852.');
+          if (btn) { btn.disabled = false; btn.innerHTML = '<i class="fas fa-lock"></i> Checkout with GunTab'; }
         }
-      }).render('#paypal-button-container');
+      });
     }
 
     // QUANTITY CONTROLS

@@ -17,8 +17,8 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="icon" type="image/png" href="../favicon.png">
   
-  <!-- PayPal SDK -->
-  <script src="https://www.paypal.com/sdk/js?client-id=AYd1GcwFQbrNbYKm2nYjeGLYy4Cfdh7aH3AtrjrtJHFgSLbUJC_8CHo-DXmNZXJqjqFIEsmIe-e02OPA&currency=USD"></script>
+  <!-- PayPal SDK disabled - 2A merchants cannot use PayPal for ammo/firearms per their policies -->
+  <!-- <script src="https://www.paypal.com/sdk/js?client-id=...&currency=USD"></script> -->
   
   <style>
     :root {
@@ -596,9 +596,9 @@
               <span class="summary-label">Estimated Total</span>
               <span class="summary-value">$${totalWithShipping.toFixed(2)}</span>
             </div>
-            <div class="checkout-note">
-              <i class="fas fa-lock"></i>
-              Secure checkout powered by PayPal
+            <div class="checkout-note" id="checkout-note">
+              <i class="fas fa-credit-card"></i>
+              Secure checkout with GunTab
             </div>
             ${needsVerification ? `
             <div class="ammo-verification-block" id="verification-block">
@@ -627,7 +627,9 @@
               <p class="ammo-verification-hint" id="ammo-verification-hint">${cartHasFirearm ? 'Please confirm all four items above to enable checkout.' : 'Please confirm both items above to enable checkout.'}</p>
             </div>
             ` : ''}
-            <div id="paypal-button-container"></div>
+            <div id="paypal-button-container">
+              <!-- GunTab checkout button rendered by initCheckoutSection -->
+            </div>
             <a href="ammunition.html" class="continue-shopping">
               <i class="fas fa-arrow-left"></i> Continue Shopping
             </a>
@@ -635,118 +637,54 @@
         </div>
       `;
 
-      // Initialize PayPal: pass subtotal, shipping, and total (subtotal + shipping)
-      initPayPal(cart, subtotal, shipping, totalWithShipping, needsVerification, cartHasFirearm);
+      // Show contact-to-order (PayPal disabled for 2A compliance - switching payment processor)
+      initCheckoutSection(cart, subtotal, shipping, totalWithShipping, needsVerification, cartHasFirearm);
     }
 
-    function initPayPal(cart, subtotal, shipping, total, requireVerification, requireFirearmVerification) {
+    function initCheckoutSection(cart, subtotal, shipping, total, requireVerification, requireFirearmVerification) {
       const container = document.getElementById('paypal-button-container');
       if (!container) return;
 
-      function renderButtons() {
-        container.innerHTML = '';
-        paypal.Buttons({
-        style: {
-          layout: 'vertical',
-          color: 'gold',
-          shape: 'rect',
-          label: 'paypal',
-          tagline: false
-        },
-        createOrder: (data, actions) => {
-          const items = cart.map(item => ({
-            name: item.name.substring(0, 127),
-            unit_amount: {
-              currency_code: 'USD',
-              value: item.price.toFixed(2)
-            },
-            quantity: item.quantity.toString(),
-            sku: item.sku,
-            category: 'PHYSICAL_GOODS'
+      function renderGunTabButton() {
+        container.innerHTML = `
+          <button id="guntab-checkout-btn" class="guntab-checkout-btn" style="width:100%; padding:1rem 1.5rem; background:var(--color-primary); color:#fff; border:none; border-radius:8px; font-weight:700; font-size:1.1rem; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:0.5rem;">
+            <i class="fas fa-lock"></i> Checkout with GunTab
+          </button>
+          <p style="font-size:0.8rem; color:#666; margin-top:0.5rem;">Secure payment • 2A-friendly</p>
+        `;
+        document.getElementById('guntab-checkout-btn').addEventListener('click', () => doGunTabCheckout(cart, subtotal, shipping));
+      }
+
+      async function doGunTabCheckout(cartItems, subtotal, shipping) {
+        const btn = document.getElementById('guntab-checkout-btn');
+        if (btn) { btn.disabled = true; btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Creating checkout...'; }
+        try {
+          const items = cartItems.map(it => ({
+            sku: it.sku,
+            name: it.name,
+            category: it.category,
+            quantity: it.quantity
           }));
-
-          var breakdown = {
-            item_total: { currency_code: 'USD', value: subtotal.toFixed(2) }
-          };
-          if (shipping > 0) {
-            breakdown.shipping = { currency_code: 'USD', value: shipping.toFixed(2) };
+          const res = await fetch('/api/guntab-create-invoice', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              items,
+              merchandise_amount_cents: Math.round(subtotal * 100),
+              shipping_amount_cents: Math.round(shipping * 100)
+            })
+          });
+          const data = await res.json();
+          if (data.success && data.response_url) {
+            window.location.href = data.response_url;
+          } else {
+            alert(data.error || 'Checkout failed. Please try again or contact us at (256) 384-3852.');
+            if (btn) { btn.disabled = false; btn.innerHTML = '<i class="fas fa-lock"></i> Checkout with GunTab'; }
           }
-          return actions.order.create({
-            purchase_units: [{
-              amount: {
-                value: total.toFixed(2),
-                currency_code: 'USD',
-                breakdown: breakdown
-              },
-              items: items
-            }],
-            application_context: {
-              brand_name: 'Modular Gunworks LLC',
-              locale: 'en-US',
-              user_action: 'PAY_NOW'
-            }
-          });
-        },
-        onApprove: (data, actions) => {
-          return actions.order.capture().then((orderData) => {
-            console.log('Order completed:', orderData);
-            
-            const orderSummaryText = cart.map(item => 
-              `${item.quantity}× ${item.name} ($${(item.price * item.quantity).toFixed(2)})`
-            ).join('\n');
-            const buyerEmail = orderData.payer?.email_address || 'Not provided';
-            const cartHadAmmo = cart.some(item => item.category && String(item.category).toLowerCase() === 'ammunition');
-            const cartHadFirearm = cart.some(item => { const c = (item.category || '').toLowerCase(); return c === 'firearms' || c === 'guns'; });
-
-            // Send order notification (including age/firearm verification audit when applicable)
-            fetch('/api/send-order-email', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({
-                orderId: orderData.id,
-                productName: 'Cart order',
-                quantity: cart.reduce((s, i) => s + i.quantity, 0),
-                totalAmount: total.toFixed(2),
-                buyerEmail: buyerEmail,
-                category: 'Cart',
-                orderSummary: orderSummaryText,
-                ageVerified: cartHadAmmo ? true : undefined,
-                stateRestrictionsAcknowledged: cartHadAmmo ? true : undefined,
-                minAgeConfirmed: cartHadAmmo ? 21 : undefined,
-                firearmTransferAcknowledged: cartHadFirearm ? true : undefined,
-                federalStateFirearmRulesAcknowledged: cartHadFirearm ? true : undefined,
-                minFirearmAgeConfirmed: cartHadFirearm ? 21 : undefined
-              })
-            }).then(res => res.json()).then(d => { if (d.success) console.log('Order email sent'); }).catch(err => console.error('Order email error:', err));
-
-            // Clear cart after successful purchase
-            MGWCart.clear();
-
-            // Show success message
-            document.getElementById('cart-content').innerHTML = `
-              <div class="cart-empty" style="background: #e8f5e9;">
-                <i class="fas fa-check-circle" style="color: #4caf50;"></i>
-                <h2>Order Confirmed!</h2>
-                <p>Thank you for your purchase! Your order ID is: <strong>${orderData.id}</strong></p>
-                <p style="font-size: 0.9rem; color: #666;">A confirmation has been sent to your PayPal email.</p>
-                <p style="font-size: 0.9rem; color: #666;">Save this order ID to <a href="../order-status.html">check your order status</a> anytime.</p>
-                <a href="ammunition.html" class="shop-now-btn" style="margin-top: 1rem;">
-                  <i class="fas fa-shopping-bag"></i> Continue Shopping
-                </a>
-              </div>
-            `;
-            document.getElementById('cart-count-text').textContent = 'Order complete!';
-            document.getElementById('clear-cart-btn').style.display = 'none';
-          });
-        },
-        onError: (err) => {
-          console.error('PayPal Error:', err);
-          alert('Payment error. Please try again.');
-        },
-        onCancel: () => {
-          console.log('Payment cancelled');
+        } catch (e) {
+          alert('Checkout failed. Please contact us at (256) 384-3852.');
+          if (btn) { btn.disabled = false; btn.innerHTML = '<i class="fas fa-lock"></i> Checkout with GunTab'; }
         }
-      }).render('#paypal-button-container');
       }
 
       if (requireVerification) {
@@ -760,8 +698,7 @@
           const ammoOk = ageCheck && stateCheck && ageCheck.checked && stateCheck.checked;
           const firearmOk = !requireFirearmVerification || (fflCheck && rulesCheck && fflCheck.checked && rulesCheck.checked);
           if (ammoOk && firearmOk) {
-            container.innerHTML = '';
-            renderButtons();
+            renderGunTabButton();
             if (hint) hint.textContent = '';
           }
         }
@@ -770,7 +707,7 @@
         if (fflCheck) fflCheck.addEventListener('change', checkAll);
         if (rulesCheck) rulesCheck.addEventListener('change', checkAll);
       } else {
-        renderButtons();
+        renderGunTabButton();
       }
     }
 
