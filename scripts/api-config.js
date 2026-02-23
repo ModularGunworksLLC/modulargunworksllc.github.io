@@ -1,7 +1,7 @@
 /**
  * API base URL for backend requests.
- * - Empty string: same origin (use when site + API run together, e.g. Northflank).
- * - Set to Northflank URL when site is on GitHub Pages and API is on Northflank:
- *   window.API_BASE = 'https://modular-gunworks-xxxxx.code.run';
+ * - localhost: use same origin (for local testing).
+ * - Otherwise: Northflank (Node server).
  */
-window.API_BASE = '';
+window.API_BASE = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
+  ? '' : 'https://http--modular-gunworks--4mr9hkqdw4ml.code.run';

@@ -523,6 +523,31 @@
       const category = getQueryParam('category') || 'ammunition';
       const lookup = skuParam || productId;
 
+      // Use server-preloaded product if available (avoids refetch, better for GunTab/crawlers)
+      const preloaded = window.__PRELOADED_PRODUCT__;
+      if (preloaded && preloaded.sku && preloaded.displayPrice > 0) {
+        const p = {
+          sku: preloaded.sku,
+          name: preloaded.name,
+          displayPrice: preloaded.displayPrice,
+          image: preloaded.image,
+          brand: preloaded.brand || '',
+          inventory: preloaded.inventory || 0,
+          category: preloaded.category || '',
+          upc: '',
+          manufacturerItemNumber: '',
+          shipWeight: null,
+          length: null,
+          width: null,
+          height: null,
+          description: '',
+          hidden: false
+        };
+        document.getElementById('back-link').href = 'shop/' + (preloaded.category || category) + '.html';
+        renderProduct(p, preloaded.category || category);
+        return;
+      }
+
       if (!lookup) {
         document.getElementById('product-content').innerHTML = '<div class="error-message"><i class="fas fa-exclamation-circle"></i> No product specified. Use ?sku=...&category=...</div>';
         return;
@@ -625,11 +650,11 @@
                 </div>
               </div>
               <div style="font-size: 0.9rem; color: #666; margin-bottom: 0.75rem;">
-                <i class="fas fa-credit-card" style="color: var(--color-primary);"></i> Secure checkout with GunTab
+                <i class="fas fa-shopping-cart" style="color: var(--color-primary);"></i> Add to cart — checkout with age verification
               </div>
             </div>
 
-            <!-- CHECKOUT (GunTab) -->
+            <!-- ADD TO CART (checkout happens in cart with age gate) -->
             <div id="paypal-button-container" style="margin-bottom: 2rem;"></div>
 
             <!-- PRODUCT DETAILS (SKU, UPC, etc.) – compact like Chattanooga -->
@@ -713,57 +738,27 @@
         hintEl.style.display = 'flex';
       }
 
-      // Show contact-to-order (PayPal disabled for 2A compliance - switching payment processor)
-      showContactToOrder();
+      // Add to Cart (checkout with age verification happens in cart)
+      showAddToCart();
     }
 
-    // GunTab checkout for single product
-    function showContactToOrder() {
+    // Add to Cart — all checkouts go through cart for age/FFL verification
+    function showAddToCart() {
       const container = document.getElementById('paypal-button-container');
       if (!container) return;
-      const qty = parseInt(document.getElementById('quantity')?.value || '1', 10);
-      const displayPrice = window._productDisplayPrice ?? 0;
-      const subtotal = displayPrice * qty;
-      const SHIPPING_FLAT = 12.99;
-      const FREE_SHIPPING_THRESHOLD = 99;
-      const shipping = subtotal >= FREE_SHIPPING_THRESHOLD ? 0 : SHIPPING_FLAT;
       container.innerHTML = `
-        <button id="guntab-checkout-btn" class="guntab-checkout-btn" style="width:100%; padding:1rem 1.5rem; background:var(--color-primary); color:#fff; border:none; border-radius:8px; font-weight:700; font-size:1.1rem; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:0.5rem;">
-          <i class="fas fa-lock"></i> Checkout with GunTab
+        <button id="add-to-cart-btn" class="guntab-checkout-btn" style="width:100%; padding:1rem 1.5rem; background:var(--color-primary); color:#fff; border:none; border-radius:8px; font-weight:700; font-size:1.1rem; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:0.5rem;">
+          <i class="fas fa-cart-plus"></i> Add to Cart
         </button>
-        <p style="font-size:0.8rem; color:#666; margin-top:0.5rem;">Secure payment • 2A-friendly</p>
+        <p style="font-size:0.8rem; color:#666; margin-top:0.5rem;">Checkout in cart — age verification required for ammo & firearms</p>
       `;
-      document.getElementById('guntab-checkout-btn').addEventListener('click', async () => {
-        const btn = document.getElementById('guntab-checkout-btn');
-        if (btn) { btn.disabled = true; btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Creating checkout...'; }
-        try {
-          const product = window._productData;
-          const items = [{
-            sku: product?.sku,
-            name: product?.name,
-            category: window._productCategory || 'other_non_regulated',
-            quantity: qty
-          }];
-          const res = await fetch((window.API_BASE || '') + '/api/guntab-create-invoice', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              items,
-              merchandise_amount_cents: Math.round(subtotal * 100),
-              shipping_amount_cents: Math.round(shipping * 100)
-            })
-          });
-          const data = await res.json();
-          if (data.success && data.response_url) {
-            window.location.href = data.response_url;
-          } else {
-            alert(data.error || 'Checkout failed. Please try again or contact us at (256) 384-3852.');
-            if (btn) { btn.disabled = false; btn.innerHTML = '<i class="fas fa-lock"></i> Checkout with GunTab'; }
-          }
-        } catch (e) {
-          alert('Checkout failed. Please contact us at (256) 384-3852.');
-          if (btn) { btn.disabled = false; btn.innerHTML = '<i class="fas fa-lock"></i> Checkout with GunTab'; }
-        }
+      document.getElementById('add-to-cart-btn').addEventListener('click', () => {
+        const product = window._productData;
+        if (!product || !product.sku) return;
+        const qty = parseInt(document.getElementById('quantity')?.value || '1', 10) || 1;
+        const category = window._productCategory || product.category || '';
+        const price = window._productDisplayPrice ?? product.displayPrice ?? 0;
+        MGWCart.add(product.sku, product.name, price, qty, product.image || '', category);
       });
     }
 

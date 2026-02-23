@@ -95,7 +95,11 @@
   // Get cart total price
   function getCartTotal() {
     const cart = getCart();
-    return cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    return cart.reduce((sum, item) => {
+      const p = parseFloat(item.price) || 0;
+      const q = parseInt(item.quantity, 10) || 1;
+      return sum + (p * q);
+    }, 0);
   }
 
   // Clear entire cart

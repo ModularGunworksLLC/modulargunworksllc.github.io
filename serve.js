@@ -9,6 +9,11 @@ const PORT = process.env.PORT || 3000;
 
 const GUNTAB_API_TOKEN = process.env.GUNTAB_API_TOKEN;
 const GUNTAB_SELLER_EMAIL = process.env.GUNTAB_SELLER_EMAIL || 'modulargunworks@gmail.com';
+// Public store URL for redirects, etc.
+const PUBLIC_STORE_URL = (process.env.PUBLIC_STORE_URL || 'https://modulargunworksllc.github.io').replace(/\/$/, '');
+// URL for GunTab listing validation: must return server-rendered product HTML (not JS-dependent).
+// If modulargunworks.com is on GitHub Pages (static), use Northflank URL here so GunTab sees product content.
+const GUNTAB_LISTING_BASE = (process.env.GUNTAB_LISTING_BASE || process.env.PUBLIC_STORE_URL || 'https://modulargunworksllc.github.io').replace(/\/$/, '');
 
 const ORDERS_FILE = path.join(__dirname, 'data', 'orders.json');
 
@@ -77,11 +82,126 @@ app.use((req, res, next) => {
     "style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; " +
     "img-src 'self' data: https: http:; " +
     "font-src 'self' https://cdnjs.cloudflare.com https://fonts.googleapis.com https://fonts.gstatic.com; " +
-    "connect-src 'self' http://localhost:3001 https://api.guntab.com https://www.paypal.com https://www.sandbox.paypal.com; " +
+    "connect-src 'self' http://localhost:3001 https://api.guntab.com https://modulargunworks.com https://www.paypal.com https://www.sandbox.paypal.com; " +
     "frame-src https://www.paypal.com https://www.sandbox.paypal.com; " +
     "frame-ancestors 'none'"
   );
   next();
+});
+
+// Helper: load product from JSON by sku + category
+function loadProductFromJson(sku, category) {
+  const SLUG_TO_FILE = {
+    ammunition: 'Ammunition.json',
+    magazines: 'Magazines.json',
+    'gun-parts': 'Gun_Parts.json',
+    gear: 'Gear.json',
+    optics: 'Optics.json',
+    reloading: 'Reloading.json',
+    outdoors: 'Outdoors.json',
+    guns: 'Firearms.json',
+    knives: 'Knives.json',
+    clothing___footwear: 'Clothing___Footwear.json'
+  };
+  const catKey = String(category || '').toLowerCase();
+  const fileName = SLUG_TO_FILE[catKey] || (category ? (category.charAt(0).toUpperCase() + category.slice(1).replace(/-/g, '_') + '.json') : 'Gear.json');
+  const jsonPath = path.join(__dirname, 'data', 'products', 'mapped-products', fileName);
+  try {
+    const data = JSON.parse(fs.readFileSync(jsonPath, 'utf8'));
+    const list = Array.isArray(data) ? data : (data.products || data.items || []);
+    const match = list.find((p) => (p.SKU || p.sku || '').toString() === String(sku || ''));
+    if (!match) return null;
+    const toNum = (v) => (v != null && v !== '' && !isNaN(Number(v))) ? Number(v) : null;
+    const msrp = toNum(match.MSRP), map = toNum(match.MAP), price = toNum(match.Price);
+    const displayPrice = (msrp ?? map ?? price) || 0;
+    return {
+      name: match['Item Name'] || match['Web Item Name'] || match.name || 'Item',
+      sku: match.SKU || match.sku,
+      displayPrice,
+      image: (match['Image Location'] || match.image || '').replace(/\?w=\d+&h=\d+/, '?w=500&h=500'),
+      brand: match.Manufacturer || match.manufacturer || '',
+      inventory: parseInt(match['Quantity In Stock'], 10) || 0
+    };
+  } catch (e) {
+    return null;
+  }
+}
+
+// Dedicated minimal product page for GunTab crawler - no regex, no JS dependency (fixes "Url does not exist")
+function handleProductView(req, res) {
+  const sku = req.query.sku;
+  const category = req.query.category || 'gear';
+  if (!sku) {
+    res.setHeader('Cache-Control', 'no-store');
+    return res.status(400).type('text/html').send('<html><body><h1>Product not specified</h1></body></html>');
+  }
+  const product = loadProductFromJson(sku, category);
+  res.setHeader('Cache-Control', 'no-store');
+  if (!product || product.displayPrice <= 0) {
+    return res.type('text/html').send(`<html><head><title>Product - Modular Gunworks LLC</title></head><body><h1>Product not found</h1><p>SKU: ${String(sku)}</p></body></html>`);
+  }
+  const esc = (s) => String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  const html = `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>${esc(product.name)} - Modular Gunworks LLC</title><meta name="description" content="${esc(product.name)} - $${product.displayPrice.toFixed(2)} - Modular Gunworks LLC"></head><body>
+<h1>${esc(product.name)}</h1>
+<p><strong>Price:</strong> $${product.displayPrice.toFixed(2)}</p>
+<p><strong>SKU:</strong> ${esc(product.sku)}</p>
+<p><strong>Brand:</strong> ${esc(product.brand) || 'Modular Gunworks'}</p>
+<p><strong>Stock:</strong> ${product.inventory > 0 ? 'In Stock (' + product.inventory + ' available)' : 'Out of Stock'}</p>
+${product.image ? `<p><img src="${esc(product.image)}" alt="${esc(product.name)}"></p>` : ''}
+<p>Modular Gunworks LLC – quality firearms, ammunition, and gear.</p>
+</body></html>`;
+  res.type('text/html').send(html);
+}
+app.get('/product-view', handleProductView);
+app.get('/product-view.html', handleProductView);
+
+// Product detail with server-rendered content for GunTab crawler (requires public page with merchandise details)
+app.get('/product-detail.html', (req, res) => {
+  const sku = req.query.sku;
+  const category = req.query.category || 'ammunition';
+  if (!sku || !category) {
+    return res.sendFile(path.join(__dirname, 'product-detail.html'));
+  }
+  const product = loadProductFromJson(sku, category);
+  const htmlPath = path.join(__dirname, 'product-detail.html');
+  let html = fs.readFileSync(htmlPath, 'utf8');
+  if (product && product.displayPrice > 0) {
+    const escaped = (s) => String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    const preload = { sku: product.sku, name: product.name, displayPrice: product.displayPrice, image: product.image || '', brand: product.brand || '', inventory: product.inventory, category };
+    const merchBlock = `
+      <script>window.__PRELOADED_PRODUCT__=${JSON.stringify(preload)};<\/script>
+      <div class="product-detail-container" data-server-rendered="true">
+        <div class="product-image-section">
+          <div class="product-main-image">${product.image ? `<img src="${escaped(product.image)}" alt="${escaped(product.name)}">` : '<div class="product-main-image-placeholder"><i class="fas fa-box"></i></div>'}</div>
+        </div>
+        <div class="product-info-section">
+          <div class="product-breadcrumb-category">${escaped(category.toUpperCase())}</div>
+          <h1 class="product-detail-title">${escaped(product.name)}</h1>
+          <div class="product-detail-brand">${escaped(product.brand) || 'Modular Gunworks'}</div>
+          <div class="product-detail-price">$${product.displayPrice.toFixed(2)}</div>
+          <div class="product-detail-stock ${product.inventory > 0 ? 'stock-in' : 'stock-out'}">
+            <i class="fas ${product.inventory > 0 ? 'fa-check-circle' : 'fa-times-circle'}"></i>
+            ${product.inventory > 0 ? `In Stock (${product.inventory} available)` : 'Out of Stock'}
+          </div>
+          <div class="detail-value">SKU: ${escaped(product.sku)}</div>
+        </div>
+      </div>
+      <noscript><p><strong>${escaped(product.name)}</strong> – $${product.displayPrice.toFixed(2)}. SKU: ${escaped(product.sku)}. Modular Gunworks LLC – quality firearms, ammunition, and gear.</p></noscript>
+    `;
+    // Replace loading placeholder – flexible regex for different formatting
+    const productContentRegex = /<div id="product-content">[\s\S]*?<div[^>]*class="loading"[^>]*>[\s\S]*?<\/div>\s*<\/div>/;
+    const beforeLen = html.length;
+    html = html.replace(productContentRegex, `<div id="product-content">${merchBlock}</div>`);
+    if (html.length === beforeLen) {
+      // Regex didn't match – try simpler fallback: replace loading text block
+      html = html.replace(
+        /<div id="product-content">[\s\S]*?Loading product details[\s\S]*?<\/div>\s*<\/div>/,
+        `<div id="product-content">${merchBlock}</div>`
+      );
+    }
+  }
+  res.setHeader('Cache-Control', 'no-store');
+  res.type('text/html').send(html);
 });
 
 // Serve static files with correct MIME types
@@ -233,13 +353,13 @@ app.post('/api/guntab-create-invoice', async (req, res) => {
     const merchCents = Math.round(Number(merchandise_amount_cents) || 0);
     const shipCents = Math.round(Number(shipping_amount_cents) || 0);
 
-    const baseUrl = `${req.protocol}://${req.get('host') || 'localhost:3000'}`;
+    // Use PUBLIC_STORE_URL for listing URLs - GunTab requires public product pages, not the API host
     const listings = items.map(it => ({
       listing_type_id: categoryToListingTypeId(it.category),
       quantity: Math.max(1, parseInt(it.quantity, 10) || 1),
       title: (it.name || it.title || 'Item').substring(0, 200),
       url: it.url || (it.sku && it.category
-        ? `${baseUrl}/product-detail.html?sku=${encodeURIComponent(it.sku)}&category=${encodeURIComponent(it.category)}`
+        ? `${GUNTAB_LISTING_BASE}/product-view.html?sku=${encodeURIComponent(it.sku)}&category=${encodeURIComponent(it.category)}`
         : null)
     }));
 
@@ -257,7 +377,7 @@ app.post('/api/guntab-create-invoice', async (req, res) => {
     if (redirect_url && typeof redirect_url === 'string' && redirect_url.startsWith('http')) {
       payload.redirect_url = redirect_url;
     } else {
-      payload.redirect_url = `${baseUrl}/order-status.html`;
+      payload.redirect_url = `${PUBLIC_STORE_URL}/order-status.html`;
     }
 
     const apiRes = await fetch('https://api.guntab.com/v1/invoices', {

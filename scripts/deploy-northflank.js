@@ -76,6 +76,7 @@ async function main() {
     NODE_ENV: 'production',
     GUNTAB_API_TOKEN: GUNTAB_TOKEN || '',
     GUNTAB_SELLER_EMAIL: 'modulargunworks@gmail.com',
+    PUBLIC_STORE_URL: process.env.PUBLIC_STORE_URL || 'https://modulargunworksllc.github.io',
   };
   if (!GUNTAB_TOKEN) {
     console.warn('⚠️  GUNTAB_API_TOKEN not in .env – add it in Northflank UI after create');

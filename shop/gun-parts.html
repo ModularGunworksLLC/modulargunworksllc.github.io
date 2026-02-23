@@ -721,7 +721,7 @@
                 ${product.inventory > 0 ? 'In Stock' : 'Out of Stock'}
               </div>
             </div>
-            <button class="product-btn" onclick="event.stopPropagation(); addToCart('${(product.sku || product.SKU || '').replace(/'/g, "\\'")}', '${product.name.replace(/'/g, "\\'")}', ${product.displayPrice ?? product.msrp ?? 0})">
+            <button class="product-btn" onclick="event.stopPropagation(); addToCart('${(product.sku || product.SKU || '').replace(/'/g, "\\'")}', '${(product.name || '').replace(/'/g, "\\'")}', ${product.displayPrice ?? product.msrp ?? 0}, 1, '${(product.image || '').replace(/'/g, "\\'")}', 'gun-parts')">
               <i class="fas fa-cart-plus"></i> Add to Cart
             </button>
           </div>
@@ -754,7 +754,7 @@
             </span>
           </td>
           <td style="text-align: center;">
-            <button class="product-btn" style="width: auto; padding: 0.6rem 1rem; font-size: 0.85rem;" onclick="event.stopPropagation(); addToCart('${(product.sku || product.SKU || '').replace(/'/g, "\\'")}', '${product.name.replace(/'/g, "\\'")}', ${product.displayPrice ?? product.msrp ?? 0})">
+            <button class="product-btn" style="width: auto; padding: 0.6rem 1rem; font-size: 0.85rem;" onclick="event.stopPropagation(); addToCart('${(product.sku || product.SKU || '').replace(/'/g, "\\'")}', '${(product.name || '').replace(/'/g, "\\'")}', ${product.displayPrice ?? product.msrp ?? 0}, 1, '${(product.image || '').replace(/'/g, "\\'")}', 'gun-parts')">
               <i class="fas fa-cart-plus"></i> Add
             </button>
           </td>

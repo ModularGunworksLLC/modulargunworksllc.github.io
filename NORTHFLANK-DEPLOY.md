@@ -77,6 +77,8 @@ No Git or branch selection required.
 |------|-------|-------|
 | `GUNTAB_API_TOKEN` | Your GunTab live API token | From .env |
 | `GUNTAB_SELLER_EMAIL` | modulargunworks@gmail.com | Optional, this is default |
+| `PUBLIC_STORE_URL` | https://modulargunworks.com | For redirects |
+| `GUNTAB_LISTING_BASE` | Northflank URL (e.g. `https://http--modular-gunworks--xxxxx.code.run`) | **Required for GunTab.** Run `node scripts/audit-northflank.js --fix` to set. |
 | `NODE_ENV` | production | Optional |
 
 ⚠️ **Do NOT add** `.env` to Git. Set these in Northflank’s UI.
@@ -120,6 +122,8 @@ No Git or branch selection required.
 **Build fails:** Check build logs. Ensure `package.json` has `"start": "node serve.js"`.
 
 **503 / app won’t start:** Verify env vars are set. Check runtime logs.
+
+**GunTab "Url does not exist or requires login":** Set `GUNTAB_LISTING_BASE` to your Northflank URL. Run `node scripts/audit-northflank.js --fix`.
 
 **Orders not persisting:** `data/orders.json` is on ephemeral disk. For persistence, add a Northflank Volume or switch to Neon (DATABASE_URL).
 
