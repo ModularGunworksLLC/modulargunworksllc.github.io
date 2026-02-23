@@ -219,6 +219,7 @@
     </div>
   </footer>
 
+  <script src="scripts/api-config.js"></script>
   <script>
     function searchOrder(e) {
       if (e) e.preventDefault();
@@ -232,7 +233,7 @@
       }
       resultEl.style.display = 'block';
       resultEl.innerHTML = '<p style="color:#666;">Looking up order…</p>';
-      fetch('/api/order-status', {
+      fetch((window.API_BASE || '') + '/api/order-status', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ orderId: orderId, email: email })

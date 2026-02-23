@@ -499,6 +499,7 @@
   </main>
 
   <!-- CART SCRIPT -->
+  <script src="../scripts/api-config.js"></script>
   <script src="../scripts/cart.js"></script>
   <script>
     // Industry-standard shipping: flat rate under threshold, free over threshold
@@ -665,7 +666,7 @@
             category: it.category,
             quantity: it.quantity
           }));
-          const res = await fetch('/api/guntab-create-invoice', {
+          const res = await fetch((window.API_BASE || '') + '/api/guntab-create-invoice', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({

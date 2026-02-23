@@ -5,7 +5,7 @@ const fs = require('fs');
 const cors = require('cors');
 const nodemailer = require('nodemailer');
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 const GUNTAB_API_TOKEN = process.env.GUNTAB_API_TOKEN;
 const GUNTAB_SELLER_EMAIL = process.env.GUNTAB_SELLER_EMAIL || 'modulargunworks@gmail.com';
@@ -208,6 +208,14 @@ function categoryToListingTypeId(category) {
   if (c === 'gun-parts' || c === 'gun parts') return 'other_non_regulated';
   return 'other_non_regulated';
 }
+
+// CORS preflight for API routes (some clients require explicit OPTIONS)
+app.options('/api/guntab-create-invoice', (req, res) => {
+  res.setHeader('Access-Control-Allow-Origin', req.headers.origin || '*');
+  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  res.sendStatus(204);
+});
 
 // Create GunTab invoice and return response_url for redirect
 app.post('/api/guntab-create-invoice', async (req, res) => {

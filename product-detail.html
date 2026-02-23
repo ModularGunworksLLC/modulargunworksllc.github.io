@@ -394,6 +394,7 @@
 <body>
   <!-- AGE GATE -->
   <script src="scripts/age-gate.js"></script>
+  <script src="scripts/api-config.js"></script>
   <script src="scripts/cart.js"></script>
 
   <!-- HEADER -->
@@ -743,7 +744,7 @@
             category: window._productCategory || 'other_non_regulated',
             quantity: qty
           }];
-          const res = await fetch('/api/guntab-create-invoice', {
+          const res = await fetch((window.API_BASE || '') + '/api/guntab-create-invoice', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
