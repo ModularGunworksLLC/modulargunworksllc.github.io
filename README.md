@@ -30,6 +30,17 @@ This repository is the **version-controlled source** for the **custom WordPress 
 
 The old default-branch HTML storefront is preserved in **`legacy/github-pages-static/`** and on Git branch **`archive/github-pages-static`** (snapshot of `origin/main` before the WordPress-first layout). See [`legacy/github-pages-static/README.md`](legacy/github-pages-static/README.md).
 
+## Push from this clone (Lightsail)
+
+The restructuring commit may exist **only locally** until you authenticate. From a machine with GitHub access:
+
+```bash
+git push origin main
+git push origin archive/github-pages-static
+```
+
+Use SSH remote or a personal access token if HTTPS fails on the server.
+
 ## Workflow
 
 1. Change theme/plugins **here**, commit, push `main`.  
