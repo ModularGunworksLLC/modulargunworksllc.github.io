@@ -32,14 +32,16 @@ The old default-branch HTML storefront is preserved in **`legacy/github-pages-st
 
 ## Push from this clone (Lightsail)
 
-The restructuring commit may exist **only locally** until you authenticate. From a machine with GitHub access:
+This repo’s `origin` uses the SSH host alias **`github-modulargunworks`** (see `~/.ssh/config`) with a **deploy key** at `~/.ssh/modulargunworks_github`. On GitHub: **Repo → Settings → Deploy keys → Add deploy key**, paste the contents of **`~/.ssh/modulargunworks_github.pub`**, and enable **Allow write access**. Then:
 
 ```bash
+cd ~/modulargunworksllc.github.io
 git push origin main
 git push origin archive/github-pages-static
 ```
 
-Use SSH remote or a personal access token if HTTPS fails on the server.
+If you use HTTPS instead, set `origin` back to  
+`https://github.com/ModularGunworksLLC/modulargunworksllc.github.io.git` and authenticate with a **personal access token** (classic: `repo` scope).
 
 ## Workflow
 
