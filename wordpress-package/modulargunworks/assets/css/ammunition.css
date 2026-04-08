@@ -9,19 +9,18 @@ main.ammunition-main {
   padding: 3rem 2rem;
 }
 
-/* SIDEBAR */
+/* SIDEBAR - aligns with product grid (no extra margin) */
 #filters-sidebar {
   flex: 0 0 300px;
   position: sticky;
-  top: 180px;
+  top: 140px;
   height: fit-content;
   background: #fff;
   border: 1px solid #e0e0e0;
   border-radius: 8px;
   padding: 0;
   overflow-y: auto;
-  max-height: calc(100vh - 200px);
-  margin-top: 180px;
+  max-height: calc(100vh - 160px);
 }
 
 /* FILTER HEADER */

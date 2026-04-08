@@ -3,14 +3,22 @@
     <div class="footer-section">
       <h3>Shop</h3>
       <ul>
-        <li><a href="<?php echo esc_url(home_url('/shop?product_cat=ammunition')); ?>">Ammunition</a></li>
-        <li><a href="<?php echo esc_url(home_url('/shop?product_cat=magazines')); ?>">Magazines</a></li>
-        <li><a href="<?php echo esc_url(home_url('/shop?product_cat=gun-parts')); ?>">Gun Parts</a></li>
-        <li><a href="<?php echo esc_url(home_url('/shop?product_cat=gear')); ?>">Gear</a></li>
-        <li><a href="<?php echo esc_url(home_url('/shop?product_cat=optics')); ?>">Optics</a></li>
-        <li><a href="<?php echo esc_url(home_url('/shop?product_cat=reloading')); ?>">Reloading</a></li>
-        <li><a href="<?php echo esc_url(home_url('/shop?product_cat=outdoors')); ?>">Outdoors</a></li>
-        <li><a href="<?php echo esc_url(home_url('/shop?product_cat=brands')); ?>">Brands</a></li>
+        <?php
+        $shop_url = function_exists('wc_get_page_permalink') ? get_permalink(wc_get_page_id('shop')) : home_url('/shop');
+        $footer_cats = ['ammunition', 'magazines', 'gun-parts', 'gear', 'optics', 'reloading', 'outdoors', 'brands'];
+        $footer_names = ['Ammunition', 'Magazines', 'Gun Parts', 'Gear', 'Optics', 'Reloading', 'Outdoors', 'Brands'];
+        $brands_page = get_page_by_path('brands');
+        foreach ($footer_cats as $i => $slug) {
+          if ($slug === 'brands') {
+            $url = ($brands_page ? get_permalink($brands_page) : home_url('/brands/'));
+          } else {
+            $term = function_exists('get_term_by') && taxonomy_exists('product_cat') ? get_term_by('slug', $slug, 'product_cat') : null;
+            $term_link = $term ? get_term_link($term) : '';
+            $url = ($term && !is_wp_error($term_link)) ? $term_link : ($shop_url . '?product_cat=' . $slug);
+          }
+          echo '<li><a href="' . esc_url($url) . '">' . esc_html($footer_names[$i]) . '</a></li>';
+        }
+        ?>
       </ul>
     </div>
 
@@ -49,7 +57,7 @@
     <div class="footer-section">
       <h3>Contact</h3>
       <p><strong>Phone:</strong> (256) 384-3852<br>
-      <strong>Email:</strong> modulargunworks@gmail.com<br>
+      <strong>Email:</strong> Info@modulargunworks.com<br>
       <strong>Location:</strong> Huntsville, AL<br>
       <strong>Hours:</strong> M-F 9AM-6PM, Sat 10AM-4PM CT</p>
     </div>

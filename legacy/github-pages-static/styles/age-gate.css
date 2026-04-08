@@ -173,10 +173,3 @@ body.age-gate-shown {
 body.age-gate-shown > *:not(.age-gate-modal) {
   display: none !important;
 }
-
-/* Cart age gate: disabled checkout button visual state */
-.mgw-checkout-disabled {
-  cursor: not-allowed !important;
-  filter: grayscale(1);
-  background-color: #999 !important;
-}

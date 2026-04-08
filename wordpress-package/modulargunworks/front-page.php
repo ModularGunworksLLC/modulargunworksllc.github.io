@@ -5,13 +5,15 @@
     <h2>Lower Prices. Same Quality. Huntsville-Based.</h2>
     <p>Why pay national prices when we ship fast from Alabama? Quality firearms, ammunition, and gear at prices you'll love.</p>
     <div class="hero-cta-buttons">
-      <?php if (function_exists('wc_get_page_permalink')) : ?>
-      <a href="<?php echo esc_url(get_permalink(wc_get_page_id('shop')) . '?product_cat=ammunition'); ?>" class="hero-cta-btn primary">Shop Ammunition</a>
-      <a href="<?php echo esc_url(get_permalink(wc_get_page_id('shop')) . '?product_cat=gear'); ?>" class="hero-cta-btn secondary">Browse Gear & Parts</a>
-      <?php else : ?>
-      <a href="<?php echo esc_url(home_url('/shop')); ?>" class="hero-cta-btn primary">Shop Ammunition</a>
-      <a href="<?php echo esc_url(home_url('/shop')); ?>" class="hero-cta-btn secondary">Browse Gear & Parts</a>
-      <?php endif; ?>
+      <?php
+      $shop_url = function_exists('wc_get_page_permalink') ? get_permalink(wc_get_page_id('shop')) : home_url('/shop');
+      $ammo_url = (function_exists('get_term_by') && taxonomy_exists('product_cat')) ? (get_term_by('slug', 'ammunition', 'product_cat') ? get_term_link(get_term_by('slug', 'ammunition', 'product_cat')) : $shop_url . '?product_cat=ammunition') : $shop_url;
+      $gear_url = (function_exists('get_term_by') && taxonomy_exists('product_cat')) ? (get_term_by('slug', 'gear', 'product_cat') ? get_term_link(get_term_by('slug', 'gear', 'product_cat')) : $shop_url . '?product_cat=gear') : $shop_url;
+      if (is_wp_error($ammo_url)) $ammo_url = $shop_url;
+      if (is_wp_error($gear_url)) $gear_url = $shop_url;
+      ?>
+      <a href="<?php echo esc_url($ammo_url); ?>" class="hero-cta-btn primary">Shop Ammunition</a>
+      <a href="<?php echo esc_url($gear_url); ?>" class="hero-cta-btn secondary">Browse Gear & Parts</a>
     </div>
   </section>
 
@@ -32,8 +34,14 @@
           ['slug' => 'brands', 'name' => 'Shop by Brand', 'count' => '80+ Brands', 'img' => 'brands.jpg'],
         ];
         $shop_url = function_exists('wc_get_page_permalink') ? get_permalink(wc_get_page_id('shop')) : home_url('/shop');
+        $brands_page = get_page_by_path('brands');
         foreach ($categories as $cat) :
-          $url = $shop_url . '?product_cat=' . $cat['slug'];
+          if ($cat['slug'] === 'brands') {
+            $url = ($brands_page ? get_permalink($brands_page) : home_url('/brands/'));
+          } else {
+            $term = function_exists('get_term_by') && taxonomy_exists('product_cat') ? get_term_by('slug', $cat['slug'], 'product_cat') : null;
+            $url = $term && !is_wp_error(get_term_link($term)) ? get_term_link($term) : ($shop_url . '?product_cat=' . $cat['slug']);
+          }
           $img_path = get_template_directory_uri() . '/assets/images/categories/' . $cat['img'];
         ?>
         <div class="carousel-item">

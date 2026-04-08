@@ -1,10 +1,29 @@
-# Order data (stored locally when using serve.js; do not commit)
-data/orders.json
+# Order data (legacy static site; do not commit live PII)
+legacy/github-pages-static/data/orders.json
 
 # Environment and secrets (never commit)
 .env
 .env.*
 !.env.example
 
-# Local admin tooling (not part of main/live site)
+# Dependencies (install with npm locally if needed for archived static tooling)
+node_modules/
+
+# WordPress / server cruft if ever present in this repo
+wp-config.php
+wp-content/uploads/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+.idea/
+.vscode/
+
+# Logs
+*.log
+npm-debug.log*
+
+# Local admin tooling (legacy)
 admin/

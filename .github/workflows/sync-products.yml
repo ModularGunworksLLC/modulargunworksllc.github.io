@@ -1,9 +1,8 @@
-name: Modular Gunworks — Product Sync (every 4 hours)
+# Archived static site only: updates JSON under legacy/github-pages-static/data/.
+# Live catalog sync runs on WordPress (mgw-chattanooga-sync on Lightsail), not via this workflow.
+name: Archived static — Chattanooga JSON sync (manual)
 
 on:
-  schedule:
-    # Every 4 hours (UTC): 12 AM, 4 AM, 8 AM, 12 PM, 4 PM, 8 PM
-    - cron: "0 0,4,8,12,16,20 * * *"
   workflow_dispatch:
 
 permissions:
@@ -12,6 +11,9 @@ permissions:
 jobs:
   sync:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: legacy/github-pages-static
 
     steps:
       - name: Checkout repository
@@ -25,9 +27,8 @@ jobs:
           node-version: 20
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci || npm install
 
-      # sync-products.js expects API_SID and API_TOKEN (from .env locally)
       - name: Set API credentials
         run: |
           echo "API_SID=${{ secrets.CHATTANOOGA_SID }}" >> $GITHUB_ENV
@@ -38,8 +39,9 @@ jobs:
 
       - name: Check for changes
         id: check_changes
+        working-directory: .
         run: |
-          if git diff --quiet data/products/mapped-products/; then
+          if git diff --quiet legacy/github-pages-static/data/products/mapped-products/; then
             echo "has_changes=false" >> $GITHUB_OUTPUT
           else
             echo "has_changes=true" >> $GITHUB_OUTPUT
@@ -47,14 +49,14 @@ jobs:
 
       - name: Commit and push product updates
         if: steps.check_changes.outputs.has_changes == 'true'
+        working-directory: .
         run: |
           git config --global user.name "Modular Gunworks Bot"
           git config --global user.email "bot@modulargunworks.com"
-          git add data/products/mapped-products/
-          git commit -m "Auto sync: products updated $(date -u +%Y-%m-%dT%H:%MZ)"
+          git add legacy/github-pages-static/data/products/mapped-products/
+          git commit -m "chore(legacy-static): refresh mapped-products JSON $(date -u +%Y-%m-%dT%H:%MZ)"
           git push origin main
 
       - name: Log status
         run: |
-          echo "✅ Product sync workflow finished"
-          echo "📦 Changes pushed to repo; GitHub Pages will serve updated product data"
+          echo "Workflow finished (archived static tree only)."

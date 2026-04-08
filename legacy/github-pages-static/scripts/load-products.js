@@ -1,0 +1,492 @@
+// scripts/load-products.js
+// Dynamic loader for normalized UI-ready product JSON files
+
+// --- Normalization helpers ---
+
+function toNumber(value) {
+  if (value === undefined || value === null) return null;
+  const n = Number(String(value).trim());
+  return Number.isFinite(n) ? n : null;
+}
+
+function toBooleanFromFlag(value) {
+  const v = String(value).trim().toLowerCase();
+  return v === "1" || v === "yes" || v === "true";
+}
+
+function normalizeCategoryValue(value) {
+  if (!value) return "";
+  return String(value).split("|").filter(Boolean)[0] || "";
+}
+
+/** Request larger image size so images stay crisp (CDN often gives ?w=110&h=110). */
+function toHighResImageUrl(url, size) {
+  if (!url || typeof url !== "string") return url;
+  size = size || 500;
+  return url.replace(/\?w=\d+&h=\d+/, "?w=" + size + "&h=" + size);
+}
+
+/** Return numeric price or null if missing/empty/zero (so we can fall back to next tier). */
+function priceOrNull(value) {
+  if (value == null || value === '') return null;
+  const s = String(value).trim().toLowerCase();
+  if (s === 'custom' || s === 'call' || s === 'quote') return null;
+  const n = toNumber(value);
+  return n != null && n > 0 ? n : null;
+}
+
+// --- Core normalizer: vendor → UI product ---
+// Display price: MSRP if present, else MAP, else Price (dealer cost) as fallback so products without MSRP/MAP still show.
+
+function normalizeVendorProduct(vendor) {
+  const msrp = priceOrNull(vendor["MSRP"]);
+  const map = priceOrNull(vendor["MAP"]);
+  const price = priceOrNull(vendor["Price"]);
+  const displayPrice = msrp ?? map ?? price ?? null;
+  const category = normalizeCategoryValue(vendor.mappedCategory?.top);
+  const isFirearmCategory = (category || "").toLowerCase() === "firearms";
+  return {
+    sku: vendor["SKU"] ?? "",
+    name: vendor["Item Name"] ?? "",
+    webName: vendor["Web Item Name"] ?? "",
+    description: vendor["Web Item Description"] ?? "",
+    price: toNumber(vendor["Price"]) ?? 0,
+    msrp: toNumber(vendor["MSRP"]),
+    map: toNumber(vendor["MAP"]),
+    displayPrice: displayPrice ?? 0,
+    upc: vendor["UPC"] ?? "",
+    inventory: toNumber(vendor["Quantity In Stock"]) ?? 0,
+    dropShip: toBooleanFromFlag(vendor["Drop Ship Flag"]),
+    dropShipPrice: toNumber(vendor["Drop Ship Price"]),
+    category: category,
+    subcategory: normalizeCategoryValue(vendor.mappedCategory?.sub),
+    rawCategory: vendor["Category"] ?? "",
+    isFirearm: isFirearmCategory,
+    minFirearmAge: isFirearmCategory ? 21 : undefined,
+    shipWeight: toNumber(vendor["Ship Weight"]),
+    image: toHighResImageUrl(vendor["Image Location"] ?? vendor["image"] ?? "", 500),
+    imageLocation: vendor["Image Location"] ?? "",
+    manufacturer: vendor["Manufacturer"] ?? "",
+    manufacturerItemNumber: vendor["Manufacturer Item Number"] ?? "",
+    length: toNumber(vendor["Length"]),
+    width: toNumber(vendor["Width"]),
+    height: toNumber(vendor["Height"]),
+    availableDropShipOptions: vendor["Available Drop Ship Delivery Options"] ?? "",
+    allocated: toBooleanFromFlag(vendor["Allocated Item?"])
+  };
+}
+
+// --- Brand order: top brands first when page loads (lower rank = higher on page) ---
+// Order is dictated by this list; brands not listed sort to the end.
+var BRAND_PRIORITY = [
+  'Hornady', 'Federal', 'Sig Sauer', 'Glock', 'Smith & Wesson', 'Ruger', 'Springfield Armory',
+  'Leupold', 'Vortex', 'Trijicon', 'Magpul', 'RCBS', 'Lee Precision', 'Redding', 'Lyman', 'Forster',
+  'Remington', 'Winchester', 'Browning', 'Savage', 'Mossberg', 'FN America', 'Heckler & Koch',
+  'Daniel Defense', 'Wilson Combat', 'Aero Precision', 'Holosun', 'Primary Arms', 'EOTech', 'Aimpoint',
+  'Streamlight', 'SureFire', 'Burris', 'Bushnell', 'Athlon', 'Nosler', 'Barnes', 'Sierra', 'Berger',
+  'Hodgdon', 'Alliant Powder', 'Fiocchi', 'Blackhawk', 'DeSantis', 'Safariland', 'ProMag', 'Mec-Gar',
+  'Kimber', 'Walther', 'Beretta', 'Henry', 'Kel-Tec', 'Umarex', 'Sellmark', 'Hogue', 'Meprolight'
+];
+
+// Map raw manufacturer string (lowercase) to display name for brand rank lookup.
+function getManufacturerDisplayName(raw) {
+  if (!raw || !String(raw).trim()) return '';
+  var key = String(raw).trim().toLowerCase().replace(/\.$/, '');
+  var map = {
+    'hornady mfg': 'Hornady', 'hornady manufacturing': 'Hornady', 'hornady': 'Hornady',
+    'federal cartridge co': 'Federal', 'federal cartridge': 'Federal', 'federal premium': 'Federal', 'federal': 'Federal',
+    'sig sauer': 'Sig Sauer', 'sig': 'Sig Sauer',
+    'glock inc': 'Glock', 'glock': 'Glock',
+    'smith & wesson inc': 'Smith & Wesson', 'smith & wesson': 'Smith & Wesson', 'smith and wesson': 'Smith & Wesson',
+    'sturm ruger & co': 'Ruger', 'ruger': 'Ruger',
+    'springfield armory': 'Springfield Armory', 'springfield': 'Springfield Armory',
+    'leupold & stevens inc': 'Leupold', 'leupold': 'Leupold',
+    'vortex optics': 'Vortex', 'vortex': 'Vortex',
+    'trijicon': 'Trijicon',
+    'magpul': 'Magpul', 'magpul industries': 'Magpul',
+    'rcbs': 'RCBS',
+    'lee precision': 'Lee Precision', 'lee': 'Lee Precision',
+    'redding': 'Redding',
+    'lyman': 'Lyman',
+    'forster products': 'Forster', 'forster': 'Forster',
+    'remington': 'Remington', 'remington arms co. inc': 'Remington',
+    'winchester': 'Winchester', 'winchester ammunition': 'Winchester',
+    'browning': 'Browning', 'browning firearms': 'Browning',
+    'savage arms': 'Savage', 'savage': 'Savage',
+    'mossberg': 'Mossberg', 'mossberg & sons inc': 'Mossberg',
+    'fn america': 'FN America', 'fn usa': 'FN America',
+    'heckler & koch': 'Heckler & Koch', 'hk': 'Heckler & Koch',
+    'daniel defense': 'Daniel Defense',
+    'wilson combat': 'Wilson Combat',
+    'aero precision': 'Aero Precision',
+    'holosun': 'Holosun',
+    'primary arms': 'Primary Arms',
+    'eotech': 'EOTech',
+    'aimpoint': 'Aimpoint',
+    'streamlight': 'Streamlight',
+    'surefire': 'SureFire', 'surefire llc': 'SureFire',
+    'burris': 'Burris',
+    'bushnell': 'Bushnell',
+    'athlon': 'Athlon', 'athlon optics': 'Athlon',
+    'nosler': 'Nosler',
+    'barnes': 'Barnes',
+    'sierra': 'Sierra',
+    'berger': 'Berger',
+    'hodgdon': 'Hodgdon',
+    'alliant powder': 'Alliant Powder',
+    'fiocchi': 'Fiocchi',
+    'blackhawk': 'Blackhawk',
+    'desantis': 'DeSantis',
+    'safariland': 'Safariland',
+    'promag': 'ProMag',
+    'mec-gar': 'Mec-Gar',
+    'kimber': 'Kimber',
+    'walther': 'Walther',
+    'beretta': 'Beretta',
+    'henry': 'Henry',
+    'kel-tec': 'Kel-Tec',
+    'umarex': 'Umarex',
+    'sellmark': 'Sellmark',
+    'hogue': 'Hogue',
+    'meprolight': 'Meprolight'
+  };
+  return map[key] || '';
+}
+
+function getBrandRank(manufacturer) {
+  var name = getManufacturerDisplayName(manufacturer);
+  if (!name) return 9999;
+  var i = BRAND_PRIORITY.indexOf(name);
+  return i >= 0 ? i : 9999;
+}
+
+// --- Firearms: exclude suppressors and NFA items (not offered for sale) ---
+
+function isSuppressorOrNFAProduct(p) {
+  const rawCat = (p.rawCategory || '').trim();
+  if (rawCat) {
+    const firstSeg = rawCat.split('|')[0].trim();
+    const isAccessory = /^Suppressors Accessories$/i.test(firstSeg);
+    if (!isAccessory && (rawCat === 'Suppressors' || rawCat.indexOf('Suppressors|') === 0)) {
+      return true;
+    }
+  }
+  const sub = (p.subcategory || '').trim().toLowerCase();
+  const name = (p.name || '').toLowerCase();
+  if (sub === 'suppressors') return true;
+  const nfaPhrases = [
+    ' sbr ', ' sbs ', ' aow ', ' machine gun ', ' destructive device ', ' nfa ',
+    'short barrel rifle', 'short barrel shotgun'
+  ];
+  return nfaPhrases.some(phrase => name.includes(phrase));
+}
+
+// --- Loader mode: single category vs sale vs brand-products ---
+
+function getLoaderMode() {
+  const path = (window.location.pathname || '').split('/').pop() || '';
+  if (path === 'sale.html' || path === 'sale') return 'sale';
+  if (path === 'brand-products.html' || path === 'brand-products') return 'brand';
+  if (path === 'search.html' || path === 'search') return 'search';
+  return 'single';
+}
+
+function getBrandFromUrl() {
+  const params = new URLSearchParams(window.location.search || '');
+  const brand = params.get('brand') || '';
+  return brand ? decodeURIComponent(brand).trim() : '';
+}
+
+// File name -> URL slug for product-detail category param
+var SALE_CATEGORIES = [
+  { file: 'Ammunition.json', slug: 'ammunition' },
+  { file: 'Magazines.json', slug: 'magazines' },
+  { file: 'Gun_Parts.json', slug: 'gun-parts' },
+  { file: 'Gear.json', slug: 'gear' },
+  { file: 'Optics.json', slug: 'optics' },
+  { file: 'Reloading.json', slug: 'reloading' },
+  { file: 'Outdoors.json', slug: 'outdoors' }
+];
+
+var BRAND_CATEGORIES = [
+  { file: 'Ammunition.json', slug: 'ammunition' },
+  { file: 'Magazines.json', slug: 'magazines' },
+  { file: 'Gun_Parts.json', slug: 'gun-parts' },
+  { file: 'Gear.json', slug: 'gear' },
+  { file: 'Optics.json', slug: 'optics' },
+  { file: 'Reloading.json', slug: 'reloading' },
+  { file: 'Outdoors.json', slug: 'outdoors' },
+  { file: 'Firearms.json', slug: 'guns' },
+  { file: 'Knives.json', slug: 'knives' },
+  { file: 'Clothing___Footwear.json', slug: 'clothing___footwear' }
+];
+
+function categoryDisplayFromSlug(slug) {
+  return (slug || '').split('-').map(function (w) { return w.charAt(0).toUpperCase() + w.slice(1); }).join(' ');
+}
+
+// --- Sale: fetch active.json, then each category; merge sale items (Price < MSRP/MAP + MAP-only) ---
+
+async function loadSaleProducts() {
+  let activeData = {};
+  try {
+    const activeRes = await fetch('../data/products/active.json');
+    if (activeRes.ok) activeData = await activeRes.json();
+  } catch (e) {
+    console.warn('active.json not loaded:', e);
+  }
+
+  const skusInSale = new Set();
+  const allSale = [];
+
+  for (const cat of SALE_CATEGORIES) {
+    try {
+      const res = await fetch('../data/products/mapped-products/' + cat.file);
+      if (!res.ok) continue;
+      const data = await res.json();
+      const list = Array.isArray(data) ? data : (data.products || data.items || []);
+      const categoryPage = cat.slug;
+
+      for (const row of list) {
+        if (row.hidden) continue;
+        const sku = (row.SKU || row.sku || '').toString();
+        const isActive = activeData[sku] && activeData[sku].page === categoryPage;
+        const regularPrice = priceOrNull(row.MSRP) ?? priceOrNull(row.MAP);
+        if (regularPrice == null) continue;
+        const sellPrice = priceOrNull(row.Price);
+        const displayPrice = (sellPrice != null && sellPrice < regularPrice) ? sellPrice : (priceOrNull(row.MAP) ?? priceOrNull(row.MSRP));
+        const isTraditionalSale = isActive && displayPrice != null && displayPrice > 0 && displayPrice < regularPrice;
+        const isMapOnly = priceOrNull(row.MAP) != null && priceOrNull(row.MSRP) == null && !skusInSale.has(sku);
+        if (!isTraditionalSale && !isMapOnly) continue;
+
+        const normalized = normalizeVendorProduct(row);
+        if (!normalized.displayPrice || normalized.displayPrice <= 0) continue;
+
+        const regular = isTraditionalSale ? regularPrice : (priceOrNull(row.MAP) ?? regularPrice);
+        const discount = regular > 0 ? Math.round(((regular - (normalized.displayPrice || 0)) / regular) * 100) : 0;
+        skusInSale.add(sku);
+        allSale.push({
+          ...normalized,
+          regularPrice: regular,
+          discount: isMapOnly ? 0 : discount,
+          sourceCategory: cat.slug,
+          categoryDisplay: categoryDisplayFromSlug(cat.slug),
+          isMapOnly: !!isMapOnly
+        });
+      }
+    } catch (e) {
+      console.error('Sale load ' + cat.file + ':', e);
+    }
+  }
+
+  allSale.sort((a, b) => {
+    if (a.discount > 0 && b.discount === 0) return -1;
+    if (a.discount === 0 && b.discount > 0) return 1;
+    if (a.discount > 0 && b.discount > 0) return b.discount - a.discount;
+    return (a.name || '').localeCompare(b.name || '');
+  });
+
+  window.allProducts = allSale;
+  if (typeof onProductsLoaded === 'function') onProductsLoaded(allSale);
+}
+
+// --- Brand: fetch all category files, merge, filter by ?brand= ---
+
+function productMatchesBrand(p, brandTrimmed) {
+  if (!brandTrimmed) return true;
+  const raw = (p.manufacturer || '').trim();
+  const displayName = getManufacturerDisplayName(raw);
+  if (displayName === brandTrimmed) return true;
+  const brandLower = brandTrimmed.toLowerCase();
+  if (raw.toLowerCase() === brandLower || raw.toLowerCase().includes(brandLower)) return true;
+  return false;
+}
+
+async function loadBrandProducts() {
+  const brand = getBrandFromUrl();
+  if (!brand) {
+    window.allProducts = [];
+    if (typeof onProductsLoaded === 'function') onProductsLoaded([]);
+    return;
+  }
+  const merged = [];
+
+  for (const cat of BRAND_CATEGORIES) {
+    try {
+      const res = await fetch('../data/products/mapped-products/' + cat.file);
+      if (!res.ok) continue;
+      const data = await res.json();
+      const list = Array.isArray(data) ? data : (data.products || data.items || []);
+      let normalized = list.map(normalizeVendorProduct);
+      normalized = normalized.filter(p => p.displayPrice != null && p.displayPrice > 0);
+      if (cat.file === 'Firearms.json') {
+        normalized = normalized.filter(p => !isSuppressorOrNFAProduct(p));
+      }
+      normalized.forEach(p => {
+        p.sourceCategorySlug = cat.slug;
+      });
+      merged.push(...normalized);
+    } catch (e) {
+      console.error('Brand load ' + cat.file + ':', e);
+    }
+  }
+
+  const products = brand ? merged.filter(p => productMatchesBrand(p, brand)) : merged;
+  products.sort((a, b) => {
+    const rankA = getBrandRank(a.manufacturer);
+    const rankB = getBrandRank(b.manufacturer);
+    if (rankA !== rankB) return rankA - rankB;
+    return (a.name || '').localeCompare(b.name || '');
+  });
+
+  window.allProducts = products;
+  if (typeof onProductsLoaded === 'function') onProductsLoaded(products);
+}
+
+// --- Search: ?q= across all BRAND_CATEGORIES ---
+function getSearchQuery() {
+  const params = new URLSearchParams(window.location.search || '');
+  const q = (params.get('q') || '').trim();
+  return q;
+}
+
+function productMatchesSearch(p, qLower) {
+  if (!qLower) return false;
+  const fields = [p.name, p.webName, p.description, p.manufacturer, p.sku].filter(Boolean);
+  return fields.some(function (val) { return String(val).toLowerCase().includes(qLower); });
+}
+
+async function loadSearchProducts() {
+  const q = getSearchQuery();
+  if (!q) {
+    window.allProducts = [];
+    if (typeof onProductsLoaded === 'function') onProductsLoaded([]);
+    return;
+  }
+  const qLower = q.toLowerCase();
+  const merged = [];
+
+  for (const cat of BRAND_CATEGORIES) {
+    try {
+      const res = await fetch('../data/products/mapped-products/' + cat.file);
+      if (!res.ok) continue;
+      const data = await res.json();
+      const list = Array.isArray(data) ? data : (data.products || data.items || []);
+      let normalized = list.map(normalizeVendorProduct);
+      normalized = normalized.filter(p => p.displayPrice != null && p.displayPrice > 0);
+      if (cat.file === 'Firearms.json') {
+        normalized = normalized.filter(p => !isSuppressorOrNFAProduct(p));
+      }
+      normalized.forEach(p => {
+        p.sourceCategorySlug = cat.slug;
+      });
+      merged.push(...normalized);
+    } catch (e) {
+      console.warn('Search load ' + cat.file + ':', e);
+    }
+  }
+
+  const products = merged.filter(p => productMatchesSearch(p, qLower));
+  products.sort((a, b) => {
+    const rankA = getBrandRank(a.manufacturer);
+    const rankB = getBrandRank(b.manufacturer);
+    if (rankA !== rankB) return rankA - rankB;
+    return (a.name || '').localeCompare(b.name || '');
+  });
+
+  window.allProducts = products;
+  if (typeof onProductsLoaded === 'function') onProductsLoaded(products);
+}
+
+// --- Existing logic: determine which file to load ---
+
+function getCategoryFileName() {
+  const page = window.location.pathname.split('/').pop().replace('.html', '');
+  // Firearms category uses Firearms.json (page is guns.html)
+  if (page === 'guns') return 'Firearms.json';
+  // Match repo filenames: e.g. gun-parts -> Gun_Parts.json, ammunition -> Ammunition.json
+  const parts = page.replace(/[- ]/g, '_').split('_').filter(Boolean);
+  const fileName = parts.map(function (p) {
+    return p.charAt(0).toUpperCase() + p.slice(1).toLowerCase();
+  }).join('_') + '.json';
+  return fileName;
+}
+
+// --- Main loader with normalization ---
+
+async function loadProducts() {
+  const mode = getLoaderMode();
+  if (mode === 'sale') {
+    try {
+      await loadSaleProducts();
+    } catch (e) {
+      window.allProducts = [];
+      if (typeof onProductsLoaded === 'function') onProductsLoaded([]);
+      console.error('Failed to load sale products:', e);
+    }
+    return;
+  }
+  if (mode === 'search') {
+    try {
+      await loadSearchProducts();
+    } catch (e) {
+      window.allProducts = [];
+      if (typeof onProductsLoaded === 'function') onProductsLoaded([]);
+      console.error('Failed to load search products:', e);
+    }
+    return;
+  }
+  if (mode === 'brand') {
+    try {
+      await loadBrandProducts();
+    } catch (e) {
+      window.allProducts = [];
+      if (typeof onProductsLoaded === 'function') onProductsLoaded([]);
+      console.error('Failed to load brand products:', e);
+    }
+    return;
+  }
+
+  const fileName = getCategoryFileName();
+  const url = `../data/products/mapped-products/${fileName}`;
+
+  try {
+    const res = await fetch(url);
+    if (!res.ok) {
+      // 404 or other error: show empty list (e.g. Magazines.json not created yet)
+      window.allProducts = [];
+      if (typeof onProductsLoaded === 'function') onProductsLoaded([]);
+      return;
+    }
+
+    const vendorProducts = await res.json();
+    const list = Array.isArray(vendorProducts) ? vendorProducts : (vendorProducts.products || vendorProducts.items || []);
+    const normalized = list.map(normalizeVendorProduct);
+    // Only list products that have a display price (MSRP, MAP, or Price fallback).
+    let products = normalized.filter(p => p.displayPrice != null && p.displayPrice > 0);
+    // Firearms page: do not list suppressors or other NFA items (not offered for sale).
+    if (fileName === 'Firearms.json') {
+      products = products.filter(p => !isSuppressorOrNFAProduct(p));
+    }
+    // Sort by brand priority so top-name brands appear first when the page loads.
+    products = products.slice().sort((a, b) => {
+      const rankA = getBrandRank(a.manufacturer);
+      const rankB = getBrandRank(b.manufacturer);
+      if (rankA !== rankB) return rankA - rankB;
+      return (a.name || '').localeCompare(b.name || '');
+    });
+
+    window.allProducts = products;
+
+    if (typeof onProductsLoaded === 'function') {
+      onProductsLoaded(products);
+    }
+
+  } catch (e) {
+    window.allProducts = [];
+    if (typeof onProductsLoaded === 'function') onProductsLoaded([]);
+    console.error('Failed to load products:', e);
+  }
+}
+
+document.addEventListener('DOMContentLoaded', loadProducts);

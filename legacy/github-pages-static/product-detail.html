@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://www.paypal.com https://www.sandbox.paypal.com; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; font-src 'self' https://cdnjs.cloudflare.com; img-src 'self' data: https:; connect-src 'self' https://www.paypal.com https://www.sandbox.paypal.com https://*.paypal.com; frame-src https://www.paypal.com https://www.sandbox.paypal.com;">
+  <meta name="description" content="Product details - Modular Gunworks LLC">
+  <meta name="author" content="Modular Gunworks LLC">
+  <meta name="theme-color" content="#181a1b">
+  
+  <title>Product Details - Modular Gunworks LLC</title>
+  
+  <!-- Modular CSS -->
+  <link rel="stylesheet" href="styles/design-system.css">
+  <link rel="stylesheet" href="styles/components.css">
+  <link rel="stylesheet" href="styles/layout.css">
+  <link rel="stylesheet" href="styles/age-gate.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="icon" type="image/png" href="favicon.png">
+  
+  <!-- PayPal SDK disabled - 2A merchants cannot use PayPal for ammo/firearms per their policies -->
+  <!-- <script src="https://www.paypal.com/sdk/js?client-id=...&currency=USD"></script> -->
+  
+  <style>
+    :root {
+      --color-primary: #b22222;
+      --color-accent: #1a2c4b;
+      --color-bg-dark: #181a1b;
+      --color-text: #333;
+      --color-light: #f5f5f5;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+      background-color: #fff;
+    }
+
+    /* Keep header above PayPal iframes when scrolling (PayPal SDK uses iframes that can stack on top) */
+    #site-header {
+      z-index: 1000;
+    }
+    #paypal-button-container {
+      position: relative;
+      z-index: 1;
+    }
+    #paypal-button-container iframe {
+      position: relative !important;
+      z-index: 0 !important;
+    }
+
+    /* MAIN CONTENT – Chattanooga-style: compact, catalog-sized */
+    main {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem;
+    }
+
+    .breadcrumb {
+      font-size: 0.85rem;
+      color: #666;
+      margin-bottom: 1.25rem;
+    }
+
+    .breadcrumb a {
+      color: var(--color-primary);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .breadcrumb a:hover {
+      text-decoration: underline;
+    }
+
+    /* PRODUCT DETAIL GRID */
+    .product-detail-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .product-image-section {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      max-width: 300px;
+    }
+
+    .product-main-image {
+      width: 100%;
+      max-height: 300px;
+      aspect-ratio: 1;
+      background: #f9f9f9;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      border: 1px solid #e0e0e0;
+    }
+
+    .product-main-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .product-main-image-placeholder {
+      color: #ccc;
+      font-size: 2.5rem;
+    }
+
+    .product-info-section {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .product-breadcrumb-category {
+      font-size: 0.75rem;
+      color: #999;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 0.5rem;
+    }
+
+    .product-detail-title {
+      font-size: 1.35rem;
+      color: var(--color-bg-dark);
+      margin-bottom: 0.35rem;
+      font-weight: 700;
+      line-height: 1.35;
+    }
+
+    .product-detail-brand {
+      font-size: 0.9rem;
+      color: #666;
+      margin-bottom: 0.75rem;
+      font-weight: 600;
+    }
+
+    .product-detail-price {
+      font-size: 1.5rem;
+      color: var(--color-primary);
+      font-weight: 700;
+      margin-bottom: 0.35rem;
+    }
+
+    .product-detail-retail {
+      font-size: 0.85rem;
+      color: #999;
+      text-decoration: line-through;
+      margin-bottom: 1rem;
+    }
+
+    .product-detail-stock {
+      font-size: 0.875rem;
+      padding: 0.35rem 0.75rem;
+      border-radius: 4px;
+      display: inline-block;
+      margin-bottom: 1.25rem;
+      font-weight: 600;
+      width: fit-content;
+    }
+
+    .stock-in {
+      background: #e8f5e9;
+      color: #2e7d32;
+    }
+
+    .stock-out {
+      background: #ffebee;
+      color: #c62828;
+    }
+
+    .product-detail-description {
+      color: #555;
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+      font-size: 0.95rem;
+    }
+
+    /* ADD TO CART SECTION */
+    .add-to-cart-section {
+      display: flex;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+      align-items: center;
+    }
+
+    .quantity-selector {
+      display: flex;
+      align-items: center;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .quantity-selector button {
+      width: 36px;
+      height: 36px;
+      background: #f5f5f5;
+      border: none;
+      cursor: pointer;
+      font-weight: 700;
+      color: #333;
+      font-size: 0.95rem;
+      transition: background 0.2s;
+    }
+
+    .quantity-selector button:hover {
+      background: #e0e0e0;
+    }
+
+    .quantity-selector input {
+      width: 52px;
+      height: 36px;
+      border: none;
+      text-align: center;
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+
+    /* PRODUCT SPECS – compact label/value like Chattanooga */
+    .product-specs-section {
+      margin-bottom: 2rem;
+    }
+
+    .specs-title {
+      font-size: 1.1rem;
+      color: var(--color-bg-dark);
+      margin-bottom: 0.75rem;
+      font-weight: 700;
+      border-bottom: 1px solid #e0e0e0;
+      padding-bottom: 0.4rem;
+    }
+
+    .specs-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.6rem 1rem;
+    }
+
+    .spec-item {
+      padding: 0.6rem 0.75rem;
+      background: #f9f9f9;
+      border-radius: 4px;
+      border-left: 3px solid var(--color-primary);
+    }
+
+    .spec-label {
+      font-size: 0.75rem;
+      color: #999;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+      margin-bottom: 0.2rem;
+      font-weight: 600;
+    }
+
+    .spec-value {
+      font-size: 0.9rem;
+      color: #333;
+      font-weight: 600;
+    }
+
+    /* RESPONSIVE – keep Chattanooga-style proportions */
+    @media (max-width: 1024px) {
+      .product-detail-container {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+
+      .specs-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 768px) {
+      main {
+        padding: 1.5rem 1rem;
+      }
+
+      .product-image-section {
+        max-width: 100%;
+      }
+
+      .product-main-image {
+        max-height: 260px;
+      }
+
+      .product-detail-title {
+        font-size: 1.2rem;
+      }
+
+      .product-detail-price {
+        font-size: 1.35rem;
+      }
+
+      .specs-title {
+        font-size: 1rem;
+      }
+    }
+
+    /* LOADING & ERROR STATES */
+    .loading {
+      text-align: center;
+      padding: 2.5rem 1.5rem;
+      font-size: 1rem;
+      color: #666;
+    }
+
+    .error-message {
+      background: #ffebee;
+      color: #c62828;
+      padding: 1.25rem 1.5rem;
+      border-radius: 6px;
+      margin-bottom: 1.5rem;
+      border-left: 4px solid #c62828;
+      font-size: 0.95rem;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      color: var(--color-primary);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+      transition: all 0.2s;
+    }
+
+    .back-link:hover {
+      gap: 0.6rem;
+    }
+
+    /* Key details block (SKU, UPC, etc.) – Chattanooga-style compact */
+    .product-details-grid {
+      border-top: 1px solid #e0e0e0;
+      padding-top: 1rem;
+    }
+    .product-details-grid .detail-label {
+      font-size: 0.75rem;
+      color: #999;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+      margin-bottom: 0.2rem;
+    }
+    .product-details-grid .detail-value {
+      font-size: 0.9rem;
+      color: #333;
+    }
+
+    /* SCROLL HINT */
+    .detail-scroll-hint {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1rem;
+      margin: 0 0 1.5rem;
+      background: #f9f9f9;
+      border: 1px dashed #ccc;
+      border-radius: 6px;
+      font-size: 0.875rem;
+      color: #555;
+    }
+    .detail-scroll-hint a {
+      color: var(--color-primary);
+      font-weight: 600;
+      text-decoration: none;
+    }
+    .detail-scroll-hint a:hover { text-decoration: underline; }
+    .detail-scroll-hint .hint-sep { color: #999; }
+    .detail-scroll-hint .scroll-arrow {
+      display: inline-flex;
+      animation: bounce-down 2s ease-in-out infinite;
+    }
+    @keyframes bounce-down {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(4px); }
+    }
+    #product-description-wrap, #product-specs-wrap { scroll-margin-top: 1rem; }
+  </style>
+</head>
+
+<body>
+  <!-- AGE GATE -->
+  <script src="scripts/age-gate.js"></script>
+  <script src="scripts/api-config.js"></script>
+  <script src="scripts/cart.js"></script>
+
+  <!-- HEADER -->
+  <header id="site-header">
+    <div class="header-top-row">
+      <h1>MODULAR GUNWORKS LLC</h1>
+      <a href="index.html" class="header-logo" title="Home">
+        <img src="images/modular-gunworks-llc.png" alt="Modular Gunworks Logo">
+        <span class="logo-label">HOME</span>
+      </a>
+    </div>
+
+    <div class="header-middle-row">
+      <div class="header-left-links">
+        <a href="order-status.html">Account</a>
+        <a href="help.html">Help</a>
+        <a href="shop/cart.html"><i class="fas fa-shopping-cart"></i> Cart <span class="cart-count-badge" style="background: var(--color-primary); color: #fff; padding: 2px 6px; border-radius: 10px; font-size: 0.75rem; display: none;">0</span></a>
+      </div>
+
+      <form class="search-bar" action="shop/search.html" method="get">
+        <input type="text" name="q" placeholder="Search ammo, gear, optics...">
+        <button type="submit" title="Search"><i class="fas fa-search"></i></button>
+      </form>
+    </div>
+
+    <nav class="category-nav">
+      <a href="shop/ammunition.html">Ammunition</a>
+      <a href="shop/magazines.html">Magazines</a>
+      <a href="shop/guns.html">Firearms</a>
+      <a href="shop/gun-parts.html">Gun Parts</a>
+      <a href="shop/gear.html">Gear</a>
+      <a href="shop/optics.html">Optics</a>
+      <a href="shop/reloading.html">Reloading</a>
+      <a href="shop/outdoors.html">Outdoors</a>
+      <a href="shop/brands.html">Brands</a>
+      <a href="shop/sale.html">ON SALE</a>
+      <a href="services.html">Services</a>
+    </nav>
+
+    <div class="promo-bar">
+      Free shipping on orders over $99 | Veteran-Owned Business | Fast Shipping | Professional Service
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT -->
+  <main>
+    <a href="#" id="back-link" class="back-link">
+      <i class="fas fa-arrow-left"></i> Back to Products
+    </a>
+
+    <div id="product-content">
+      <div class="loading">
+        <i class="fas fa-spinner fa-spin"></i> Loading product details...
+      </div>
+    </div>
+  </main>
+
+  <script>
+    // GET QUERY PARAMETERS
+    function getQueryParam(name) {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get(name);
+    }
+
+    // Request larger image size so main image stays crisp (CDN often gives ?w=110&h=110).
+    function toHighResImageUrl(url, size) {
+      if (!url || typeof url !== 'string') return url;
+      size = size || 800;
+      return url.replace(/\?w=\d+&h=\d+/, '?w=' + size + '&h=' + size);
+    }
+
+    function escapeHtml(str) {
+      if (str == null) return '';
+      const div = document.createElement('div');
+      div.textContent = str;
+      return div.innerHTML;
+    }
+
+    // Valid numeric price; treat custom/call/quote as invalid
+    function priceOrNull(value) {
+      if (value == null || value === '') return null;
+      const s = String(value).trim().toLowerCase();
+      if (s === 'custom' || s === 'call' || s === 'quote') return null;
+      const n = Number(value);
+      return Number.isFinite(n) && n > 0 ? n : null;
+    }
+
+    // Normalize vendor row (mapped-products JSON) to product shape.
+    // Display price: MSRP if present, else MAP, else Price (so ammo/items without MSRP/MAP still show a price).
+    function isNfaSuppressorVendorRow(row) {
+      const c = (row.Category || row.category || '').trim();
+      if (!c) return false;
+      const first = c.split('|')[0].trim();
+      if (/^Suppressors Accessories$/i.test(first)) return false;
+      return c === 'Suppressors' || c.indexOf('Suppressors|') === 0;
+    }
+
+    function normalizeVendorRow(row) {
+      const num = v => (v != null && v !== '' && !isNaN(Number(v))) ? Number(v) : null;
+      const rawImage = row['Image Location'] || row.image || '';
+      const msrp = priceOrNull(row.MSRP);
+      const map = priceOrNull(row.MAP);
+      const price = priceOrNull(row.Price);
+      const displayPrice = msrp ?? map ?? price ?? null;
+      return {
+        sku: row.SKU || row.sku || '',
+        name: row['Item Name'] || row['Web Item Name'] || row.name || '',
+        webName: row['Web Item Name'] || row['Item Name'] || '',
+        image: toHighResImageUrl(rawImage, 800),
+        price: num(row.Price) ?? 0,
+        msrp: num(row.MSRP),
+        displayPrice: displayPrice ?? 0,
+        inventory: num(row['Quantity In Stock']) ?? 0,
+        brand: row.Manufacturer || row.manufacturer || '',
+        manufacturer: row.Manufacturer || row.manufacturer || '',
+        description: row['Web Item Description'] || row.description || '',
+        upc: row.UPC || '',
+        manufacturerItemNumber: row['Manufacturer Item Number'] || '',
+        category: row.Category || row.mappedCategory?.sub || '',
+        shipWeight: num(row['Ship Weight']),
+        length: num(row.Length),
+        width: num(row.Width),
+        height: num(row.Height),
+        dropShipOptions: row['Available Drop Ship Delivery Options'] || '',
+        allocated: row['Allocated Item?'] || '',
+        hidden: false
+      };
+    }
+
+    // LOAD PRODUCT
+    async function loadProduct() {
+      const productId = getQueryParam('id');
+      const skuParam = getQueryParam('sku');
+      const category = getQueryParam('category') || 'ammunition';
+      const lookup = skuParam || productId;
+
+      // Use server-preloaded product if available (avoids refetch, better for GunTab/crawlers)
+      const preloaded = window.__PRELOADED_PRODUCT__;
+      if (preloaded && preloaded.sku && preloaded.displayPrice > 0) {
+        const p = {
+          sku: preloaded.sku,
+          name: preloaded.name,
+          displayPrice: preloaded.displayPrice,
+          image: preloaded.image,
+          brand: preloaded.brand || '',
+          inventory: preloaded.inventory || 0,
+          category: preloaded.category || '',
+          upc: '',
+          manufacturerItemNumber: '',
+          shipWeight: null,
+          length: null,
+          width: null,
+          height: null,
+          description: '',
+          hidden: false
+        };
+        document.getElementById('back-link').href = 'shop/' + (preloaded.category || category) + '.html';
+        renderProduct(p, preloaded.category || category);
+        return;
+      }
+
+      if (!lookup) {
+        document.getElementById('product-content').innerHTML = '<div class="error-message"><i class="fas fa-exclamation-circle"></i> No product specified. Use ?sku=...&category=...</div>';
+        return;
+      }
+
+      try {
+        // Category slug -> actual JSON filename (sync outputs: Gun_Parts.json, Clothing___Footwear.json, etc.)
+        const SLUG_TO_FILE = {
+          'ammunition': 'Ammunition.json',
+          'magazines': 'Magazines.json',
+          'gun-parts': 'Gun_Parts.json',
+          'gear': 'Gear.json',
+          'optics': 'Optics.json',
+          'reloading': 'Reloading.json',
+          'outdoors': 'Outdoors.json',
+          'guns': 'Firearms.json',
+          'knives': 'Knives.json',
+          'clothing___footwear': 'Clothing___Footwear.json'
+        };
+        const categoryKey = (category || '').toLowerCase();
+        const fileName = SLUG_TO_FILE[categoryKey] || (category.charAt(0).toUpperCase() + category.slice(1).replace(/-/g, '_') + '.json');
+        const mappedUrl = `./data/products/mapped-products/${fileName}`;
+        const response = await fetch(mappedUrl);
+        if (!response.ok) throw new Error('Failed to load product data');
+
+        const data = await response.json();
+        const rawList = Array.isArray(data) ? data : (data.products || data.items || []);
+        let product = null;
+        let vendorRow = null;
+
+        if (rawList.length && rawList[0] && (rawList[0].SKU !== undefined || rawList[0].sku !== undefined)) {
+          vendorRow = rawList.find(p => (p.SKU || p.sku || '').toString() === lookup.toString()) || null;
+          product = vendorRow ? normalizeVendorRow(vendorRow) : null;
+        } else {
+          vendorRow = rawList.find(p => (p.id || p.sku) === lookup) || null;
+          product = vendorRow ? normalizeVendorRow(vendorRow) : null;
+        }
+
+        if (!product) {
+          document.getElementById('product-content').innerHTML = '<div class="error-message"><i class="fas fa-exclamation-circle"></i> Product not found.</div>';
+          return;
+        }
+
+        if (vendorRow && isNfaSuppressorVendorRow(vendorRow)) {
+          document.getElementById('product-content').innerHTML = '<div class="error-message"><i class="fas fa-exclamation-circle"></i> This product is not available.</div>';
+          return;
+        }
+
+        if (product.hidden) {
+          document.getElementById('product-content').innerHTML = '<div class="error-message"><i class="fas fa-exclamation-circle"></i> This product is currently not available.</div>';
+          return;
+        }
+
+        if (!product.displayPrice || product.displayPrice <= 0) {
+          document.getElementById('product-content').innerHTML = '<div class="error-message"><i class="fas fa-exclamation-circle"></i> This product has no valid price in our catalog. Please contact us for pricing.</div>';
+          return;
+        }
+
+        document.getElementById('back-link').href = `shop/${category}.html`;
+        renderProduct(product, category);
+      } catch (error) {
+        console.error('Error loading product:', error);
+        document.getElementById('product-content').innerHTML = '<div class="error-message"><i class="fas fa-exclamation-circle"></i> Error loading product details. Please try again.</div>';
+      }
+    }
+
+    // RENDER PRODUCT
+    function renderProduct(product, category) {
+      const displayPrice = product.displayPrice ?? 0;
+      const inStock = product.inventory > 0;
+
+      const productHTML = `
+        <div class="product-detail-container">
+          <!-- IMAGE SECTION -->
+          <div class="product-image-section">
+            <div class="product-main-image">
+              ${product.image && product.image !== '/images/products/placeholder.jpg'
+                ? `<img src="${product.image}" alt="${product.name}" onerror="this.parentElement.innerHTML='<div class=&quot;product-main-image-placeholder&quot;><i class=&quot;fas fa-box&quot;></i></div>'">`
+                : `<div class="product-main-image-placeholder"><i class="fas fa-box"></i></div>`
+              }
+            </div>
+          </div>
+
+          <!-- INFO SECTION -->
+          <div class="product-info-section">
+            <div class="product-breadcrumb-category">${category.toUpperCase()}</div>
+            <h1 class="product-detail-title">${product.name}</h1>
+            <div class="product-detail-brand">${product.brand || 'Unknown Brand'}</div>
+
+            <!-- PRICING (display = MSRP if present, else MAP; Price is dealer cost, never shown to retail) -->
+            <div class="product-detail-price">$${displayPrice.toFixed(2)}</div>
+
+            <!-- STOCK STATUS -->
+            <div class="product-detail-stock ${inStock ? 'stock-in' : 'stock-out'}">
+              <i class="fas ${inStock ? 'fa-check-circle' : 'fa-times-circle'}"></i>
+              ${inStock ? `In Stock (${product.inventory} available)` : 'Out of Stock'}
+            </div>
+
+            <!-- QUANTITY & CHECKOUT -->
+            <div style="margin-bottom: 1.5rem;">
+              <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                <label style="font-weight: 600; color: #333;">Quantity:</label>
+                <div class="quantity-selector">
+                  <button onclick="decreaseQuantity()">−</button>
+                  <input type="number" id="quantity" value="1" min="1" readonly>
+                  <button onclick="increaseQuantity()">+</button>
+                </div>
+              </div>
+              <div style="font-size: 0.9rem; color: #666; margin-bottom: 0.75rem;">
+                <i class="fas fa-shopping-cart" style="color: var(--color-primary);"></i> Add to cart — checkout with age verification
+              </div>
+            </div>
+
+            <!-- ADD TO CART (checkout happens in cart with age gate) -->
+            <div id="paypal-button-container" style="margin-bottom: 2rem;"></div>
+
+            <!-- PRODUCT DETAILS (SKU, UPC, etc.) – compact like Chattanooga -->
+            <div class="product-details-grid">
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem 1.25rem;">
+                <div><div class="detail-label">SKU</div><div class="detail-value">${escapeHtml(product.sku || '—')}</div></div>
+                ${product.upc ? `<div><div class="detail-label">UPC</div><div class="detail-value">${escapeHtml(product.upc)}</div></div>` : ''}
+                ${product.manufacturerItemNumber ? `<div><div class="detail-label">Manufacturer Part #</div><div class="detail-value">${escapeHtml(product.manufacturerItemNumber)}</div></div>` : ''}
+                ${product.category ? `<div><div class="detail-label">Category</div><div class="detail-value">${escapeHtml(product.category)}</div></div>` : ''}
+                ${product.shipWeight != null && product.shipWeight > 0 ? `<div><div class="detail-label">Ship Weight</div><div class="detail-value">${product.shipWeight} lbs</div></div>` : ''}
+                ${(product.length != null || product.width != null || product.height != null) ? `<div><div class="detail-label">Dimensions</div><div class="detail-value">${[product.length, product.width, product.height].filter(Boolean).map(n => n + '"').join(' × ') || '—'}</div></div>` : ''}
+                ${product.requiresFFL ? `<div><div class="detail-label">FFL</div><div class="detail-value" style="color: #d32f2f;"><i class="fas fa-exclamation-triangle"></i> Required</div></div>` : ''}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Hint so customers know there’s more below (shown only when description/specs exist) -->
+        <div id="detail-scroll-hint" class="detail-scroll-hint" style="display: none;"></div>
+
+        <!-- DESCRIPTION (from Chattanooga Web Item Description) -->
+        <div id="product-description-wrap" style="display: none; margin-bottom: 1.5rem;">
+          <h2 class="specs-title">Product Description</h2>
+          <div id="product-description" class="product-detail-description"></div>
+        </div>
+
+        <!-- SPECIFICATIONS -->
+        <div id="product-specs-wrap" style="display: none;" class="product-specs-section">
+          <h2 class="specs-title">Specifications</h2>
+          <div class="specs-grid" id="product-specs-grid"></div>
+        </div>
+      `;
+
+      document.getElementById('product-content').innerHTML = productHTML;
+
+      window._productData = product;
+      window._productDisplayPrice = displayPrice;
+      window._productCategory = category;
+
+      // Product description (HTML from Chattanooga Web Item Description)
+      const descWrap = document.getElementById('product-description-wrap');
+      const descEl = document.getElementById('product-description');
+      if (descWrap && descEl && product.description) {
+        descEl.innerHTML = product.description;
+        descWrap.style.display = 'block';
+      }
+
+      // Specifications from API fields
+      const specsWrap = document.getElementById('product-specs-wrap');
+      const specsGrid = document.getElementById('product-specs-grid');
+      if (specsWrap && specsGrid) {
+        const specs = [];
+        if (product.sku) specs.push({ label: 'SKU', value: product.sku });
+        if (product.upc) specs.push({ label: 'UPC', value: product.upc });
+        if (product.manufacturerItemNumber) specs.push({ label: 'Manufacturer Part #', value: product.manufacturerItemNumber });
+        if (product.category) specs.push({ label: 'Category', value: product.category });
+        if (product.shipWeight != null && product.shipWeight > 0) specs.push({ label: 'Ship Weight', value: product.shipWeight + ' lbs' });
+        if (product.length != null || product.width != null || product.height != null) {
+          const dim = [product.length, product.width, product.height].filter(Boolean).map(n => n + '"').join(' × ');
+          specs.push({ label: 'Dimensions', value: dim || '—' });
+        }
+        if (product.dropShipOptions) specs.push({ label: 'Shipping Options', value: String(product.dropShipOptions).replace(/\|/g, ', ') });
+        if (product.allocated) specs.push({ label: 'Allocated', value: product.allocated });
+        if (specs.length > 0) {
+          specsGrid.innerHTML = specs.map(s => `
+            <div class="spec-item"><div class="spec-label">${escapeHtml(s.label)}</div><div class="spec-value">${escapeHtml(s.value)}</div></div>
+          `).join('');
+          specsWrap.style.display = 'block';
+        }
+      }
+
+      // Show “more below” hint when there’s description or specs so customers know to scroll
+      const hintEl = document.getElementById('detail-scroll-hint');
+      const hasDesc = descWrap && descWrap.style.display === 'block';
+      const hasSpecs = specsWrap && specsWrap.style.display !== 'none';
+      if (hintEl && (hasDesc || hasSpecs)) {
+        const parts = [];
+        if (hasDesc) parts.push('<a href="#product-description-wrap">Description</a>');
+        if (hasSpecs) parts.push('<a href="#product-specs-wrap">Specifications</a>');
+        hintEl.innerHTML = '<span class="scroll-arrow"><i class="fas fa-chevron-down"></i></span> More details below: ' + parts.join(' <span class="hint-sep">|</span> ');
+        hintEl.style.display = 'flex';
+      }
+
+      // Add to Cart (checkout with age verification happens in cart)
+      showAddToCart();
+    }
+
+    // Add to Cart — all checkouts go through cart for age/FFL verification
+    function showAddToCart() {
+      const container = document.getElementById('paypal-button-container');
+      if (!container) return;
+      container.innerHTML = `
+        <button id="add-to-cart-btn" class="guntab-checkout-btn" style="width:100%; padding:1rem 1.5rem; background:var(--color-primary); color:#fff; border:none; border-radius:8px; font-weight:700; font-size:1.1rem; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:0.5rem;">
+          <i class="fas fa-cart-plus"></i> Add to Cart
+        </button>
+        <p style="font-size:0.8rem; color:#666; margin-top:0.5rem;">Checkout in cart — age verification required for ammo & firearms</p>
+      `;
+      document.getElementById('add-to-cart-btn').addEventListener('click', () => {
+        const product = window._productData;
+        if (!product || !product.sku) return;
+        const qty = parseInt(document.getElementById('quantity')?.value || '1', 10) || 1;
+        const category = window._productCategory || product.category || '';
+        const price = window._productDisplayPrice ?? product.displayPrice ?? 0;
+        MGWCart.add(product.sku, product.name, price, qty, product.image || '', category);
+      });
+    }
+
+    // QUANTITY CONTROLS
+    function increaseQuantity() {
+      const input = document.getElementById('quantity');
+      input.value = parseInt(input.value) + 1;
+    }
+
+    function decreaseQuantity() {
+      const input = document.getElementById('quantity');
+      if (parseInt(input.value) > 1) {
+        input.value = parseInt(input.value) - 1;
+      }
+    }
+
+    // LOAD ON PAGE READY
+    document.addEventListener('DOMContentLoaded', loadProduct);
+  </script>
+</body>
+
+</html>
