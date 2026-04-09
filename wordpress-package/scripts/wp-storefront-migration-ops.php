@@ -259,6 +259,15 @@ function mgw_storefront_dedupe_programmatic_facets() {
 	mgw_storefront_log( 'Deduped layered-nav widget instances for preferred storefront facets.' );
 }
 
+function mgw_storefront_set_filter_surface_mode( $mode ) {
+	$mode = is_string( $mode ) ? strtolower( trim( $mode ) ) : 'programmatic';
+	if ( ! in_array( $mode, array( 'programmatic', 'widgets' ), true ) ) {
+		$mode = 'programmatic';
+	}
+	update_option( 'mgw_filter_surface_mode', $mode );
+	mgw_storefront_log( 'Set mgw_filter_surface_mode=' . $mode );
+}
+
 /**
  * Steps:
  * 1) Disable legacy static URL behavior in WP (canonical redirects enabled).
@@ -267,7 +276,8 @@ function mgw_storefront_dedupe_programmatic_facets() {
  * 4) Verify taxonomy terms.
  * 5) Verify non-empty facet coverage by category.
  * 6) Dedupe layered facets.
- * 7) Clear product transients.
+ * 7) Set filter surface mode.
+ * 8) Clear product transients.
  */
 update_option( 'mgw_enable_legacy_static_urls', 0 );
 mgw_storefront_log( 'Set mgw_enable_legacy_static_urls=0 (legacy static routes redirected to Woo).' );
@@ -277,6 +287,7 @@ mgw_storefront_backfill_attributes();
 mgw_storefront_verify_taxonomies();
 mgw_storefront_verify_taxonomy_counts_by_category();
 mgw_storefront_dedupe_programmatic_facets();
+mgw_storefront_set_filter_surface_mode( 'programmatic' );
 
 if ( function_exists( 'wc_delete_product_transients' ) ) {
 	wc_delete_product_transients();

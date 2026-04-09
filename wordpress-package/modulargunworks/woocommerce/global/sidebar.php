@@ -40,7 +40,7 @@ $shop_sidebar_widgets = is_array( $shop_sidebar_widgets ) ? $shop_sidebar_widget
 	</div>
 	<div class="mgw-filter-scroll-wrapper">
 		<?php wc_get_template( 'sidebar-shop-filters.php' ); ?>
-		<?php if ( is_active_sidebar( 'shop-sidebar' ) ) : ?>
+		<?php if ( 'widgets' === modulargunworks_get_filter_surface_mode() && is_active_sidebar( 'shop-sidebar' ) ) : ?>
 			<?php dynamic_sidebar( 'shop-sidebar' ); ?>
 		<?php endif; ?>
 	</div>
