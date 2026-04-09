@@ -21,6 +21,21 @@ get_header();
   <div class="services-contact">
     <p>For scheduling or other questions, <a href="<?php echo esc_url(home_url('/contact')); ?>">contact us</a>.</p>
   </div>
+
+  <section class="services-request">
+    <h2>Request Service</h2>
+    <?php if (shortcode_exists('contact-form-7')) : ?>
+      <?php echo do_shortcode('[contact-form-7 title="Service Request"]'); ?>
+    <?php elseif (shortcode_exists('wpforms')) : ?>
+      <?php echo do_shortcode('[wpforms id="2"]'); ?>
+    <?php elseif (shortcode_exists('fluentform')) : ?>
+      <?php echo do_shortcode('[fluentform id="2"]'); ?>
+    <?php else : ?>
+      <p class="services-request-note">
+        Install a free form plugin (Contact Form 7, WPForms Lite, or Fluent Forms) and add a "Service Request" form shortcode here.
+      </p>
+    <?php endif; ?>
+  </section>
 </main>
 <style>
 .services-grid{display:grid;grid-template-columns:1fr 1fr;gap:2rem;max-width:900px;margin:0 auto 2rem;}
@@ -31,6 +46,9 @@ get_header();
 .service-cta{display:inline-block;background:var(--color-primary);color:#fff;padding:.6rem 1.2rem;border-radius:4px;text-decoration:none;font-weight:600;}
 .service-cta:hover{background:#8b1a1a;color:#fff;}
 .services-contact{text-align:center;padding-top:2rem;border-top:1px solid #e0e0e0;}
+.services-request{max-width:900px;margin:2rem auto 0;}
+.services-request h2{margin-bottom:1rem;}
+.services-request-note{background:#f9f9f9;padding:1rem;border:1px solid #ddd;border-radius:8px;color:#444;}
 @media(max-width:768px){.services-grid{grid-template-columns:1fr;}}
 </style>
 <?php get_footer(); ?>
