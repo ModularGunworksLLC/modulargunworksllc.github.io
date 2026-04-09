@@ -2,6 +2,33 @@
 
 Use this as the **single** checklist after you push to `main`. Adjust paths if your Bitnami layout differs.
 
+## One-command staging deploy (recommended)
+
+For the normalized/plugin-native branch, run:
+
+```bash
+cd ~/modulargunworksllc.github.io
+chmod +x wordpress-package/scripts/deploy-normalized-staging.sh
+bash wordpress-package/scripts/deploy-normalized-staging.sh cursor/normalize-wp-plugin-native-97d8
+```
+
+If your PaymentHub plugin has a known WordPress.org slug, auto-install/activate it too:
+
+```bash
+cd ~/modulargunworksllc.github.io
+PAYMENTHUB_PLUGIN_SLUG=your-paymenthub-slug bash wordpress-package/scripts/deploy-normalized-staging.sh cursor/normalize-wp-plugin-native-97d8
+```
+
+What this does:
+- checks out and pulls the branch
+- deploys theme + MGW plugins
+- removes deprecated `mgw-force-cart-checkout` plugin
+- installs/activates free plugins (WooCommerce, Age Gate, Contact Form 7) via WP-CLI when available
+- optionally installs PaymentHub when `PAYMENTHUB_PLUGIN_SLUG` is provided
+- normalizes Cart/Checkout page shortcodes
+- creates/updates Contact Form 7 forms (`Contact`, `Service Request`) and wires templates
+- restarts PHP-FPM and clears transients
+
 ## Paths
 
 | On server (typical Bitnami) | Source in repo |
@@ -28,7 +55,7 @@ sudo chown -R daemon:daemon /bitnami/wordpress/wp-content/themes/modulargunworks
 ## 3. Copy custom plugins
 
 ```bash
-for d in mgw-chattanooga-sync mgw-crypto-polyfill mgw-force-cart-checkout mgw-populate-filter-attributes mgw-sales-tax mgw-image-count; do
+for d in mgw-chattanooga-sync mgw-crypto-polyfill mgw-populate-filter-attributes mgw-sales-tax mgw-image-count; do
   sudo mkdir -p "/bitnami/wordpress/wp-content/plugins/$d"
   sudo cp -a "wordpress-package/plugins/$d/." "/bitnami/wordpress/wp-content/plugins/$d/"
 done
