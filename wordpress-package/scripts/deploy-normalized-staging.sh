@@ -13,29 +13,52 @@ set -euo pipefail
 BRANCH="${1:-${BRANCH:-cursor/normalize-wp-plugin-native-97d8}}"
 REPO_DIR="${REPO_DIR:-$HOME/modulargunworksllc.github.io}"
 
-detect_wp_path() {
-  if [[ -d /bitnami/wordpress ]]; then
+detect_wp_content_path() {
+  if [[ -d /bitnami/wordpress/wp-content ]]; then
     echo "/bitnami/wordpress"
     return 0
   fi
-  if [[ -d /opt/bitnami/wordpress ]]; then
+  if [[ -d /opt/bitnami/wordpress/wp-content ]]; then
     echo "/opt/bitnami/wordpress"
     return 0
   fi
-  if [[ -d /var/www/html ]]; then
+  if [[ -d /var/www/html/wp-content ]]; then
     echo "/var/www/html"
     return 0
   fi
   return 1
 }
 
-WP_PATH="${WP_PATH:-$(detect_wp_path || true)}"
-if [[ -z "$WP_PATH" ]]; then
-  echo "Could not detect WordPress path. Set WP_PATH explicitly."
+detect_wp_core_path() {
+  if [[ -f /opt/bitnami/wordpress/wp-load.php ]]; then
+    echo "/opt/bitnami/wordpress"
+    return 0
+  fi
+  if [[ -f /bitnami/wordpress/wp-load.php ]]; then
+    echo "/bitnami/wordpress"
+    return 0
+  fi
+  if [[ -f /var/www/html/wp-load.php ]]; then
+    echo "/var/www/html"
+    return 0
+  fi
+  return 1
+}
+
+WP_CONTENT_PATH="${WP_CONTENT_PATH:-$(detect_wp_content_path || true)}"
+WP_CORE_PATH="${WP_CORE_PATH:-${WP_PATH:-$(detect_wp_core_path || true)}}"
+
+if [[ -z "$WP_CONTENT_PATH" ]]; then
+  echo "Could not detect WordPress content path. Set WP_CONTENT_PATH explicitly."
   exit 1
 fi
 
-WP_CONTENT="$WP_PATH/wp-content"
+if [[ -z "$WP_CORE_PATH" ]]; then
+  echo "Could not detect WordPress core path (wp-load.php). Set WP_CORE_PATH explicitly."
+  exit 1
+fi
+
+WP_CONTENT="$WP_CONTENT_PATH/wp-content"
 THEME_TARGET="$WP_CONTENT/themes/modulargunworks"
 PLUGIN_TARGET="$WP_CONTENT/plugins"
 
@@ -45,7 +68,8 @@ if [[ ! -d "$REPO_DIR" ]]; then
 fi
 
 echo "==> Using repo: $REPO_DIR"
-echo "==> Using WordPress path: $WP_PATH"
+echo "==> Using WordPress content path: $WP_CONTENT_PATH"
+echo "==> Using WordPress core path: $WP_CORE_PATH"
 echo "==> Deploying branch: $BRANCH"
 
 cd "$REPO_DIR"
@@ -94,7 +118,7 @@ if [[ ! -x "$WP_CLI_BIN" ]]; then
 fi
 
 echo "==> Running WordPress normalization setup via wp-cli"
-wp_cmd=(sudo "$WP_CLI_BIN" --path="$WP_PATH")
+wp_cmd=(sudo "$WP_CLI_BIN" --path="$WP_CORE_PATH")
 
 install_activate_free_plugin() {
   local slug="$1"
