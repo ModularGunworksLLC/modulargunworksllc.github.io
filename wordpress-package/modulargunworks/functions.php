@@ -87,6 +87,18 @@ function modulargunworks_is_wc_placeholder_attachment_id( $attachment_id ) {
 	return $opt > 0 && $aid === $opt;
 }
 
+function modulargunworks_attachment_looks_like_placeholder( $attachment_id ) {
+	$aid = (int) $attachment_id;
+	if ( $aid <= 0 ) {
+		return true;
+	}
+	if ( modulargunworks_is_wc_placeholder_attachment_id( $aid ) ) {
+		return true;
+	}
+	$url = wp_get_attachment_url( $aid );
+	return is_string( $url ) && false !== strpos( $url, 'woocommerce-placeholder' );
+}
+
 function modulargunworks_product_needs_chattanooga_image_fallback( $product, $image_html ) {
 	if ( ! $product instanceof WC_Product ) {
 		return false;
@@ -95,10 +107,7 @@ function modulargunworks_product_needs_chattanooga_image_fallback( $product, $im
 		return false;
 	}
 	$id = (int) $product->get_image_id();
-	if ( $id <= 0 ) {
-		return true;
-	}
-	if ( modulargunworks_is_wc_placeholder_attachment_id( $id ) ) {
+	if ( modulargunworks_attachment_looks_like_placeholder( $id ) ) {
 		return true;
 	}
 	if ( is_string( $image_html ) && false !== strpos( $image_html, 'woocommerce-placeholder' ) ) {
@@ -150,8 +159,7 @@ function modulargunworks_single_product_image_thumbnail_html_chattanooga( $html,
 		return $html;
 	}
 	$tid = (int) $post_thumbnail_id;
-	$replace = ( $tid <= 0 )
-		|| modulargunworks_is_wc_placeholder_attachment_id( $tid )
+	$replace = modulargunworks_attachment_looks_like_placeholder( $tid )
 		|| ( false !== strpos( (string) $html, 'woocommerce-placeholder' ) );
 	if ( ! $replace ) {
 		return $html;
@@ -171,6 +179,43 @@ function modulargunworks_single_product_image_thumbnail_html_chattanooga( $html,
 	);
 }
 add_filter( 'woocommerce_single_product_image_thumbnail_html', 'modulargunworks_single_product_image_thumbnail_html_chattanooga', 10, 2 );
+
+/**
+ * Some loop/template paths bypass woocommerce_product_get_image and call the post thumbnail stack directly.
+ * Replace placeholder thumbnails with Chattanooga CDN image there as a final fallback.
+ */
+function modulargunworks_post_thumbnail_html_chattanooga( $html, $post_id, $post_thumbnail_id, $size, $attr ) {
+	unset( $size );
+	if ( get_post_type( $post_id ) !== 'product' ) {
+		return $html;
+	}
+	$product = wc_get_product( (int) $post_id );
+	if ( ! $product ) {
+		return $html;
+	}
+	$url = modulargunworks_get_chattanooga_image_url( $product );
+	if ( '' === $url ) {
+		return $html;
+	}
+	if ( ! modulargunworks_attachment_looks_like_placeholder( $post_thumbnail_id ) && false === strpos( (string) $html, 'woocommerce-placeholder' ) ) {
+		return $html;
+	}
+	$url = esc_url( $url );
+	if ( '' === $url ) {
+		return $html;
+	}
+	$class = 'wp-post-image chattanooga-cdn-image';
+	if ( is_array( $attr ) && ! empty( $attr['class'] ) ) {
+		$class .= ' ' . $attr['class'];
+	}
+	return sprintf(
+		'<img src="%s" alt="%s" class="%s" loading="lazy" decoding="async" />',
+		$url,
+		esc_attr( $product->get_name() ),
+		esc_attr( trim( $class ) )
+	);
+}
+add_filter( 'post_thumbnail_html', 'modulargunworks_post_thumbnail_html_chattanooga', 10, 5 );
 
 /**
  * Theme supports and menus.
@@ -258,7 +303,7 @@ function modulargunworks_sidebar_has_layered_attribute_widget( array $sidebar_wi
 }
 
 function modulargunworks_ensure_shop_sidebar_filter_widgets() {
-	if ( ! current_user_can( 'manage_woocommerce' ) || ! class_exists( 'WooCommerce' ) ) {
+	if ( ! class_exists( 'WooCommerce' ) ) {
 		return;
 	}
 
@@ -423,6 +468,7 @@ function modulargunworks_ensure_shop_sidebar_filter_widgets() {
 	}
 }
 add_action( 'admin_init', 'modulargunworks_ensure_shop_sidebar_filter_widgets', 30 );
+add_action( 'init', 'modulargunworks_ensure_shop_sidebar_filter_widgets', 50 );
 
 /**
  * Keep cart badge current when products are added via AJAX.
