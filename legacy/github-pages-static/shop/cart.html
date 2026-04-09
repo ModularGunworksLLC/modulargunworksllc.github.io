@@ -606,7 +606,7 @@
             </div>
             <div class="checkout-note" id="checkout-note">
               <i class="fas fa-credit-card"></i>
-              Secure checkout with GunTab
+              Checkout is handled on our WooCommerce store.
             </div>
             ${needsVerification ? `
             <div class="ammo-verification-block" id="verification-block">
@@ -636,7 +636,7 @@
             </div>
             ` : ''}
             <div id="paypal-button-container">
-              <!-- GunTab checkout button rendered by initCheckoutSection -->
+              <!-- WooCommerce checkout CTA rendered by initCheckoutSection -->
             </div>
             <a href="ammunition.html" class="continue-shopping">
               <i class="fas fa-arrow-left"></i> Continue Shopping
@@ -645,64 +645,30 @@
         </div>
       `;
 
-      // Show contact-to-order (PayPal disabled for 2A compliance - switching payment processor)
+      // Redirect legacy static cart traffic to WooCommerce checkout.
       initCheckoutSection(cart, subtotal, shipping, totalWithShipping, needsVerification, cartHasFirearm);
     }
 
     function initCheckoutSection(cart, subtotal, shipping, total, requireVerification, requireFirearmVerification) {
       const container = document.getElementById('paypal-button-container');
       if (!container) return;
+      const WOO_STORE_BASE = (window.MGW_WOO_STORE_URL || '').trim() || 'https://modulargunworks.com';
 
-      function renderGunTabButton() {
-        container.innerHTML = `
-          <button id="guntab-checkout-btn" class="guntab-checkout-btn" style="width:100%; padding:1rem 1.5rem; background:var(--color-primary); color:#fff; border:none; border-radius:8px; font-weight:700; font-size:1.1rem; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:0.5rem;">
-            <i class="fas fa-lock"></i> Checkout with GunTab
-          </button>
-          <p style="font-size:0.8rem; color:#666; margin-top:0.5rem;">Secure payment • 2A-friendly</p>
-        `;
-        document.getElementById('guntab-checkout-btn').addEventListener('click', () => doGunTabCheckout(cart, subtotal, shipping));
+      function toWooUrl(path) {
+        const base = WOO_STORE_BASE.replace(/\/+$/, '');
+        const normalizedPath = String(path || '').replace(/^\/+/, '');
+        return base + '/' + normalizedPath;
       }
 
-      async function doGunTabCheckout(cartItems, subtotal, shipping) {
-        const btn = document.getElementById('guntab-checkout-btn');
-        if (btn) { btn.disabled = true; btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Creating checkout...'; }
-        try {
-          const items = cartItems.map(it => ({
-            sku: it.sku,
-            name: it.name,
-            category: it.category,
-            quantity: it.quantity
-          }));
-          const apiUrl = (window.API_BASE || '') + '/api/guntab-create-invoice';
-          const res = await fetch(apiUrl, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              items,
-              merchandise_amount_cents: Math.round(subtotal * 100),
-              shipping_amount_cents: Math.round(shipping * 100)
-            })
-          });
-          const text = await res.text();
-          let data;
-          try {
-            data = JSON.parse(text);
-          } catch {
-            console.error('API returned non-JSON. Status:', res.status, 'Body:', text.slice(0, 500));
-            throw new Error('Server returned invalid response (status ' + res.status + '). Check browser console.');
-          }
-          if (data.success && data.response_url) {
-            window.location.href = data.response_url;
-          } else {
-            const errMsg = data.error || data.message || 'Checkout failed. Please try again or contact us at (256) 384-3852.';
-            alert(errMsg);
-            if (btn) { btn.disabled = false; btn.innerHTML = '<i class="fas fa-lock"></i> Checkout with GunTab'; }
-          }
-        } catch (e) {
-          console.error('Checkout error:', e);
-          alert('Checkout failed: ' + (e.message || e) + '. Contact us at (256) 384-3852.');
-          if (btn) { btn.disabled = false; btn.innerHTML = '<i class="fas fa-lock"></i> Checkout with GunTab'; }
-        }
+      function renderWooCheckoutButton() {
+        const cartUrl = toWooUrl('/cart/');
+        const checkoutUrl = toWooUrl('/checkout/');
+        container.innerHTML = `
+          <a id="woo-checkout-btn" class="guntab-checkout-btn" href="${checkoutUrl}" style="text-decoration:none; width:100%; padding:1rem 1.5rem; background:var(--color-primary); color:#fff; border:none; border-radius:8px; font-weight:700; font-size:1.1rem; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:0.5rem;">
+            <i class="fas fa-lock"></i> Continue to Secure Checkout
+          </a>
+          <p style="font-size:0.8rem; color:#666; margin-top:0.5rem;">If items are missing, open your Woo cart first: <a href="${cartUrl}" target="_blank" rel="noopener">View Woo cart</a></p>
+        `;
       }
 
       if (requireVerification) {
@@ -716,7 +682,7 @@
           const ammoOk = ageCheck && stateCheck && ageCheck.checked && stateCheck.checked;
           const firearmOk = !requireFirearmVerification || (fflCheck && rulesCheck && fflCheck.checked && rulesCheck.checked);
           if (ammoOk && firearmOk) {
-            renderGunTabButton();
+            renderWooCheckoutButton();
             if (hint) hint.textContent = '';
           }
         }
@@ -725,7 +691,7 @@
         if (fflCheck) fflCheck.addEventListener('change', checkAll);
         if (rulesCheck) rulesCheck.addEventListener('change', checkAll);
       } else {
-        renderGunTabButton();
+        renderWooCheckoutButton();
       }
     }
 

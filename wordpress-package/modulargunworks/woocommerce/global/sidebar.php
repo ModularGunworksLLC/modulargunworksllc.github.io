@@ -6,10 +6,6 @@
  */
 defined( 'ABSPATH' ) || exit;
 
-if ( ! is_active_sidebar( 'shop-sidebar' ) ) {
-	return;
-}
-
 $clear_filters_url = '';
 if ( function_exists( 'is_shop' ) && ( is_shop() || is_product_category() || is_tax( 'pa_brand' ) ) ) {
 	$current_url = '';
@@ -32,6 +28,8 @@ if ( function_exists( 'is_shop' ) && ( is_shop() || is_product_category() || is_
 if ( '' === $clear_filters_url ) {
 	$clear_filters_url = get_permalink( wc_get_page_id( 'shop' ) );
 }
+$shop_sidebar_widgets = get_option( 'widget_woocommerce_layered_nav', array() );
+$shop_sidebar_widgets = is_array( $shop_sidebar_widgets ) ? $shop_sidebar_widgets : array();
 ?>
 <aside id="secondary" class="widget-area mgw-shop-sidebar mgw-woo-sidebar" role="complementary">
 	<div class="filter-header">
@@ -41,6 +39,9 @@ if ( '' === $clear_filters_url ) {
 		</a>
 	</div>
 	<div class="mgw-filter-scroll-wrapper">
-		<?php dynamic_sidebar( 'shop-sidebar' ); ?>
+		<?php wc_get_template( 'sidebar-shop-filters.php' ); ?>
+		<?php if ( is_active_sidebar( 'shop-sidebar' ) ) : ?>
+			<?php dynamic_sidebar( 'shop-sidebar' ); ?>
+		<?php endif; ?>
 	</div>
 </aside>

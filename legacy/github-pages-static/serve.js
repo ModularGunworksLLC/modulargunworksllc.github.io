@@ -9,6 +9,8 @@ const PORT = process.env.PORT || 3000;
 
 const GUNTAB_API_TOKEN = process.env.GUNTAB_API_TOKEN;
 const GUNTAB_SELLER_EMAIL = process.env.GUNTAB_SELLER_EMAIL || 'modulargunworks@gmail.com';
+const SHIPPING_FLAT_RATE_CENTS = 1299;
+const FREE_SHIPPING_THRESHOLD_CENTS = 9900;
 // Public store URL for redirects, etc.
 const PUBLIC_STORE_URL = (process.env.PUBLIC_STORE_URL || 'https://modulargunworksllc.github.io').replace(/\/$/, '');
 // URL for GunTab listing validation: must return server-rendered product HTML (not JS-dependent).
@@ -34,13 +36,16 @@ function writeOrders(orders) {
 }
 
 // Gmail configuration
-const transporter = nodemailer.createTransport({
+const GMAIL_USER = process.env.GMAIL_USER || '';
+const GMAIL_APP_PASSWORD = process.env.GMAIL_APP_PASSWORD || '';
+const MAIL_ENABLED = !!(GMAIL_USER && GMAIL_APP_PASSWORD);
+const transporter = MAIL_ENABLED ? nodemailer.createTransport({
   service: 'gmail',
   auth: {
-    user: 'modulargunworks@gmail.com',
-    pass: 'xygt wwgk fnbp qkps'
+    user: GMAIL_USER,
+    pass: GMAIL_APP_PASSWORD
   }
-});
+}) : null;
 
 // Set proper MIME types for static files
 const mimeTypes = {
@@ -125,6 +130,24 @@ function loadProductFromJson(sku, category) {
   } catch (e) {
     return null;
   }
+}
+
+function computeTrustedMerchandiseCents(items) {
+  if (!Array.isArray(items)) return 0;
+  let total = 0;
+  for (const it of items) {
+    const qty = Math.max(1, parseInt((it && it.quantity) || 1, 10) || 1);
+    const product = loadProductFromJson(it && it.sku, it && it.category);
+    if (!product || !(product.displayPrice > 0)) {
+      throw new Error(`Invalid item in cart payload (sku=${(it && it.sku) || 'unknown'})`);
+    }
+    total += Math.round(Number(product.displayPrice) * 100) * qty;
+  }
+  return total;
+}
+
+function expectedShippingCents(merchandiseCents) {
+  return merchandiseCents >= FREE_SHIPPING_THRESHOLD_CENTS ? 0 : SHIPPING_FLAT_RATE_CENTS;
 }
 
 // Dedicated minimal product page for GunTab crawler - no regex, no JS dependency (fixes "Url does not exist")
@@ -222,6 +245,9 @@ app.get('/', (req, res) => {
 
 // Order email endpoint
 app.post('/api/send-order-email', async (req, res) => {
+  if (!MAIL_ENABLED || !transporter) {
+    return res.status(503).json({ success: false, error: 'Email service is not configured' });
+  }
   try {
     const { orderId, productName, quantity, totalAmount, buyerEmail, category, orderSummary, ageVerified, stateRestrictionsAcknowledged, minAgeConfirmed, firearmTransferAcknowledged, federalStateFirearmRulesAcknowledged, minFirearmAgeConfirmed } = req.body;
 
@@ -265,8 +291,8 @@ app.post('/api/send-order-email', async (req, res) => {
     `;
 
     await transporter.sendMail({
-      from: 'modulargunworks@gmail.com',
-      to: 'modulargunworks@gmail.com',
+      from: GMAIL_USER,
+      to: GMAIL_USER,
       subject: `New Order #${orderId} - ${productName}`,
       html: emailContent
     });
@@ -346,12 +372,26 @@ app.post('/api/guntab-create-invoice', async (req, res) => {
   try {
     const { items, merchandise_amount_cents, shipping_amount_cents, buyer_email, redirect_url } = req.body;
 
-    if (!items || !Array.isArray(items) || items.length === 0 || merchandise_amount_cents == null) {
-      return res.status(400).json({ success: false, error: 'Missing items or merchandise_amount_cents' });
+    if (!items || !Array.isArray(items) || items.length === 0 || merchandise_amount_cents == null || shipping_amount_cents == null) {
+      return res.status(400).json({ success: false, error: 'Missing items, merchandise_amount_cents, or shipping_amount_cents' });
     }
 
-    const merchCents = Math.round(Number(merchandise_amount_cents) || 0);
-    const shipCents = Math.round(Number(shipping_amount_cents) || 0);
+    const merchCentsClient = Math.round(Number(merchandise_amount_cents) || 0);
+    const shipCentsClient = Math.round(Number(shipping_amount_cents) || 0);
+    const merchCentsTrusted = computeTrustedMerchandiseCents(items);
+    if (Math.abs(merchCentsTrusted - merchCentsClient) > 1) {
+      return res.status(400).json({
+        success: false,
+        error: `Invalid merchandise amount. Expected ${merchCentsTrusted}, got ${merchCentsClient}.`
+      });
+    }
+    const shipExpected = expectedShippingCents(merchCentsTrusted);
+    if (shipCentsClient !== shipExpected) {
+      return res.status(400).json({
+        success: false,
+        error: `Invalid shipping amount. Expected ${shipExpected}, got ${shipCentsClient}.`
+      });
+    }
 
     // Use PUBLIC_STORE_URL for listing URLs - GunTab requires public product pages, not the API host
     const listings = items.map(it => ({
@@ -365,8 +405,8 @@ app.post('/api/guntab-create-invoice', async (req, res) => {
 
     const payload = {
       seller_email: GUNTAB_SELLER_EMAIL,
-      merchandise_amount_cents: String(merchCents),
-      shipping_amount_cents: String(shipCents),
+      merchandise_amount_cents: String(merchCentsTrusted),
+      shipping_amount_cents: String(shipExpected),
       listings,
       service_fee_paid_by: 'seller',
       payment_method_convenience_fee_paid_by: 'buyer'

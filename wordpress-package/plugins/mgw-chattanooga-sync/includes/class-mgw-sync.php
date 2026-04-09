@@ -304,7 +304,7 @@ class MGW_Chattanooga_Sync {
     /**
      * Valid HTTPS/HTTP image URL from feed (Chattanooga CDN). Empty if unusable.
      */
-    private function resolve_valid_image_url($n, array $row) {
+    private function resolve_valid_image_url($n, array $row, $sku = '') {
         $img_raw = $n['image_url'] ?? $row['Image Location'] ?? $row['Image URL'] ?? '';
         $img_raw = is_string($img_raw) ? trim($img_raw) : '';
         if ($img_raw === '') {
@@ -312,6 +312,12 @@ class MGW_Chattanooga_Sync {
         }
         $img = $this->to_high_res_image($img_raw, 800);
         if (!filter_var($img, FILTER_VALIDATE_URL)) {
+            $sku = is_string($sku) ? trim($sku) : '';
+            if ($sku !== '') {
+                error_log(sprintf('[MGW Chattanooga Sync] Invalid image URL for SKU %s: %s', $sku, $img_raw));
+            } else {
+                error_log(sprintf('[MGW Chattanooga Sync] Invalid image URL: %s', $img_raw));
+            }
             return '';
         }
         $scheme = wp_parse_url($img, PHP_URL_SCHEME);
@@ -367,6 +373,9 @@ class MGW_Chattanooga_Sync {
         }
 
         $caliber = isset($n['caliber']) ? trim((string) $n['caliber']) : '';
+        if ($caliber === '' && in_array($parent_slug, ['firearms', 'guns', 'handguns', 'rifles', 'shotguns'], true)) {
+            $caliber = $this->extract_caliber($name);
+        }
         if ($caliber !== '') {
             $this->set_product_attribute_term($product, 'pa_caliber', $caliber);
         }
@@ -395,6 +404,36 @@ class MGW_Chattanooga_Sync {
             $this->set_product_attribute_term($product, 'pa_capacity', $cap);
         }
 
+        $gauge = isset($n['gauge']) ? trim((string) $n['gauge']) : '';
+        if ($gauge !== '') {
+            $this->set_product_attribute_term($product, 'pa_gauge', $gauge);
+        }
+
+        $velocity = isset($n['velocity']) ? trim((string) $n['velocity']) : '';
+        if ($velocity !== '') {
+            $this->set_product_attribute_term($product, 'pa_velocity', $velocity);
+        }
+
+        $shot_size = isset($n['shot_size']) ? trim((string) $n['shot_size']) : '';
+        if ($shot_size !== '') {
+            $this->set_product_attribute_term($product, 'pa_shot_size', $shot_size);
+        }
+
+        $casing = isset($n['casing']) ? trim((string) $n['casing']) : '';
+        if ($casing !== '') {
+            $this->set_product_attribute_term($product, 'pa_casing', $casing);
+        }
+
+        $product_line = isset($n['product_line']) ? trim((string) $n['product_line']) : '';
+        if ($product_line !== '') {
+            $this->set_product_attribute_term($product, 'pa_product_line', $product_line);
+        }
+
+        $style = isset($n['style']) ? trim((string) $n['style']) : '';
+        if ($style !== '') {
+            $this->set_product_attribute_term($product, 'pa_style', $style);
+        }
+
         $rounds_raw = $n['round_count'] ?? '';
         if ($rounds_raw === '' || $rounds_raw === null) {
             $rounds_raw = $row['Rounds'] ?? $row['Rounds Per Box'] ?? '';
@@ -404,6 +443,7 @@ class MGW_Chattanooga_Sync {
         }
         $rounds = is_numeric($rounds_raw) ? (int) $rounds_raw : 0;
         if ($rounds > 0) {
+            $this->set_product_attribute_term($product, 'pa_rounds', (string) $rounds);
             $product->update_meta_data('_round_count', $rounds);
             $price = (float) $product->get_price();
             if ($price > 0) {
@@ -532,7 +572,7 @@ class MGW_Chattanooga_Sync {
                 $msrp_raw = $n['msrp'] ?? $row['MSRP'] ?? '';
                 $map_raw  = $n['map'] ?? $row['MAP'] ?? '';
                 $list_price = $this->resolve_listing_price($n, $row);
-                $image_url  = $this->resolve_valid_image_url($n, $row);
+                $image_url  = $this->resolve_valid_image_url($n, $row, $sku);
 
                 $sellable = ($list_price !== null && $list_price > 0 && $image_url !== '');
                 $desired_stock_qty = (int) ($n['stock'] ?? $row['Quantity In Stock'] ?? $row['Quantity Available'] ?? 0);
@@ -611,6 +651,9 @@ class MGW_Chattanooga_Sync {
                 $before_id = $product->get_id();
                 $product->save();
                 $pid = $product->get_id();
+                if ($pid && $sellable) {
+                    $this->maybe_set_featured_image_from_feed($pid, $image_url, $sku);
+                }
 
                 if (!$before_id && $pid) {
                     $created++;
@@ -1055,13 +1098,31 @@ class MGW_Chattanooga_Sync {
         }
     }
 
+    private function maybe_set_featured_image_from_feed($product_id, $image_url, $sku = '') {
+        if ((int) $product_id <= 0 || !is_string($image_url) || trim($image_url) === '') {
+            return;
+        }
+        try {
+            $this->set_product_image((int) $product_id, trim($image_url));
+        } catch (Exception $e) {
+            $sku = is_string($sku) ? trim($sku) : '';
+            if ($sku !== '') {
+                error_log(sprintf('[MGW Chattanooga Sync] Failed to sideload featured image for SKU %s (%d): %s', $sku, (int) $product_id, $e->getMessage()));
+            } else {
+                error_log(sprintf('[MGW Chattanooga Sync] Failed to sideload featured image for product %d: %s', (int) $product_id, $e->getMessage()));
+            }
+        }
+    }
+
     private function set_product_image($product_id, $image_url) {
         require_once ABSPATH . 'wp-admin/includes/media.php';
         require_once ABSPATH . 'wp-admin/includes/file.php';
         require_once ABSPATH . 'wp-admin/includes/image.php';
 
-        $tmp = download_url($image_url);
-        if (is_wp_error($tmp)) return;
+        $tmp = download_url($image_url, 60);
+        if (is_wp_error($tmp)) {
+            throw new Exception('download_url failed: ' . $tmp->get_error_message());
+        }
 
         $file_array = [
             'name' => basename(parse_url($image_url, PHP_URL_PATH)) ?: 'product.jpg',
@@ -1070,7 +1131,7 @@ class MGW_Chattanooga_Sync {
         $attach_id = media_handle_sideload($file_array, $product_id);
         if (is_wp_error($attach_id)) {
             @unlink($tmp);
-            return;
+            throw new Exception('media_handle_sideload failed: ' . $attach_id->get_error_message());
         }
         set_post_thumbnail($product_id, $attach_id);
     }

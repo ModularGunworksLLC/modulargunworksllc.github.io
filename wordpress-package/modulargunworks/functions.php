@@ -218,6 +218,37 @@ function modulargunworks_post_thumbnail_html_chattanooga( $html, $post_id, $post
 add_filter( 'post_thumbnail_html', 'modulargunworks_post_thumbnail_html_chattanooga', 10, 5 );
 
 /**
+ * Keep cart line-item thumbnails aligned with product image fallback behavior.
+ */
+function modulargunworks_cart_item_thumbnail( $thumbnail, $cart_item, $cart_item_key ) {
+	unset( $cart_item_key );
+	$product = isset( $cart_item['data'] ) ? $cart_item['data'] : null;
+	if ( ! $product || ! is_a( $product, 'WC_Product' ) ) {
+		return $thumbnail;
+	}
+	return $product->get_image( 'woocommerce_thumbnail' );
+}
+add_filter( 'woocommerce_cart_item_thumbnail', 'modulargunworks_cart_item_thumbnail', 10, 3 );
+
+/**
+ * Expose Chattanooga image URL in Woo REST product responses.
+ */
+function modulargunworks_rest_prepare_product_object( $response, $object, $request ) {
+	unset( $request );
+	if ( ! $response instanceof WP_REST_Response || ! $object || ! is_a( $object, 'WC_Product' ) ) {
+		return $response;
+	}
+	$data = $response->get_data();
+	if ( ! is_array( $data ) ) {
+		return $response;
+	}
+	$data['mgw_chattanooga_image_url'] = modulargunworks_get_chattanooga_image_url( $object );
+	$response->set_data( $data );
+	return $response;
+}
+add_filter( 'woocommerce_rest_prepare_product_object', 'modulargunworks_rest_prepare_product_object', 10, 3 );
+
+/**
  * Theme supports and menus.
  */
 function modulargunworks_theme_setup() {
@@ -674,6 +705,30 @@ function modulargunworks_checkout_state_notice() {
 	<?php
 }
 add_action( 'woocommerce_before_checkout_form', 'modulargunworks_checkout_state_notice', 6 );
+
+/**
+ * Require a selected shipping method before order placement when shipping is needed.
+ */
+function modulargunworks_checkout_requires_shipping_method() {
+	if ( ! function_exists( 'WC' ) || ! WC()->cart ) {
+		return;
+	}
+	if ( ! WC()->cart->needs_shipping() ) {
+		return;
+	}
+	$shipping_methods = isset( $_POST['shipping_method'] ) ? (array) wp_unslash( $_POST['shipping_method'] ) : array(); // phpcs:ignore WordPress.Security.NonceVerification.Missing
+	$has_selected     = false;
+	foreach ( $shipping_methods as $method ) {
+		if ( is_string( $method ) && '' !== trim( $method ) ) {
+			$has_selected = true;
+			break;
+		}
+	}
+	if ( ! $has_selected ) {
+		wc_add_notice( __( 'Please select a shipping method before placing your order.', 'modulargunworks' ), 'error' );
+	}
+}
+add_action( 'woocommerce_checkout_process', 'modulargunworks_checkout_requires_shipping_method', 5 );
 
 /**
  * Add-to-cart notice for firearm items.

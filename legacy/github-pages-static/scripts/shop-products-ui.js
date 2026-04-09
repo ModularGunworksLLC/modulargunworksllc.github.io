@@ -522,7 +522,7 @@
       : '';
     const sku = (product.sku || '').trim();
     const imgHtml = product.image
-      ? '<img src="' + (product.image.replace(/"/g, '&quot;')) + '" alt="' + escapeHtml(product.name || '') + '" loading="lazy">'
+      ? '<img src="' + (product.image.replace(/"/g, '&quot;')) + '" alt="' + escapeHtml(product.name || '') + '" loading="lazy" onerror="this.onerror=null; this.parentElement.innerHTML=\'<div class=&quot;product-image-placeholder&quot;><i class=&quot;fas fa-box&quot;></i></div>\';">'
       : '<div class="product-image-placeholder"><i class="fas fa-box"></i></div>';
     const saleBadge = isSale && (product.discount > 0 || product.isMapOnly)
       ? '<div class="sale-badge">' + (product.isMapOnly ? 'Great Price' : (product.discount + '% OFF')) + '</div>'
