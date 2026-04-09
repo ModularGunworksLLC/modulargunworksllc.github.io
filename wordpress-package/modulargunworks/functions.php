@@ -233,6 +233,17 @@ function modulargunworks_sidebar_has_widget_prefix( array $sidebar_widgets, $pre
 	return false;
 }
 
+function modulargunworks_sidebar_widget_instance_ids( array $sidebar_widgets, $prefix ) {
+	$ids = array();
+	foreach ( $sidebar_widgets as $widget_id ) {
+		if ( ! is_string( $widget_id ) || 0 !== strpos( $widget_id, $prefix . '-' ) ) {
+			continue;
+		}
+		$ids[] = (int) substr( $widget_id, strlen( $prefix . '-' ) );
+	}
+	return array_values( array_unique( array_filter( $ids ) ) );
+}
+
 function modulargunworks_sidebar_has_layered_attribute_widget( array $sidebar_widgets, array $instances, $attribute_slug ) {
 	foreach ( $sidebar_widgets as $widget_id ) {
 		if ( ! is_string( $widget_id ) || 0 !== strpos( $widget_id, 'woocommerce_layered_nav-' ) ) {
@@ -252,7 +263,7 @@ function modulargunworks_ensure_shop_sidebar_filter_widgets() {
 	}
 
 	$done = (int) get_option( 'mgw_native_filter_widgets_version', 0 );
-	if ( $done >= 1 ) {
+	if ( $done >= 2 ) {
 		return;
 	}
 
@@ -292,6 +303,20 @@ function modulargunworks_ensure_shop_sidebar_filter_widgets() {
 		update_option( 'widget_woocommerce_price_filter', $opt );
 		$shop_sidebar_widgets[] = 'woocommerce_price_filter-' . $id;
 	}
+	$price_opt = get_option( 'widget_woocommerce_price_filter', array() );
+	if ( ! is_array( $price_opt ) ) {
+		$price_opt = array();
+	}
+	if ( ! isset( $price_opt['_multiwidget'] ) ) {
+		$price_opt['_multiwidget'] = 1;
+	}
+	foreach ( modulargunworks_sidebar_widget_instance_ids( $shop_sidebar_widgets, 'woocommerce_price_filter' ) as $id ) {
+		if ( ! isset( $price_opt[ $id ] ) || ! is_array( $price_opt[ $id ] ) ) {
+			$price_opt[ $id ] = array();
+		}
+		$price_opt[ $id ]['title'] = __( 'Price', 'modulargunworks' );
+	}
+	update_option( 'widget_woocommerce_price_filter', $price_opt );
 
 	if ( ! modulargunworks_sidebar_has_widget_prefix( $shop_sidebar_widgets, 'woocommerce_product_categories' ) ) {
 		$opt = get_option( 'widget_woocommerce_product_categories', array() );
@@ -315,6 +340,32 @@ function modulargunworks_ensure_shop_sidebar_filter_widgets() {
 		update_option( 'widget_woocommerce_product_categories', $opt );
 		$shop_sidebar_widgets[] = 'woocommerce_product_categories-' . $id;
 	}
+	$product_categories_opt = get_option( 'widget_woocommerce_product_categories', array() );
+	if ( ! is_array( $product_categories_opt ) ) {
+		$product_categories_opt = array();
+	}
+	if ( ! isset( $product_categories_opt['_multiwidget'] ) ) {
+		$product_categories_opt['_multiwidget'] = 1;
+	}
+	foreach ( modulargunworks_sidebar_widget_instance_ids( $shop_sidebar_widgets, 'woocommerce_product_categories' ) as $id ) {
+		if ( ! isset( $product_categories_opt[ $id ] ) || ! is_array( $product_categories_opt[ $id ] ) ) {
+			$product_categories_opt[ $id ] = array();
+		}
+		$product_categories_opt[ $id ] = array_merge(
+			$product_categories_opt[ $id ],
+			array(
+				'title'              => __( 'Category', 'modulargunworks' ),
+				'orderby'            => 'name',
+				'dropdown'           => 0,
+				'count'              => 1,
+				'hierarchical'       => 1,
+				'show_children_only' => 1,
+				'hide_empty'         => 1,
+				'max_depth'          => '',
+			)
+		);
+	}
+	update_option( 'widget_woocommerce_product_categories', $product_categories_opt );
 
 	$layered_nav = get_option( 'widget_woocommerce_layered_nav', array() );
 	if ( ! is_array( $layered_nav ) ) {
@@ -349,12 +400,24 @@ function modulargunworks_ensure_shop_sidebar_filter_widgets() {
 		);
 		$shop_sidebar_widgets[] = 'woocommerce_layered_nav-' . $id;
 	}
+	foreach ( modulargunworks_sidebar_widget_instance_ids( $shop_sidebar_widgets, 'woocommerce_layered_nav' ) as $id ) {
+		if ( ! isset( $layered_nav[ $id ] ) || ! is_array( $layered_nav[ $id ] ) ) {
+			continue;
+		}
+		$layered_nav[ $id ] = array_merge(
+			$layered_nav[ $id ],
+			array(
+				'display_type' => 'list',
+				'query_type'   => 'or',
+			)
+		);
+	}
 
 	update_option( 'widget_woocommerce_layered_nav', $layered_nav );
 	$sidebars['shop-sidebar'] = array_values( array_unique( $shop_sidebar_widgets ) );
 	update_option( 'sidebars_widgets', $sidebars );
 
-	update_option( 'mgw_native_filter_widgets_version', 1 );
+	update_option( 'mgw_native_filter_widgets_version', 2 );
 	if ( function_exists( 'wc_delete_product_transients' ) ) {
 		wc_delete_product_transients();
 	}

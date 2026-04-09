@@ -203,6 +203,12 @@ main.mgw-shop-main {
   font-size: 0.82rem;
 }
 
+/* Hide huge top-level category select dropdown; we use list-style category tree below. */
+.mgw-woo-sidebar .widget_product_categories select.dropdown_product_cat,
+.mgw-woo-sidebar .widget_product_categories .select2 {
+  display: none !important;
+}
+
 .mgw-woo-sidebar .woocommerce-widget-layered-nav-dropdown__submit,
 .mgw-woo-sidebar .price_slider_amount button.button {
   background: var(--color-primary) !important;
