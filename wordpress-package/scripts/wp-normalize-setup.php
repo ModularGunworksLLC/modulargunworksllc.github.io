@@ -269,13 +269,20 @@ if ( ! isset( $layered_nav['_multiwidget'] ) ) {
 	$layered_nav['_multiwidget'] = 1;
 }
 
-$attr_map = array(
-	'brand'        => __( 'Brand', 'modulargunworks' ),
-	'caliber'      => __( 'Caliber', 'modulargunworks' ),
-	'capacity'     => __( 'Capacity', 'modulargunworks' ),
-	'bullet_type'  => __( 'Bullet Type', 'modulargunworks' ),
-	'grain_weight' => __( 'Grain', 'modulargunworks' ),
-);
+	$attr_map = array(
+		'brand'        => __( 'Brand', 'modulargunworks' ),
+		'caliber'      => __( 'Caliber', 'modulargunworks' ),
+		'capacity'     => __( 'Capacity', 'modulargunworks' ),
+		'bullet_type'  => __( 'Bullet Type', 'modulargunworks' ),
+		'grain_weight' => __( 'Grain', 'modulargunworks' ),
+		'rounds'       => __( 'Rounds', 'modulargunworks' ),
+		'gauge'        => __( 'Gauge', 'modulargunworks' ),
+		'velocity'     => __( 'Velocity', 'modulargunworks' ),
+		'shot_size'    => __( 'Shot Size', 'modulargunworks' ),
+		'casing'       => __( 'Casing', 'modulargunworks' ),
+		'product_line' => __( 'Product Line', 'modulargunworks' ),
+		'style'        => __( 'Style', 'modulargunworks' ),
+	);
 
 foreach ( $attr_map as $attribute_slug => $title ) {
 	$taxonomy = wc_attribute_taxonomy_name( $attribute_slug );

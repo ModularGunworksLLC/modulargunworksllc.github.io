@@ -1,0 +1,32 @@
+# Legacy static storefront hard-redirects to canonical WooCommerce routes.
+# Include this file from your server block after confirming paths/domains.
+#
+# Example include:
+#   include /opt/bitnami/nginx/conf/server_blocks/legacy-nginx-redirects.conf;
+#
+# NOTE:
+# - Keep these enabled after cutover to preserve SEO and old ad links.
+# - Product-detail redirect tries SKU mapping in WordPress first (theme logic),
+#   then falls back to /shop/ if SKU not resolvable.
+
+rewrite ^/shop/ammunition\.html$ /product-category/ammunition/ permanent;
+rewrite ^/shop/magazines\.html$ /product-category/magazines/ permanent;
+rewrite ^/shop/guns\.html$ /product-category/firearms/ permanent;
+rewrite ^/shop/gun-parts\.html$ /product-category/gun-parts/ permanent;
+rewrite ^/shop/gear\.html$ /product-category/gear/ permanent;
+rewrite ^/shop/optics\.html$ /product-category/optics/ permanent;
+rewrite ^/shop/reloading\.html$ /product-category/reloading/ permanent;
+rewrite ^/shop/outdoors\.html$ /product-category/outdoors/ permanent;
+rewrite ^/shop/brands\.html$ /brands/ permanent;
+rewrite ^/shop/brand-products\.html$ /brands/ permanent;
+rewrite ^/shop/sale\.html$ /shop/?orderby=price permanent;
+rewrite ^/shop/search\.html$ /shop/ permanent;
+rewrite ^/shop/cart\.html$ /cart/ permanent;
+rewrite ^/shop/checkout\.html$ /checkout/ permanent;
+rewrite ^/cart\.html$ /cart/ permanent;
+rewrite ^/checkout\.html$ /checkout/ permanent;
+rewrite ^/product-detail\.html$ /shop/ permanent;
+rewrite ^/product-view\.html$ /shop/ permanent;
+
+# Catch-all for any remaining /shop/*.html legacy pages.
+rewrite ^/shop/.+\.html$ /shop/ permanent;

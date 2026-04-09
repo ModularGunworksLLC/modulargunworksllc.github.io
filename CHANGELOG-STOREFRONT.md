@@ -22,4 +22,21 @@
 - Legacy invoice API now recomputes trusted merchandise totals server-side and rejects client mismatches beyond +/-1 cent.
 - Legacy invoice API now enforces shipping amount based on configured free-shipping threshold and flat-rate constants.
 - Removed hardcoded Gmail app password from `serve.js`; email sending now requires `GMAIL_USER` + `GMAIL_APP_PASSWORD`, otherwise `/api/send-order-email` returns 503.
+- Legacy `/api/guntab-create-invoice` now returns HTTP 410 to enforce Woo-only checkout and eliminate split payment orchestration.
 - Added `.env.example` keys for `GMAIL_USER` and `GMAIL_APP_PASSWORD`.
+
+## Canonicalization / Guardrails
+- Added WordPress `template_redirect` canonicalization from legacy static routes to Woo routes:
+  - `/shop/*.html` -> `/shop/` or mapped `/product-category/*`
+  - `/shop/cart.html` and `/cart.html` -> `/cart/`
+  - `/shop/checkout.html` and `/checkout.html` -> `/checkout/`
+  - `/shop/search.html` -> `/shop/`
+  - `/product-detail.html` and `/product-view.html` -> SKU-resolved Woo product permalink when possible, otherwise `/shop/`
+- Added noindex headers for legacy static-style `.html` paths as SEO defense-in-depth.
+- Updated theme cart JS to always resolve cart URL using Woo permalink (`wc_get_cart_url`) fallback.
+- Added WP-CLI migration ops script (`wordpress-package/scripts/wp-storefront-migration-ops.php`) for:
+  - full Chattanooga sync loop to completion,
+  - filter-attribute backfill,
+  - taxonomy/facet verification report,
+  - optional de-duplication of layered-nav widgets already rendered programmatically.
+- Added CI guardrail workflow (`.github/workflows/legacy-guardrails.yml`) to fail PRs that add/modify app features under `legacy/github-pages-static/` (docs/archive exceptions only).

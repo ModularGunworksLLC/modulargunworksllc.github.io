@@ -189,11 +189,11 @@
 
   // Helper to get cart URL relative to current page
   function getCartUrl() {
-    const path = window.location.pathname;
-    if (path.includes('/shop/')) {
-      return 'cart.html';
+    const fallback = '/cart/';
+    if (typeof window !== 'undefined' && window.wc_cart_params && window.wc_cart_params.cart_url) {
+      return window.wc_cart_params.cart_url;
     }
-    return 'shop/cart.html';
+    return fallback;
   }
 
   // Escape HTML for safe display

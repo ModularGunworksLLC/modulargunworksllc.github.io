@@ -1,0 +1,52 @@
+name: Guardrails — Block legacy feature code
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+jobs:
+  block-legacy-feature-edits:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Detect changed files
+        id: changed
+        run: |
+          FILES="$(git diff --name-only HEAD~1..HEAD || true)"
+          {
+            echo "files<<EOF"
+            echo "$FILES"
+            echo "EOF"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Enforce no-feature policy in legacy folder
+        run: |
+          CHANGED="${{ steps.changed.outputs.files }}"
+          if [[ -z "$CHANGED" ]]; then
+            echo "No changed files."
+            exit 0
+          fi
+
+          # Allow only archival docs and data refreshes in legacy tree.
+          # Block edits to legacy runtime logic/templates/assets.
+          VIOLATIONS="$(printf "%s\n" "$CHANGED" | rg '^legacy/github-pages-static/' | rg -v '^legacy/github-pages-static/(README\\.md|static-reference-docs/|data/products/mapped-products/|data/products/chattanooga-product-feed\\.csv)$' || true)"
+
+          if [[ -n "$VIOLATIONS" ]]; then
+            echo "❌ Legacy no-feature policy violation. The following files are not allowed to change:"
+            printf "%s\n" "$VIOLATIONS"
+            echo ""
+            echo "Allowed legacy paths:"
+            echo "- legacy/github-pages-static/README.md"
+            echo "- legacy/github-pages-static/static-reference-docs/**"
+            echo "- legacy/github-pages-static/data/products/mapped-products/**"
+            echo "- legacy/github-pages-static/data/products/chattanooga-product-feed.csv"
+            exit 1
+          fi
+
+          echo "✅ Legacy guardrail passed."

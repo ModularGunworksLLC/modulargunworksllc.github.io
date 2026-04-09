@@ -88,6 +88,35 @@ sudo /opt/bitnami/ctlscript.sh restart php-fpm
 - Shop grid and a single product page  
 - Cart thumbnail and checkout  
 - Any filter/AJAX shop flows you recently changed  
+- Confirm legacy static paths 301 to Woo canonical routes:
+  - `/shop/*.html` → `/product-category/*` / `/shop/`
+  - `/product-detail.html?sku=...` → matching Woo product permalink when SKU exists
+- Confirm noindex header behavior on legacy `.html` paths
+- Verify canonical nav links only point to:
+  - `/shop/`
+  - `/product-category/*`
+  - `/cart/`
+  - `/checkout/`
+  - `/my-account/`
+- Verify category filters and images:
+  - non-empty `pa_*` terms for active categories
+  - product cards/PDP/cart image fallback behavior
+
+## 7. Woo-first migration ops (Phase D/E/F)
+
+Run this after code deploy to execute full catalog/facet migration checks:
+
+```bash
+cd ~/modulargunworksllc.github.io
+sudo /opt/bitnami/wp-cli/bin/wp --path=/opt/bitnami/wordpress eval-file wordpress-package/scripts/wp-storefront-migration-ops.php
+```
+
+This script:
+- runs Chattanooga sync batches to completion (bounded),
+- runs attribute backfill,
+- deduplicates sidebar filters to avoid programmatic+widget overlap,
+- verifies non-empty `pa_*` facets by top category,
+- prints deployment readiness guidance.
 
 ## See also
 

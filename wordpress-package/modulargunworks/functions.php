@@ -333,15 +333,22 @@ function modulargunworks_sidebar_has_layered_attribute_widget( array $sidebar_wi
 	return false;
 }
 
+function modulargunworks_get_filter_surface_mode() {
+	$mode = get_option( 'mgw_filter_surface_mode', 'programmatic' );
+	$mode = is_string( $mode ) ? strtolower( trim( $mode ) ) : 'programmatic';
+	return in_array( $mode, array( 'programmatic', 'widgets' ), true ) ? $mode : 'programmatic';
+}
+
 function modulargunworks_ensure_shop_sidebar_filter_widgets() {
 	if ( ! class_exists( 'WooCommerce' ) ) {
 		return;
 	}
 
 	$done = (int) get_option( 'mgw_native_filter_widgets_version', 0 );
-	if ( $done >= 2 ) {
+	if ( $done >= 3 ) {
 		return;
 	}
+	$filter_surface_mode = modulargunworks_get_filter_surface_mode();
 
 	$sidebars = get_option( 'sidebars_widgets', array() );
 	if ( ! is_array( $sidebars ) ) {
@@ -451,49 +458,61 @@ function modulargunworks_ensure_shop_sidebar_filter_widgets() {
 		$layered_nav['_multiwidget'] = 1;
 	}
 
-	$attributes = array(
-		'brand'        => __( 'Brand', 'modulargunworks' ),
-		'caliber'      => __( 'Caliber', 'modulargunworks' ),
-		'capacity'     => __( 'Capacity', 'modulargunworks' ),
-		'bullet_type'  => __( 'Bullet Type', 'modulargunworks' ),
-		'grain_weight' => __( 'Grain', 'modulargunworks' ),
-	);
-
-	foreach ( $attributes as $attribute_slug => $title ) {
-		$taxonomy = wc_attribute_taxonomy_name( $attribute_slug );
-		if ( ! taxonomy_exists( $taxonomy ) ) {
-			continue;
-		}
-		if ( modulargunworks_sidebar_has_layered_attribute_widget( $shop_sidebar_widgets, $layered_nav, $attribute_slug ) ) {
-			continue;
-		}
-		$id = modulargunworks_next_widget_instance_id( $layered_nav );
-		$layered_nav[ $id ] = array(
-			'title'        => $title,
-			'attribute'    => $attribute_slug,
-			'display_type' => 'list',
-			'query_type'   => 'or',
-		);
-		$shop_sidebar_widgets[] = 'woocommerce_layered_nav-' . $id;
-	}
-	foreach ( modulargunworks_sidebar_widget_instance_ids( $shop_sidebar_widgets, 'woocommerce_layered_nav' ) as $id ) {
-		if ( ! isset( $layered_nav[ $id ] ) || ! is_array( $layered_nav[ $id ] ) ) {
-			continue;
-		}
-		$layered_nav[ $id ] = array_merge(
-			$layered_nav[ $id ],
-			array(
-				'display_type' => 'list',
-				'query_type'   => 'or',
+	if ( 'programmatic' === $filter_surface_mode ) {
+		// Programmatic facet renderer is canonical. Keep category/price/active filters only.
+		$shop_sidebar_widgets = array_values(
+			array_filter(
+				$shop_sidebar_widgets,
+				static function ( $widget_id ) {
+					return ! ( is_string( $widget_id ) && 0 === strpos( $widget_id, 'woocommerce_layered_nav-' ) );
+				}
 			)
 		);
+	} else {
+		$attributes = array(
+			'brand'        => __( 'Brand', 'modulargunworks' ),
+			'caliber'      => __( 'Caliber', 'modulargunworks' ),
+			'capacity'     => __( 'Capacity', 'modulargunworks' ),
+			'bullet_type'  => __( 'Bullet Type', 'modulargunworks' ),
+			'grain_weight' => __( 'Grain', 'modulargunworks' ),
+		);
+
+		foreach ( $attributes as $attribute_slug => $title ) {
+			$taxonomy = wc_attribute_taxonomy_name( $attribute_slug );
+			if ( ! taxonomy_exists( $taxonomy ) ) {
+				continue;
+			}
+			if ( modulargunworks_sidebar_has_layered_attribute_widget( $shop_sidebar_widgets, $layered_nav, $attribute_slug ) ) {
+				continue;
+			}
+			$id = modulargunworks_next_widget_instance_id( $layered_nav );
+			$layered_nav[ $id ] = array(
+				'title'        => $title,
+				'attribute'    => $attribute_slug,
+				'display_type' => 'list',
+				'query_type'   => 'or',
+			);
+			$shop_sidebar_widgets[] = 'woocommerce_layered_nav-' . $id;
+		}
+		foreach ( modulargunworks_sidebar_widget_instance_ids( $shop_sidebar_widgets, 'woocommerce_layered_nav' ) as $id ) {
+			if ( ! isset( $layered_nav[ $id ] ) || ! is_array( $layered_nav[ $id ] ) ) {
+				continue;
+			}
+			$layered_nav[ $id ] = array_merge(
+				$layered_nav[ $id ],
+				array(
+					'display_type' => 'list',
+					'query_type'   => 'or',
+				)
+			);
+		}
 	}
 
 	update_option( 'widget_woocommerce_layered_nav', $layered_nav );
 	$sidebars['shop-sidebar'] = array_values( array_unique( $shop_sidebar_widgets ) );
 	update_option( 'sidebars_widgets', $sidebars );
 
-	update_option( 'mgw_native_filter_widgets_version', 2 );
+	update_option( 'mgw_native_filter_widgets_version', 3 );
 	if ( function_exists( 'wc_delete_product_transients' ) ) {
 		wc_delete_product_transients();
 	}
@@ -791,4 +810,105 @@ function modulargunworks_create_product_categories() {
 	}
 }
 add_action( 'after_switch_theme', 'modulargunworks_create_product_categories' );
+
+/**
+ * Legacy static URL migration map to WooCommerce canonical routes.
+ *
+ * @return array<string,string>
+ */
+function modulargunworks_legacy_static_route_map() {
+	return array(
+		'/shop/ammunition.html'   => '/product-category/ammunition/',
+		'/shop/magazines.html'    => '/product-category/magazines/',
+		'/shop/guns.html'         => '/product-category/firearms/',
+		'/shop/gun-parts.html'    => '/product-category/gun-parts/',
+		'/shop/gear.html'         => '/product-category/gear/',
+		'/shop/optics.html'       => '/product-category/optics/',
+		'/shop/reloading.html'    => '/product-category/reloading/',
+		'/shop/outdoors.html'     => '/product-category/outdoors/',
+		'/shop/brands.html'       => '/brands/',
+		'/shop/brand-products.html' => '/brands/',
+		'/shop/sale.html'         => '/shop/?orderby=price',
+		'/shop/search.html'       => '/shop/',
+		'/search.html'            => '/shop/',
+		'/shop/cart.html'         => '/cart/',
+		'/shop/checkout.html'     => '/checkout/',
+		'/cart.html'              => '/cart/',
+		'/checkout.html'          => '/checkout/',
+		'/product-detail.html'    => '/shop/',
+		'/product-view.html'      => '/shop/',
+	);
+}
+
+/**
+ * Best-effort lookup: Chattanooga SKU query param to WooCommerce product URL.
+ *
+ * @param string $sku Product SKU.
+ * @return string
+ */
+function modulargunworks_get_product_url_by_sku( $sku ) {
+	$sku = is_string( $sku ) ? trim( $sku ) : '';
+	if ( '' === $sku || ! function_exists( 'wc_get_product_id_by_sku' ) ) {
+		return '';
+	}
+	$product_id = (int) wc_get_product_id_by_sku( $sku );
+	if ( $product_id <= 0 ) {
+		return '';
+	}
+	$url = get_permalink( $product_id );
+	return is_string( $url ) ? $url : '';
+}
+
+/**
+ * Redirect legacy static shop/cart/search/detail routes to canonical Woo pages.
+ */
+function modulargunworks_redirect_legacy_static_routes() {
+	if ( is_admin() || wp_doing_ajax() || wp_doing_cron() ) {
+		return;
+	}
+	if ( (bool) get_option( 'mgw_enable_legacy_static_urls', false ) ) {
+		return;
+	}
+
+	$path = parse_url( add_query_arg( array() ), PHP_URL_PATH );
+	$path = is_string( $path ) ? rtrim( $path, '/' ) : '';
+	if ( '' === $path ) {
+		$path = '/';
+	}
+	$path_lower = strtolower( $path );
+
+	$map = modulargunworks_legacy_static_route_map();
+	if ( isset( $map[ $path_lower ] ) ) {
+		$target = $map[ $path_lower ];
+		if ( '/product-detail.html' === $path_lower || '/product-view.html' === $path_lower ) {
+			$sku = isset( $_GET['sku'] ) ? sanitize_text_field( wp_unslash( $_GET['sku'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			$product_url = modulargunworks_get_product_url_by_sku( $sku );
+			if ( '' !== $product_url ) {
+				wp_safe_redirect( $product_url, 301 );
+				exit;
+			}
+		}
+		wp_safe_redirect( home_url( $target ), 301 );
+		exit;
+	}
+
+	if ( 0 === strpos( $path_lower, '/shop/' ) && preg_match( '/\.html$/', $path_lower ) ) {
+		$shop_url = function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'shop' ) : home_url( '/shop/' );
+		wp_safe_redirect( $shop_url, 301 );
+		exit;
+	}
+}
+add_action( 'template_redirect', 'modulargunworks_redirect_legacy_static_routes', 1 );
+
+/**
+ * Add noindex header on legacy-static routes as migration defense-in-depth.
+ */
+function modulargunworks_legacy_noindex_header() {
+	$path = parse_url( add_query_arg( array() ), PHP_URL_PATH );
+	$path = is_string( $path ) ? strtolower( $path ) : '';
+	if ( false !== strpos( $path, '.html' ) && ( 0 === strpos( $path, '/shop/' ) || '/product-detail.html' === $path || '/product-view.html' === $path ) ) {
+		header( 'X-Robots-Tag: noindex, nofollow', true );
+	}
+}
+add_action( 'send_headers', 'modulargunworks_legacy_noindex_header' );
 

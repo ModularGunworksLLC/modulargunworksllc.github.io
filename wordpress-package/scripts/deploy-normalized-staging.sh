@@ -146,6 +146,8 @@ else
 fi
 
 "${wp_cmd[@]}" eval-file "$REPO_DIR/wordpress-package/scripts/wp-normalize-setup.php"
+echo "==> Running storefront migration ops (redirects/facets verification)"
+"${wp_cmd[@]}" eval-file "$REPO_DIR/wordpress-package/scripts/wp-storefront-migration-ops.php"
 
 echo ""
 echo "Done. Visit your staging URL and verify:"

@@ -355,7 +355,8 @@ function categoryToListingTypeId(category) {
   return 'other_non_regulated';
 }
 
-// CORS preflight for API routes (some clients require explicit OPTIONS)
+// Legacy static GunTab checkout API intentionally retired.
+// Canonical checkout is WordPress/WooCommerce.
 app.options('/api/guntab-create-invoice', (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', req.headers.origin || '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
@@ -363,88 +364,12 @@ app.options('/api/guntab-create-invoice', (req, res) => {
   res.sendStatus(204);
 });
 
-// Create GunTab invoice and return response_url for redirect
-app.post('/api/guntab-create-invoice', async (req, res) => {
-  if (!GUNTAB_API_TOKEN) {
-    return res.status(503).json({ success: false, error: 'GunTab is not configured. Contact support.' });
-  }
-
-  try {
-    const { items, merchandise_amount_cents, shipping_amount_cents, buyer_email, redirect_url } = req.body;
-
-    if (!items || !Array.isArray(items) || items.length === 0 || merchandise_amount_cents == null || shipping_amount_cents == null) {
-      return res.status(400).json({ success: false, error: 'Missing items, merchandise_amount_cents, or shipping_amount_cents' });
-    }
-
-    const merchCentsClient = Math.round(Number(merchandise_amount_cents) || 0);
-    const shipCentsClient = Math.round(Number(shipping_amount_cents) || 0);
-    const merchCentsTrusted = computeTrustedMerchandiseCents(items);
-    if (Math.abs(merchCentsTrusted - merchCentsClient) > 1) {
-      return res.status(400).json({
-        success: false,
-        error: `Invalid merchandise amount. Expected ${merchCentsTrusted}, got ${merchCentsClient}.`
-      });
-    }
-    const shipExpected = expectedShippingCents(merchCentsTrusted);
-    if (shipCentsClient !== shipExpected) {
-      return res.status(400).json({
-        success: false,
-        error: `Invalid shipping amount. Expected ${shipExpected}, got ${shipCentsClient}.`
-      });
-    }
-
-    // Use PUBLIC_STORE_URL for listing URLs - GunTab requires public product pages, not the API host
-    const listings = items.map(it => ({
-      listing_type_id: categoryToListingTypeId(it.category),
-      quantity: Math.max(1, parseInt(it.quantity, 10) || 1),
-      title: (it.name || it.title || 'Item').substring(0, 200),
-      url: it.url || (it.sku && it.category
-        ? `${GUNTAB_LISTING_BASE}/product-view.html?sku=${encodeURIComponent(it.sku)}&category=${encodeURIComponent(it.category)}`
-        : null)
-    }));
-
-    const payload = {
-      seller_email: GUNTAB_SELLER_EMAIL,
-      merchandise_amount_cents: String(merchCentsTrusted),
-      shipping_amount_cents: String(shipExpected),
-      listings,
-      service_fee_paid_by: 'seller',
-      payment_method_convenience_fee_paid_by: 'buyer'
-    };
-    if (buyer_email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(buyer_email)) {
-      payload.buyer_email = buyer_email;
-    }
-    if (redirect_url && typeof redirect_url === 'string' && redirect_url.startsWith('http')) {
-      payload.redirect_url = redirect_url;
-    } else {
-      payload.redirect_url = `${PUBLIC_STORE_URL}/order-status.html`;
-    }
-
-    const apiRes = await fetch('https://api.guntab.com/v1/invoices', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Token ${GUNTAB_API_TOKEN}`
-      },
-      body: JSON.stringify(payload)
-    });
-
-    const data = await apiRes.json();
-
-    if (!apiRes.ok) {
-      const errMsg = (data.errors && Array.isArray(data.errors)) ? data.errors.join('; ') : (data.error || 'GunTab API error');
-      return res.status(apiRes.status >= 500 ? 502 : 400).json({ success: false, error: errMsg });
-    }
-
-    if (!data.response_url) {
-      return res.status(502).json({ success: false, error: 'No checkout URL from GunTab' });
-    }
-
-    res.json({ success: true, response_url: data.response_url, invoice_id: data.id });
-  } catch (err) {
-    console.error('GunTab create-invoice error:', err);
-    res.status(500).json({ success: false, error: 'Failed to create checkout session' });
-  }
+app.post('/api/guntab-create-invoice', (req, res) => {
+  res.status(410).json({
+    success: false,
+    error: 'Legacy checkout API retired. Use WooCommerce checkout.',
+    checkout_url: `${PUBLIC_STORE_URL.replace(/\/$/, '')}/checkout/`
+  });
 });
 
 // 404 handler - return 404 instead of HTML
