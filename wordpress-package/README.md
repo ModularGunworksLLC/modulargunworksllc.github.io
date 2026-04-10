@@ -9,7 +9,8 @@ Includes theme, assets, product data, and deployment instructions.
 
 | Folder/File | Purpose |
 |-------------|---------|
-| `modulargunworks/` | Custom WordPress theme (Modular Gunworks design) |
+| `modulargunworks/` | Legacy full theme (custom Woo overrides) |
+| `modulargunworks-shell/` | **Greenfield shell** — header/footer/home + default WooCommerce (see `docs/GREENFIELD-SERVER-STEPS.md`) |
 | `product-data/` | JSON product files for WooCommerce import |
 | `CURSOR-LIGHTSAIL-SETUP.md` | **How to use Cursor AI with your Lightsail WordPress** |
 

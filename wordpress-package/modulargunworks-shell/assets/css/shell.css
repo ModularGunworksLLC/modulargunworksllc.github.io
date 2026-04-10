@@ -1,0 +1,24 @@
+/**
+ * Greenfield shell: spacing for generic pages and Woo wrapper.
+ */
+.mgw-shell-page {
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 0 1.5rem;
+}
+
+.mgw-shell-page-title {
+  margin-bottom: 1rem;
+}
+
+.mgw-shell-default-loop {
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 0 1.5rem;
+}
+
+.mgw-shell-woo-wrap {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+}

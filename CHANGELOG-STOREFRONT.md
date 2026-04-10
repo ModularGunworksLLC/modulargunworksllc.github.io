@@ -1,5 +1,12 @@
 # Storefront Refactor Changelog
 
+## Greenfield shell theme
+
+- Added **`modulargunworks-shell`** theme: `header.php` / `footer.php`, home page, copied `assets/` (CSS, images), `woocommerce.php` wrapper only (no custom archive/single overrides).
+- **`scripts/deploy-greenfield-shell.sh`**: deploy shell + refresh `mgw-*` plugins, `wp theme activate modulargunworks-shell`; optional `MGW_GREENFIELD_RUN_NORMALIZE` / `MGW_GREENFIELD_RUN_MIGRATION`.
+- **`scripts/wp-greenfield-delete-all-products.php`**: batch-delete all products and reset `mgw_chattanooga_batch_offset` (run via `wp eval-file`).
+- **`docs/GREENFIELD-SERVER-STEPS.md`**: Lightsail checklist (deploy, optional wipe, re-sync).
+
 ## Canvas reset (theme)
 
 - Empty shop/category archives use `woocommerce/loop/no-products-found.php` with on-brand messaging and links to home and shop.
