@@ -1,5 +1,7 @@
 # Sales Tax Setup – Modular Gunworks (Huntsville, AL)
 
+> The **`mgw-sales-tax`** plugin was removed from `wordpress-package/plugins/`; this doc is general guidance only.
+
 You have **physical nexus** in Huntsville, AL, so you must collect sales tax. This guide matches your obligations for 2026.
 
 ---

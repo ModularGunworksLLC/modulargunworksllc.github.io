@@ -1,0 +1,14 @@
+/*
+Theme Name: Modular Gunworks Shell
+Theme URI: https://modulargunworks.com
+Author: Modular Gunworks LLC
+Description: Greenfield storefront shell—header, footer, home, and WooCommerce wrapper. Add catalog via Chattanooga sync after activation.
+Version: 1.0.0
+License: MIT
+License URI: https://opensource.org/licenses/MIT
+Text Domain: modulargunworks-shell
+Requires at least: 6.0
+Requires PHP: 7.4
+*/
+
+/* Styles load from assets/css — see functions.php */

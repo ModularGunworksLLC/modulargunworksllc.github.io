@@ -37,31 +37,18 @@ get_header();
       <h2>Send a Message</h2>
       <?php if (shortcode_exists('contact-form-7')) : ?>
         <?php echo do_shortcode('[contact-form-7 title="Contact"]'); ?>
+      <?php elseif (shortcode_exists('wpforms')) : ?>
+        <?php echo do_shortcode('[wpforms id="1"]'); ?>
+      <?php elseif (shortcode_exists('fluentform')) : ?>
+        <?php echo do_shortcode('[fluentform id="1"]'); ?>
       <?php else : ?>
-      <form class="contact-form" action="<?php echo esc_url(admin_url('admin-post.php')); ?>" method="post">
-        <input type="hidden" name="action" value="modulargunworks_contact">
-        <?php wp_nonce_field('modulargunworks_contact', 'contact_nonce'); ?>
-        <div class="form-group">
-          <label for="contact-name">Name *</label>
-          <input type="text" id="contact-name" name="contact_name" required>
-        </div>
-        <div class="form-group">
-          <label for="contact-email">Email *</label>
-          <input type="email" id="contact-email" name="contact_email" required>
-        </div>
-        <div class="form-group">
-          <label for="contact-message">Message *</label>
-          <textarea id="contact-message" name="contact_message" rows="5" required></textarea>
-        </div>
-        <button type="submit" class="form-btn">Send Message</button>
-      </form>
-      <p style="margin-top:1rem;font-size:0.9rem;color:#666;">Or email us directly at <a href="mailto:info@modulargunworks.com">Info@modulargunworks.com</a></p>
+        <p class="contact-plugin-note">
+          Install a free form plugin (Contact Form 7, WPForms Lite, or Fluent Forms) and place its shortcode on this page.
+        </p>
       <?php endif; ?>
+      <p style="margin-top:1rem;font-size:0.9rem;color:#666;">Or email us directly at <a href="mailto:info@modulargunworks.com">Info@modulargunworks.com</a></p>
     </div>
   </div>
-  <?php if (isset($_GET['contact_sent']) && $_GET['contact_sent'] === '1') : ?>
-  <p class="contact-success" style="max-width:600px;margin:1rem auto;padding:1rem;background:#d4edda;border:1px solid #c3e6cb;border-radius:8px;color:#155724;">Thank you! Your message has been sent. We will get back to you soon.</p>
-  <?php endif; ?>
 </main>
 <style>
 .contact-wrapper{display:grid;grid-template-columns:1fr 1fr;gap:3rem;max-width:1000px;margin:0 auto;}
@@ -69,12 +56,7 @@ get_header();
 .info-item{display:flex;gap:1rem;align-items:flex-start;margin-bottom:1.5rem;}
 .info-icon{font-size:1.25rem;color:var(--color-primary);width:28px;}
 .info-content a{color:var(--color-primary);}
-.contact-form{background:#f9f9f9;padding:1.5rem;border-radius:8px;border:1px solid #e0e0e0;}
-.form-group{margin-bottom:1rem;}
-.form-group label{display:block;margin-bottom:0.4rem;font-weight:600;}
-.form-group input,.form-group textarea{width:100%;padding:0.6rem;border:1px solid #ddd;border-radius:4px;}
-.form-btn{background:var(--color-primary);color:#fff;padding:0.75rem 1.5rem;border:none;border-radius:4px;cursor:pointer;font-weight:600;width:100%;}
-.form-btn:hover{background:#8b1a1a;}
+.contact-plugin-note{background:#f9f9f9;padding:1rem;border-radius:8px;border:1px solid #ddd;color:#444;}
 @media(max-width:768px){.contact-wrapper{grid-template-columns:1fr;}}
 </style>
 <?php get_footer(); ?>
