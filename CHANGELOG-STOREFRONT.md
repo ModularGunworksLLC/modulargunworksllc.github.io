@@ -11,7 +11,7 @@
 ## Greenfield shell theme
 
 - Added **`modulargunworks-shell`** theme: `header.php` / `footer.php`, home page, copied `assets/` (CSS, images), `woocommerce.php` wrapper only (no custom archive/single overrides).
-- **`scripts/deploy-greenfield-shell.sh`**: deploy shell + refresh `mgw-*` plugins, `wp theme activate modulargunworks-shell`; optional `MGW_GREENFIELD_RUN_NORMALIZE` / `MGW_GREENFIELD_RUN_MIGRATION`.
+- **`scripts/deploy-greenfield-shell.sh`**: deploy shell theme, `wp theme activate modulargunworks-shell`; optional `MGW_GREENFIELD_RUN_NORMALIZE` / `MGW_GREENFIELD_RUN_MIGRATION`. *(MGW plugins removed from package in a later change — see top of this file.)*
 - **`scripts/wp-greenfield-delete-all-products.php`**: wipe catalog via `WC_Product::delete( true )`, stray `product` / `product_variation` posts, clear Chattanooga feed cache options, optional `wc_update_product_lookup_tables()`.
 - **`docs/GREENFIELD-SERVER-STEPS.md`**: Lightsail checklist (deploy, optional wipe, re-sync).
 
