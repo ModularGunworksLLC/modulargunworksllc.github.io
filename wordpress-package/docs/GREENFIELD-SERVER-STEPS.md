@@ -33,17 +33,43 @@ To also run full migration/sync:
 MGW_GREENFIELD_RUN_MIGRATION=1 bash wordpress-package/scripts/deploy-greenfield-shell.sh
 ```
 
-## 3) Optional — delete all products (irreversible)
+## 3) Wipe catalog — products only (shell + empty store)
+
+This removes **all products and variations** and resets Chattanooga sync pointers. It does **not** remove:
+
+- WordPress **pages** (About, Contact, …)
+- **Users** or **orders** (see §3b if you also want orders gone)
+- **Plugin settings** (Chattanooga SID/token, payment gateways in `wp_options`)
 
 ```bash
+REPO="$HOME/modulargunworksllc.github.io"
+WP_PATH="/opt/bitnami/wordpress"
+# If your core lives under /bitnami/wordpress, use: WP_PATH="/bitnami/wordpress"
+
 sudo /opt/bitnami/wp-cli/bin/wp eval-file \
-  /home/bitnami/modulargunworksllc.github.io/wordpress-package/scripts/wp-greenfield-delete-all-products.php \
-  --path=/opt/bitnami/wordpress
+  "$REPO/wordpress-package/scripts/wp-greenfield-delete-all-products.php" \
+  --path="$WP_PATH"
 ```
 
-Adjust `--path` and repo path if your layout differs (`/bitnami/wordpress` on some images).
+Optional — rebuild Woo lookup tables if the script logs a notice or admin shows odd counts:
+
+```bash
+sudo /opt/bitnami/wp-cli/bin/wp wc tool run regenerate_product_lookup_tables --path="$WP_PATH" 2>/dev/null || true
+```
 
 Then **purge cache** (Breeze, Cloudflare, browser).
+
+### 3b) Also delete orders (optional, stronger reset)
+
+**Destructive** for accounting — export orders first if you need history.
+
+```bash
+sudo /opt/bitnami/wp-cli/bin/wp post delete \
+  $(sudo /opt/bitnami/wp-cli/bin/wp post list --post_type=shop_order --format=ids --path="$WP_PATH") \
+  --force --path="$WP_PATH"
+```
+
+Repeat for `shop_order_refund` if present. Many stores skip this and only wipe products.
 
 ## 4) Optional — remove old theme folder
 
