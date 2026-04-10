@@ -46,10 +46,21 @@ REPO="$HOME/modulargunworksllc.github.io"
 WP_PATH="/opt/bitnami/wordpress"
 # If your core lives under /bitnami/wordpress, use: WP_PATH="/bitnami/wordpress"
 
-sudo /opt/bitnami/wp-cli/bin/wp eval-file \
+# Use stdbuf so lines appear as they print (otherwise the terminal can look “frozen”):
+stdbuf -oL -eL sudo -E env MGW_SKIP_LOOKUP_REBUILD=1 \
+  /opt/bitnami/wp-cli/bin/wp eval-file \
   "$REPO/wordpress-package/scripts/wp-greenfield-delete-all-products.php" \
   --path="$WP_PATH"
 ```
+
+`MGW_SKIP_LOOKUP_REBUILD=1` skips the slow Woo “lookup tables” step at the end; you can run `wp wc tool run regenerate_product_lookup_tables` later.
+
+### If it looks frozen
+
+- **Large catalogs** (many thousands of products): each SKU runs through Woo delete hooks — **30–90+ minutes** is normal. You should see `[greenfield]` lines every batch; the **first** batch can take **1–3 minutes** while WordPress loads.
+- **Second SSH session:** `ps aux | grep wp` — if `wp` is using CPU, it is still working.
+- **Stop:** `Ctrl+C`, then fix partial state by running the same script again (it deletes what is left).
+- **Avoid hang on lookup rebuild:** keep `MGW_SKIP_LOOKUP_REBUILD=1` as above.
 
 Optional — rebuild Woo lookup tables if the script logs a notice or admin shows odd counts:
 
