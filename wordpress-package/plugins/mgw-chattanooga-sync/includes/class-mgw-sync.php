@@ -645,11 +645,49 @@ class MGW_Chattanooga_Sync {
                     $upc = trim((string) $row['UPC']);
                 }
                 if ($upc !== '' && method_exists($product, 'set_global_unique_id')) {
-                    $product->set_global_unique_id(sanitize_text_field($upc));
+                    $upc_value = sanitize_text_field($upc);
+                    try {
+                        $product->set_global_unique_id($upc_value);
+                    } catch (Throwable $t) {
+                        // Duplicate/invalid GTIN should not stop the whole sync batch.
+                        $product->delete_meta_data('_global_unique_id');
+                        $product->update_meta_data('_mgw_gtin_conflict', $upc_value);
+                        $product->update_meta_data('_mgw_gtin_conflict_message', substr($t->getMessage(), 0, 255));
+                        error_log(sprintf('[MGW Chattanooga Sync] GTIN conflict for SKU %s (UPC %s): %s', $sku, $upc_value, $t->getMessage()));
+                    }
                 }
 
                 $before_id = $product->get_id();
-                $product->save();
+                try {
+                    $product->save();
+                } catch (Throwable $t) {
+                    $msg = (string) $t->getMessage();
+                    if (stripos($msg, 'Invalid or duplicated GTIN') !== false || stripos($msg, 'duplicated GTIN') !== false) {
+                        // Some stores enforce unique GTIN globally; skip GTIN and keep syncing.
+                        if (method_exists($product, 'set_global_unique_id')) {
+                            try {
+                                $product->set_global_unique_id('');
+                            } catch (Throwable $ignore) {
+                                // no-op
+                            }
+                        }
+                        $product->delete_meta_data('_global_unique_id');
+                        $product->update_meta_data('_mgw_gtin_conflict_message', substr($msg, 0, 255));
+                        try {
+                            $product->save();
+                            error_log(sprintf('[MGW Chattanooga Sync] Retried save without GTIN for SKU %s: %s', $sku, $msg));
+                        } catch (Throwable $retryError) {
+                            $skipped_saves++;
+                            update_option('mgw_chattanooga_batch_offset', $row_no);
+                            $last_row = $row_no;
+                            $batch_processed++;
+                            error_log(sprintf('[MGW Chattanooga Sync] Save failed for SKU %s even after GTIN reset: %s', $sku, $retryError->getMessage()));
+                            continue;
+                        }
+                    } else {
+                        throw $t;
+                    }
+                }
                 $pid = $product->get_id();
                 if ($pid && $sellable) {
                     $this->maybe_set_featured_image_from_feed($pid, $image_url, $sku);

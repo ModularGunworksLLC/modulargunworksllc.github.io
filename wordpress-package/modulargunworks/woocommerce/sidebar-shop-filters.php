@@ -114,26 +114,6 @@ $facet_definitions = array(
 
 $facets = isset( $facets_by_profile[ $profile ] ) ? $facets_by_profile[ $profile ] : $facets_by_profile['default'];
 
-$widget_instances = get_option( 'widget_woocommerce_layered_nav', array() );
-if ( ! is_array( $widget_instances ) ) {
-	$widget_instances = array();
-}
-$sidebars = get_option( 'sidebars_widgets', array() );
-$sidebars = is_array( $sidebars ) ? $sidebars : array();
-$shop_sidebar_widgets = isset( $sidebars['shop-sidebar'] ) && is_array( $sidebars['shop-sidebar'] ) ? $sidebars['shop-sidebar'] : array();
-$existing_widget_attributes = array();
-foreach ( $shop_sidebar_widgets as $widget_id ) {
-	if ( ! is_string( $widget_id ) || 0 !== strpos( $widget_id, 'woocommerce_layered_nav-' ) ) {
-		continue;
-	}
-	$instance_id = (int) substr( $widget_id, strlen( 'woocommerce_layered_nav-' ) );
-	if ( $instance_id <= 0 || empty( $widget_instances[ $instance_id ]['attribute'] ) ) {
-		continue;
-	}
-	$existing_widget_attributes[] = sanitize_title( (string) $widget_instances[ $instance_id ]['attribute'] );
-}
-$existing_widget_attributes = array_values( array_unique( array_filter( $existing_widget_attributes ) ) );
-
 global $wp_query;
 $displayed_product_ids = array();
 if ( isset( $wp_query->posts ) && is_array( $wp_query->posts ) ) {
@@ -150,9 +130,6 @@ $layered_widget = new WC_Widget_Layered_Nav();
 foreach ( $facets as $attribute_slug ) {
 	$attribute_slug = sanitize_title( (string) $attribute_slug );
 	if ( '' === $attribute_slug || ! isset( $facet_definitions[ $attribute_slug ] ) ) {
-		continue;
-	}
-	if ( in_array( $attribute_slug, $existing_widget_attributes, true ) ) {
 		continue;
 	}
 
