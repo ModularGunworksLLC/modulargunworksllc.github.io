@@ -1365,6 +1365,50 @@ body.single-product .mgw-single-product-gallery img.wp-post-image {
   justify-content: center;
 }
 
+/* ===== EMPTY CATALOG (canvas / pre-sync) ===== */
+.mgw-catalog-empty {
+  max-width: 36rem;
+  margin: 2rem auto;
+  padding: 1.5rem 1.75rem;
+  text-align: center;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  background: #fafafa;
+}
+
+.mgw-catalog-empty__title {
+  margin: 0 0 0.75rem 0;
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--color-bg-dark, #181a1b);
+}
+
+.mgw-catalog-empty__text {
+  margin: 0 0 1.25rem 0;
+  color: #555;
+  line-height: 1.5;
+}
+
+.mgw-catalog-empty__actions {
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: center;
+}
+
+.mgw-catalog-empty__actions .button {
+  display: inline-block;
+}
+
+.mgw-catalog-empty-sidebar-msg {
+  margin: 0;
+  padding: 1rem;
+  font-size: 0.9rem;
+  color: #666;
+  line-height: 1.45;
+}
+
 /* ===== RESPONSIVE ===== */
 @media (max-width: 1024px) {
   main.mgw-shop-main {

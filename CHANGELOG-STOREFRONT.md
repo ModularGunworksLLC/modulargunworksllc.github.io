@@ -1,5 +1,12 @@
 # Storefront Refactor Changelog
 
+## Canvas reset (theme)
+
+- Empty shop/category archives use `woocommerce/loop/no-products-found.php` with on-brand messaging and links to home and shop.
+- Shop sidebar shows a short note when the main query has zero products instead of an empty Filters chrome; programmatic facets skip all attributes when no products are listed (`sidebar-shop-filters.php`).
+- Shop sidebar widget auto-provisioner no longer runs on front-end `init` (only `admin_init`), reducing unnecessary option writes per request.
+- Deploy and optional WP-CLI catalog wipe documented in `wordpress-package/docs/CANVAS-RESET-DEPLOY.md`.
+
 ## Images
 - Chattanooga sync now validates image URLs with SKU-aware logging and keeps invalid/non-empty values visible in logs for diagnosis.
 - Sellable products now attempt featured image sideloading after save via `maybe_set_featured_image_from_feed()` while preserving `_chattanooga_image_url` meta fallback.

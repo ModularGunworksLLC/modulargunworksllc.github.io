@@ -1142,7 +1142,7 @@ class MGW_Chattanooga_Sync {
         }
         try {
             $this->set_product_image((int) $product_id, trim($image_url));
-        } catch (Exception $e) {
+        } catch (Throwable $e) {
             $sku = is_string($sku) ? trim($sku) : '';
             if ($sku !== '') {
                 error_log(sprintf('[MGW Chattanooga Sync] Failed to sideload featured image for SKU %s (%d): %s', $sku, (int) $product_id, $e->getMessage()));
@@ -1152,26 +1152,59 @@ class MGW_Chattanooga_Sync {
         }
     }
 
+    /**
+     * Sideload featured image with retries. Theme can still use _chattanooga_image_url if this fails.
+     */
     private function set_product_image($product_id, $image_url) {
         require_once ABSPATH . 'wp-admin/includes/media.php';
         require_once ABSPATH . 'wp-admin/includes/file.php';
         require_once ABSPATH . 'wp-admin/includes/image.php';
 
-        $tmp = download_url($image_url, 60);
-        if (is_wp_error($tmp)) {
-            throw new Exception('download_url failed: ' . $tmp->get_error_message());
+        $product_id = (int) $product_id;
+        $image_url  = trim((string) $image_url);
+        $max_tries  = 3;
+        $timeout    = 90;
+        $last_error = '';
+
+        for ($attempt = 1; $attempt <= $max_tries; $attempt++) {
+            $tmp = download_url($image_url, $timeout);
+            if (is_wp_error($tmp)) {
+                $last_error = 'download_url failed: ' . $tmp->get_error_message();
+                if ($attempt < $max_tries) {
+                    sleep(min(2 * $attempt, 5));
+                }
+                continue;
+            }
+
+            $filesize = @filesize($tmp);
+            if ($filesize === false || $filesize < 100) {
+                @unlink($tmp);
+                $last_error = 'downloaded image empty or too small (' . (is_int($filesize) ? (string) $filesize : 'unknown') . ' bytes)';
+                if ($attempt < $max_tries) {
+                    sleep(min(2 * $attempt, 5));
+                }
+                continue;
+            }
+
+            $file_array = [
+                'name'     => basename((string) parse_url($image_url, PHP_URL_PATH)) ?: 'product.jpg',
+                'tmp_name' => $tmp,
+            ];
+            $attach_id = media_handle_sideload($file_array, $product_id);
+            if (is_wp_error($attach_id)) {
+                @unlink($tmp);
+                $last_error = 'media_handle_sideload failed: ' . $attach_id->get_error_message();
+                if ($attempt < $max_tries) {
+                    sleep(min(2 * $attempt, 5));
+                }
+                continue;
+            }
+
+            set_post_thumbnail($product_id, (int) $attach_id);
+            return;
         }
 
-        $file_array = [
-            'name' => basename(parse_url($image_url, PHP_URL_PATH)) ?: 'product.jpg',
-            'tmp_name' => $tmp,
-        ];
-        $attach_id = media_handle_sideload($file_array, $product_id);
-        if (is_wp_error($attach_id)) {
-            @unlink($tmp);
-            throw new Exception('media_handle_sideload failed: ' . $attach_id->get_error_message());
-        }
-        set_post_thumbnail($product_id, $attach_id);
+        throw new Exception($last_error !== '' ? $last_error : 'set_product_image failed with no detail');
     }
 
 }

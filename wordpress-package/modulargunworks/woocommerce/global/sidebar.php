@@ -28,10 +28,14 @@ if ( function_exists( 'is_shop' ) && ( is_shop() || is_product_category() || is_
 if ( '' === $clear_filters_url ) {
 	$clear_filters_url = get_permalink( wc_get_page_id( 'shop' ) );
 }
-$shop_sidebar_widgets = get_option( 'widget_woocommerce_layered_nav', array() );
-$shop_sidebar_widgets = is_array( $shop_sidebar_widgets ) ? $shop_sidebar_widgets : array();
+
+global $wp_query;
+$mgw_no_results = ( is_shop() || is_product_taxonomy() ) && $wp_query && (int) $wp_query->found_posts === 0;
 ?>
 <aside id="secondary" class="widget-area mgw-shop-sidebar mgw-woo-sidebar" role="complementary">
+	<?php if ( $mgw_no_results ) : ?>
+		<p class="mgw-catalog-empty-sidebar-msg"><?php esc_html_e( 'Filters will appear here once products are available in this view.', 'modulargunworks' ); ?></p>
+	<?php else : ?>
 	<div class="filter-header">
 		<h3><?php esc_html_e( 'Filters', 'modulargunworks' ); ?></h3>
 		<a href="<?php echo esc_url( $clear_filters_url ); ?>" class="clear-filters-link clear-filters-red">
@@ -44,4 +48,5 @@ $shop_sidebar_widgets = is_array( $shop_sidebar_widgets ) ? $shop_sidebar_widget
 			<?php dynamic_sidebar( 'shop-sidebar' ); ?>
 		<?php endif; ?>
 	</div>
+	<?php endif; ?>
 </aside>

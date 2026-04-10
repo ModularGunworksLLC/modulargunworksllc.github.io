@@ -26,7 +26,7 @@ function modulargunworks_enqueue_assets() {
 	}
 
 	if ( class_exists( 'WooCommerce' ) ) {
-		wp_enqueue_style( 'mgw-woocommerce', $theme_uri . '/assets/css/woocommerce.css', array( 'mgw-layout' ), '3.2.0' );
+		wp_enqueue_style( 'mgw-woocommerce', $theme_uri . '/assets/css/woocommerce.css', array( 'mgw-layout' ), '3.3.0' );
 	}
 
 	wp_enqueue_style(
@@ -518,7 +518,6 @@ function modulargunworks_ensure_shop_sidebar_filter_widgets() {
 	}
 }
 add_action( 'admin_init', 'modulargunworks_ensure_shop_sidebar_filter_widgets', 30 );
-add_action( 'init', 'modulargunworks_ensure_shop_sidebar_filter_widgets', 50 );
 
 /**
  * Keep cart badge current when products are added via AJAX.

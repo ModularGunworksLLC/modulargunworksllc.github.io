@@ -146,8 +146,12 @@ else
 fi
 
 "${wp_cmd[@]}" eval-file "$REPO_DIR/wordpress-package/scripts/wp-normalize-setup.php"
-echo "==> Running storefront migration ops (redirects/facets verification)"
-"${wp_cmd[@]}" eval-file "$REPO_DIR/wordpress-package/scripts/wp-storefront-migration-ops.php"
+if [[ -n "${MGW_DEPLOY_SKIP_STOREFRONT_MIGRATION:-}" ]]; then
+  echo "==> Skipping storefront migration (MGW_DEPLOY_SKIP_STOREFRONT_MIGRATION is set). Run wp-storefront-migration-ops.php separately."
+else
+  echo "==> Running storefront migration ops (redirects/facets verification)"
+  "${wp_cmd[@]}" eval-file "$REPO_DIR/wordpress-package/scripts/wp-storefront-migration-ops.php"
+fi
 
 echo ""
 echo "Done. Visit your staging URL and verify:"

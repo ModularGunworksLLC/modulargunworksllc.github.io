@@ -55,7 +55,7 @@ function modulargunworks_sidebar_filter_profile( array $context_slugs ) {
  */
 function modulargunworks_sidebar_has_displayed_terms( $taxonomy, array $product_ids ) {
 	if ( empty( $product_ids ) ) {
-		return true;
+		return false;
 	}
 	$term_ids = wp_get_object_terms(
 		$product_ids,
@@ -127,6 +127,20 @@ $displayed_product_ids = array_values( array_unique( array_filter( $displayed_pr
 
 $layered_widget = new WC_Widget_Layered_Nav();
 
+// WC_Widget_Layered_Nav::widget() reads title/attribute/display_type/query_type from $instance only.
+// $args must be WordPress sidebar wrappers (before_widget is expanded with id + classname).
+global $wp_registered_sidebars;
+$shop_sidebar = isset( $wp_registered_sidebars['shop-sidebar'] ) && is_array( $wp_registered_sidebars['shop-sidebar'] )
+	? $wp_registered_sidebars['shop-sidebar']
+	: array();
+
+$before_widget_tmpl = isset( $shop_sidebar['before_widget'] ) ? (string) $shop_sidebar['before_widget'] : '<section id="%1$s" class="widget %2$s">';
+$after_widget       = isset( $shop_sidebar['after_widget'] ) ? (string) $shop_sidebar['after_widget'] : '</section>';
+$before_title       = isset( $shop_sidebar['before_title'] ) ? (string) $shop_sidebar['before_title'] : '<h3 class="widget_title">';
+$after_title        = isset( $shop_sidebar['after_title'] ) ? (string) $shop_sidebar['after_title'] : '</h3>';
+
+$widget_base_class = 'woocommerce widget_layered_nav woocommerce-widget-layered-nav';
+
 foreach ( $facets as $attribute_slug ) {
 	$attribute_slug = sanitize_title( (string) $attribute_slug );
 	if ( '' === $attribute_slug || ! isset( $facet_definitions[ $attribute_slug ] ) ) {
@@ -151,11 +165,23 @@ foreach ( $facets as $attribute_slug ) {
 		continue;
 	}
 
-	$args = array(
+	$widget_html_id = 'mgw_layered_nav_programmatic_' . $attribute_slug;
+	$widget_class   = trim( $widget_base_class . ' mgw-layered-nav-programmatic mgw-layered-nav-' . $attribute_slug );
+
+	$sidebar_args = array(
+		'before_widget' => sprintf( $before_widget_tmpl, esc_attr( $widget_html_id ), esc_attr( $widget_class ) ),
+		'after_widget'  => $after_widget,
+		'before_title'  => $before_title,
+		'after_title'   => $after_title,
+		'widget_id'     => $widget_html_id,
+	);
+
+	$instance = array(
 		'title'        => (string) $facet_definitions[ $attribute_slug ]['title'],
 		'attribute'    => $attribute_slug,
 		'display_type' => 'list',
 		'query_type'   => 'or',
 	);
-	$layered_widget->widget( $args, array() );
+
+	$layered_widget->widget( $sidebar_args, $instance );
 }
