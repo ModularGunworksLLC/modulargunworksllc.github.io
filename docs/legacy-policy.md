@@ -10,9 +10,9 @@ This repository is WordPress-first. The `legacy/github-pages-static/` tree is ar
    - operational migration notes,
    - emergency compatibility patches explicitly approved by maintainers.
 3. All customer-facing commerce behavior must be implemented in:
-   - `wordpress-package/modulargunworks/` (theme), and/or
-   - `wordpress-package/plugins/mgw-*` (custom plugins), and/or
-   - WooCommerce/admin/plugin configuration on server.
+   - `wordpress-package/modulargunworks/` or `modulargunworks-shell/` (themes in Git), and/or
+   - Plugins installed on the server (`mgw-*` are no longer shipped under `wordpress-package/plugins/`), and/or
+   - WooCommerce / WordPress admin configuration.
 
 ## Enforcement
 

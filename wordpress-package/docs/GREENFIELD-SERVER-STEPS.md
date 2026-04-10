@@ -94,8 +94,8 @@ sudo chown -R daemon:daemon /bitnami/wordpress/wp-content/themes
 
 ## 5) Deactivate extra plugins
 
-In **wp-admin → Plugins**, turn off anything you no longer need (e.g. duplicate filter plugins). Keep **WooCommerce**, **Chattanooga Sync**, payments, security.
+In **wp-admin → Plugins**, turn off anything you no longer need. Keep **WooCommerce**, payments, and security as required. Chattanooga sync (or another importer) must be installed separately if you use it — it is **not** deployed from this repo.
 
 ## 6) Re-import catalog (when ready)
 
-**Settings → Chattanooga Sync → Sync Now** (or cron). First run after wipe will walk the feed from the start (`mgw_chattanooga_batch_offset` was reset by the delete script).
+If you use **Chattanooga Sync** on the server, run **Sync Now** (or cron) after a wipe. The delete script resets `mgw_chattanooga_batch_offset` when that plugin is present.

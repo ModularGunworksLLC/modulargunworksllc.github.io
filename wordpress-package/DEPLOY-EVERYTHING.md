@@ -37,5 +37,5 @@ This runbook supersedes the old static checkout + force-template path.
 ## Notes
 
 - `mgw-force-cart-checkout` is deprecated and should remain removed.
-- `mgw-crypto-polyfill` can remain installed for browser compatibility, but checkout flow ownership is Woo + gateway plugin.
+- Crypto polyfill and other `mgw-*` plugins are optional on the server (no longer shipped in `wordpress-package/plugins/`).
 - Static `legacy/github-pages-static/serve.js` is archived behavior; `/api/guntab-create-invoice` now returns 410 by default.

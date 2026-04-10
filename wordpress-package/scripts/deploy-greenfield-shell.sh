@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# Deploy greenfield "shell" theme + refresh MGW plugins; activate shell theme.
+# Deploy greenfield "shell" theme only (MGW plugins removed from this package).
 # Does NOT run Chattanooga sync or storefront migration unless you opt in.
 #
 # Usage (on the Lightsail host, from repo root):
@@ -55,21 +55,14 @@ echo "==> Deploying modulargunworks-shell theme"
 sudo mkdir -p "$THEME_SHELL"
 sudo cp -a wordpress-package/modulargunworks-shell/. "$THEME_SHELL/"
 
-echo "==> Refreshing MGW plugins (same set as normalized deploy)"
-for d in mgw-chattanooga-sync mgw-crypto-polyfill mgw-populate-filter-attributes mgw-sales-tax mgw-image-count; do
-  if [[ -d "wordpress-package/plugins/$d" ]]; then
-    sudo mkdir -p "$PLUGIN_TARGET/$d"
-    sudo cp -a "wordpress-package/plugins/$d/." "$PLUGIN_TARGET/$d/"
-  fi
-done
-
+echo "==> Removing deprecated custom-force plugin (if present)"
 sudo rm -rf "$PLUGIN_TARGET/mgw-force-cart-checkout"
 sudo rm -f "$PLUGIN_TARGET/mgw-image-count-plugin.php"
 
 if id daemon >/dev/null 2>&1; then
-  sudo chown -R daemon:daemon "$THEME_SHELL" "$PLUGIN_TARGET"/mgw-* 2>/dev/null || true
+  sudo chown -R daemon:daemon "$THEME_SHELL"
 else
-  sudo chown -R bitnami:daemon "$THEME_SHELL" "$PLUGIN_TARGET"/mgw-* 2>/dev/null || true
+  sudo chown -R bitnami:daemon "$THEME_SHELL" 2>/dev/null || true
 fi
 
 if [[ -x /opt/bitnami/ctlscript.sh ]]; then

@@ -11,6 +11,7 @@ Includes theme, assets, product data, and deployment instructions.
 |-------------|---------|
 | `modulargunworks/` | Legacy full theme (custom Woo overrides) |
 | `modulargunworks-shell/` | **Greenfield shell** — header/footer/home + default WooCommerce (see `docs/GREENFIELD-SERVER-STEPS.md`) |
+| `plugins/` | **No `mgw-*` plugins** — Chattanooga sync, crypto polyfill, populate-filter-attributes, sales-tax, and image-count were removed from Git |
 | `product-data/` | JSON product files for WooCommerce import |
 | `CURSOR-LIGHTSAIL-SETUP.md` | **How to use Cursor AI with your Lightsail WordPress** |
 

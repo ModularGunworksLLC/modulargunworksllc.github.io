@@ -15,7 +15,7 @@ rsync -avz --delete \
 
 If your image uses `/var/www/html`, change the remote path. Then in **wp-admin → Appearance → Themes**, ensure **Modular Gunworks** is active (or re-activate after upload).
 
-**Plugin:** Keep **`mgw-chattanooga-sync`** deployed from `wordpress-package/plugins/mgw-chattanooga-sync/`. Removing `category-mapping.json` or other plugin files **breaks** category assignment until a replacement importer exists.
+**Importer:** Chattanooga / other `mgw-*` plugins are **not** in this package anymore. Manage them on the server or restore from Git history.
 
 ## 2. Deactivate conflicting plugins (on the server)
 

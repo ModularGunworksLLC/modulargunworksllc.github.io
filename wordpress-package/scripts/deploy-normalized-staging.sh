@@ -82,11 +82,7 @@ echo "==> Deploying theme"
 sudo mkdir -p "$THEME_TARGET"
 sudo cp -a wordpress-package/modulargunworks/. "$THEME_TARGET/"
 
-echo "==> Deploying custom MGW plugins"
-for d in mgw-chattanooga-sync mgw-crypto-polyfill mgw-populate-filter-attributes mgw-sales-tax mgw-image-count; do
-  sudo mkdir -p "$PLUGIN_TARGET/$d"
-  sudo cp -a "wordpress-package/plugins/$d/." "$PLUGIN_TARGET/$d/"
-done
+echo "==> MGW plugins are not shipped in wordpress-package anymore (install separately if needed)"
 
 echo "==> Removing deprecated custom-force plugin"
 sudo rm -rf "$PLUGIN_TARGET/mgw-force-cart-checkout"
@@ -94,10 +90,9 @@ sudo rm -f "$PLUGIN_TARGET/mgw-image-count-plugin.php"
 
 echo "==> Applying ownership"
 if id daemon >/dev/null 2>&1; then
-  sudo chown -R daemon:daemon "$THEME_TARGET" "$PLUGIN_TARGET"/mgw-*
+  sudo chown -R daemon:daemon "$THEME_TARGET"
 else
-  # Bitnami fallback user/group
-  sudo chown -R bitnami:daemon "$THEME_TARGET" "$PLUGIN_TARGET"/mgw-* || true
+  sudo chown -R bitnami:daemon "$THEME_TARGET" || true
 fi
 
 echo "==> Restarting services"

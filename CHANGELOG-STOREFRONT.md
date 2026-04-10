@@ -1,5 +1,13 @@
 # Storefront Refactor Changelog
 
+## MGW plugins removed from `wordpress-package` (2026)
+
+- **Deleted from Git:** `mgw-chattanooga-sync`, `mgw-crypto-polyfill`, `mgw-populate-filter-attributes`, `mgw-sales-tax`, `mgw-image-count`, and **`mgw-run-once-fix.php`**.
+- **`deploy-greenfield-shell.sh`** deploys the **shell theme only** (still removes deprecated `mgw-force-cart-checkout` and legacy `mgw-image-count-plugin.php` single file if present).
+- **`deploy-normalized-staging.sh`** no longer copies `mgw-*` from the repo.
+- **`setup-on-lightsail.sh`** replaced with a stub pointing at `deploy-greenfield-shell.sh`.
+- Docs updated: `DEPLOY-FROM-GIT.md`, `RUNTIME-STACK.md`, `GREENFIELD-SERVER-STEPS.md`, `CANVAS-RESET-DEPLOY.md`, `DEPLOY-EVERYTHING.md`, root `README.md`, `legacy-policy.md`.
+
 ## Greenfield shell theme
 
 - Added **`modulargunworks-shell`** theme: `header.php` / `footer.php`, home page, copied `assets/` (CSS, images), `woocommerce.php` wrapper only (no custom archive/single overrides).
