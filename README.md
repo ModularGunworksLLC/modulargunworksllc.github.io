@@ -9,6 +9,7 @@ This repository is the **version-controlled source** for the **custom WordPress 
 | **[`wordpress-package/modulargunworks/`](wordpress-package/modulargunworks/)** | Active **`modulargunworks` theme** — copy to `wp-content/themes/modulargunworks/` on the server. |
 | **[`wordpress-package/plugins/`](wordpress-package/plugins/)** | **Custom plugins** (`mgw-*`) — copy to `wp-content/plugins/`. |
 | **[`wordpress-package/*.md`](wordpress-package/)** + scripts | Deploy notes, audits, one-off maintenance PHP/SH scripts. |
+| **[`apps/store/`](apps/store/)** | **Next.js storefront** for Vercel rebuild (set Vercel Root Directory to `apps/store`). See [`VERCEL-SETUP.md`](VERCEL-SETUP.md). |
 | **[`legacy/github-pages-static/`](legacy/github-pages-static/)** | **Archived** pre-WordPress GitHub Pages HTML site (not deployed from `main` root). |
 | **[`docs/`](docs/)** | **GitHub Pages stub** only (redirect to the live site). Configure Pages to use **`/docs`** on **`main`**. |
 

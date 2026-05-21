@@ -1,0 +1,30 @@
+/* Next.js shell — theme styles live in /public/theme/css (ported from WordPress). */
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+main {
+  min-height: 40vh;
+}
+
+.page-title {
+  margin-top: 0;
+}
+
+.content-section {
+  max-width: 48rem;
+  margin: 0 auto;
+}
+
+.shop-placeholder {
+  padding: 2rem;
+  text-align: center;
+}
+
+.shop-placeholder p {
+  max-width: 36rem;
+  margin: 1rem auto;
+}
