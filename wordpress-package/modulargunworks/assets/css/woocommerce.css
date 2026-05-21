@@ -31,8 +31,10 @@
   line-height: 1.5;
 }
 
-main.mgw-shop-main {
+.mgw-shop-main {
   display: flex;
+  /* DOM order is content then sidebar; reverse row so filters sit on the left (products on the right) */
+  flex-direction: row-reverse;
   align-items: flex-start;
   gap: 2rem;
   margin: 0;
@@ -40,7 +42,8 @@ main.mgw-shop-main {
 }
 
 /* Sidebar - filters, no clipping (overflow on inner wrapper) */
-.mgw-shop-sidebar {
+.mgw-shop-sidebar,
+.mgw-woo-sidebar {
   flex: 0 0 280px;
   position: sticky;
   top: 160px;
@@ -73,7 +76,8 @@ main.mgw-shop-main {
 }
 
 /* Filter header */
-.mgw-shop-sidebar .filter-header {
+.mgw-shop-sidebar .filter-header,
+.mgw-woo-sidebar .filter-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -83,7 +87,8 @@ main.mgw-shop-main {
   flex-shrink: 0;
 }
 
-.mgw-shop-sidebar .filter-header h3 {
+.mgw-shop-sidebar .filter-header h3,
+.mgw-woo-sidebar .filter-header h3 {
   font-size: 0.95rem;
   margin: 0;
   font-weight: 700;
@@ -92,13 +97,16 @@ main.mgw-shop-main {
 }
 
 /* Clear All - red CTA like reference site */
-.mgw-shop-sidebar .filter-active-count {
+.mgw-shop-sidebar .filter-active-count,
+.mgw-woo-sidebar .filter-active-count {
   font-weight: 600;
   opacity: 0.9;
 }
 
 .mgw-shop-sidebar .clear-filters-link,
-.mgw-shop-sidebar #clear-filters {
+.mgw-shop-sidebar #clear-filters,
+.mgw-woo-sidebar .clear-filters-link,
+.mgw-woo-sidebar #clear-filters {
   padding: 0.3rem 0.6rem;
   background: transparent;
   color: var(--color-primary);
@@ -114,7 +122,10 @@ main.mgw-shop-main {
 
 .mgw-shop-sidebar .clear-filters-red,
 .mgw-shop-sidebar .clear-filters-link:hover,
-.mgw-shop-sidebar #clear-filters:hover {
+.mgw-shop-sidebar #clear-filters:hover,
+.mgw-woo-sidebar .clear-filters-red,
+.mgw-woo-sidebar .clear-filters-link:hover,
+.mgw-woo-sidebar #clear-filters:hover {
   color: #c62828 !important;
   opacity: 1;
 }
@@ -142,16 +153,87 @@ main.mgw-shop-main {
   accent-color: var(--color-primary);
 }
 
-.mgw-shop-sidebar .widget {
+.mgw-shop-sidebar .widget,
+.mgw-woo-sidebar .widget {
   padding: 1rem 1.2rem;
   border-bottom: 1px solid #e0e0e0;
 }
 
-.mgw-shop-sidebar .widget_title {
+.mgw-shop-sidebar .widget_title,
+.mgw-woo-sidebar .widget_title {
   font-size: 0.9rem;
   font-weight: 700;
   margin-bottom: 0.75rem;
   color: #333;
+}
+
+/* Native Woo filter widgets (layered nav, price, categories) */
+.mgw-woo-sidebar .widget_layered_nav ul,
+.mgw-woo-sidebar .widget_product_categories ul,
+.mgw-woo-sidebar .woocommerce-widget-layered-nav-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.mgw-woo-sidebar .widget_layered_nav li,
+.mgw-woo-sidebar .widget_product_categories li,
+.mgw-woo-sidebar .woocommerce-widget-layered-nav-list__item {
+  margin: 0 0 0.4rem;
+  padding: 0;
+  font-size: 0.9rem;
+  line-height: 1.35;
+}
+
+.mgw-woo-sidebar .widget_layered_nav a,
+.mgw-woo-sidebar .widget_product_categories a,
+.mgw-woo-sidebar .woocommerce-widget-layered-nav-list__item a {
+  color: #333;
+  text-decoration: none;
+}
+
+.mgw-woo-sidebar .widget_layered_nav a:hover,
+.mgw-woo-sidebar .widget_product_categories a:hover,
+.mgw-woo-sidebar .woocommerce-widget-layered-nav-list__item a:hover {
+  color: var(--color-primary);
+}
+
+.mgw-woo-sidebar .widget_layered_nav .count,
+.mgw-woo-sidebar .widget_product_categories .count,
+.mgw-woo-sidebar .woocommerce-widget-layered-nav-list__item .count {
+  color: #777;
+  font-size: 0.82rem;
+}
+
+/* Hide huge top-level category select dropdown; we use list-style category tree below. */
+.mgw-woo-sidebar .widget_product_categories select.dropdown_product_cat,
+.mgw-woo-sidebar .widget_product_categories .select2 {
+  display: none !important;
+}
+
+.mgw-woo-sidebar .woocommerce-widget-layered-nav-dropdown__submit,
+.mgw-woo-sidebar .price_slider_amount button.button {
+  background: var(--color-primary) !important;
+  color: #fff !important;
+  border: none !important;
+  border-radius: 4px !important;
+  padding: 0.45rem 0.75rem !important;
+  font-weight: 600 !important;
+}
+
+.mgw-woo-sidebar .price_slider_wrapper .ui-slider .ui-slider-range {
+  background: var(--color-primary);
+}
+
+.mgw-woo-sidebar .price_slider_wrapper .ui-slider .ui-slider-handle {
+  background: #fff;
+  border: 2px solid var(--color-primary);
+}
+
+.mgw-woo-sidebar .price_slider_amount {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 /* Filter toggle */
@@ -1287,7 +1369,7 @@ body.single-product .mgw-single-product-gallery img.wp-post-image {
 
 /* ===== RESPONSIVE ===== */
 @media (max-width: 1024px) {
-  main.mgw-shop-main {
+  .mgw-shop-main {
     flex-direction: column;
   }
 
@@ -1304,7 +1386,7 @@ body.single-product .mgw-single-product-gallery img.wp-post-image {
 }
 
 @media (max-width: 768px) {
-  main.mgw-shop-main {
+  .mgw-shop-main {
     padding: 2rem 1rem;
   }
 
@@ -1324,4 +1406,19 @@ body.single-product .mgw-single-product-gallery img.wp-post-image {
     grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
     gap: 1rem !important;
   }
+}
+
+/* Checkout eligibility affirmation */
+.mgw-checkout-eligibility-field {
+  margin: 1.25rem 0 0.5rem;
+  padding: 1rem;
+  background: #fafafa;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+}
+
+.mgw-checkout-eligibility-field label {
+  font-size: 0.9rem !important;
+  line-height: 1.45 !important;
+  font-weight: 500;
 }

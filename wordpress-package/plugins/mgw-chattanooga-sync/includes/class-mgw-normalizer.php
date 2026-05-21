@@ -17,6 +17,7 @@ class MGW_Normalizer {
     const KEYS = [
         'sku', 'name', 'price', 'stock', 'brand', 'category_key', 'image_url', 'description', 'upc',
         'msrp', 'map', 'caliber', 'bullet_type', 'grain', 'round_count', 'capacity',
+        'gauge', 'velocity', 'shot_size', 'casing', 'product_line', 'style',
     ];
 
     /**
@@ -82,6 +83,12 @@ class MGW_Normalizer {
                 'grain'        => ['Grain'],
                 'round_count'  => ['Rounds', 'Rounds Per Box', 'Round Count'],
                 'capacity'     => ['Firearm Capacity', 'Magazine Capacity', 'Capacity'],
+                'gauge'        => ['Gauge'],
+                'velocity'     => ['Velocity', 'Muzzle Velocity'],
+                'shot_size'    => ['Shot Size', 'Shot'],
+                'casing'       => ['Casing', 'Case Type', 'Case Material'],
+                'product_line' => ['Product Line', 'Series'],
+                'style'        => ['Style', 'Model Style', 'Configuration'],
             ],
         ];
     }

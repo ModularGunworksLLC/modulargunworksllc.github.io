@@ -24,11 +24,15 @@ get_header();
     </div>
     <div class="faq-item">
       <button class="faq-question"><span>What is your return policy?</span><i class="fas fa-chevron-down"></i></button>
-      <div class="faq-answer"><p>We offer a 30-day return policy on most items in original, unused condition. Firearms and ammunition may have additional restrictions. See our <a href="<?php echo esc_url(home_url('/returns')); ?>">Returns</a> page for details.</p></div>
+      <div class="faq-answer"><p>Firearms and ammunition sales are final once a lawful transfer occurs or the ammunition ships, per our <a href="<?php echo esc_url(home_url('/returns')); ?>">Returns</a> page. Some accessories may qualify for return within thirty days with authorization.</p></div>
     </div>
     <div class="faq-item">
       <button class="faq-question"><span>What are your shipping costs?</span><i class="fas fa-chevron-down"></i></button>
       <div class="faq-answer"><p>Shipping costs depend on your order, destination, and carrier rates. Totals are shown in your cart and at checkout before you pay.</p></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-question"><span>Can prices or availability change after I order?</span><i class="fas fa-chevron-down"></i></button>
+      <div class="faq-answer"><p>Pricing and inventory sync from large distributor feeds; errors can occur. We reserve the right to cancel orders caused by mispricing or technical glitches—see our <a href="<?php echo esc_url(home_url('/terms')); ?>">Terms</a>.</p></div>
     </div>
   </div>
 
@@ -36,7 +40,7 @@ get_header();
     <h2 class="faq-category-title">Orders & Payment</h2>
     <div class="faq-item">
       <button class="faq-question"><span>What payment methods do you accept?</span><i class="fas fa-chevron-down"></i></button>
-      <div class="faq-answer"><p>We accept major credit cards and GunTab for compliant firearm-related purchases. All transactions are secure.</p></div>
+      <div class="faq-answer"><p>We accept major credit cards and other payment options shown at checkout. All transactions are secure.</p></div>
     </div>
   </div>
 </main>

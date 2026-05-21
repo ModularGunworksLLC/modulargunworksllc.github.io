@@ -15,8 +15,26 @@ main { max-width: 1400px; margin: 0 auto; padding: 3rem 2rem; }
 .carousel-btn { width: 44px; height: 44px; border: 1px solid #ddd; background: #f5f5f5; color: #333; font-size: 1.2rem; cursor: pointer; border-radius: 4px; transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; }
 .carousel-btn:hover { background: #e0e0e0; border-color: #999; }
 .hero-section { background: linear-gradient(135deg, var(--color-bg-dark) 0%, #2a3f5f 100%); color: white; padding: 4rem 2rem; margin-bottom: 4rem; border-radius: 8px; text-align: center; }
-.hero-section h2 { font-size: 2.8rem; margin-bottom: 1rem; font-weight: 700; line-height: 1.2; color: white; text-shadow: 0 2px 4px rgba(0,0,0,0.3); }
-.hero-section p { font-size: 1.3rem; margin-bottom: 2rem; opacity: 0.95; max-width: 700px; margin-left: auto; margin-right: auto; line-height: 1.6; }
+
+/*
+ * design-system.css sets all h1–h6 to --color-bg-dark (#181a1b).
+ * Hero sits on a dark gradient; force light type (+ shadow) regardless of stylesheet merge order / caching.
+ */
+.hero-section h1,
+.hero-section h2 {
+  font-size: 2.8rem;
+  margin-bottom: 1rem;
+  font-weight: 700;
+  line-height: 1.2;
+  color: #ffffff !important;
+  text-shadow:
+    0 0 2px rgba(0, 0, 0, 0.85),
+    0 2px 8px rgba(0, 0, 0, 0.45);
+}
+.hero-section p { font-size: 1.3rem; margin-bottom: 1rem; opacity: 0.95; max-width: 700px; margin-left: auto; margin-right: auto; line-height: 1.6; }
+.hero-local-meta { font-size: 1rem !important; opacity: 0.9 !important; margin-bottom: 2rem !important; }
+.hero-local-meta a { color: #fff; text-decoration: none; font-weight: 600; transition: color 0.3s; }
+.hero-local-meta a:hover { color: #ffeb3b; }
 .hero-cta-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
 .hero-cta-btn { padding: 1rem 2.5rem; font-size: 1.1rem; border: none; border-radius: 4px; font-weight: 600; cursor: pointer; transition: all 0.3s ease; text-decoration: none; display: inline-block; }
 .hero-cta-btn.primary { background: var(--color-primary); color: white; }
@@ -35,5 +53,5 @@ main { max-width: 1400px; margin: 0 auto; padding: 3rem 2rem; }
 .about-section p { color: #666; line-height: 1.8; margin-bottom: 1.5rem; font-size: 1rem; }
 .about-cta-link { display: inline-block; color: var(--color-primary); font-weight: 600; text-decoration: none; margin-top: 1rem; transition: all 0.3s ease; }
 .about-cta-link:hover { color: #9d1a1a; }
-@media (max-width: 768px) { .carousel-item { flex: 0 0 calc(50% - 0.75rem); } .hero-section h2 { font-size: 2rem; } .hero-section p { font-size: 1.1rem; } .hero-cta-buttons { flex-direction: column; align-items: stretch; } .hero-cta-btn { width: 100%; } .why-shop-grid { grid-template-columns: 1fr 1fr; } }
-@media (max-width: 480px) { .carousel-item { flex: 0 0 100%; } .section-title { font-size: 1.6rem; } .hero-section { padding: 2.5rem 1rem; margin-bottom: 2rem; } .hero-section h2 { font-size: 1.6rem; } .hero-section p { font-size: 1rem; } .why-shop-section h2, .about-section h2 { font-size: 1.6rem; } .why-shop-grid { grid-template-columns: 1fr; gap: 1.5rem; } .why-shop-section, .about-section { padding: 2rem 1rem; } main { padding: 2rem 1rem; } }
+@media (max-width: 768px) { .carousel-item { flex: 0 0 calc(50% - 0.75rem); } .hero-section h1, .hero-section h2 { font-size: 2rem; } .hero-section p { font-size: 1.1rem; } .hero-cta-buttons { flex-direction: column; align-items: stretch; } .hero-cta-btn { width: 100%; } .why-shop-grid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 480px) { .carousel-item { flex: 0 0 100%; } .section-title { font-size: 1.6rem; } .hero-section { padding: 2.5rem 1rem; margin-bottom: 2rem; } .hero-section h1, .hero-section h2 { font-size: 1.5rem; } .hero-section p { font-size: 1rem; } .why-shop-section h2, .about-section h2 { font-size: 1.6rem; } .why-shop-grid { grid-template-columns: 1fr; gap: 1.5rem; } .why-shop-section, .about-section { padding: 2rem 1rem; } main { padding: 2rem 1rem; } }

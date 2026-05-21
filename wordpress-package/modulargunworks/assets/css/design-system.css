@@ -57,6 +57,12 @@ h1 { font-size: var(--font-size-h1); }
 h2 { font-size: var(--font-size-h2); }
 h3 { font-size: var(--font-size-h3); }
 
+/* Home hero: dark gradient behind heading — do not use ink-colored heading tokens here */
+.hero-section h1,
+.hero-section h2 {
+  color: #ffffff;
+}
+
 .small { font-size: var(--font-size-small); }
 
 .text-primary { color: var(--color-primary); }

@@ -17,6 +17,7 @@ get_header();
     </ol>
     <h2>Requirements</h2>
     <p>You must be 21+ for handguns, 18+ for rifles/shotguns (or 21+ per state law). You must pass a federal background check (NICS) and meet all eligibility requirements.</p>
+    <p>Once your Form 4473 is completed and you take possession at our counter, the firearm sale is final except where law requires otherwise—review our <a href="<?php echo esc_url(home_url('/returns')); ?>">Returns</a> summary before completing paperwork.</p>
     <p><a href="<?php echo esc_url(home_url('/ffl-transfers')); ?>">View our FFL transfer fees and details</a></p>
   </div>
 </main>

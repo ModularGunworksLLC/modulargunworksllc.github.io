@@ -11,7 +11,7 @@
 
 <header id="site-header">
   <div class="header-top-row">
-    <h1>MODULAR GUNWORKS LLC</h1>
+    <p class="header-site-title">MODULAR GUNWORKS LLC</p>
     <a href="<?php echo esc_url(home_url('/')); ?>" class="header-logo" title="Home">
       <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/modular-gunworks-llc.png'); ?>" alt="Modular Gunworks Logo">
       <span class="logo-label">HOME</span>
@@ -19,21 +19,31 @@
   </div>
 
   <div class="header-middle-row">
-    <div class="header-left-links">
-      <a href="<?php echo esc_url(home_url('/my-account')); ?>">Account</a>
-      <a href="<?php echo esc_url(home_url('/help')); ?>">Help</a>
-      <?php if (function_exists('wc_get_cart_url')) : ?>
-      <a href="<?php echo esc_url(wc_get_cart_url()); ?>"><i class="fas fa-shopping-cart"></i> Cart <span class="cart-count-badge" style="background: var(--color-primary); color: #fff; padding: 2px 6px; border-radius: 10px; font-size: 0.75rem;"><?php echo function_exists('WC') && WC()->cart ? absint(WC()->cart->get_cart_contents_count()) : 0; ?></span></a>
-      <?php else : ?>
-      <a href="<?php echo esc_url(home_url('/cart')); ?>"><i class="fas fa-shopping-cart"></i> Cart</a>
-      <?php endif; ?>
-    </div>
+    <div class="header-middle-row-inner">
+      <div class="header-left-links">
+        <a href="<?php echo esc_url(home_url('/my-account')); ?>">Account</a>
+        <a href="<?php echo esc_url(home_url('/help')); ?>">Help</a>
+        <?php if (function_exists('wc_get_cart_url')) : ?>
+        <a href="<?php echo esc_url(wc_get_cart_url()); ?>"><i class="fas fa-shopping-cart"></i> Cart <span class="cart-count-badge" style="background: var(--color-primary); color: #fff; padding: 2px 6px; border-radius: 10px; font-size: 0.75rem;"><?php echo function_exists('WC') && WC()->cart ? absint(WC()->cart->get_cart_contents_count()) : 0; ?></span></a>
+        <?php else : ?>
+        <a href="<?php echo esc_url(home_url('/cart')); ?>"><i class="fas fa-shopping-cart"></i> Cart</a>
+        <?php endif; ?>
+      </div>
 
-    <form class="search-bar" action="<?php echo esc_url(function_exists('wc_get_page_permalink') ? get_permalink(wc_get_page_id('shop')) : home_url('/shop')); ?>" method="get">
-      <input type="text" name="s" placeholder="Search ammo, gear, optics...">
-      <input type="hidden" name="post_type" value="product">
-      <button type="submit">Search</button>
-    </form>
+      <form class="search-bar" action="<?php echo esc_url(function_exists('wc_get_page_permalink') ? get_permalink(wc_get_page_id('shop')) : home_url('/shop')); ?>" method="get" role="search" aria-label="<?php esc_attr_e('Search products', 'modulargunworks'); ?>">
+        <input type="text" name="s" placeholder="<?php esc_attr_e('Search products, ammo, optics… (pickup & ship from Huntsville)', 'modulargunworks'); ?>">
+        <input type="hidden" name="post_type" value="product">
+        <button type="submit"><?php esc_html_e('Search', 'modulargunworks'); ?></button>
+      </form>
+    </div>
+    <div class="header-local-strip">
+      <p class="header-local-tagline"><?php esc_html_e('Licensed FFL · Transfers & local pickup · Huntsville, Alabama', 'modulargunworks'); ?></p>
+      <nav class="header-local-links" aria-label="<?php esc_attr_e('Quick local links', 'modulargunworks'); ?>">
+        <a href="<?php echo esc_url(home_url('/ffl-transfers')); ?>"><?php esc_html_e('FFL transfers', 'modulargunworks'); ?></a>
+        <a href="<?php echo esc_url(home_url('/services')); ?>"><?php esc_html_e('Services', 'modulargunworks'); ?></a>
+        <a href="<?php echo esc_url(home_url('/contact')); ?>"><?php esc_html_e('Contact & hours', 'modulargunworks'); ?></a>
+      </nav>
+    </div>
   </div>
 
   <nav class="category-nav">

@@ -19,7 +19,7 @@ get_header();
     </div>
   </div>
   <div class="services-contact">
-    <p>For scheduling or other questions, <a href="<?php echo esc_url(home_url('/contact')); ?>">contact us</a>.</p>
+    <p>Ready to book? Choose a service above, then use the Request button on that service page. For non-service questions, <a href="<?php echo esc_url(home_url('/contact')); ?>">contact us</a>.</p>
   </div>
 </main>
 <style>

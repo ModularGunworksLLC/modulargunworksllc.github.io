@@ -16,7 +16,16 @@
     "bullet_type": ["Bullet Type"],
     "grain": ["Grain"],
     "round_count": ["Rounds", "Rounds Per Box", "Round Count"],
-    "capacity": ["Firearm Capacity", "Magazine Capacity", "Capacity"]
+    "capacity": ["Firearm Capacity", "Magazine Capacity", "Capacity"],
+    "gauge": ["Gauge"],
+    "velocity": ["Velocity", "Muzzle Velocity"],
+    "shot_size": ["Shot Size", "Shot"],
+    "casing": ["Casing", "Case Type", "Case Material"],
+    "product_line": ["Product Line", "Series"],
+    "style": ["Style", "Model Style", "Configuration"],
+    "shotshell_length": ["Shotshell Length", "Shell Length", "ShellLength", "Length"],
+    "shot_material": ["Shot Material", "ShotMaterial", "Pellet Material"],
+    "lead_free": ["Lead Free", "Lead-Free", "LeadFree", "Non-Lead"]
   },
   "category_mapping_file": "category-mapping.json"
 }

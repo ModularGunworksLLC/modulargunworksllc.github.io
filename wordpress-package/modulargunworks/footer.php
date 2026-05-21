@@ -38,6 +38,7 @@
         <li><a href="<?php echo esc_url(home_url('/terms')); ?>">Terms & Conditions</a></li>
         <li><a href="<?php echo esc_url(home_url('/privacy')); ?>">Privacy Policy</a></li>
         <li><a href="<?php echo esc_url(home_url('/returns')); ?>">Returns</a></li>
+        <li><a href="<?php echo esc_url(home_url('/ffl-transfers')); ?>">FFL transfers in Huntsville</a></li>
         <li><a href="<?php echo esc_url(home_url('/order-status')); ?>">Order Status</a></li>
         <li><a href="<?php echo esc_url(home_url('/state-restrictions')); ?>">State Restrictions</a></li>
         <li><a href="<?php echo esc_url(home_url('/firearm-transfer-guide')); ?>">Firearm Transfer Guide</a></li>
@@ -47,19 +48,45 @@
     <div class="footer-section footer-newsletter">
       <h3>Newsletter</h3>
       <p class="newsletter-tagline">Get deals & restock alerts</p>
-      <form class="newsletter-form" action="#" method="post">
-        <input type="text" name="firstName" placeholder="First name" required>
-        <input type="email" name="email" placeholder="Email" required>
-        <button type="submit">Sign up</button>
+      <?php
+      $nl_action = function_exists( 'modulargunworks_get_local' ) ? trim( modulargunworks_get_local( 'mgw_newsletter_form_action' ) ) : '';
+      $nl_has    = ( $nl_action !== '' && filter_var( $nl_action, FILTER_VALIDATE_URL ) );
+      ?>
+      <?php if ( ! $nl_has && current_user_can( 'manage_options' ) ) : ?>
+        <p class="newsletter-admin-hint"><?php esc_html_e( 'Set “Newsletter form action URL” under Appearance → Customize to activate this form.', 'modulargunworks' ); ?></p>
+      <?php endif; ?>
+      <form class="newsletter-form" action="<?php echo $nl_has ? esc_url( $nl_action ) : ''; ?>" method="post"<?php echo $nl_has ? ' target="_blank" rel="noopener noreferrer"' : ' onsubmit="return false;" data-mgw-newsletter-inactive="1"'; ?>>
+        <input type="text" name="FNAME" placeholder="<?php esc_attr_e( 'First name', 'modulargunworks' ); ?>" <?php echo $nl_has ? 'required' : 'disabled'; ?> autocomplete="given-name">
+        <input type="email" name="EMAIL" placeholder="<?php esc_attr_e( 'Email', 'modulargunworks' ); ?>" <?php echo $nl_has ? 'required' : 'disabled'; ?> autocomplete="email">
+        <button type="submit" <?php echo ! $nl_has ? 'disabled' : ''; ?>><?php esc_html_e( 'Sign up', 'modulargunworks' ); ?></button>
       </form>
     </div>
 
     <div class="footer-section">
       <h3>Contact</h3>
-      <p><strong>Phone:</strong> (256) 384-3852<br>
-      <strong>Email:</strong> Info@modulargunworks.com<br>
+      <p><strong>Phone:</strong> <a href="tel:+12563843852">(256) 384-3852</a><br>
+      <strong>Email:</strong> <a href="mailto:info@modulargunworks.com">info@modulargunworks.com</a><br>
+      <?php if (function_exists('modulargunworks_get_address_display')) :
+        $addr = modulargunworks_get_address_display();
+        ?>
+      <strong>Location:</strong><br><span class="footer-address-block"><?php echo esc_html($addr); ?></span><br>
+      <?php else : ?>
       <strong>Location:</strong> Huntsville, AL<br>
+      <?php endif; ?>
       <strong>Hours:</strong> M-F 9AM-6PM, Sat 10AM-4PM CT</p>
+      <p><a href="<?php echo esc_url(home_url('/contact')); ?>"><?php esc_html_e('Directions & contact form →', 'modulargunworks'); ?></a></p>
+    </div>
+  </div>
+
+  <div class="footer-local-strip footer-wide">
+    <p><?php esc_html_e('Modular Gunworks LLC is a veteran-owned gun shop and licensed FFL in Huntsville, Alabama. We specialize in compliant FFL transfers for online buyers, in-store pickup, gunsmithing, and shipping lawful orders nationwide from our North Alabama operation.', 'modulargunworks'); ?></p>
+    <div class="footer-local-quicklinks">
+      <a href="<?php echo esc_url(home_url('/ffl-transfers')); ?>"><?php esc_html_e('FFL transfers in Huntsville', 'modulargunworks'); ?></a>
+      <a href="<?php echo esc_url(home_url('/services')); ?>"><?php esc_html_e('Gunsmithing & services', 'modulargunworks'); ?></a>
+      <a href="<?php echo esc_url(home_url('/contact')); ?>"><?php esc_html_e('Visit & contact', 'modulargunworks'); ?></a>
+      <?php if (function_exists('wc_get_page_permalink')) : ?>
+      <a href="<?php echo esc_url(wc_get_page_permalink('shop')); ?>"><?php esc_html_e('Shop the catalog', 'modulargunworks'); ?></a>
+      <?php endif; ?>
     </div>
   </div>
 
