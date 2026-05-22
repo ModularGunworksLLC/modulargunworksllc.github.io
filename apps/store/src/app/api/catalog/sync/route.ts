@@ -1,11 +1,13 @@
 import { NextResponse } from "next/server";
-import { buildCatalogFromChattanooga } from "@/lib/chattanooga/catalog";
+import { syncChattanoogaCatalogToDatabase } from "@/lib/catalog/sync-to-db";
 import { getChattanoogaCredentials } from "@/lib/chattanooga/client";
+import { hasCatalogDatabase } from "@/lib/catalog/db";
+import { env } from "@/lib/env";
 
 export const maxDuration = 300;
 
 function authorized(request: Request): boolean {
-  const secret = process.env.CRON_SECRET || process.env.CATALOG_SYNC_SECRET;
+  const secret = env.catalogSyncSecret;
   if (!secret) return process.env.NODE_ENV === "development";
   const header = request.headers.get("authorization");
   return header === `Bearer ${secret}`;
@@ -13,45 +15,41 @@ function authorized(request: Request): boolean {
 
 /**
  * POST /api/catalog/sync
- * Pulls Chattanooga /items/product-feed and returns mapping stats + sample products.
- * Full catalog persistence (DB/Blob) is the next step.
+ * Chattanooga product-feed → Turso catalog DB (same mapping as WordPress mgw-chattanooga-sync).
  */
 export async function POST(request: Request) {
   if (!authorized(request)) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  const creds = getChattanoogaCredentials();
-  if (!creds) {
+  if (!hasCatalogDatabase()) {
     return NextResponse.json(
       {
-        error: "Missing CHATTANOOGA_API_SID and CHATTANOOGA_API_TOKEN in environment",
+        error:
+          "Set TURSO_DATABASE_URL and TURSO_AUTH_TOKEN on Vercel (Turso free tier: https://turso.tech)",
       },
       { status: 500 },
     );
   }
 
-  let maxSellable = 50;
-  try {
-    const body = await request.json().catch(() => ({}));
-    if (typeof body.maxSellable === "number") maxSellable = body.maxSellable;
-  } catch {
-    /* empty body ok */
+  if (!getChattanoogaCredentials()) {
+    return NextResponse.json(
+      {
+        error:
+          "Missing CHATTANOOGA_API_SID and CHATTANOOGA_API_TOKEN. Run sync:env on Lightsail then push to Vercel.",
+      },
+      { status: 500 },
+    );
   }
 
   try {
-    const { products, stats } = await buildCatalogFromChattanooga({
-      sid: creds.sid,
-      token: creds.token,
-      maxSellable,
-    });
-
+    const { stats, inserted } = await syncChattanoogaCatalogToDatabase();
     return NextResponse.json({
       ok: true,
       message:
-        "Catalog pulled from Chattanooga API using WordPress category-mapping + normalizer rules.",
+        "Chattanooga feed synced to Vercel catalog database (not Lightsail WordPress).",
+      inserted,
       stats,
-      sample: products.slice(0, 20),
     });
   } catch (e) {
     const message = e instanceof Error ? e.message : String(e);

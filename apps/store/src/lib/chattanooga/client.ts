@@ -1,4 +1,5 @@
 import { createHash } from "node:crypto";
+import { env, hasChattanoogaCredentials } from "@/lib/env";
 
 const API_BASE = "https://api.chattanoogashooting.com/rest/v5";
 
@@ -8,10 +9,8 @@ function authHeader(sid: string, token: string): string {
 }
 
 export function getChattanoogaCredentials(): { sid: string; token: string } | null {
-  const sid = process.env.CHATTANOOGA_API_SID || process.env.API_SID || "";
-  const token = process.env.CHATTANOOGA_API_TOKEN || process.env.API_TOKEN || "";
-  if (!sid || !token) return null;
-  return { sid, token };
+  if (!hasChattanoogaCredentials()) return null;
+  return { sid: env.chattanooga.sid, token: env.chattanooga.token };
 }
 
 export async function fetchChattanoogaApi(

@@ -2,8 +2,11 @@ import Link from "next/link";
 import { SiteShell } from "@/components/SiteShell";
 import { ProductGrid } from "@/components/ProductGrid";
 import { CATEGORY_NAV } from "@/lib/navigation";
-import { fetchWordPressProducts } from "@/lib/wordpress/catalog";
-import { getWordPressStoreUrl } from "@/lib/wordpress/config";
+import {
+  getCatalogProductCount,
+  hasCatalogDatabase,
+  listCatalogProducts,
+} from "@/lib/catalog/db";
 
 export const metadata = {
   title: "Shop",
@@ -11,7 +14,7 @@ export const metadata = {
     "Shop firearms, ammunition, optics, and accessories online at Modular Gunworks — veteran-owned FFL in Huntsville, Alabama.",
 };
 
-export const revalidate = 300;
+export const dynamic = "force-dynamic";
 
 type Props = {
   searchParams: Promise<{ product_cat?: string; s?: string; page?: string }>;
@@ -23,8 +26,25 @@ export default async function ShopPage({ searchParams }: Props) {
   const search = sp.s?.trim() || undefined;
   const page = Math.max(parseInt(sp.page || "1", 10) || 1, 1);
 
-  const { products, total, totalPages } = await fetchWordPressProducts({
-    category,
+  if (!hasCatalogDatabase()) {
+    return (
+      <SiteShell>
+        <main className="mgw-shop-wrapper content-section">
+          <h1 className="page-title">Shop</h1>
+          <p className="shop-empty">
+            Catalog database is not configured on this deployment. Add{" "}
+            <code>TURSO_DATABASE_URL</code> and <code>TURSO_AUTH_TOKEN</code> on Vercel,
+            push Chattanooga credentials from Lightsail, then run{" "}
+            <code>POST /api/catalog/sync</code>.
+          </p>
+        </main>
+      </SiteShell>
+    );
+  }
+
+  const totalInDb = await getCatalogProductCount();
+  const { products, total, totalPages } = await listCatalogProducts({
+    topSlug: category,
     search,
     page,
     perPage: 48,
@@ -39,8 +59,9 @@ export default async function ShopPage({ searchParams }: Props) {
         <header className="mgw-shop-page-header">
           <h1 className="mgw-shop-page-title page-title">{title}</h1>
           <p className="mgw-shop-page-desc">
-            {total.toLocaleString()} products from your live WordPress catalog (
-            {getWordPressStoreUrl()}). Chattanooga direct sync on Vercel is optional.
+            {totalInDb === 0
+              ? "Catalog database is empty — sync from Chattanooga API required."
+              : `${total.toLocaleString()} products · ${totalInDb.toLocaleString()} in catalog DB (Chattanooga feed, not Lightsail)`}
           </p>
         </header>
 

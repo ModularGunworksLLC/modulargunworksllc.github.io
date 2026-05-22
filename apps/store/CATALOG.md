@@ -1,78 +1,41 @@
-# Shop catalog — Chattanooga API (WordPress foundation)
+# Shop catalog — Chattanooga API → Turso DB (not Lightsail)
 
-The Vercel storefront does **not** use the old GitHub Pages static JSON. It uses the **same pipeline as your WordPress `mgw-chattanooga-sync` plugin**.
+The Vercel storefront does **not** load products from WordPress at runtime.
 
 ## Data flow
 
 ```mermaid
 flowchart LR
   API["Chattanooga API\nGET /rest/v5/items/product-feed"]
-  CSV["Signed CSV URL"]
-  Norm["MGW Normalizer\nchattanooga-map.json"]
-  CatMap["category-mapping.json"]
-  Store["StoreProduct\nfor Next.js pages"]
-  API --> CSV --> Norm --> CatMap --> Store
+  CSV["Signed CSV"]
+  Map["WP mapping rules\nchattanooga-map + category-mapping"]
+  DB["Turso catalog DB"]
+  Pages["/shop + /shop/product/slug"]
+  API --> CSV --> Map --> DB --> Pages
 ```
 
 | Step | WordPress today | Vercel store |
 |------|-----------------|--------------|
-| Auth | `Basic SID:md5(token)` | Same in `lib/chattanooga/client.ts` |
-| Feed | `/items/product-feed` → download CSV | Same |
-| Columns | `chattanooga-map.json` | Copied to `src/data/chattanooga/` |
-| Categories | `category-mapping.json` | Same file |
-| Retail price | MSRP, else MAP (not dealer Price) | Same in `rules.ts` |
-| Sellable | Price + image required | Same |
-| NFA | Excluded from storefront | Same |
+| Auth | `Basic SID:md5(token)` | Same (`CHATTANOOGA_API_SID` / `TOKEN`) |
+| Feed | `/items/product-feed` | Same |
+| Mapping | `mgw-chattanooga-sync` | Ported in `src/lib/chattanooga/` |
+| Storage | WooCommerce MySQL | **Turso** (`catalog_products` table) |
+| Shop UI | WP templates | Next.js reads **only Turso** |
 
-## WordPress bridge (works on Vercel without Chattanooga env)
+## Sync
 
-The live shop at **modulargunworks.com** already has ~2,000 products synced by `mgw-chattanooga-sync`. The Vercel store reads them via the public **WooCommerce Store API**:
+- **POST** `/api/catalog/sync` — full feed → replace DB rows (Bearer `CRON_SECRET`)
+- **Cron** — every 4 hours (`vercel.json`)
+- **GET** `/api/catalog/sample` — inspect DB contents
 
-- `GET /wp-json/wc/store/v1/products`
-- Shop grid: `/shop`, `/shop?product_cat=ammunition`
-- Product page: `/shop/product/[slug]`
-- Sample API falls back to WordPress when `CHATTANOOGA_*` is not set
+## Environment
 
-Set `NEXT_PUBLIC_WORDPRESS_STORE_URL=https://www.modulargunworks.com` (optional; this is the default).
+See **[ENV.md](./ENV.md)** — pull secrets from Lightsail WordPress, add Turso URL/token, push to Vercel.
 
-## Environment (Vercel → Settings → Environment Variables)
+| Variable | Purpose |
+|----------|---------|
+| `CHATTANOOGA_API_SID` / `CHATTANOOGA_API_TOKEN` | Chattanooga feed |
+| `TURSO_DATABASE_URL` / `TURSO_AUTH_TOKEN` | Product database |
+| `CRON_SECRET` | Protect sync endpoint + Vercel cron |
 
-| Variable | Source |
-|----------|--------|
-| `CHATTANOOGA_API_SID` | Same as WordPress Chattanooga Sync / `.env` `API_SID` |
-| `CHATTANOOGA_API_TOKEN` | Same as `API_TOKEN` |
-| `CRON_SECRET` | Optional — protects `POST /api/catalog/sync` |
-
-Never commit real credentials to GitHub.
-
-## Inspect mapped data (before building product pages)
-
-After env vars are set on Vercel:
-
-```text
-GET /api/catalog/sample?limit=24&top=ammunition
-```
-
-Returns sellable products mapped with `topSlug`, `subSlug`, `listPrice`, `imageUrl`, etc.
-
-Manual sync + stats:
-
-```text
-POST /api/catalog/sync
-Authorization: Bearer YOUR_CRON_SECRET
-Body: { "maxSellable": 50 }
-```
-
-## Next implementation steps
-
-1. **Persist catalog** — Neon/Turbo or Vercel Blob after each sync (not in git).
-2. **Vercel Cron** — every 4 hours, same as WP `mgw_chattanooga_sync_cron`.
-3. **Shop UI** — `/shop` reads persisted catalog; product page `/shop/product/[sku]` uses WP tile layout.
-4. **Filters** — port Filter Everything behavior from WooCommerce meta attributes.
-
-## Source of truth for mapping changes
-
-Edit on Lightsail → sync to `wordpress-package/plugins/mgw-chattanooga-sync/includes/`, then copy into:
-
-`apps/store/src/data/chattanooga/chattanooga-map.json`  
-`apps/store/src/data/chattanooga/category-mapping.json`
+Lightsail WordPress keeps its own sync for **modulargunworks.com** until DNS cutover.

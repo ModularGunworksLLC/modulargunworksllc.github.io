@@ -1,16 +1,17 @@
 import { ProductCard } from "./ProductCard";
-import type { WcProductCard } from "@/lib/wordpress/map-product";
+import type { CatalogProduct } from "@/lib/catalog/db";
 
 type Props = {
-  products: WcProductCard[];
+  products: CatalogProduct[];
 };
 
 export function ProductGrid({ products }: Props) {
   if (!products.length) {
     return (
       <p className="shop-empty">
-        No products found in this category. Try another category or check back after
-        the next catalog sync on the live store.
+        No products in the catalog database yet. Run a Chattanooga sync (
+        <code>POST /api/catalog/sync</code>) after Turso and API credentials are set on
+        Vercel.
       </p>
     );
   }
@@ -18,7 +19,7 @@ export function ProductGrid({ products }: Props) {
   return (
     <div className="products-grid">
       {products.map((p) => (
-        <ProductCard key={p.slug} product={p} />
+        <ProductCard key={p.sku} product={p} />
       ))}
     </div>
   );

@@ -25,14 +25,16 @@ After redeploy, the home page should show the Modular Gunworks header/hero (not 
 
 Use the `*.vercel.app` URL from the latest deployment. A gray banner notes that the live store is still on modulargunworks.com.
 
-## Catalog on Vercel (no secrets required)
+## Catalog on Vercel (Chattanooga → Turso — not Lightsail)
 
-The shop reads your **live WordPress WooCommerce catalog** (~2k products already synced from Chattanooga). Default store URL is `https://www.modulargunworks.com` — works without env vars.
+The shop does **not** pull products from WordPress. Flow:
 
-- `/shop` — product grid  
-- `/api/catalog/sample` — JSON sample (WordPress fallback)
+1. **Chattanooga API** credentials from Lightsail (`sync-env-from-wordpress.sh`)  
+2. **Turso** database (`TURSO_DATABASE_URL` + `TURSO_AUTH_TOKEN`)  
+3. **POST** `/api/catalog/sync` (or 4h cron) fills the DB  
+4. `/shop` reads **only Turso**
 
-Optional: set `NEXT_PUBLIC_WORDPRESS_STORE_URL` if the live store URL changes.
+See `apps/store/ENV.md` and `apps/store/CATALOG.md`.
 
 ## Environment variables (Chattanooga direct sync — optional)
 

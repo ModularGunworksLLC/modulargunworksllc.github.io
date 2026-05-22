@@ -33,12 +33,37 @@ export function ServiceRequestModal({
     };
   }, [open]);
 
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  const [submitting, setSubmitting] = useState(false);
+  const [status, setStatus] = useState<"idle" | "ok" | "error">("idle");
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const fd = new FormData(e.currentTarget);
     const name = String(fd.get("name") || "");
     const email = String(fd.get("email") || "");
     const message = String(fd.get("message") || "");
+    const phone = String(fd.get("phone") || "");
+
+    setSubmitting(true);
+    setStatus("idle");
+    try {
+      const res = await fetch("/api/service-request", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, phone, message }),
+      });
+      if (res.ok) {
+        setStatus("ok");
+        e.currentTarget.reset();
+        return;
+      }
+      setStatus("error");
+    } catch {
+      setStatus("error");
+    } finally {
+      setSubmitting(false);
+    }
+
     const subject = encodeURIComponent(`Service request from ${name}`);
     const body = encodeURIComponent(
       `Name: ${name}\nEmail: ${email}\n\n${message}`,
@@ -82,16 +107,27 @@ export function ServiceRequestModal({
             <input id="sr-name" name="name" type="text" required autoComplete="name" />
             <label htmlFor="sr-email">Email</label>
             <input id="sr-email" name="email" type="email" required autoComplete="email" />
+            <label htmlFor="sr-phone">Phone (optional)</label>
+            <input id="sr-phone" name="phone" type="tel" autoComplete="tel" />
             <label htmlFor="sr-message">Message</label>
             <textarea id="sr-message" name="message" required />
+            {status === "ok" ? (
+              <p className="request-service-note" role="status">
+                Request sent — we will follow up soon.
+              </p>
+            ) : null}
+            {status === "error" ? (
+              <p className="request-service-note" role="alert">
+                Online submit failed; opening email as backup…
+              </p>
+            ) : null}
             <p style={{ marginTop: "1rem" }}>
-              <button type="submit" className="cta-link">
-                Send via email
+              <button type="submit" className="cta-link" disabled={submitting}>
+                {submitting ? "Sending…" : "Submit request"}
               </button>
             </p>
             <p className="request-service-note">
-              Or call <a href={`tel:${STORE.phoneTel}`}>{STORE.phone}</a> — full
-              online form integration coming soon.
+              Or call <a href={`tel:${STORE.phoneTel}`}>{STORE.phone}</a>.
             </p>
           </form>
         </div>

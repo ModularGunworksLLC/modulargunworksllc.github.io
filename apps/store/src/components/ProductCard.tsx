@@ -1,5 +1,5 @@
 import Link from "next/link";
-import type { WcProductCard } from "@/lib/wordpress/map-product";
+import type { CatalogProduct } from "@/lib/catalog/db";
 
 function formatPrice(n: number | null): string {
   if (n == null || n <= 0) return "—";
@@ -7,7 +7,7 @@ function formatPrice(n: number | null): string {
 }
 
 type Props = {
-  product: WcProductCard;
+  product: CatalogProduct;
   showSkuAbove?: boolean;
 };
 
@@ -15,6 +15,7 @@ export function ProductCard({ product, showSkuAbove }: Props) {
   const isMagazines = product.topSlug === "magazines";
   const skuAbove = showSkuAbove ?? isMagazines;
   const href = `/shop/product/${product.slug}`;
+  const inStock = product.stock > 0;
 
   return (
     <div className="product-card">
@@ -48,9 +49,9 @@ export function ProductCard({ product, showSkuAbove }: Props) {
           <div className="product-pricing">
             <div className="product-price">{formatPrice(product.listPrice)}</div>
             <div
-              className={`product-stock ${product.inStock ? "stock-in" : "stock-out"}`}
+              className={`product-stock ${inStock ? "stock-in" : "stock-out"}`}
             >
-              {product.inStock ? "In Stock" : "Out of Stock"}
+              {inStock ? "In Stock" : "Out of Stock"}
             </div>
           </div>
           {product.sku && !skuAbove ? (

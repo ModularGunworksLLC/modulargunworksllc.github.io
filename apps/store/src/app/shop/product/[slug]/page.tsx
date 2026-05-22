@@ -1,9 +1,12 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { SiteShell } from "@/components/SiteShell";
-import { fetchWordPressProductBySlug } from "@/lib/wordpress/catalog";
+import {
+  getCatalogProductBySlug,
+  hasCatalogDatabase,
+} from "@/lib/catalog/db";
 
-export const revalidate = 300;
+export const dynamic = "force-dynamic";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -11,23 +14,36 @@ type Props = {
 
 export async function generateMetadata({ params }: Props) {
   const { slug } = await params;
-  const product = await fetchWordPressProductBySlug(slug);
+  if (!hasCatalogDatabase()) return { title: "Product" };
+  const product = await getCatalogProductBySlug(slug);
   if (!product) return { title: "Product not found" };
   return {
     title: product.name,
-    description: product.name,
+    description: product.name.replace(/<[^>]+>/g, "").slice(0, 160),
   };
 }
 
 export default async function ProductDetailPage({ params }: Props) {
   const { slug } = await params;
-  const product = await fetchWordPressProductBySlug(slug);
+
+  if (!hasCatalogDatabase()) {
+    return (
+      <SiteShell>
+        <main className="content-section">
+          <p>Catalog database not configured on this deployment.</p>
+        </main>
+      </SiteShell>
+    );
+  }
+
+  const product = await getCatalogProductBySlug(slug);
   if (!product) notFound();
 
   const price =
     product.listPrice != null && product.listPrice > 0
       ? `$${product.listPrice.toFixed(2)}`
       : "—";
+  const inStock = product.stock > 0;
 
   return (
     <SiteShell>
@@ -63,9 +79,9 @@ export default async function ProductDetailPage({ params }: Props) {
               {price}
             </p>
             <p
-              className={`product-stock ${product.inStock ? "stock-in" : "stock-out"}`}
+              className={`product-stock ${inStock ? "stock-in" : "stock-out"}`}
             >
-              {product.inStock ? "In Stock" : "Out of Stock"}
+              {inStock ? "In Stock" : "Out of Stock"}
             </p>
             {product.sku ? <p className="product-sku">SKU: {product.sku}</p> : null}
             {product.description ? (
@@ -74,19 +90,12 @@ export default async function ProductDetailPage({ params }: Props) {
                 dangerouslySetInnerHTML={{ __html: product.description }}
               />
             ) : null}
-            <p style={{ marginTop: "1.5rem" }}>
-              <a
-                href={product.permalink}
-                className="cta-link"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                View on live store (checkout)
+            <p className="request-service-note" style={{ marginTop: "1.5rem" }}>
+              Cart and checkout on this preview are coming next. Until then, purchase at{" "}
+              <a href={process.env.NEXT_PUBLIC_LIVE_STORE_URL || "https://www.modulargunworks.com"}>
+                modulargunworks.com
               </a>
-            </p>
-            <p className="request-service-note" style={{ marginTop: "1rem" }}>
-              Cart and checkout on this preview site are coming next. Purchase on{" "}
-              <a href={product.permalink}>modulargunworks.com</a> until cutover.
+              .
             </p>
           </div>
         </div>
