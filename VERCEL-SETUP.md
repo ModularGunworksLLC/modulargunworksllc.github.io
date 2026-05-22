@@ -2,6 +2,8 @@
 
 Your Vercel project is linked to this repo. **Production WordPress on Lightsail is unchanged.**
 
+**Dashboard shows “Something went wrong” on Overview?** Use direct links in [`VERCEL-CONNECT.md`](VERCEL-CONNECT.md) — open **Deployments** or **Settings**, not Overview.
+
 ## One-time dashboard change (required)
 
 1. Open [Vercel](https://vercel.com) → project **modulargunworksllc-github-io** (or renamed **mgw-store**).
