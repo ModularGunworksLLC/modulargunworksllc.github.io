@@ -1,0 +1,3738 @@
+{
+  "3D Targets": {
+    "top": "Outdoors",
+    "sub": "3D Targets"
+  },
+  "Accessories": {
+    "top": "Gear",
+    "sub": "Accessories"
+  },
+  "Accessories|Hunting": {
+    "top": "Outdoors",
+    "sub": "Accessories|Hunting"
+  },
+  "Accessory Holsters": {
+    "top": "Gear",
+    "sub": "Accessory Holsters"
+  },
+  "Accessory Holsters|Holster Accessories": {
+    "top": "Gear",
+    "sub": "Accessory Holsters|Holster Accessories"
+  },
+  "Action Cameras": {
+    "top": "Outdoors",
+    "sub": "Action Cameras"
+  },
+  "Action Cameras|Archery Accessories": {
+    "top": "Outdoors",
+    "sub": "Action Cameras|Archery Accessories"
+  },
+  "Adapters & Rails": {
+    "top": "Gear",
+    "sub": "Adapters & Rails"
+  },
+  "Air Gun Accessories": {
+    "top": "Outdoors",
+    "sub": "Air Gun Accessories"
+  },
+  "Air Gun Accessories|Airgun Accessories": {
+    "top": "Outdoors",
+    "sub": "Air Gun Accessories|Airgun Accessories"
+  },
+  "Air Gun Accessories|Airgun Handguns": {
+    "top": "Outdoors",
+    "sub": "Air Gun Accessories|Airgun Handguns"
+  },
+  "Air Gun Accessories|Airgun Rifles": {
+    "top": "Outdoors",
+    "sub": "Air Gun Accessories|Airgun Rifles"
+  },
+  "Air Gun Accessories|Pellets & BBs": {
+    "top": "Outdoors",
+    "sub": "Air Gun Accessories|Pellets & BBs"
+  },
+  "Air Gun Pellets & BBs": {
+    "top": "Outdoors",
+    "sub": "Air Gun Pellets & BBs"
+  },
+  "Air Gun Pellets & BBs|Airgun Accessories": {
+    "top": "Outdoors",
+    "sub": "Air Gun Pellets & BBs|Airgun Accessories"
+  },
+  "Air Gun Pellets & BBs|Pellets & BBs": {
+    "top": "Outdoors",
+    "sub": "Air Gun Pellets & BBs|Pellets & BBs"
+  },
+  "Air Pistols": {
+    "top": "Outdoors",
+    "sub": "Air Pistols"
+  },
+  "Air Pistols|Airgun Accessories": {
+    "top": "Outdoors",
+    "sub": "Air Pistols|Airgun Accessories"
+  },
+  "Air Pistols|Airgun Handguns": {
+    "top": "Outdoors",
+    "sub": "Air Pistols|Airgun Handguns"
+  },
+  "Air Rifle Scopes": {
+    "top": "Optics",
+    "sub": "Air Rifle Scopes"
+  },
+  "Air Rifles": {
+    "top": "Outdoors",
+    "sub": "Air Rifles"
+  },
+  "Air Rifles|Airgun Handguns": {
+    "top": "Outdoors",
+    "sub": "Air Rifles|Airgun Handguns"
+  },
+  "Air Rifles|Airgun Rifles": {
+    "top": "Outdoors",
+    "sub": "Air Rifles|Airgun Rifles"
+  },
+  "Airgun Rifles": {
+    "top": "Outdoors",
+    "sub": "Airgun Rifles"
+  },
+  "Airguns|Air Gun Accessories": {
+    "top": "Outdoors",
+    "sub": "Airguns|Air Gun Accessories"
+  },
+  "Airguns|Air Gun Accessories|Airgun Accessories": {
+    "top": "Outdoors",
+    "sub": "Airguns|Air Gun Accessories|Airgun Accessories"
+  },
+  "Airguns|Air Gun Pellets & BBs|Pellets & BBs": {
+    "top": "Outdoors",
+    "sub": "Airguns|Air Gun Pellets & BBs|Pellets & BBs"
+  },
+  "Airguns|Air Rifles": {
+    "top": "Outdoors",
+    "sub": "Airguns|Air Rifles"
+  },
+  "Airguns|Air Rifles|Airgun Rifles": {
+    "top": "Outdoors",
+    "sub": "Airguns|Air Rifles|Airgun Rifles"
+  },
+  "Airguns|Airsoft Guns|Airgun Handguns": {
+    "top": "Outdoors",
+    "sub": "Airguns|Airsoft Guns|Airgun Handguns"
+  },
+  "Airsoft Guns|Airgun Handguns": {
+    "top": "Outdoors",
+    "sub": "Airsoft Guns|Airgun Handguns"
+  },
+  "Airsoft Guns|Airgun Rifles": {
+    "top": "Outdoors",
+    "sub": "Airsoft Guns|Airgun Rifles"
+  },
+  "Alignment Leveling & Other Tools": {
+    "top": "Gear",
+    "sub": "Alignment Leveling & Other Tools"
+  },
+  "Alignment Leveling & Other Tools|Punches": {
+    "top": "Gear",
+    "sub": "Alignment Leveling & Other Tools|Punches"
+  },
+  "Alignment Leveling & Other Tools|Scope/Sight Mounting": {
+    "top": "Gear",
+    "sub": "Alignment Leveling & Other Tools|Scope/Sight Mounting"
+  },
+  "Alignment Leveling & Other Tools|Screwdrivers & Torque Wrenches": {
+    "top": "Gear",
+    "sub": "Alignment Leveling & Other Tools|Screwdrivers & Torque Wrenches"
+  },
+  "Alignment Leveling & Other Tools|Tools": {
+    "top": "Gear",
+    "sub": "Alignment Leveling & Other Tools|Tools"
+  },
+  "Ammo & Bullet Storage": {
+    "top": "Gear",
+    "sub": "Ammo & Bullet Storage"
+  },
+  "Ammo Boxes": {
+    "top": "Gear",
+    "sub": "Ammo Boxes"
+  },
+  "Ammo Boxes|Ammo Cans & Dry Box": {
+    "top": "Gear",
+    "sub": "Ammo Boxes|Ammo Cans & Dry Box"
+  },
+  "Ammo Cans & Dry Box": {
+    "top": "Gear",
+    "sub": "Ammo Cans & Dry Box"
+  },
+  "Ammo Cans & Dry Box|Packs & Bags": {
+    "top": "Gear",
+    "sub": "Ammo Cans & Dry Box|Packs & Bags"
+  },
+  "Ammunition|Handgun Ammunition": {
+    "top": "Ammunition",
+    "sub": "Ammunition|Handgun Ammunition"
+  },
+  "Ammunition|Rifle Ammunition": {
+    "top": "Ammunition",
+    "sub": "Ammunition|Rifle Ammunition"
+  },
+  "Ammunition|Rimfire Ammunition": {
+    "top": "Ammunition",
+    "sub": "Ammunition|Rimfire Ammunition"
+  },
+  "Ammunition|Shotgun Ammunition": {
+    "top": "Ammunition",
+    "sub": "Ammunition|Shotgun Ammunition"
+  },
+  "Archery Accessories": {
+    "top": "Outdoors",
+    "sub": "Archery Accessories"
+  },
+  "Archery Accessories|3D Targets": {
+    "top": "Outdoors",
+    "sub": "Archery Accessories|3D Targets"
+  },
+  "Archery Accessories|Archery Sights|Archery Scopes": {
+    "top": "Outdoors",
+    "sub": "Archery Accessories|Archery Sights|Archery Scopes"
+  },
+  "Archery Accessories|Arrow Rests": {
+    "top": "Outdoors",
+    "sub": "Archery Accessories|Arrow Rests"
+  },
+  "Archery Accessories|Block & Foam Targets": {
+    "top": "Outdoors",
+    "sub": "Archery Accessories|Block & Foam Targets"
+  },
+  "Archery Accessories|Bow Cases": {
+    "top": "Outdoors",
+    "sub": "Archery Accessories|Bow Cases"
+  },
+  "Archery Accessories|Bow Scales": {
+    "top": "Outdoors",
+    "sub": "Archery Accessories|Bow Scales"
+  },
+  "Archery Accessories|Bowfishing Accessories": {
+    "top": "Outdoors",
+    "sub": "Archery Accessories|Bowfishing Accessories"
+  },
+  "Archery Accessories|Chronographs & Shot Timers": {
+    "top": "Outdoors",
+    "sub": "Archery Accessories|Chronographs & Shot Timers"
+  },
+  "Archery Accessories|Crossbow Accessories": {
+    "top": "Outdoors",
+    "sub": "Archery Accessories|Crossbow Accessories"
+  },
+  "Archery Accessories|Crossbow Targets": {
+    "top": "Outdoors",
+    "sub": "Archery Accessories|Crossbow Targets"
+  },
+  "Archery Accessories|Leveling & Alignment Tools": {
+    "top": "Outdoors",
+    "sub": "Archery Accessories|Leveling & Alignment Tools"
+  },
+  "Archery Accessories|Mathews Bridge-Lock Sights & Accessories": {
+    "top": "Outdoors",
+    "sub": "Archery Accessories|Mathews Bridge-Lock Sights & Accessories"
+  },
+  "Archery Accessories|Multi-Tools & Tool Kits": {
+    "top": "Outdoors",
+    "sub": "Archery Accessories|Multi-Tools & Tool Kits"
+  },
+  "Archery Accessories|Oil & Lubricants": {
+    "top": "Outdoors",
+    "sub": "Archery Accessories|Oil & Lubricants"
+  },
+  "Archery Accessories|Peep Sights": {
+    "top": "Outdoors",
+    "sub": "Archery Accessories|Peep Sights"
+  },
+  "Archery Accessories|Rangefinders": {
+    "top": "Outdoors",
+    "sub": "Archery Accessories|Rangefinders"
+  },
+  "Archery Accessories|Sights & Scopes": {
+    "top": "Outdoors",
+    "sub": "Archery Accessories|Sights & Scopes"
+  },
+  "Archery Accessories|Stabilizers & Dampers": {
+    "top": "Outdoors",
+    "sub": "Archery Accessories|Stabilizers & Dampers"
+  },
+  "Archery Scopes|Centerfire Scopes": {
+    "top": "Optics",
+    "sub": "Archery Scopes|Centerfire Scopes"
+  },
+  "Archery Sights|Archery Scopes": {
+    "top": "Outdoors",
+    "sub": "Archery Sights|Archery Scopes"
+  },
+  "Archery Sights|Archery Scopes|Rangefinders": {
+    "top": "Outdoors",
+    "sub": "Archery Sights|Archery Scopes|Rangefinders"
+  },
+  "Arrow Building & Repair": {
+    "top": "Outdoors",
+    "sub": "Arrow Building & Repair"
+  },
+  "Arrow Building & Repair|Archery Accessories": {
+    "top": "Outdoors",
+    "sub": "Arrow Building & Repair|Archery Accessories"
+  },
+  "Arrow Components": {
+    "top": "Outdoors",
+    "sub": "Arrow Components"
+  },
+  "Arrow Components|Archery Accessories": {
+    "top": "Outdoors",
+    "sub": "Arrow Components|Archery Accessories"
+  },
+  "Arrow Rests": {
+    "top": "Outdoors",
+    "sub": "Arrow Rests"
+  },
+  "Arrow Tubes & Cases": {
+    "top": "Outdoors",
+    "sub": "Arrow Tubes & Cases"
+  },
+  "Arrows": {
+    "top": "Outdoors",
+    "sub": "Arrows"
+  },
+  "Arrows|Archery": {
+    "top": "Outdoors",
+    "sub": "Arrows|Archery"
+  },
+  "Axes Hatchets & Machetes": {
+    "top": "Knives",
+    "sub": "Axes Hatchets & Machetes"
+  },
+  "Backpacks|Handgun Cases|Packs & Bags": {
+    "top": "Gear",
+    "sub": "Backpacks|Handgun Cases|Packs & Bags"
+  },
+  "Backpacks|Packs & Bags": {
+    "top": "Gear",
+    "sub": "Backpacks|Packs & Bags"
+  },
+  "Bags & Duffels": {
+    "top": "Outdoors",
+    "sub": "Bags & Duffels"
+  },
+  "Bags & Packs": {
+    "top": "Outdoors",
+    "sub": "Bags & Packs"
+  },
+  "Bags & Packs|Ammo Cans & Dry Box": {
+    "top": "Outdoors",
+    "sub": "Bags & Packs|Ammo Cans & Dry Box"
+  },
+  "Bags & Packs|Binocular Cases & Harnesses": {
+    "top": "Outdoors",
+    "sub": "Bags & Packs|Binocular Cases & Harnesses"
+  },
+  "Bags & Packs|Clay Target Throwers": {
+    "top": "Outdoors",
+    "sub": "Bags & Packs|Clay Target Throwers"
+  },
+  "Bags & Packs|Packs & Bags": {
+    "top": "Outdoors",
+    "sub": "Bags & Packs|Packs & Bags"
+  },
+  "Bags & Packs|Pouches": {
+    "top": "Outdoors",
+    "sub": "Bags & Packs|Pouches"
+  },
+  "Bags & Packs|Range Bags": {
+    "top": "Outdoors",
+    "sub": "Bags & Packs|Range Bags"
+  },
+  "Barrels|Chassis & Stocks": {
+    "top": "Gun Parts",
+    "sub": "Barrels|Chassis & Stocks"
+  },
+  "Backpacking": {
+    "top": "Outdoors",
+    "sub": "Backpacking"
+  },
+  "Backpacks": {
+    "top": "Gear",
+    "sub": "Backpacks"
+  },
+  "Backpacks|Handgun Cases": {
+    "top": "Gear",
+    "sub": "Backpacks|Handgun Cases"
+  },
+  "Bag Targets": {
+    "top": "Outdoors",
+    "sub": "Bag Targets"
+  },
+  "Barrels": {
+    "top": "Gun Parts",
+    "sub": "Barrels"
+  },
+  "Barrels|Caliber Conversions": {
+    "top": "Gun Parts",
+    "sub": "Barrels|Caliber Conversions"
+  },
+  "Barrels|Parts/Parts Kits": {
+    "top": "Gun Parts",
+    "sub": "Barrels|Parts/Parts Kits"
+  },
+  "Bases & Mounts by Gun Make & Model": {
+    "top": "Optics",
+    "sub": "Bases & Mounts by Gun Make & Model"
+  },
+  "Batteries": {
+    "top": "Gear",
+    "sub": "Batteries"
+  },
+  "Batteries|Flashlights & Accessories": {
+    "top": "Gear",
+    "sub": "Batteries|Flashlights & Accessories"
+  },
+  "Bear Safety Gear": {
+    "top": "Outdoors",
+    "sub": "Bear Safety Gear"
+  },
+  "Bear Safety Gear|Pepper Spray": {
+    "top": "Outdoors",
+    "sub": "Bear Safety Gear|Pepper Spray"
+  },
+  "Bear Safety Gear|Self Defense Accessories": {
+    "top": "Outdoors",
+    "sub": "Bear Safety Gear|Self Defense Accessories"
+  },
+  "Beds & Pads": {
+    "top": "Outdoors",
+    "sub": "Beds & Pads"
+  },
+  "Beds & Pads|Beds": {
+    "top": "Outdoors",
+    "sub": "Beds & Pads|Beds"
+  },
+  "Belts": {
+    "top": "Gear",
+    "sub": "Belts"
+  },
+  "Belts|Gun Holsters": {
+    "top": "Gear",
+    "sub": "Belts|Gun Holsters"
+  },
+  "Belts|Holster & Duty Belts": {
+    "top": "Gear",
+    "sub": "Belts|Holster & Duty Belts"
+  },
+  "Belts|Holster Accessories": {
+    "top": "Gear",
+    "sub": "Belts|Holster Accessories"
+  },
+  "Belts|Shooting|Holster & Duty Belts": {
+    "top": "Gear",
+    "sub": "Belts|Shooting|Holster & Duty Belts"
+  },
+  "Benches & Stands": {
+    "top": "Reloading",
+    "sub": "Benches & Stands"
+  },
+  "Bibs & Coveralls": {
+    "top": "Clothing & Footwear",
+    "sub": "Bibs & Coveralls"
+  },
+  "Big Game Decoys": {
+    "top": "Outdoors",
+    "sub": "Big Game Decoys"
+  },
+  "Binocular Cases & Harnesses": {
+    "top": "Optics",
+    "sub": "Binocular Cases & Harnesses"
+  },
+  "Binocular Cases & Harnesses|Pouches": {
+    "top": "Optics",
+    "sub": "Binocular Cases & Harnesses|Pouches"
+  },
+  "Binoculars": {
+    "top": "Optics",
+    "sub": "Binoculars"
+  },
+  "Binoculars|Binocular Cases & Harnesses": {
+    "top": "Optics",
+    "sub": "Binoculars|Binocular Cases & Harnesses"
+  },
+  "Binoculars|Binoculars": {
+    "top": "Optics",
+    "sub": "Binoculars|Binoculars"
+  },
+  "Binoculars|Binoculars & Monoculars": {
+    "top": "Optics",
+    "sub": "Binoculars|Binoculars & Monoculars"
+  },
+  "Binoculars|Night Vision Binoculars": {
+    "top": "Optics",
+    "sub": "Binoculars|Night Vision Binoculars"
+  },
+  "Binoculars|Optics|Binoculars": {
+    "top": "Optics",
+    "sub": "Binoculars|Optics|Binoculars"
+  },
+  "Binoculars|Rangefinding Binoculars": {
+    "top": "Optics",
+    "sub": "Binoculars|Rangefinding Binoculars"
+  },
+  "Bipods": {
+    "top": "Gear",
+    "sub": "Bipods"
+  },
+  "Black Powder Cannons": {
+    "top": "Outdoors",
+    "sub": "Black Powder Cannons"
+  },
+  "Black Powder Pistol Kits": {
+    "top": "Outdoors",
+    "sub": "Black Powder Pistol Kits"
+  },
+  "Black Powder Pistols": {
+    "top": "Outdoors",
+    "sub": "Black Powder Pistols"
+  },
+  "Black Powder Rifle Kits": {
+    "top": "Outdoors",
+    "sub": "Black Powder Rifle Kits"
+  },
+  "Black Powder Rifles": {
+    "top": "Outdoors",
+    "sub": "Black Powder Rifles"
+  },
+  "Black Powder Substitutes": {
+    "top": "Outdoors",
+    "sub": "Black Powder Substitutes"
+  },
+  "Black Powder Substitutes & Accessories": {
+    "top": "Outdoors",
+    "sub": "Black Powder Substitutes & Accessories"
+  },
+  "Black Powder Substitutes & Accessories|Black Powder Substitutes": {
+    "top": "Outdoors",
+    "sub": "Black Powder Substitutes & Accessories|Black Powder Substitutes"
+  },
+  "Black Powder Substitutes|Muzzleloader Cappers & Speed Loaders": {
+    "top": "Outdoors",
+    "sub": "Black Powder Substitutes|Muzzleloader Cappers & Speed Loaders"
+  },
+  "Blind Accessories": {
+    "top": "Outdoors",
+    "sub": "Blind Accessories"
+  },
+  "Blind Accessories|Archery Accessories": {
+    "top": "Outdoors",
+    "sub": "Blind Accessories|Archery Accessories"
+  },
+  "Blind Accessories|Shooting Rests": {
+    "top": "Outdoors",
+    "sub": "Blind Accessories|Shooting Rests"
+  },
+  "Blind Bags": {
+    "top": "Outdoors",
+    "sub": "Blind Bags"
+  },
+  "Blind Bags|Hunting Packs": {
+    "top": "Outdoors",
+    "sub": "Blind Bags|Hunting Packs"
+  },
+  "Blind Chairs": {
+    "top": "Outdoors",
+    "sub": "Blind Chairs"
+  },
+  "Blind Chairs|Chairs": {
+    "top": "Outdoors",
+    "sub": "Blind Chairs|Chairs"
+  },
+  "Blind Chairs|Shooting": {
+    "top": "Outdoors",
+    "sub": "Blind Chairs|Shooting"
+  },
+  "Blind Chairs|Treestand Accessories": {
+    "top": "Outdoors",
+    "sub": "Blind Chairs|Treestand Accessories"
+  },
+  "Blind Chairs|Waterfowl Blinds": {
+    "top": "Outdoors",
+    "sub": "Blind Chairs|Waterfowl Blinds"
+  },
+  "Block & Foam Targets": {
+    "top": "Outdoors",
+    "sub": "Block & Foam Targets"
+  },
+  "Bolt Carriers": {
+    "top": "Gun Parts",
+    "sub": "Bolt Carriers"
+  },
+  "Bolt Carriers|Lowers": {
+    "top": "Gun Parts",
+    "sub": "Bolt Carriers|Lowers"
+  },
+  "Bolts": {
+    "top": "Outdoors",
+    "sub": "Bolts"
+  },
+  "Boots & Shoes": {
+    "top": "Clothing & Footwear",
+    "sub": "Boots & Shoes"
+  },
+  "Boots & Shoes|Boots & Shoes": {
+    "top": "Clothing & Footwear",
+    "sub": "Boots & Shoes|Boots & Shoes"
+  },
+  "Boots & Shoes|Boots & Shoes|Clothing & Footwear": {
+    "top": "Clothing & Footwear",
+    "sub": "Boots & Shoes|Boots & Shoes|Clothing & Footwear"
+  },
+  "Boots & Shoes|Clothing & Footwear": {
+    "top": "Clothing & Footwear",
+    "sub": "Boots & Shoes|Clothing & Footwear"
+  },
+  "Boresighters": {
+    "top": "Optics",
+    "sub": "Boresighters"
+  },
+  "Boresighters|Scope/Sight Mounting": {
+    "top": "Optics",
+    "sub": "Boresighters|Scope/Sight Mounting"
+  },
+  "Bow Cases": {
+    "top": "Outdoors",
+    "sub": "Bow Cases"
+  },
+  "Bow Cases|Archery|Handgun Cases": {
+    "top": "Outdoors",
+    "sub": "Bow Cases|Archery|Handgun Cases"
+  },
+  "Bow Cases|Cases Safes & Storage": {
+    "top": "Gear",
+    "sub": "Bow Cases|Cases Safes & Storage"
+  },
+  "Bow Cases|Rifle Cases": {
+    "top": "Outdoors",
+    "sub": "Bow Cases|Rifle Cases"
+  },
+  "Bow Cases|Slings": {
+    "top": "Outdoors",
+    "sub": "Bow Cases|Slings"
+  },
+  "Bowfishing": {
+    "top": "Outdoors",
+    "sub": "Bowfishing"
+  },
+  "Bowfishing Accessories": {
+    "top": "Outdoors",
+    "sub": "Bowfishing Accessories"
+  },
+  "Bowls & Feeders|Medical": {
+    "top": "Outdoors",
+    "sub": "Bowls & Feeders|Medical"
+  },
+  "Box Calls": {
+    "top": "Outdoors",
+    "sub": "Box Calls"
+  },
+  "Box Calls|Mouth Calls|Slate & Glass Calls": {
+    "top": "Outdoors",
+    "sub": "Box Calls|Mouth Calls|Slate & Glass Calls"
+  },
+  "Box Calls|Slate & Glass Calls": {
+    "top": "Outdoors",
+    "sub": "Box Calls|Slate & Glass Calls"
+  },
+  "Brass": {
+    "top": "Reloading",
+    "sub": "Brass"
+  },
+  "Brass Catchers": {
+    "top": "Gear",
+    "sub": "Brass Catchers"
+  },
+  "Brass Catchers|Pouches": {
+    "top": "Gear",
+    "sub": "Brass Catchers|Pouches"
+  },
+  "Breech & Wrenches": {
+    "top": "Gun Parts",
+    "sub": "Breech & Wrenches"
+  },
+  "Broadheads Field & Specialty Points": {
+    "top": "Outdoors",
+    "sub": "Broadheads Field & Specialty Points"
+  },
+  "Broadheads Field & Specialty Points|Archery Accessories": {
+    "top": "Outdoors",
+    "sub": "Broadheads Field & Specialty Points|Archery Accessories"
+  },
+  "Buffer Tubes/Buffers & Springs": {
+    "top": "Gun Parts",
+    "sub": "Buffer Tubes/Buffers & Springs"
+  },
+  "Buffer Tubes/Buffers & Springs|Parts/Parts Kits": {
+    "top": "Gun Parts",
+    "sub": "Buffer Tubes/Buffers & Springs|Parts/Parts Kits"
+  },
+  "Bullet Casting": {
+    "top": "Reloading",
+    "sub": "Bullet Casting"
+  },
+  "Bullet Casting|Dies": {
+    "top": "Reloading",
+    "sub": "Bullet Casting|Dies"
+  },
+  "Bullet Pullers": {
+    "top": "Reloading",
+    "sub": "Bullet Pullers"
+  },
+  "Calipers & Micrometers": {
+    "top": "Reloading",
+    "sub": "Calipers & Micrometers"
+  },
+  "Caps Hats & Beanies": {
+    "top": "Clothing & Footwear",
+    "sub": "Caps Hats & Beanies"
+  },
+  "Caps Hats & Beanies|Caps Hats & Beanies": {
+    "top": "Clothing & Footwear",
+    "sub": "Caps Hats & Beanies|Caps Hats & Beanies"
+  },
+  "Caps Hats & Beanies|Caps Hats & Beanies|Hats": {
+    "top": "Clothing & Footwear",
+    "sub": "Caps Hats & Beanies|Caps Hats & Beanies|Hats"
+  },
+  "Caps Hats & Beanies|Clothing & Footwear": {
+    "top": "Clothing & Footwear",
+    "sub": "Caps Hats & Beanies|Clothing & Footwear"
+  },
+  "Caps Hats & Beanies|Hats": {
+    "top": "Clothing & Footwear",
+    "sub": "Caps Hats & Beanies|Hats"
+  },
+  "Caps Hats & Beanies|Hats|Clothing & Footwear": {
+    "top": "Clothing & Footwear",
+    "sub": "Caps Hats & Beanies|Hats|Clothing & Footwear"
+  },
+  "Cases Safes & Storage|Ammo Boxes": {
+    "top": "Gear",
+    "sub": "Cases Safes & Storage|Ammo Boxes"
+  },
+  "Cases Safes & Storage|Gun Locks": {
+    "top": "Gear",
+    "sub": "Cases Safes & Storage|Gun Locks"
+  },
+  "Cases Safes & Storage|Gun Safes & Cabinets": {
+    "top": "Gear",
+    "sub": "Cases Safes & Storage|Gun Safes & Cabinets"
+  },
+  "Cases Safes & Storage|Handgun Cases": {
+    "top": "Gear",
+    "sub": "Cases Safes & Storage|Handgun Cases"
+  },
+  "Cases Safes & Storage|Handgun Cases|Pouches": {
+    "top": "Gear",
+    "sub": "Cases Safes & Storage|Handgun Cases|Pouches"
+  },
+  "CA Compliant": {
+    "top": "Firearms",
+    "sub": "CA Compliant"
+  },
+  "CSSI Exclusive Shop": {
+    "top": "Firearms",
+    "sub": "CSSI Exclusive Shop"
+  },
+  "CSSI Exclusive Shop|Centerfire Scopes": {
+    "top": "Optics",
+    "sub": "CSSI Exclusive Shop|Centerfire Scopes"
+  },
+  "CSSI Exclusive Shop|Grips": {
+    "top": "Gun Parts",
+    "sub": "CSSI Exclusive Shop|Grips"
+  },
+  "CSSI Exclusive Shop|Handgun Ammunition": {
+    "top": "Ammunition",
+    "sub": "CSSI Exclusive Shop|Handgun Ammunition"
+  },
+  "CSSI Exclusive Shop|Single Stage Presses": {
+    "top": "Reloading",
+    "sub": "CSSI Exclusive Shop|Single Stage Presses"
+  },
+  "Caliber Conversions": {
+    "top": "Gun Parts",
+    "sub": "Caliber Conversions"
+  },
+  "Camp Tools": {
+    "top": "Outdoors",
+    "sub": "Camp Tools"
+  },
+  "Campground": {
+    "top": "Outdoors",
+    "sub": "Campground"
+  },
+  "Cartridge Holders": {
+    "top": "Gear",
+    "sub": "Cartridge Holders"
+  },
+  "Case Lubes": {
+    "top": "Reloading",
+    "sub": "Case Lubes"
+  },
+  "Case Prep Tools": {
+    "top": "Reloading",
+    "sub": "Case Prep Tools"
+  },
+  "Cases Safes & Storage|Handgun Cases|Storage & Organization Accessories": {
+    "top": "Gear",
+    "sub": "Cases Safes & Storage|Handgun Cases|Storage & Organization Accessories"
+  },
+  "Cases Safes & Storage|Rifle Cases": {
+    "top": "Gear",
+    "sub": "Cases Safes & Storage|Rifle Cases"
+  },
+  "Cases Safes & Storage|Shooting Rests": {
+    "top": "Gear",
+    "sub": "Cases Safes & Storage|Shooting Rests"
+  },
+  "Cases Safes & Storage|Storage & Organization Accessories": {
+    "top": "Gear",
+    "sub": "Cases Safes & Storage|Storage & Organization Accessories"
+  },
+  "Cellular Trail Cameras": {
+    "top": "Outdoors",
+    "sub": "Cellular Trail Cameras"
+  },
+  "Cellular Trail Cameras|Hunting": {
+    "top": "Outdoors",
+    "sub": "Cellular Trail Cameras|Hunting"
+  },
+  "Centerfire Scopes": {
+    "top": "Optics",
+    "sub": "Centerfire Scopes"
+  },
+  "Chairs": {
+    "top": "Outdoors",
+    "sub": "Chairs"
+  },
+  "Charging Handles/Bolt Knobs": {
+    "top": "Gun Parts",
+    "sub": "Charging Handles/Bolt Knobs"
+  },
+  "Chassis & Stocks": {
+    "top": "Gun Parts",
+    "sub": "Chassis & Stocks"
+  },
+  "Chassis & Stocks|Chassis & Stocks": {
+    "top": "Gun Parts",
+    "sub": "Chassis & Stocks|Chassis & Stocks"
+  },
+  "Chokes/Muzzle Devices": {
+    "top": "Gun Parts",
+    "sub": "Chokes/Muzzle Devices"
+  },
+  "Chokes/Muzzle Devices|Screwdrivers & Torque Wrenches": {
+    "top": "Gun Parts",
+    "sub": "Chokes/Muzzle Devices|Screwdrivers & Torque Wrenches"
+  },
+  "Chronographs & Shot Timers": {
+    "top": "Gear",
+    "sub": "Chronographs & Shot Timers"
+  },
+  "Clay Target Throwers": {
+    "top": "Outdoors",
+    "sub": "Clay Target Throwers"
+  },
+  "Cleaning Brushes Mops and Swabs": {
+    "top": "Gun Parts",
+    "sub": "Cleaning Brushes Mops and Swabs"
+  },
+  "Cleaning Brushes Mops and Swabs|Breech & Wrenches": {
+    "top": "Gun Parts",
+    "sub": "Cleaning Brushes Mops and Swabs|Breech & Wrenches"
+  },
+  "Cleaning Brushes Mops and Swabs|Muzzleloader Cleaning & Accessories": {
+    "top": "Gun Parts",
+    "sub": "Cleaning Brushes Mops and Swabs|Muzzleloader Cleaning & Accessories"
+  },
+  "Cleaning Mats": {
+    "top": "Gear",
+    "sub": "Cleaning Mats"
+  },
+  "Cleaning Mats|Gun Cleaning Mats": {
+    "top": "Gear",
+    "sub": "Cleaning Mats|Gun Cleaning Mats"
+  },
+  "Climbing Sticks": {
+    "top": "Outdoors",
+    "sub": "Climbing Sticks"
+  },
+  "Climbing Treestands": {
+    "top": "Outdoors",
+    "sub": "Climbing Treestands"
+  },
+  "Cloths & Wipes": {
+    "top": "Gear",
+    "sub": "Cloths & Wipes"
+  },
+  "Collars & Leashes": {
+    "top": "Outdoors",
+    "sub": "Collars & Leashes"
+  },
+  "Collars & Leashes|Collars Leashes & Harnesses": {
+    "top": "Outdoors",
+    "sub": "Collars & Leashes|Collars Leashes & Harnesses"
+  },
+  "Compasses|Emergency & Survival": {
+    "top": "Outdoors",
+    "sub": "Compasses|Emergency & Survival"
+  },
+  "Components": {
+    "top": "Reloading",
+    "sub": "Components"
+  },
+  "Components|Brass": {
+    "top": "Reloading",
+    "sub": "Components|Brass"
+  },
+  "Compound Bows": {
+    "top": "Outdoors",
+    "sub": "Compound Bows"
+  },
+  "Cookware": {
+    "top": "Outdoors",
+    "sub": "Cookware"
+  },
+  "Crossbow Accessories": {
+    "top": "Outdoors",
+    "sub": "Crossbow Accessories"
+  },
+  "Crossbow Targets": {
+    "top": "Outdoors",
+    "sub": "Crossbow Targets"
+  },
+  "Crossbows": {
+    "top": "Outdoors",
+    "sub": "Crossbows"
+  },
+  "Crossbows|Archery": {
+    "top": "Outdoors",
+    "sub": "Crossbows|Archery"
+  },
+  "Decoy Accessories": {
+    "top": "Outdoors",
+    "sub": "Decoy Accessories"
+  },
+  "Decoy Bags": {
+    "top": "Outdoors",
+    "sub": "Decoy Bags"
+  },
+  "Decoy Bags|Dry Bags|Bags & Duffels": {
+    "top": "Outdoors",
+    "sub": "Decoy Bags|Dry Bags|Bags & Duffels"
+  },
+  "Deer Calls": {
+    "top": "Outdoors",
+    "sub": "Deer Calls"
+  },
+  "Die Parts Shell Holders & Accessories": {
+    "top": "Reloading",
+    "sub": "Die Parts Shell Holders & Accessories"
+  },
+  "Die Parts Shell Holders & Accessories|Powder Measures Dispensers & Scales": {
+    "top": "Reloading",
+    "sub": "Die Parts Shell Holders & Accessories|Powder Measures Dispensers & Scales"
+  },
+  "Die Parts Shell Holders & Accessories|Shell Holders & Plates": {
+    "top": "Reloading",
+    "sub": "Die Parts Shell Holders & Accessories|Shell Holders & Plates"
+  },
+  "Dies": {
+    "top": "Reloading",
+    "sub": "Dies"
+  },
+  "Dies|Benches & Stands": {
+    "top": "Reloading",
+    "sub": "Dies|Benches & Stands"
+  },
+  "Dies|Calipers & Micrometers": {
+    "top": "Reloading",
+    "sub": "Dies|Calipers & Micrometers"
+  },
+  "Dies|Case Lubes": {
+    "top": "Reloading",
+    "sub": "Dies|Case Lubes"
+  },
+  "Dies|Case Prep Tools": {
+    "top": "Reloading",
+    "sub": "Dies|Case Prep Tools"
+  },
+  "Dies|Powder Measures Dispensers & Scales": {
+    "top": "Reloading",
+    "sub": "Dies|Powder Measures Dispensers & Scales"
+  },
+  "Dies|Replacement Parts": {
+    "top": "Reloading",
+    "sub": "Dies|Replacement Parts"
+  },
+  "Displays": {
+    "top": "Gear",
+    "sub": "Displays"
+  },
+  "Dog Blinds": {
+    "top": "Outdoors",
+    "sub": "Dog Blinds"
+  },
+  "Dog Blinds|Beds": {
+    "top": "Outdoors",
+    "sub": "Dog Blinds|Beds"
+  },
+  "Dog Blinds|Beds|Hunting": {
+    "top": "Outdoors",
+    "sub": "Dog Blinds|Beds|Hunting"
+  },
+  "Dog Blinds|Hunting": {
+    "top": "Outdoors",
+    "sub": "Dog Blinds|Hunting"
+  },
+  "Dog Training": {
+    "top": "Outdoors",
+    "sub": "Dog Training"
+  },
+  "Dog Training|Collars Leashes & Harnesses": {
+    "top": "Outdoors",
+    "sub": "Dog Training|Collars Leashes & Harnesses"
+  },
+  "Dog Training|Toys": {
+    "top": "Outdoors",
+    "sub": "Dog Training|Toys"
+  },
+  "Dog Training|Training": {
+    "top": "Outdoors",
+    "sub": "Dog Training|Training"
+  },
+  "Dove Decoys": {
+    "top": "Outdoors",
+    "sub": "Dove Decoys"
+  },
+  "Dry Bags": {
+    "top": "Outdoors",
+    "sub": "Dry Bags"
+  },
+  "Dry Bags|Bags & Duffels": {
+    "top": "Outdoors",
+    "sub": "Dry Bags|Bags & Duffels"
+  },
+  "Dry Bags|Bags & Duffels|Ammo Boxes": {
+    "top": "Outdoors",
+    "sub": "Dry Bags|Bags & Duffels|Ammo Boxes"
+  },
+  "Dry Bags|Bags & Duffels|Range Bags": {
+    "top": "Outdoors",
+    "sub": "Dry Bags|Bags & Duffels|Range Bags"
+  },
+  "Dry Bags|Bags & Duffels|Range Bags|Handgun Cases": {
+    "top": "Outdoors",
+    "sub": "Dry Bags|Bags & Duffels|Range Bags|Handgun Cases"
+  },
+  "Dry Bags|Bags & Duffels|Range Bags|Shooting Rests": {
+    "top": "Outdoors",
+    "sub": "Dry Bags|Bags & Duffels|Range Bags|Shooting Rests"
+  },
+  "Duck Calls": {
+    "top": "Outdoors",
+    "sub": "Duck Calls"
+  },
+  "Duck Calls|Hunting": {
+    "top": "Outdoors",
+    "sub": "Duck Calls|Hunting"
+  },
+  "Duck Decoys": {
+    "top": "Outdoors",
+    "sub": "Duck Decoys"
+  },
+  "Duck Decoys|Hunting": {
+    "top": "Outdoors",
+    "sub": "Duck Decoys|Hunting"
+  },
+  "Dummy Rounds": {
+    "top": "Gun Parts",
+    "sub": "Dummy Rounds"
+  },
+  "Dummy Rounds|Snap Caps & Dummy Rounds|Cleaning Brushes Mops and Swabs|Snap Caps & Dummy Rounds": {
+    "top": "Gun Parts",
+    "sub": "Dummy Rounds|Snap Caps & Dummy Rounds|Cleaning Brushes Mops and Swabs|Snap Caps & Dummy Rounds"
+  },
+  "Dummy Rounds|Snap Caps & Dummy Rounds|Snap Caps & Dummy Rounds": {
+    "top": "Gun Parts",
+    "sub": "Dummy Rounds|Snap Caps & Dummy Rounds|Snap Caps & Dummy Rounds"
+  },
+  "Ear & Eye Combo Kits": {
+    "top": "Gear",
+    "sub": "Ear & Eye Combo Kits"
+  },
+  "Ear Muffs": {
+    "top": "Gear",
+    "sub": "Ear Muffs"
+  },
+  "Ear Plugs": {
+    "top": "Gear",
+    "sub": "Ear Plugs"
+  },
+  "Electronic Calls": {
+    "top": "Outdoors",
+    "sub": "Electronic Calls"
+  },
+  "Electronic Collars|Collars Leashes & Harnesses": {
+    "top": "Outdoors",
+    "sub": "Electronic Collars|Collars Leashes & Harnesses"
+  },
+  "Electronic Game Calls": {
+    "top": "Outdoors",
+    "sub": "Electronic Game Calls"
+  },
+  "Electronic Game Calls|Predator Calls": {
+    "top": "Outdoors",
+    "sub": "Electronic Game Calls|Predator Calls"
+  },
+  "Elk Calls": {
+    "top": "Outdoors",
+    "sub": "Elk Calls"
+  },
+  "Elk Calls|Hunting": {
+    "top": "Outdoors",
+    "sub": "Elk Calls|Hunting"
+  },
+  "Emergency & Survival": {
+    "top": "Outdoors",
+    "sub": "Emergency & Survival"
+  },
+  "Facemasks Balaclavas & Neck Gaiters": {
+    "top": "Clothing & Footwear",
+    "sub": "Facemasks Balaclavas & Neck Gaiters"
+  },
+  "Feeders": {
+    "top": "Outdoors",
+    "sub": "Feeders"
+  },
+  "Feeders|Hunting": {
+    "top": "Outdoors",
+    "sub": "Feeders|Hunting"
+  },
+  "Feeders|Lanterns": {
+    "top": "Outdoors",
+    "sub": "Feeders|Lanterns"
+  },
+  "Fiber Optic Sights": {
+    "top": "Optics",
+    "sub": "Fiber Optic Sights"
+  },
+  "Field Products": {
+    "top": "Outdoors",
+    "sub": "Field Products"
+  },
+  "Firearms|Grips": {
+    "top": "Gun Parts",
+    "sub": "Firearms|Grips"
+  },
+  "Firepits & Heating": {
+    "top": "Outdoors",
+    "sub": "Firepits & Heating"
+  },
+  "First Aid": {
+    "top": "Outdoors",
+    "sub": "First Aid"
+  },
+  "First Aid Kits|First Aid Kits": {
+    "top": "Outdoors",
+    "sub": "First Aid Kits|First Aid Kits"
+  },
+  "First Aid|First Aid Kits": {
+    "top": "Outdoors",
+    "sub": "First Aid|First Aid Kits"
+  },
+  "First Aid|First Aid Kits|First Aid Kits": {
+    "top": "Outdoors",
+    "sub": "First Aid|First Aid Kits|First Aid Kits"
+  },
+  "First Aid|Shooting": {
+    "top": "Outdoors",
+    "sub": "First Aid|Shooting"
+  },
+  "Flashlights": {
+    "top": "Gear",
+    "sub": "Flashlights"
+  },
+  "Flashlights & Accessories": {
+    "top": "Gear",
+    "sub": "Flashlights & Accessories"
+  },
+  "Flashlights & Accessories|Accessory Holsters": {
+    "top": "Gear",
+    "sub": "Flashlights & Accessories|Accessory Holsters"
+  },
+  "Flashlights|Flashlights & Accessories": {
+    "top": "Gear",
+    "sub": "Flashlights|Flashlights & Accessories"
+  },
+  "Flashlights|Optics|Flashlights & Accessories": {
+    "top": "Gear",
+    "sub": "Flashlights|Optics|Flashlights & Accessories"
+  },
+  "Flintlock": {
+    "top": "Outdoors",
+    "sub": "Flintlock"
+  },
+  "Food": {
+    "top": "Outdoors",
+    "sub": "Food"
+  },
+  "Food Dehydrators": {
+    "top": "Outdoors",
+    "sub": "Food Dehydrators"
+  },
+  "Food Plots": {
+    "top": "Outdoors",
+    "sub": "Food Plots"
+  },
+  "Game Processing": {
+    "top": "Outdoors",
+    "sub": "Game Processing"
+  },
+  "Gas Blocks/Gas Tubes": {
+    "top": "Gun Parts",
+    "sub": "Gas Blocks/Gas Tubes"
+  },
+  "Gloves": {
+    "top": "Clothing & Footwear",
+    "sub": "Gloves"
+  },
+  "Gloves|Facemasks Balaclavas & Neck Gaiters": {
+    "top": "Clothing & Footwear",
+    "sub": "Gloves|Facemasks Balaclavas & Neck Gaiters"
+  },
+  "Gloves|Gloves": {
+    "top": "Clothing & Footwear",
+    "sub": "Gloves|Gloves"
+  },
+  "Gloves|Gloves|Gloves": {
+    "top": "Clothing & Footwear",
+    "sub": "Gloves|Gloves|Gloves"
+  },
+  "Gloves|Vests": {
+    "top": "Clothing & Footwear",
+    "sub": "Gloves|Vests"
+  },
+  "Goose Calls": {
+    "top": "Outdoors",
+    "sub": "Goose Calls"
+  },
+  "Goose Calls|Hunting": {
+    "top": "Outdoors",
+    "sub": "Goose Calls|Hunting"
+  },
+  "Goose Decoys": {
+    "top": "Outdoors",
+    "sub": "Goose Decoys"
+  },
+  "Grips": {
+    "top": "Gun Parts",
+    "sub": "Grips"
+  },
+  "Ground Blinds": {
+    "top": "Outdoors",
+    "sub": "Ground Blinds"
+  },
+  "Ground Blinds|Hunting": {
+    "top": "Outdoors",
+    "sub": "Ground Blinds|Hunting"
+  },
+  "Gun & Magazine Combo Holsters": {
+    "top": "Gear",
+    "sub": "Gun & Magazine Combo Holsters"
+  },
+  "Gun Bluing": {
+    "top": "Gun Parts",
+    "sub": "Gun Bluing"
+  },
+  "Gun Bluing|Gun Cleaning Kits": {
+    "top": "Gun Parts",
+    "sub": "Gun Bluing|Gun Cleaning Kits"
+  },
+  "Gun Bore Guides": {
+    "top": "Gun Parts",
+    "sub": "Gun Bore Guides"
+  },
+  "Gun Cleaning Accessories": {
+    "top": "Gun Parts",
+    "sub": "Gun Cleaning Accessories"
+  },
+  "Gun Cleaning Jags Patch Holders & Patches": {
+    "top": "Gun Parts",
+    "sub": "Gun Cleaning Jags Patch Holders & Patches"
+  },
+  "Gun Cleaning Jags Patch Holders & Patches|Muzzleloader Cleaning & Accessories": {
+    "top": "Gun Parts",
+    "sub": "Gun Cleaning Jags Patch Holders & Patches|Muzzleloader Cleaning & Accessories"
+  },
+  "Gun Cleaning Kits": {
+    "top": "Gun Parts",
+    "sub": "Gun Cleaning Kits"
+  },
+  "Gun Cleaning Kits|Air Gun Accessories": {
+    "top": "Gun Parts",
+    "sub": "Gun Cleaning Kits|Air Gun Accessories"
+  },
+  "Gun Cleaning Kits|Muzzleloader Cleaning & Accessories": {
+    "top": "Gun Parts",
+    "sub": "Gun Cleaning Kits|Muzzleloader Cleaning & Accessories"
+  },
+  "Gun Cleaning Mats": {
+    "top": "Gun Parts",
+    "sub": "Gun Cleaning Mats"
+  },
+  "Gun Cleaning Rods": {
+    "top": "Gun Parts",
+    "sub": "Gun Cleaning Rods"
+  },
+  "Gun Cleaning Rods|Muzzleloader Ramrods": {
+    "top": "Gun Parts",
+    "sub": "Gun Cleaning Rods|Muzzleloader Ramrods"
+  },
+  "Gun Cleaning Tools": {
+    "top": "Gun Parts",
+    "sub": "Gun Cleaning Tools"
+  },
+  "Gun Cleaning Tools|Muzzleloader Cleaning & Accessories": {
+    "top": "Gun Parts",
+    "sub": "Gun Cleaning Tools|Muzzleloader Cleaning & Accessories"
+  },
+  "Gun Holsters": {
+    "top": "Gear",
+    "sub": "Gun Holsters"
+  },
+  "Gun Holsters|Holster Accessories": {
+    "top": "Gear",
+    "sub": "Gun Holsters|Holster Accessories"
+  },
+  "Gun Locks": {
+    "top": "Gear",
+    "sub": "Gun Locks"
+  },
+  "Gun Oils & Gun Cleaning Solvents": {
+    "top": "Gun Parts",
+    "sub": "Gun Oils & Gun Cleaning Solvents"
+  },
+  "Gun Oils & Gun Cleaning Solvents|Muzzleloader Cleaning & Accessories": {
+    "top": "Gun Parts",
+    "sub": "Gun Oils & Gun Cleaning Solvents|Muzzleloader Cleaning & Accessories"
+  },
+  "Gun Parts & Tools": {
+    "top": "Gun Parts",
+    "sub": "Gun Parts & Tools"
+  },
+  "Gun Parts & Tools|Handguards": {
+    "top": "Gun Parts",
+    "sub": "Gun Parts & Tools|Handguards"
+  },
+  "Gun Parts & Tools|Scope Bases & Mounts": {
+    "top": "Gun Parts",
+    "sub": "Gun Parts & Tools|Scope Bases & Mounts"
+  },
+  "Gun Parts & Tools|Triggers": {
+    "top": "Gun Parts",
+    "sub": "Gun Parts & Tools|Triggers"
+  },
+  "Gun Parts|Barrels": {
+    "top": "Gun Parts",
+    "sub": "Gun Parts|Barrels"
+  },
+  "Gun Parts|Bolt Carriers": {
+    "top": "Gun Parts",
+    "sub": "Gun Parts|Bolt Carriers"
+  },
+  "Gun Parts|Caliber Conversions": {
+    "top": "Gun Parts",
+    "sub": "Gun Parts|Caliber Conversions"
+  },
+  "Gun Parts|Chassis & Stocks": {
+    "top": "Gun Parts",
+    "sub": "Gun Parts|Chassis & Stocks"
+  },
+  "Gun Parts|Chokes/Muzzle Devices": {
+    "top": "Gun Parts",
+    "sub": "Gun Parts|Chokes/Muzzle Devices"
+  },
+  "Gun Parts|Dummy Rounds|Snap Caps & Dummy Rounds|Snap Caps & Dummy Rounds": {
+    "top": "Gun Parts",
+    "sub": "Gun Parts|Dummy Rounds|Snap Caps & Dummy Rounds|Snap Caps & Dummy Rounds"
+  },
+  "Gun Parts|Grips": {
+    "top": "Gun Parts",
+    "sub": "Gun Parts|Grips"
+  },
+  "Gun Parts|Handguards": {
+    "top": "Gun Parts",
+    "sub": "Gun Parts|Handguards"
+  },
+  "Gun Parts|Handgun Magazines": {
+    "top": "Gun Parts",
+    "sub": "Gun Parts|Handgun Magazines"
+  },
+  "Gun Parts|Lowers|Grips": {
+    "top": "Gun Parts",
+    "sub": "Gun Parts|Lowers|Grips"
+  },
+  "Gun Parts|Magazine Accessories": {
+    "top": "Gun Parts",
+    "sub": "Gun Parts|Magazine Accessories"
+  },
+  "Gun Parts|Magazine Releases": {
+    "top": "Gun Parts",
+    "sub": "Gun Parts|Magazine Releases"
+  },
+  "Gun Parts|Muzzle Devices": {
+    "top": "Gun Parts",
+    "sub": "Gun Parts|Muzzle Devices"
+  },
+  "Gun Parts|Night Sights": {
+    "top": "Gun Parts",
+    "sub": "Gun Parts|Night Sights"
+  },
+  "Gun Parts|Parts": {
+    "top": "Gun Parts",
+    "sub": "Gun Parts|Parts"
+  },
+  "Gun Parts|Recoil Pads": {
+    "top": "Gun Parts",
+    "sub": "Gun Parts|Recoil Pads"
+  },
+  "Gun Parts|Rifle Magazines": {
+    "top": "Gun Parts",
+    "sub": "Gun Parts|Rifle Magazines"
+  },
+  "Gun Parts|Shotgun Lights": {
+    "top": "Gun Parts",
+    "sub": "Gun Parts|Shotgun Lights"
+  },
+  "Gun Parts|Tools": {
+    "top": "Gun Parts",
+    "sub": "Gun Parts|Tools"
+  },
+  "Gun Parts|Triggers": {
+    "top": "Gun Parts",
+    "sub": "Gun Parts|Triggers"
+  },
+  "Gun Parts|Uppers": {
+    "top": "Gun Parts",
+    "sub": "Gun Parts|Uppers"
+  },
+  "Gun Safes & Cabinets": {
+    "top": "Gear",
+    "sub": "Gun Safes & Cabinets"
+  },
+  "Gun Vises": {
+    "top": "Gun Parts",
+    "sub": "Gun Vises"
+  },
+  "Gun Vises|Gun Cleaning Kits": {
+    "top": "Gun Parts",
+    "sub": "Gun Vises|Gun Cleaning Kits"
+  },
+  "Gun Vises|Gun Cleaning Tools": {
+    "top": "Gun Parts",
+    "sub": "Gun Vises|Gun Cleaning Tools"
+  },
+  "Gun Vises|Vices & Cradles": {
+    "top": "Gun Parts",
+    "sub": "Gun Vises|Vices & Cradles"
+  },
+  "Handcuffs & Restraints": {
+    "top": "Gear",
+    "sub": "Handcuffs & Restraints"
+  },
+  "Headlamps|Flashlights & Accessories": {
+    "top": "Outdoors",
+    "sub": "Headlamps|Flashlights & Accessories"
+  },
+  "Headspace Gauges|Calipers & Micrometers": {
+    "top": "Reloading",
+    "sub": "Headspace Gauges|Calipers & Micrometers"
+  },
+  "Headspace Gauges|Powder Measures Dispensers & Scales": {
+    "top": "Reloading",
+    "sub": "Headspace Gauges|Powder Measures Dispensers & Scales"
+  },
+  "Health & Safety": {
+    "top": "Outdoors",
+    "sub": "Health & Safety"
+  },
+  "Holster & Duty Belts": {
+    "top": "Gear",
+    "sub": "Holster & Duty Belts"
+  },
+  "Hoodies & Sweatshirts": {
+    "top": "Clothing & Footwear",
+    "sub": "Hoodies & Sweatshirts"
+  },
+  "Hoodies & Sweatshirts|Clothing & Footwear": {
+    "top": "Clothing & Footwear",
+    "sub": "Hoodies & Sweatshirts|Clothing & Footwear"
+  },
+  "Hoodies & Sweatshirts|Hoodies & Sweatshirts": {
+    "top": "Clothing & Footwear",
+    "sub": "Hoodies & Sweatshirts|Hoodies & Sweatshirts"
+  },
+  "Hoodies & Sweatshirts|Long Sleeve Shirts": {
+    "top": "Clothing & Footwear",
+    "sub": "Hoodies & Sweatshirts|Long Sleeve Shirts"
+  },
+  "Jackets Coats & Parkas": {
+    "top": "Clothing & Footwear",
+    "sub": "Jackets Coats & Parkas"
+  },
+  "Jackets Coats & Parkas|Jackets Coats & Parkas": {
+    "top": "Clothing & Footwear",
+    "sub": "Jackets Coats & Parkas|Jackets Coats & Parkas"
+  },
+  "Knives & Edged Tools": {
+    "top": "Knives",
+    "sub": "Knives & Edged Tools"
+  },
+  "Knives & Edged Tools|Axes Hatchets & Machetes": {
+    "top": "Knives",
+    "sub": "Knives & Edged Tools|Axes Hatchets & Machetes"
+  },
+  "Knives & Edged Tools|Axes Hatchets & Machetes|Knives": {
+    "top": "Knives",
+    "sub": "Knives & Edged Tools|Axes Hatchets & Machetes|Knives"
+  },
+  "Knives & Edged Tools|Axes Hatchets & Machetes|Knives & Edged Tools": {
+    "top": "Knives",
+    "sub": "Knives & Edged Tools|Axes Hatchets & Machetes|Knives & Edged Tools"
+  },
+  "Knives & Edged Tools|Emergency & Survival": {
+    "top": "Knives",
+    "sub": "Knives & Edged Tools|Emergency & Survival"
+  },
+  "Knives & Edged Tools|Knives": {
+    "top": "Knives",
+    "sub": "Knives & Edged Tools|Knives"
+  },
+  "Knives & Edged Tools|Knives & Edged Tools": {
+    "top": "Knives",
+    "sub": "Knives & Edged Tools|Knives & Edged Tools"
+  },
+  "Knives & Edged Tools|Knives|Knives": {
+    "top": "Knives",
+    "sub": "Knives & Edged Tools|Knives|Knives"
+  },
+  "Knives & Edged Tools|Knives|Knives & Edged Tools": {
+    "top": "Knives",
+    "sub": "Knives & Edged Tools|Knives|Knives & Edged Tools"
+  },
+  "Knives & Edged Tools|Multi-Tools": {
+    "top": "Knives",
+    "sub": "Knives & Edged Tools|Multi-Tools"
+  },
+  "Knives & Edged Tools|Multi-Tools|Emergency & Survival": {
+    "top": "Knives",
+    "sub": "Knives & Edged Tools|Multi-Tools|Emergency & Survival"
+  },
+  "Knives & Edged Tools|Multi-Tools|Knives & Edged Tools": {
+    "top": "Knives",
+    "sub": "Knives & Edged Tools|Multi-Tools|Knives & Edged Tools"
+  },
+  "Knives & Edged Tools|Pouches": {
+    "top": "Knives",
+    "sub": "Knives & Edged Tools|Pouches"
+  },
+  "Knives|Axes Hatchets & Machetes|Knives": {
+    "top": "Knives",
+    "sub": "Knives|Axes Hatchets & Machetes|Knives"
+  },
+  "Knives|Knives & Edged Tools": {
+    "top": "Knives",
+    "sub": "Knives|Knives & Edged Tools"
+  },
+  "Hammocks": {
+    "top": "Outdoors",
+    "sub": "Hammocks"
+  },
+  "Handguards": {
+    "top": "Gun Parts",
+    "sub": "Handguards"
+  },
+  "Handgun Ammunition": {
+    "top": "Ammunition",
+    "sub": "Handgun Ammunition"
+  },
+  "Handgun Ammunition|Rifle Ammunition": {
+    "top": "Ammunition",
+    "sub": "Handgun Ammunition|Rifle Ammunition"
+  },
+  "Handgun Cases": {
+    "top": "Gear",
+    "sub": "Handgun Cases"
+  },
+  "Handgun Cases|Pouches": {
+    "top": "Gear",
+    "sub": "Handgun Cases|Pouches"
+  },
+  "Handgun Lights": {
+    "top": "Gear",
+    "sub": "Handgun Lights"
+  },
+  "Handgun Lights|Rifle Lights": {
+    "top": "Gear",
+    "sub": "Handgun Lights|Rifle Lights"
+  },
+  "Handgun Magazines": {
+    "top": "Magazines",
+    "sub": "Handgun Magazines"
+  },
+  "Handgun Magazines|Rifle Magazines": {
+    "top": "Magazines",
+    "sub": "Handgun Magazines|Rifle Magazines"
+  },
+  "Handgun Sights": {
+    "top": "Optics",
+    "sub": "Handgun Sights"
+  },
+  "Handguns": {
+    "top": "Firearms",
+    "sub": "Handguns"
+  },
+  "Handguns|CA Compliant": {
+    "top": "Firearms",
+    "sub": "Handguns|CA Compliant"
+  },
+  "Handguns|CA Compliant|CSSI Exclusive Shop": {
+    "top": "Firearms",
+    "sub": "Handguns|CA Compliant|CSSI Exclusive Shop"
+  },
+  "Handguns|CA Compliant|Firearms": {
+    "top": "Firearms",
+    "sub": "Handguns|CA Compliant|Firearms"
+  },
+  "Handguns|CA Compliant|MA Compliant": {
+    "top": "Firearms",
+    "sub": "Handguns|CA Compliant|MA Compliant"
+  },
+  "Handguns|CSSI Exclusive Shop": {
+    "top": "Firearms",
+    "sub": "Handguns|CSSI Exclusive Shop"
+  },
+  "Handguns|CSSI Exclusive Shop|Firearms": {
+    "top": "Firearms",
+    "sub": "Handguns|CSSI Exclusive Shop|Firearms"
+  },
+  "Handguns|Firearms": {
+    "top": "Firearms",
+    "sub": "Handguns|Firearms"
+  },
+  "Handguns|MA Compliant": {
+    "top": "Firearms",
+    "sub": "Handguns|MA Compliant"
+  },
+  "Handguns|Used Guns": {
+    "top": "Firearms",
+    "sub": "Handguns|Used Guns"
+  },
+  "Handguns|Used Guns|CA Compliant": {
+    "top": "Firearms",
+    "sub": "Handguns|Used Guns|CA Compliant"
+  },
+  "Handguns|Used Guns|CSSI Exclusive Shop": {
+    "top": "Firearms",
+    "sub": "Handguns|Used Guns|CSSI Exclusive Shop"
+  },
+  "Hang On Treestands": {
+    "top": "Outdoors",
+    "sub": "Hang On Treestands"
+  },
+  "Hats": {
+    "top": "Clothing & Footwear",
+    "sub": "Hats"
+  },
+  "Headlamps": {
+    "top": "Outdoors",
+    "sub": "Headlamps"
+  },
+  "Headlamps|Knives|Knives": {
+    "top": "Outdoors",
+    "sub": "Headlamps|Knives|Knives"
+  },
+  "Headlamps|Optics": {
+    "top": "Outdoors",
+    "sub": "Headlamps|Optics"
+  },
+  "Headspace Gauges": {
+    "top": "Reloading",
+    "sub": "Headspace Gauges"
+  },
+  "Holster Accessories": {
+    "top": "Gear",
+    "sub": "Holster Accessories"
+  },
+  "Hunting": {
+    "top": "Outdoors",
+    "sub": "Hunting"
+  },
+  "Hunting Accessories": {
+    "top": "Outdoors",
+    "sub": "Hunting Accessories"
+  },
+  "Hunting Eyewear|Safety Glasses|Shooting Glasses": {
+    "top": "Optics",
+    "sub": "Hunting Eyewear|Safety Glasses|Shooting Glasses"
+  },
+  "Hunting Eyewear|Shooting Glasses": {
+    "top": "Optics",
+    "sub": "Hunting Eyewear|Shooting Glasses"
+  },
+  "Hunting Eyewear|Sunglasses|Shooting Glasses": {
+    "top": "Optics",
+    "sub": "Hunting Eyewear|Sunglasses|Shooting Glasses"
+  },
+  "Hunting Eyewear|Sunglasses|Sunglasses": {
+    "top": "Optics",
+    "sub": "Hunting Eyewear|Sunglasses|Sunglasses"
+  },
+  "Hunting Eyewear|Sunglasses|Sunglasses|Shooting Glasses": {
+    "top": "Optics",
+    "sub": "Hunting Eyewear|Sunglasses|Sunglasses|Shooting Glasses"
+  },
+  "Hunting Packs": {
+    "top": "Outdoors",
+    "sub": "Hunting Packs"
+  },
+  "Hunting Pants": {
+    "top": "Clothing & Footwear",
+    "sub": "Hunting Pants"
+  },
+  "Hunting Safety": {
+    "top": "Outdoors",
+    "sub": "Hunting Safety"
+  },
+  "Hunting Safety|Shooting Vests": {
+    "top": "Outdoors",
+    "sub": "Hunting Safety|Shooting Vests"
+  },
+  "Hunting Vests": {
+    "top": "Clothing & Footwear",
+    "sub": "Hunting Vests"
+  },
+  "Hunting|Electronic Game Calls": {
+    "top": "Outdoors",
+    "sub": "Hunting|Electronic Game Calls"
+  },
+  "Hygiene Products": {
+    "top": "Outdoors",
+    "sub": "Hygiene Products"
+  },
+  "Inline": {
+    "top": "Outdoors",
+    "sub": "Inline"
+  },
+  "Insect Repellants": {
+    "top": "Outdoors",
+    "sub": "Insect Repellants"
+  },
+  "Knives": {
+    "top": "Knives",
+    "sub": "Knives"
+  },
+  "Knives|Knives": {
+    "top": "Knives",
+    "sub": "Knives|Knives"
+  },
+  "Knives|Knives & Edged Tools|Knives": {
+    "top": "Knives",
+    "sub": "Knives|Knives & Edged Tools|Knives"
+  },
+  "Knives|Multi-Tools|Knives": {
+    "top": "Knives",
+    "sub": "Knives|Multi-Tools|Knives"
+  },
+  "Knives|Self Defense Accessories|Knives": {
+    "top": "Knives",
+    "sub": "Knives|Self Defense Accessories|Knives"
+  },
+  "Ladder Treestands": {
+    "top": "Outdoors",
+    "sub": "Ladder Treestands"
+  },
+  "Lanterns": {
+    "top": "Outdoors",
+    "sub": "Lanterns"
+  },
+  "Lanterns|Batteries": {
+    "top": "Outdoors",
+    "sub": "Lanterns|Batteries"
+  },
+  "Lanyards": {
+    "top": "Outdoors",
+    "sub": "Lanyards"
+  },
+  "Lanyards|Training": {
+    "top": "Outdoors",
+    "sub": "Lanyards|Training"
+  },
+  "Laser Sights": {
+    "top": "Optics",
+    "sub": "Laser Sights"
+  },
+  "Laundry Detergent": {
+    "top": "Outdoors",
+    "sub": "Laundry Detergent"
+  },
+  "Locator Calls": {
+    "top": "Outdoors",
+    "sub": "Locator Calls"
+  },
+  "Long Sleeve Shirts": {
+    "top": "Clothing & Footwear",
+    "sub": "Long Sleeve Shirts"
+  },
+  "Long Sleeve Shirts|Clothing & Footwear": {
+    "top": "Clothing & Footwear",
+    "sub": "Long Sleeve Shirts|Clothing & Footwear"
+  },
+  "Long Sleeve Shirts|Hoodies & Sweatshirts": {
+    "top": "Clothing & Footwear",
+    "sub": "Long Sleeve Shirts|Hoodies & Sweatshirts"
+  },
+  "Long Sleeve Shirts|Long Sleeve Shirts": {
+    "top": "Clothing & Footwear",
+    "sub": "Long Sleeve Shirts|Long Sleeve Shirts"
+  },
+  "Lowers": {
+    "top": "Gun Parts",
+    "sub": "Lowers"
+  },
+  "Lowers|Grips": {
+    "top": "Gun Parts",
+    "sub": "Lowers|Grips"
+  },
+  "Lowers|Lowers": {
+    "top": "Gun Parts",
+    "sub": "Lowers|Lowers"
+  },
+  "Lowers|Uppers": {
+    "top": "Gun Parts",
+    "sub": "Lowers|Uppers"
+  },
+  "MA Compliant": {
+    "top": "Firearms",
+    "sub": "MA Compliant"
+  },
+  "Magazine Accessories": {
+    "top": "Gun Parts",
+    "sub": "Magazine Accessories"
+  },
+  "Magazine Accessories|Packs & Bags": {
+    "top": "Gun Parts",
+    "sub": "Magazine Accessories|Packs & Bags"
+  },
+  "Magazine Accessories|Slings & Swivels": {
+    "top": "Gun Parts",
+    "sub": "Magazine Accessories|Slings & Swivels"
+  },
+  "Magazine Catches": {
+    "top": "Gun Parts",
+    "sub": "Magazine Catches"
+  },
+  "Magazine Catches|Magazine Catches": {
+    "top": "Gun Parts",
+    "sub": "Magazine Catches|Magazine Catches"
+  },
+  "Magazine Extensions": {
+    "top": "Gun Parts",
+    "sub": "Magazine Extensions"
+  },
+  "Magazine Extensions|Parts": {
+    "top": "Gun Parts",
+    "sub": "Magazine Extensions|Parts"
+  },
+  "Magazine Holsters": {
+    "top": "Gear",
+    "sub": "Magazine Holsters"
+  },
+  "Magazine Pouches": {
+    "top": "Gear",
+    "sub": "Magazine Pouches"
+  },
+  "Magazine Releases": {
+    "top": "Gun Parts",
+    "sub": "Magazine Releases"
+  },
+  "Magazine Releases|Parts": {
+    "top": "Gun Parts",
+    "sub": "Magazine Releases|Parts"
+  },
+  "Magazine Speedloaders": {
+    "top": "Gun Parts",
+    "sub": "Magazine Speedloaders"
+  },
+  "Magazine Speedloaders|Speedloaders & Accessories": {
+    "top": "Gun Parts",
+    "sub": "Magazine Speedloaders|Speedloaders & Accessories"
+  },
+  "Magazine Speedloaders|Speedloaders & Accessories|Pouches": {
+    "top": "Gun Parts",
+    "sub": "Magazine Speedloaders|Speedloaders & Accessories|Pouches"
+  },
+  "Magazine Storage": {
+    "top": "Gun Parts",
+    "sub": "Magazine Storage"
+  },
+  "Magazine Tubes": {
+    "top": "Gun Parts",
+    "sub": "Magazine Tubes"
+  },
+  "Magnifier": {
+    "top": "Optics",
+    "sub": "Magnifier"
+  },
+  "Manuals": {
+    "top": "Gear",
+    "sub": "Manuals"
+  },
+  "Mathews Bridge-Lock Sights & Accessories": {
+    "top": "Outdoors",
+    "sub": "Mathews Bridge-Lock Sights & Accessories"
+  },
+  "Meat Grinders": {
+    "top": "Outdoors",
+    "sub": "Meat Grinders"
+  },
+  "Meat Mixers": {
+    "top": "Outdoors",
+    "sub": "Meat Mixers"
+  },
+  "Meat Saws": {
+    "top": "Outdoors",
+    "sub": "Meat Saws"
+  },
+  "Meat Saws|Hunting": {
+    "top": "Outdoors",
+    "sub": "Meat Saws|Hunting"
+  },
+  "Meat Slicers": {
+    "top": "Outdoors",
+    "sub": "Meat Slicers"
+  },
+  "Minerals & Attractants": {
+    "top": "Outdoors",
+    "sub": "Minerals & Attractants"
+  },
+  "Monoculars": {
+    "top": "Optics",
+    "sub": "Monoculars"
+  },
+  "Monopods": {
+    "top": "Optics",
+    "sub": "Monopods"
+  },
+  "Monopods|Shooting Sticks": {
+    "top": "Optics",
+    "sub": "Monopods|Shooting Sticks"
+  },
+  "Mouth Calls": {
+    "top": "Outdoors",
+    "sub": "Mouth Calls"
+  },
+  "Multi-Tools": {
+    "top": "Knives",
+    "sub": "Multi-Tools"
+  },
+  "Multi-Tools & Tool Kits": {
+    "top": "Knives",
+    "sub": "Multi-Tools & Tool Kits"
+  },
+  "Muzzle Devices": {
+    "top": "Gun Parts",
+    "sub": "Muzzle Devices"
+  },
+  "Muzzle Devices|Tools": {
+    "top": "Gun Parts",
+    "sub": "Muzzle Devices|Tools"
+  },
+  "Muzzleloader Bullets & Sabots": {
+    "top": "Outdoors",
+    "sub": "Muzzleloader Bullets & Sabots"
+  },
+  "Muzzleloader Bullets & Sabots|Muzzleloader Bullets & Sabots": {
+    "top": "Outdoors",
+    "sub": "Muzzleloader Bullets & Sabots|Muzzleloader Bullets & Sabots"
+  },
+  "Muzzleloader Cappers & Speed Loaders": {
+    "top": "Outdoors",
+    "sub": "Muzzleloader Cappers & Speed Loaders"
+  },
+  "Muzzleloader Cleaning & Accessories": {
+    "top": "Outdoors",
+    "sub": "Muzzleloader Cleaning & Accessories"
+  },
+  "Muzzleloader Ramrods": {
+    "top": "Outdoors",
+    "sub": "Muzzleloader Ramrods"
+  },
+  "Muzzleloader Scopes": {
+    "top": "Optics",
+    "sub": "Muzzleloader Scopes"
+  },
+  "Muzzleloaders": {
+    "top": "Outdoors",
+    "sub": "Muzzleloaders"
+  },
+  "Night Sights": {
+    "top": "Optics",
+    "sub": "Night Sights"
+  },
+  "Night Vision Accessories": {
+    "top": "Optics",
+    "sub": "Night Vision Accessories"
+  },
+  "Night Vision Binoculars": {
+    "top": "Optics",
+    "sub": "Night Vision Binoculars"
+  },
+  "Night Vision Binoculars|Thermal Binoculars": {
+    "top": "Optics",
+    "sub": "Night Vision Binoculars|Thermal Binoculars"
+  },
+  "Night Vision Goggles": {
+    "top": "Optics",
+    "sub": "Night Vision Goggles"
+  },
+  "Night Vision Monoculars": {
+    "top": "Optics",
+    "sub": "Night Vision Monoculars"
+  },
+  "Night Vision Rifle Scopes": {
+    "top": "Optics",
+    "sub": "Night Vision Rifle Scopes"
+  },
+  "Night Vision Rifle Scopes|Thermal Rifle Scopes": {
+    "top": "Optics",
+    "sub": "Night Vision Rifle Scopes|Thermal Rifle Scopes"
+  },
+  "Night Vision|Thermal Rifle Scopes": {
+    "top": "Optics",
+    "sub": "Night Vision|Thermal Rifle Scopes"
+  },
+  "Non Cellular Trail Cameras": {
+    "top": "Outdoors",
+    "sub": "Non Cellular Trail Cameras"
+  },
+  "Non Cellular Trail Cameras|Navigation & Observation": {
+    "top": "Outdoors",
+    "sub": "Non Cellular Trail Cameras|Navigation & Observation"
+  },
+  "Oil & Lubricants": {
+    "top": "Gear",
+    "sub": "Oil & Lubricants"
+  },
+  "Optics": {
+    "top": "Optics",
+    "sub": "Optics"
+  },
+  "Optics|Bases & Mounts by Gun Make & Model": {
+    "top": "Optics",
+    "sub": "Optics|Bases & Mounts by Gun Make & Model"
+  },
+  "Optics|Binocular Cases & Harnesses": {
+    "top": "Optics",
+    "sub": "Optics|Binocular Cases & Harnesses"
+  },
+  "Optics|Binoculars": {
+    "top": "Optics",
+    "sub": "Optics|Binoculars"
+  },
+  "Optics|Centerfire Scopes": {
+    "top": "Optics",
+    "sub": "Optics|Centerfire Scopes"
+  },
+  "Optics|Chassis & Stocks": {
+    "top": "Optics",
+    "sub": "Optics|Chassis & Stocks"
+  },
+  "Optics|Handgun Lights": {
+    "top": "Optics",
+    "sub": "Optics|Handgun Lights"
+  },
+  "Optics|Laser Sights": {
+    "top": "Optics",
+    "sub": "Optics|Laser Sights"
+  },
+  "Optics|Night Sights": {
+    "top": "Optics",
+    "sub": "Optics|Night Sights"
+  },
+  "Optics|Night Vision Goggles": {
+    "top": "Optics",
+    "sub": "Optics|Night Vision Goggles"
+  },
+  "Optics|Night Vision Monoculars": {
+    "top": "Optics",
+    "sub": "Optics|Night Vision Monoculars"
+  },
+  "Optics|Rangefinding Binoculars|Rangefinders|Rangefinding Binoculars": {
+    "top": "Optics",
+    "sub": "Optics|Rangefinding Binoculars|Rangefinders|Rangefinding Binoculars"
+  },
+  "Optics|Red Dot Sight Mounts & Adapters": {
+    "top": "Optics",
+    "sub": "Optics|Red Dot Sight Mounts & Adapters"
+  },
+  "Optics|Reflex": {
+    "top": "Optics",
+    "sub": "Optics|Reflex"
+  },
+  "Optics|Rifle Lights": {
+    "top": "Optics",
+    "sub": "Optics|Rifle Lights"
+  },
+  "Optics|Scope Bases & Mounts": {
+    "top": "Optics",
+    "sub": "Optics|Scope Bases & Mounts"
+  },
+  "Optics|Scope Covers & Sunshades": {
+    "top": "Optics",
+    "sub": "Optics|Scope Covers & Sunshades"
+  },
+  "Optics|Scope Rings": {
+    "top": "Optics",
+    "sub": "Optics|Scope Rings"
+  },
+  "Optics|Spotting Scopes": {
+    "top": "Optics",
+    "sub": "Optics|Spotting Scopes"
+  },
+  "Optics|Thermal Accessories": {
+    "top": "Optics",
+    "sub": "Optics|Thermal Accessories"
+  },
+  "Optics|Thermal Imaging Cameras": {
+    "top": "Optics",
+    "sub": "Optics|Thermal Imaging Cameras"
+  },
+  "Optics|Thermal Monoculars": {
+    "top": "Optics",
+    "sub": "Optics|Thermal Monoculars"
+  },
+  "Optics|Thermal Rifle Scopes": {
+    "top": "Optics",
+    "sub": "Optics|Thermal Rifle Scopes"
+  },
+  "Optics|Tube": {
+    "top": "Optics",
+    "sub": "Optics|Tube"
+  },
+  "Outdoors": {
+    "top": "Outdoors",
+    "sub": "Outdoors"
+  },
+  "Outdoors|Backpacks": {
+    "top": "Outdoors",
+    "sub": "Outdoors|Backpacks"
+  },
+  "Outdoors|Flashlights": {
+    "top": "Outdoors",
+    "sub": "Outdoors|Flashlights"
+  },
+  "PFDs": {
+    "top": "Outdoors",
+    "sub": "PFDs"
+  },
+  "Packs & Bags": {
+    "top": "Gear",
+    "sub": "Packs & Bags"
+  },
+  "Packs & Bags|Gun Holsters": {
+    "top": "Gear",
+    "sub": "Packs & Bags|Gun Holsters"
+  },
+  "Packs & Bags|Holster Accessories": {
+    "top": "Gear",
+    "sub": "Packs & Bags|Holster Accessories"
+  },
+  "Paint Stain Polish & Finish": {
+    "top": "Gear",
+    "sub": "Paint Stain Polish & Finish"
+  },
+  "Paint Stain Polish & Finish|Cloths & Wipes": {
+    "top": "Gear",
+    "sub": "Paint Stain Polish & Finish|Cloths & Wipes"
+  },
+  "Paint Stain Polish & Finish|Gun Cleaning Kits": {
+    "top": "Gear",
+    "sub": "Paint Stain Polish & Finish|Gun Cleaning Kits"
+  },
+  "Pants": {
+    "top": "Clothing & Footwear",
+    "sub": "Pants"
+  },
+  "Pants|Clothing & Footwear": {
+    "top": "Clothing & Footwear",
+    "sub": "Pants|Clothing & Footwear"
+  },
+  "Pants|Hunting Pants": {
+    "top": "Clothing & Footwear",
+    "sub": "Pants|Hunting Pants"
+  },
+  "Paper Targets": {
+    "top": "Outdoors",
+    "sub": "Paper Targets"
+  },
+  "Parts": {
+    "top": "Gun Parts",
+    "sub": "Parts"
+  },
+  "Parts/Parts Kits": {
+    "top": "Gun Parts",
+    "sub": "Parts/Parts Kits"
+  },
+  "Parts/Parts Kits|Ammo Boxes": {
+    "top": "Gun Parts",
+    "sub": "Parts/Parts Kits|Ammo Boxes"
+  },
+  "Parts/Parts Kits|Slings & Swivels": {
+    "top": "Gun Parts",
+    "sub": "Parts/Parts Kits|Slings & Swivels"
+  },
+  "Parts|Cartridge Holders": {
+    "top": "Gun Parts",
+    "sub": "Parts|Cartridge Holders"
+  },
+  "Pellets & BBs": {
+    "top": "Outdoors",
+    "sub": "Pellets & BBs"
+  },
+  "Pepper Gun Accessories": {
+    "top": "Gear",
+    "sub": "Pepper Gun Accessories"
+  },
+  "Pepper Guns": {
+    "top": "Gear",
+    "sub": "Pepper Guns"
+  },
+  "Pepper Spray": {
+    "top": "Gear",
+    "sub": "Pepper Spray"
+  },
+  "Pepper Spray|Pepper Gun Accessories": {
+    "top": "Gear",
+    "sub": "Pepper Spray|Pepper Gun Accessories"
+  },
+  "Percussion Cap": {
+    "top": "Outdoors",
+    "sub": "Percussion Cap"
+  },
+  "Percussion Caps & Primers": {
+    "top": "Reloading",
+    "sub": "Percussion Caps & Primers"
+  },
+  "Personal Defense & Security": {
+    "top": "Gear",
+    "sub": "Personal Defense & Security"
+  },
+  "Personal Defense & Security|Emergency & Survival|Self Defense Accessories": {
+    "top": "Gear",
+    "sub": "Personal Defense & Security|Emergency & Survival|Self Defense Accessories"
+  },
+  "Personal Defense & Security|Handcuffs & Restraints": {
+    "top": "Gear",
+    "sub": "Personal Defense & Security|Handcuffs & Restraints"
+  },
+  "Personal Defense & Security|Knives|Handcuffs & Restraints": {
+    "top": "Gear",
+    "sub": "Personal Defense & Security|Knives|Handcuffs & Restraints"
+  },
+  "Personal Defense & Security|Knives|Self Defense Accessories": {
+    "top": "Gear",
+    "sub": "Personal Defense & Security|Knives|Self Defense Accessories"
+  },
+  "Personal Defense & Security|Pepper Gun Accessories": {
+    "top": "Gear",
+    "sub": "Personal Defense & Security|Pepper Gun Accessories"
+  },
+  "Personal Defense & Security|Pepper Guns": {
+    "top": "Gear",
+    "sub": "Personal Defense & Security|Pepper Guns"
+  },
+  "Personal Defense & Security|Pepper Spray": {
+    "top": "Gear",
+    "sub": "Personal Defense & Security|Pepper Spray"
+  },
+  "Personal Defense & Security|Plate Carriers|Plate Carriers & Chest Rigs": {
+    "top": "Gear",
+    "sub": "Personal Defense & Security|Plate Carriers|Plate Carriers & Chest Rigs"
+  },
+  "Personal Defense & Security|Self Defense Accessories": {
+    "top": "Gear",
+    "sub": "Personal Defense & Security|Self Defense Accessories"
+  },
+  "Personal Defense & Security|Shooting Vests|Plate Carriers & Chest Rigs": {
+    "top": "Gear",
+    "sub": "Personal Defense & Security|Shooting Vests|Plate Carriers & Chest Rigs"
+  },
+  "Personal Defense & Security|Stun Guns": {
+    "top": "Gear",
+    "sub": "Personal Defense & Security|Stun Guns"
+  },
+  "Personal Defense & Security|Stun Guns|Flashlights & Accessories": {
+    "top": "Gear",
+    "sub": "Personal Defense & Security|Stun Guns|Flashlights & Accessories"
+  },
+  "Personal Defense & Security|TASER Accessories": {
+    "top": "Gear",
+    "sub": "Personal Defense & Security|TASER Accessories"
+  },
+  "Personal Defense & Security|TASER Devices": {
+    "top": "Gear",
+    "sub": "Personal Defense & Security|TASER Devices"
+  },
+  "Personal Defense & Security|TASER Devices|Flashlights & Accessories": {
+    "top": "Gear",
+    "sub": "Personal Defense & Security|TASER Devices|Flashlights & Accessories"
+  },
+  "Picatinny-Style Universal Mounts": {
+    "top": "Gun Parts",
+    "sub": "Picatinny-Style Universal Mounts"
+  },
+  "Picatinny-Style Universal Mounts|Handguards": {
+    "top": "Gun Parts",
+    "sub": "Picatinny-Style Universal Mounts|Handguards"
+  },
+  "Picatinny-Style Universal Mounts|Parts/Parts Kits": {
+    "top": "Gun Parts",
+    "sub": "Picatinny-Style Universal Mounts|Parts/Parts Kits"
+  },
+  "Picatinny-Style Universal Mounts|Scope Rings": {
+    "top": "Gun Parts",
+    "sub": "Picatinny-Style Universal Mounts|Scope Rings"
+  },
+  "Pistol Brass": {
+    "top": "Reloading",
+    "sub": "Pistol Brass"
+  },
+  "Pistol Bullets": {
+    "top": "Reloading",
+    "sub": "Pistol Bullets"
+  },
+  "Pistol Bullets|Muzzleloader Bullets & Sabots": {
+    "top": "Reloading",
+    "sub": "Pistol Bullets|Muzzleloader Bullets & Sabots"
+  },
+  "Pistol Dies": {
+    "top": "Reloading",
+    "sub": "Pistol Dies"
+  },
+  "Pistol Powder": {
+    "top": "Reloading",
+    "sub": "Pistol Powder"
+  },
+  "Pistol Primers": {
+    "top": "Reloading",
+    "sub": "Pistol Primers"
+  },
+  "Pistol Scopes": {
+    "top": "Optics",
+    "sub": "Pistol Scopes"
+  },
+  "Plate Carriers": {
+    "top": "Gear",
+    "sub": "Plate Carriers"
+  },
+  "Plate Carriers|Plate Carriers & Chest Rigs": {
+    "top": "Gear",
+    "sub": "Plate Carriers|Plate Carriers & Chest Rigs"
+  },
+  "Portable Showers": {
+    "top": "Outdoors",
+    "sub": "Portable Showers"
+  },
+  "Pouches": {
+    "top": "Gear",
+    "sub": "Pouches"
+  },
+  "Pouches|Accessory Holsters": {
+    "top": "Gear",
+    "sub": "Pouches|Accessory Holsters"
+  },
+  "Pouches|Gun & Magazine Combo Holsters": {
+    "top": "Gear",
+    "sub": "Pouches|Gun & Magazine Combo Holsters"
+  },
+  "Pouches|Gun Holsters": {
+    "top": "Gear",
+    "sub": "Pouches|Gun Holsters"
+  },
+  "Pouches|Holster Accessories": {
+    "top": "Gear",
+    "sub": "Pouches|Holster Accessories"
+  },
+  "Pouches|Magazine Holsters": {
+    "top": "Gear",
+    "sub": "Pouches|Magazine Holsters"
+  },
+  "Pouches|Muzzleloader Ramrods": {
+    "top": "Outdoors",
+    "sub": "Pouches|Muzzleloader Ramrods"
+  },
+  "Powder Measures": {
+    "top": "Reloading",
+    "sub": "Powder Measures"
+  },
+  "Powder Measures Dispensers & Scales": {
+    "top": "Reloading",
+    "sub": "Powder Measures Dispensers & Scales"
+  },
+  "Predator Calls": {
+    "top": "Outdoors",
+    "sub": "Predator Calls"
+  },
+  "Predator Decoys": {
+    "top": "Outdoors",
+    "sub": "Predator Decoys"
+  },
+  "Press Parts & Accessories": {
+    "top": "Reloading",
+    "sub": "Press Parts & Accessories"
+  },
+  "Press Parts & Accessories|Brass Catchers": {
+    "top": "Reloading",
+    "sub": "Press Parts & Accessories|Brass Catchers"
+  },
+  "Press Parts & Accessories|Dies": {
+    "top": "Reloading",
+    "sub": "Press Parts & Accessories|Dies"
+  },
+  "Presses|Case Prep Tools": {
+    "top": "Reloading",
+    "sub": "Presses|Case Prep Tools"
+  },
+  "Primer Accessories & Fuses": {
+    "top": "Reloading",
+    "sub": "Primer Accessories & Fuses"
+  },
+  "Progressive Presses": {
+    "top": "Reloading",
+    "sub": "Progressive Presses"
+  },
+  "Pull Through Bore Cleaners": {
+    "top": "Gun Parts",
+    "sub": "Pull Through Bore Cleaners"
+  },
+  "Punches": {
+    "top": "Gear",
+    "sub": "Punches"
+  },
+  "Purses": {
+    "top": "Gear",
+    "sub": "Purses"
+  },
+  "Purses|Bags & Packs": {
+    "top": "Gear",
+    "sub": "Purses|Bags & Packs"
+  },
+  "Purses|Cases Safes & Storage": {
+    "top": "Gear",
+    "sub": "Purses|Cases Safes & Storage"
+  },
+  "Purses|Personal Defense & Security": {
+    "top": "Gear",
+    "sub": "Purses|Personal Defense & Security"
+  },
+  "Quivers Belts & Carriers": {
+    "top": "Outdoors",
+    "sub": "Quivers Belts & Carriers"
+  },
+  "Rain Gear": {
+    "top": "Clothing & Footwear",
+    "sub": "Rain Gear"
+  },
+  "Range Accessories": {
+    "top": "Gear",
+    "sub": "Range Accessories"
+  },
+  "Range Bags": {
+    "top": "Gear",
+    "sub": "Range Bags"
+  },
+  "Range Bags|Handgun Cases": {
+    "top": "Gear",
+    "sub": "Range Bags|Handgun Cases"
+  },
+  "Range Bags|Pouches": {
+    "top": "Gear",
+    "sub": "Range Bags|Pouches"
+  },
+  "Range Bags|Shooting Rests": {
+    "top": "Gear",
+    "sub": "Range Bags|Shooting Rests"
+  },
+  "Range Gear": {
+    "top": "Gear",
+    "sub": "Range Gear"
+  },
+  "Range Gear|Gun Cleaning Accessories": {
+    "top": "Gear",
+    "sub": "Range Gear|Gun Cleaning Accessories"
+  },
+  "Rangefinders": {
+    "top": "Optics",
+    "sub": "Rangefinders"
+  },
+  "Rangefinders|Pouches": {
+    "top": "Optics",
+    "sub": "Rangefinders|Pouches"
+  },
+  "Rangefinding Binoculars": {
+    "top": "Optics",
+    "sub": "Rangefinding Binoculars"
+  },
+  "Rangefinding Binoculars|Rangefinding Binoculars": {
+    "top": "Optics",
+    "sub": "Rangefinding Binoculars|Rangefinding Binoculars"
+  },
+  "Reactive Targets": {
+    "top": "Outdoors",
+    "sub": "Reactive Targets"
+  },
+  "Recoil Pads": {
+    "top": "Gun Parts",
+    "sub": "Recoil Pads"
+  },
+  "Red Dot Sight Mounts & Adapters": {
+    "top": "Optics",
+    "sub": "Red Dot Sight Mounts & Adapters"
+  },
+  "Red Dot Sight Mounts & Adapters|Picatinny-Style Universal Mounts": {
+    "top": "Optics",
+    "sub": "Red Dot Sight Mounts & Adapters|Picatinny-Style Universal Mounts"
+  },
+  "Red Dot Sight Mounts & Adapters|Scope Bases & Mounts": {
+    "top": "Optics",
+    "sub": "Red Dot Sight Mounts & Adapters|Scope Bases & Mounts"
+  },
+  "Red Dot Sights": {
+    "top": "Optics",
+    "sub": "Red Dot Sights"
+  },
+  "Reflex": {
+    "top": "Optics",
+    "sub": "Reflex"
+  },
+  "Reflex|Magnifier": {
+    "top": "Optics",
+    "sub": "Reflex|Magnifier"
+  },
+  "Releases & Accessories": {
+    "top": "Outdoors",
+    "sub": "Releases & Accessories"
+  },
+  "Reloading": {
+    "top": "Reloading",
+    "sub": "Reloading"
+  },
+  "Reloading Kits": {
+    "top": "Reloading",
+    "sub": "Reloading Kits"
+  },
+  "Reloading Kits|Dies": {
+    "top": "Reloading",
+    "sub": "Reloading Kits|Dies"
+  },
+  "Reloading|Bullet Casting": {
+    "top": "Reloading",
+    "sub": "Reloading|Bullet Casting"
+  },
+  "Reloading|Bullet Pullers": {
+    "top": "Reloading",
+    "sub": "Reloading|Bullet Pullers"
+  },
+  "Reloading|Calipers & Micrometers": {
+    "top": "Reloading",
+    "sub": "Reloading|Calipers & Micrometers"
+  },
+  "Reloading|Case Prep Tools": {
+    "top": "Reloading",
+    "sub": "Reloading|Case Prep Tools"
+  },
+  "Reloading|Die Parts Shell Holders & Accessories": {
+    "top": "Reloading",
+    "sub": "Reloading|Die Parts Shell Holders & Accessories"
+  },
+  "Reloading|Dies": {
+    "top": "Reloading",
+    "sub": "Reloading|Dies"
+  },
+  "Reloading|Muzzleloader Bullets & Sabots": {
+    "top": "Reloading",
+    "sub": "Reloading|Muzzleloader Bullets & Sabots"
+  },
+  "Reloading|Muzzleloader Bullets & Sabots|Muzzleloader Bullets & Sabots": {
+    "top": "Reloading",
+    "sub": "Reloading|Muzzleloader Bullets & Sabots|Muzzleloader Bullets & Sabots"
+  },
+  "Reloading|Pistol Brass": {
+    "top": "Reloading",
+    "sub": "Reloading|Pistol Brass"
+  },
+  "Reloading|Pistol Bullets": {
+    "top": "Reloading",
+    "sub": "Reloading|Pistol Bullets"
+  },
+  "Reloading|Pistol Dies": {
+    "top": "Reloading",
+    "sub": "Reloading|Pistol Dies"
+  },
+  "Reloading|Pistol Powder": {
+    "top": "Reloading",
+    "sub": "Reloading|Pistol Powder"
+  },
+  "Reloading|Pistol Primers": {
+    "top": "Reloading",
+    "sub": "Reloading|Pistol Primers"
+  },
+  "Reloading|Powder Measures Dispensers & Scales": {
+    "top": "Reloading",
+    "sub": "Reloading|Powder Measures Dispensers & Scales"
+  },
+  "Reloading|Press Parts & Accessories": {
+    "top": "Reloading",
+    "sub": "Reloading|Press Parts & Accessories"
+  },
+  "Reloading|Presses|Case Prep Tools": {
+    "top": "Reloading",
+    "sub": "Reloading|Presses|Case Prep Tools"
+  },
+  "Reloading|Primer Accessories & Fuses": {
+    "top": "Reloading",
+    "sub": "Reloading|Primer Accessories & Fuses"
+  },
+  "Reloading|Reloading": {
+    "top": "Reloading",
+    "sub": "Reloading|Reloading"
+  },
+  "Reloading|Reloading Kits": {
+    "top": "Reloading",
+    "sub": "Reloading|Reloading Kits"
+  },
+  "Reloading|Reloading|Rifle Bullets": {
+    "top": "Reloading",
+    "sub": "Reloading|Reloading|Rifle Bullets"
+  },
+  "Reloading|Replacement Parts": {
+    "top": "Reloading",
+    "sub": "Reloading|Replacement Parts"
+  },
+  "Reloading|Rifle Brass": {
+    "top": "Reloading",
+    "sub": "Reloading|Rifle Brass"
+  },
+  "Reloading|Rifle Bullets": {
+    "top": "Reloading",
+    "sub": "Reloading|Rifle Bullets"
+  },
+  "Reloading|Rifle Dies": {
+    "top": "Reloading",
+    "sub": "Reloading|Rifle Dies"
+  },
+  "Reloading|Rifle Powder": {
+    "top": "Reloading",
+    "sub": "Reloading|Rifle Powder"
+  },
+  "Reloading|Rifle Primers": {
+    "top": "Reloading",
+    "sub": "Reloading|Rifle Primers"
+  },
+  "Reloading|Shell Holders & Plates": {
+    "top": "Reloading",
+    "sub": "Reloading|Shell Holders & Plates"
+  },
+  "Reloading|Shotshell Primers|Percussion Caps & Primers": {
+    "top": "Reloading",
+    "sub": "Reloading|Shotshell Primers|Percussion Caps & Primers"
+  },
+  "Reloading|Single Stage Presses": {
+    "top": "Reloading",
+    "sub": "Reloading|Single Stage Presses"
+  },
+  "Reloading|Tumblers & Media": {
+    "top": "Reloading",
+    "sub": "Reloading|Tumblers & Media"
+  },
+  "Replacement Parts": {
+    "top": "Gear",
+    "sub": "Replacement Parts"
+  },
+  "Rifle Ammunition": {
+    "top": "Ammunition",
+    "sub": "Rifle Ammunition"
+  },
+  "Rifle Brass": {
+    "top": "Reloading",
+    "sub": "Rifle Brass"
+  },
+  "Rifle Bullets": {
+    "top": "Reloading",
+    "sub": "Rifle Bullets"
+  },
+  "Rifle Bullets|Muzzleloader Bullets & Sabots": {
+    "top": "Reloading",
+    "sub": "Rifle Bullets|Muzzleloader Bullets & Sabots"
+  },
+  "Rifle Cases": {
+    "top": "Gear",
+    "sub": "Rifle Cases"
+  },
+  "Rifle Cases|Pouches": {
+    "top": "Gear",
+    "sub": "Rifle Cases|Pouches"
+  },
+  "Rifle Cases|Shotgun Cases": {
+    "top": "Gear",
+    "sub": "Rifle Cases|Shotgun Cases"
+  },
+  "Rifle Dies": {
+    "top": "Reloading",
+    "sub": "Rifle Dies"
+  },
+  "Rifle Lights": {
+    "top": "Optics",
+    "sub": "Rifle Lights"
+  },
+  "Rifle Lights|Flashlights & Accessories": {
+    "top": "Optics",
+    "sub": "Rifle Lights|Flashlights & Accessories"
+  },
+  "Rifle Lights|Grips": {
+    "top": "Optics",
+    "sub": "Rifle Lights|Grips"
+  },
+  "Rifle Magazines": {
+    "top": "Magazines",
+    "sub": "Rifle Magazines"
+  },
+  "Rifle Magazines|Magazine Speedloaders|Speedloaders & Accessories": {
+    "top": "Magazines",
+    "sub": "Rifle Magazines|Magazine Speedloaders|Speedloaders & Accessories"
+  },
+  "Rifle Magazines|Shotgun Magazines": {
+    "top": "Magazines",
+    "sub": "Rifle Magazines|Shotgun Magazines"
+  },
+  "Rifle Parts": {
+    "top": "Gun Parts",
+    "sub": "Rifle Parts"
+  },
+  "Rifle Powder": {
+    "top": "Reloading",
+    "sub": "Rifle Powder"
+  },
+  "Rifle Primers": {
+    "top": "Reloading",
+    "sub": "Rifle Primers"
+  },
+  "Rifle Scopes": {
+    "top": "Optics",
+    "sub": "Rifle Scopes"
+  },
+  "Rifle Sights": {
+    "top": "Optics",
+    "sub": "Rifle Sights"
+  },
+  "Rifle Storage": {
+    "top": "Gear",
+    "sub": "Rifle Storage"
+  },
+  "Rifles": {
+    "top": "Firearms",
+    "sub": "Rifles"
+  },
+  "Rifles|CA Compliant": {
+    "top": "Firearms",
+    "sub": "Rifles|CA Compliant"
+  },
+  "Rifles|CSSI Exclusive Shop": {
+    "top": "Firearms",
+    "sub": "Rifles|CSSI Exclusive Shop"
+  },
+  "Rifles|CSSI Exclusive Shop|Firearms": {
+    "top": "Firearms",
+    "sub": "Rifles|CSSI Exclusive Shop|Firearms"
+  },
+  "Rifles|Chassis & Stocks": {
+    "top": "Gun Parts",
+    "sub": "Rifles|Chassis & Stocks"
+  },
+  "Rifles|Firearms": {
+    "top": "Firearms",
+    "sub": "Rifles|Firearms"
+  },
+  "Rifles|Firearms|Firearms": {
+    "top": "Firearms",
+    "sub": "Rifles|Firearms|Firearms"
+  },
+  "Rifles|Gun Parts|Uppers": {
+    "top": "Gun Parts",
+    "sub": "Rifles|Gun Parts|Uppers"
+  },
+  "Rifles|Shotguns": {
+    "top": "Firearms",
+    "sub": "Rifles|Shotguns"
+  },
+  "Rifles|Uppers": {
+    "top": "Gun Parts",
+    "sub": "Rifles|Uppers"
+  },
+  "Rifles|Used Guns": {
+    "top": "Firearms",
+    "sub": "Rifles|Used Guns"
+  },
+  "Rifles|Used Guns|CA Compliant": {
+    "top": "Firearms",
+    "sub": "Rifles|Used Guns|CA Compliant"
+  },
+  "Rimfire Ammunition": {
+    "top": "Ammunition",
+    "sub": "Rimfire Ammunition"
+  },
+  "Rimfire Scopes": {
+    "top": "Optics",
+    "sub": "Rimfire Scopes"
+  },
+  "Safe Accessories": {
+    "top": "Gear",
+    "sub": "Safe Accessories"
+  },
+  "Safety Glasses": {
+    "top": "Gear",
+    "sub": "Safety Glasses"
+  },
+  "Safety Glasses|Ear & Eye Combo Kits": {
+    "top": "Gear",
+    "sub": "Safety Glasses|Ear & Eye Combo Kits"
+  },
+  "Safety Glasses|Shooting Glasses": {
+    "top": "Gear",
+    "sub": "Safety Glasses|Shooting Glasses"
+  },
+  "Sausage Stuffers": {
+    "top": "Outdoors",
+    "sub": "Sausage Stuffers"
+  },
+  "Scent Attractants": {
+    "top": "Outdoors",
+    "sub": "Scent Attractants"
+  },
+  "Scent Control Kits": {
+    "top": "Outdoors",
+    "sub": "Scent Control Kits"
+  },
+  "Scope Accessories": {
+    "top": "Optics",
+    "sub": "Scope Accessories"
+  },
+  "Scope Bases & Mounts": {
+    "top": "Optics",
+    "sub": "Scope Bases & Mounts"
+  },
+  "Scope Bases & Mounts|Barrels": {
+    "top": "Optics",
+    "sub": "Scope Bases & Mounts|Barrels"
+  },
+  "Scope Bases & Mounts|Chassis & Stocks": {
+    "top": "Optics",
+    "sub": "Scope Bases & Mounts|Chassis & Stocks"
+  },
+  "Scope Bases & Mounts|Scope Rings": {
+    "top": "Optics",
+    "sub": "Scope Bases & Mounts|Scope Rings"
+  },
+  "Scope Bases & Mounts|Sling Accessories": {
+    "top": "Optics",
+    "sub": "Scope Bases & Mounts|Sling Accessories"
+  },
+  "Scope Covers & Sunshades": {
+    "top": "Optics",
+    "sub": "Scope Covers & Sunshades"
+  },
+  "Scope Rings": {
+    "top": "Optics",
+    "sub": "Scope Rings"
+  },
+  "Scope/Sight Mounting": {
+    "top": "Optics",
+    "sub": "Scope/Sight Mounting"
+  },
+  "Screwdrivers & Torque Wrenches": {
+    "top": "Gear",
+    "sub": "Screwdrivers & Torque Wrenches"
+  },
+  "Screwdrivers & Torque Wrenches|Gun Cleaning Kits": {
+    "top": "Gun Parts",
+    "sub": "Screwdrivers & Torque Wrenches|Gun Cleaning Kits"
+  },
+  "Self Defense Accessories": {
+    "top": "Gear",
+    "sub": "Self Defense Accessories"
+  },
+  "Self Defense Accessories|Flashlights & Accessories": {
+    "top": "Gear",
+    "sub": "Self Defense Accessories|Flashlights & Accessories"
+  },
+  "Sharpeners & Maintenance": {
+    "top": "Knives",
+    "sub": "Sharpeners & Maintenance"
+  },
+  "Sharpeners & Maintenance|Knives & Edged Tools": {
+    "top": "Knives",
+    "sub": "Sharpeners & Maintenance|Knives & Edged Tools"
+  },
+  "Shell Holders": {
+    "top": "Reloading",
+    "sub": "Shell Holders"
+  },
+  "Shell Holders & Plates": {
+    "top": "Reloading",
+    "sub": "Shell Holders & Plates"
+  },
+  "Shell Holders & Plates|Replacement Parts": {
+    "top": "Reloading",
+    "sub": "Shell Holders & Plates|Replacement Parts"
+  },
+  "Shell Holders|Brass Catchers": {
+    "top": "Reloading",
+    "sub": "Shell Holders|Brass Catchers"
+  },
+  "Shell Holders|Pouches": {
+    "top": "Reloading",
+    "sub": "Shell Holders|Pouches"
+  },
+  "Shell Holders|Range Bags|Brass Catchers": {
+    "top": "Reloading",
+    "sub": "Shell Holders|Range Bags|Brass Catchers"
+  },
+  "Shirts": {
+    "top": "Clothing & Footwear",
+    "sub": "Shirts"
+  },
+  "Shirts|Clothing & Footwear": {
+    "top": "Clothing & Footwear",
+    "sub": "Shirts|Clothing & Footwear"
+  },
+  "Shooting": {
+    "top": "Outdoors",
+    "sub": "Shooting"
+  },
+  "Shooting Glasses": {
+    "top": "Gear",
+    "sub": "Shooting Glasses"
+  },
+  "Shooting Patches & Wads": {
+    "top": "Outdoors",
+    "sub": "Shooting Patches & Wads"
+  },
+  "Shooting Rests": {
+    "top": "Outdoors",
+    "sub": "Shooting Rests"
+  },
+  "Shooting Rests|Bipods": {
+    "top": "Outdoors",
+    "sub": "Shooting Rests|Bipods"
+  },
+  "Shooting Rests|Shooting Sticks": {
+    "top": "Outdoors",
+    "sub": "Shooting Rests|Shooting Sticks"
+  },
+  "Shooting Sticks": {
+    "top": "Outdoors",
+    "sub": "Shooting Sticks"
+  },
+  "Shooting Vests": {
+    "top": "Clothing & Footwear",
+    "sub": "Shooting Vests"
+  },
+  "Shooting Vests|Plate Carriers & Chest Rigs": {
+    "top": "Clothing & Footwear",
+    "sub": "Shooting Vests|Plate Carriers & Chest Rigs"
+  },
+  "Shooting|Accessory Holsters": {
+    "top": "Gear",
+    "sub": "Shooting|Accessory Holsters"
+  },
+  "Shooting|Adapters & Rails": {
+    "top": "Gear",
+    "sub": "Shooting|Adapters & Rails"
+  },
+  "Shooting|Bipods": {
+    "top": "Gear",
+    "sub": "Shooting|Bipods"
+  },
+  "Shooting|Brass Catchers": {
+    "top": "Gear",
+    "sub": "Shooting|Brass Catchers"
+  },
+  "Shooting|Chronographs & Shot Timers": {
+    "top": "Gear",
+    "sub": "Shooting|Chronographs & Shot Timers"
+  },
+  "Shooting|Clay Target Throwers": {
+    "top": "Outdoors",
+    "sub": "Shooting|Clay Target Throwers"
+  },
+  "Shooting|Cleaning Brushes Mops and Swabs": {
+    "top": "Gun Parts",
+    "sub": "Shooting|Cleaning Brushes Mops and Swabs"
+  },
+  "Shooting|Ear & Eye Combo Kits": {
+    "top": "Gear",
+    "sub": "Shooting|Ear & Eye Combo Kits"
+  },
+  "Shooting|Ear Muffs": {
+    "top": "Gear",
+    "sub": "Shooting|Ear Muffs"
+  },
+  "Shooting|Ear Plugs": {
+    "top": "Gear",
+    "sub": "Shooting|Ear Plugs"
+  },
+  "Shooting|Gun & Magazine Combo Holsters": {
+    "top": "Gear",
+    "sub": "Shooting|Gun & Magazine Combo Holsters"
+  },
+  "Shooting|Gun Cleaning Accessories": {
+    "top": "Gun Parts",
+    "sub": "Shooting|Gun Cleaning Accessories"
+  },
+  "Shooting|Gun Cleaning Jags Patch Holders & Patches": {
+    "top": "Gun Parts",
+    "sub": "Shooting|Gun Cleaning Jags Patch Holders & Patches"
+  },
+  "Shooting|Gun Cleaning Kits": {
+    "top": "Gun Parts",
+    "sub": "Shooting|Gun Cleaning Kits"
+  },
+  "Shooting|Gun Cleaning Rods": {
+    "top": "Gun Parts",
+    "sub": "Shooting|Gun Cleaning Rods"
+  },
+  "Shooting|Gun Holsters": {
+    "top": "Gear",
+    "sub": "Shooting|Gun Holsters"
+  },
+  "Shooting|Gun Oils & Gun Cleaning Solvents": {
+    "top": "Gun Parts",
+    "sub": "Shooting|Gun Oils & Gun Cleaning Solvents"
+  },
+  "Shooting|Magazine Speedloaders": {
+    "top": "Gun Parts",
+    "sub": "Shooting|Magazine Speedloaders"
+  },
+  "Shooting|Paper Targets": {
+    "top": "Outdoors",
+    "sub": "Shooting|Paper Targets"
+  },
+  "Shooting|Pouches": {
+    "top": "Gear",
+    "sub": "Shooting|Pouches"
+  },
+  "Shooting|Pouches|Magazine Holsters": {
+    "top": "Gear",
+    "sub": "Shooting|Pouches|Magazine Holsters"
+  },
+  "Shooting|Pull Through Bore Cleaners": {
+    "top": "Gun Parts",
+    "sub": "Shooting|Pull Through Bore Cleaners"
+  },
+  "Shooting|Rifle Cases|Shotgun Cases": {
+    "top": "Gear",
+    "sub": "Shooting|Rifle Cases|Shotgun Cases"
+  },
+  "Shooting|Shooting Glasses": {
+    "top": "Gear",
+    "sub": "Shooting|Shooting Glasses"
+  },
+  "Shooting|Shooting Rests": {
+    "top": "Outdoors",
+    "sub": "Shooting|Shooting Rests"
+  },
+  "Shooting|Sling Accessories": {
+    "top": "Gear",
+    "sub": "Shooting|Sling Accessories"
+  },
+  "Shooting|Slings": {
+    "top": "Gear",
+    "sub": "Shooting|Slings"
+  },
+  "Shooting|Speedloaders & Accessories": {
+    "top": "Gun Parts",
+    "sub": "Shooting|Speedloaders & Accessories"
+  },
+  "Shooting|Steel Targets": {
+    "top": "Outdoors",
+    "sub": "Shooting|Steel Targets"
+  },
+  "Shooting|Swivels": {
+    "top": "Gear",
+    "sub": "Shooting|Swivels"
+  },
+  "Shooting|Target Stands & Accessories": {
+    "top": "Outdoors",
+    "sub": "Shooting|Target Stands & Accessories"
+  },
+  "Short Barreled Rifles": {
+    "top": "Firearms",
+    "sub": "Short Barreled Rifles"
+  },
+  "Short Barreled Rifles|Rifles": {
+    "top": "Firearms",
+    "sub": "Short Barreled Rifles|Rifles"
+  },
+  "Short Sleeve Shirts": {
+    "top": "Clothing & Footwear",
+    "sub": "Short Sleeve Shirts"
+  },
+  "Short Sleeve Shirts|Clothing & Footwear": {
+    "top": "Clothing & Footwear",
+    "sub": "Short Sleeve Shirts|Clothing & Footwear"
+  },
+  "Short Sleeve Shirts|Short Sleeve Shirts": {
+    "top": "Clothing & Footwear",
+    "sub": "Short Sleeve Shirts|Short Sleeve Shirts"
+  },
+  "Shorts": {
+    "top": "Clothing & Footwear",
+    "sub": "Shorts"
+  },
+  "Shorts|Clothing & Footwear": {
+    "top": "Clothing & Footwear",
+    "sub": "Shorts|Clothing & Footwear"
+  },
+  "Shotgun Ammunition": {
+    "top": "Ammunition",
+    "sub": "Shotgun Ammunition"
+  },
+  "Shotgun Ammunition|Dummy Rounds|Snap Caps & Dummy Rounds|Snap Caps & Dummy Rounds": {
+    "top": "Ammunition",
+    "sub": "Shotgun Ammunition|Dummy Rounds|Snap Caps & Dummy Rounds|Snap Caps & Dummy Rounds"
+  },
+  "Shotgun Cases": {
+    "top": "Gear",
+    "sub": "Shotgun Cases"
+  },
+  "Shotgun Lights": {
+    "top": "Optics",
+    "sub": "Shotgun Lights"
+  },
+  "Shotgun Magazines": {
+    "top": "Magazines",
+    "sub": "Shotgun Magazines"
+  },
+  "Shotgun Scopes": {
+    "top": "Optics",
+    "sub": "Shotgun Scopes"
+  },
+  "Shotgun Sights": {
+    "top": "Optics",
+    "sub": "Shotgun Sights"
+  },
+  "Shotguns": {
+    "top": "Firearms",
+    "sub": "Shotguns"
+  },
+  "Shotguns|CA Compliant": {
+    "top": "Firearms",
+    "sub": "Shotguns|CA Compliant"
+  },
+  "Shotguns|CA Compliant|MA Compliant": {
+    "top": "Firearms",
+    "sub": "Shotguns|CA Compliant|MA Compliant"
+  },
+  "Shotguns|Firearms": {
+    "top": "Firearms",
+    "sub": "Shotguns|Firearms"
+  },
+  "Shotguns|Used Guns": {
+    "top": "Firearms",
+    "sub": "Shotguns|Used Guns"
+  },
+  "Shotshell Powder": {
+    "top": "Reloading",
+    "sub": "Shotshell Powder"
+  },
+  "Shotshell Primers": {
+    "top": "Reloading",
+    "sub": "Shotshell Primers"
+  },
+  "Shotshell Primers|Percussion Caps & Primers": {
+    "top": "Reloading",
+    "sub": "Shotshell Primers|Percussion Caps & Primers"
+  },
+  "Shotshell Storage": {
+    "top": "Gear",
+    "sub": "Shotshell Storage"
+  },
+  "Sights & Scopes": {
+    "top": "Optics",
+    "sub": "Sights & Scopes"
+  },
+  "Sights & Scopes|Archery Scopes": {
+    "top": "Optics",
+    "sub": "Sights & Scopes|Archery Scopes"
+  },
+  "Single Stage Presses": {
+    "top": "Reloading",
+    "sub": "Single Stage Presses"
+  },
+  "Single Stage Presses|Dies": {
+    "top": "Reloading",
+    "sub": "Single Stage Presses|Dies"
+  },
+  "Slate & Glass Calls": {
+    "top": "Outdoors",
+    "sub": "Slate & Glass Calls"
+  },
+  "Sleeping Bags": {
+    "top": "Outdoors",
+    "sub": "Sleeping Bags"
+  },
+  "Sleeping Pads": {
+    "top": "Outdoors",
+    "sub": "Sleeping Pads"
+  },
+  "Slides": {
+    "top": "Gun Parts",
+    "sub": "Slides"
+  },
+  "Slides|Triggers": {
+    "top": "Gun Parts",
+    "sub": "Slides|Triggers"
+  },
+  "Sling Accessories": {
+    "top": "Gear",
+    "sub": "Sling Accessories"
+  },
+  "Sling Accessories|Adapters & Rails": {
+    "top": "Gear",
+    "sub": "Sling Accessories|Adapters & Rails"
+  },
+  "Slings": {
+    "top": "Gear",
+    "sub": "Slings"
+  },
+  "Slings & Swivels": {
+    "top": "Gear",
+    "sub": "Slings & Swivels"
+  },
+  "Slings & Swivels|Adapters & Rails": {
+    "top": "Gear",
+    "sub": "Slings & Swivels|Adapters & Rails"
+  },
+  "Slingshots and Accessories": {
+    "top": "Outdoors",
+    "sub": "Slingshots and Accessories"
+  },
+  "Slingshots and Accessories|Airgun Accessories": {
+    "top": "Outdoors",
+    "sub": "Slingshots and Accessories|Airgun Accessories"
+  },
+  "Snap Caps & Dummy Rounds": {
+    "top": "Gun Parts",
+    "sub": "Snap Caps & Dummy Rounds"
+  },
+  "Snap Caps & Dummy Rounds|Snap Caps & Dummy Rounds": {
+    "top": "Gun Parts",
+    "sub": "Snap Caps & Dummy Rounds|Snap Caps & Dummy Rounds"
+  },
+  "Socks": {
+    "top": "Clothing & Footwear",
+    "sub": "Socks"
+  },
+  "Socks|Socks": {
+    "top": "Clothing & Footwear",
+    "sub": "Socks|Socks"
+  },
+  "Socks|Socks|Clothing & Footwear": {
+    "top": "Clothing & Footwear",
+    "sub": "Socks|Socks|Clothing & Footwear"
+  },
+  "Software": {
+    "top": "Gear",
+    "sub": "Software"
+  },
+  "Speedloaders & Accessories": {
+    "top": "Gun Parts",
+    "sub": "Speedloaders & Accessories"
+  },
+  "Speedloaders & Accessories|Accessory Holsters": {
+    "top": "Gear",
+    "sub": "Speedloaders & Accessories|Accessory Holsters"
+  },
+  "Speedloaders & Accessories|Holster Accessories": {
+    "top": "Gear",
+    "sub": "Speedloaders & Accessories|Holster Accessories"
+  },
+  "Speedloaders & Accessories|Pouches|Accessory Holsters": {
+    "top": "Gear",
+    "sub": "Speedloaders & Accessories|Pouches|Accessory Holsters"
+  },
+  "Spotting Scope Tripods & Mounting": {
+    "top": "Optics",
+    "sub": "Spotting Scope Tripods & Mounting"
+  },
+  "Spotting Scope Tripods & Mounting|Shooting Rests": {
+    "top": "Optics",
+    "sub": "Spotting Scope Tripods & Mounting|Shooting Rests"
+  },
+  "Spotting Scope Tripods & Mounting|Tripods": {
+    "top": "Optics",
+    "sub": "Spotting Scope Tripods & Mounting|Tripods"
+  },
+  "Spotting Scopes": {
+    "top": "Optics",
+    "sub": "Spotting Scopes"
+  },
+  "Stabilizers & Dampers": {
+    "top": "Outdoors",
+    "sub": "Stabilizers & Dampers"
+  },
+  "Steel Targets": {
+    "top": "Outdoors",
+    "sub": "Steel Targets"
+  },
+  "Stock/Chassis Bedding": {
+    "top": "Gun Parts",
+    "sub": "Stock/Chassis Bedding"
+  },
+  "Storage": {
+    "top": "Gear",
+    "sub": "Storage"
+  },
+  "Storage & Organization Accessories": {
+    "top": "Gear",
+    "sub": "Storage & Organization Accessories"
+  },
+  "Storage|Ammo Boxes": {
+    "top": "Gear",
+    "sub": "Storage|Ammo Boxes"
+  },
+  "Stoves & Grills": {
+    "top": "Outdoors",
+    "sub": "Stoves & Grills"
+  },
+  "Stun Guns": {
+    "top": "Gear",
+    "sub": "Stun Guns"
+  },
+  "Sunglasses": {
+    "top": "Gear",
+    "sub": "Sunglasses"
+  },
+  "Sunglasses|Shooting Glasses": {
+    "top": "Gear",
+    "sub": "Sunglasses|Shooting Glasses"
+  },
+  "Sunglasses|Shooting Rests|Shooting Glasses": {
+    "top": "Gear",
+    "sub": "Sunglasses|Shooting Rests|Shooting Glasses"
+  },
+  "Sunglasses|Shooting|Shooting Glasses": {
+    "top": "Gear",
+    "sub": "Sunglasses|Shooting|Shooting Glasses"
+  },
+  "Sunglasses|Sunglasses|Shooting Glasses": {
+    "top": "Gear",
+    "sub": "Sunglasses|Sunglasses|Shooting Glasses"
+  },
+  "Suppressor Cleaners": {
+    "top": "Gun Parts",
+    "sub": "Suppressor Cleaners"
+  },
+  "Suppressor Cleaners|Gun Oils & Gun Cleaning Solvents": {
+    "top": "Gun Parts",
+    "sub": "Suppressor Cleaners|Gun Oils & Gun Cleaning Solvents"
+  },
+  "Suppressor Height Sights": {
+    "top": "Optics",
+    "sub": "Suppressor Height Sights"
+  },
+  "Suppressors": {
+    "top": "Firearms",
+    "sub": "Suppressors"
+  },
+  "Suppressors Accessories": {
+    "top": "Gun Parts",
+    "sub": "Suppressors Accessories"
+  },
+  "Suppressors Accessories|Gun Parts|Muzzle Devices": {
+    "top": "Gun Parts",
+    "sub": "Suppressors Accessories|Gun Parts|Muzzle Devices"
+  },
+  "Suppressors Accessories|Knives": {
+    "top": "Knives",
+    "sub": "Suppressors Accessories|Knives"
+  },
+  "Suppressors Accessories|Muzzle Devices": {
+    "top": "Gun Parts",
+    "sub": "Suppressors Accessories|Muzzle Devices"
+  },
+  "Suppressors Accessories|Packs & Bags": {
+    "top": "Gear",
+    "sub": "Suppressors Accessories|Packs & Bags"
+  },
+  "Suppressors Accessories|Suppressor Cleaners": {
+    "top": "Gun Parts",
+    "sub": "Suppressors Accessories|Suppressor Cleaners"
+  },
+  "Suppressors and Parts": {
+    "top": "Gun Parts",
+    "sub": "Suppressors and Parts"
+  },
+  "Suppressors|Gun Parts": {
+    "top": "Gun Parts",
+    "sub": "Suppressors|Gun Parts"
+  },
+  "Suppressors|Handguns": {
+    "top": "Firearms",
+    "sub": "Suppressors|Handguns"
+  },
+  "Suppressors|Muzzle Devices": {
+    "top": "Gun Parts",
+    "sub": "Suppressors|Muzzle Devices"
+  },
+  "Suppressors|Suppressors": {
+    "top": "Firearms",
+    "sub": "Suppressors|Suppressors"
+  },
+  "Suppressors|Used Guns": {
+    "top": "Firearms",
+    "sub": "Suppressors|Used Guns"
+  },
+  "Swivels": {
+    "top": "Gear",
+    "sub": "Swivels"
+  },
+  "Swivels|Sling Accessories": {
+    "top": "Gear",
+    "sub": "Swivels|Sling Accessories"
+  },
+  "TASER Accessories": {
+    "top": "Gear",
+    "sub": "TASER Accessories"
+  },
+  "TASER Accessories|Accessory Holsters": {
+    "top": "Gear",
+    "sub": "TASER Accessories|Accessory Holsters"
+  },
+  "TASER Devices": {
+    "top": "Gear",
+    "sub": "TASER Devices"
+  },
+  "Tables": {
+    "top": "Outdoors",
+    "sub": "Tables"
+  },
+  "Tabs Slings Guards & Gloves": {
+    "top": "Outdoors",
+    "sub": "Tabs Slings Guards & Gloves"
+  },
+  "Target Stands & Accessories": {
+    "top": "Outdoors",
+    "sub": "Target Stands & Accessories"
+  },
+  "Targets": {
+    "top": "Outdoors",
+    "sub": "Targets"
+  },
+  "Targets|Paper Targets": {
+    "top": "Outdoors",
+    "sub": "Targets|Paper Targets"
+  },
+  "Thermal Accessories": {
+    "top": "Optics",
+    "sub": "Thermal Accessories"
+  },
+  "Thermal Accessories|Scope Rings": {
+    "top": "Optics",
+    "sub": "Thermal Accessories|Scope Rings"
+  },
+  "Thermal Binoculars": {
+    "top": "Optics",
+    "sub": "Thermal Binoculars"
+  },
+  "Thermal Imaging": {
+    "top": "Optics",
+    "sub": "Thermal Imaging"
+  },
+  "Thermal Imaging Cameras": {
+    "top": "Optics",
+    "sub": "Thermal Imaging Cameras"
+  },
+  "Thermal Monoculars": {
+    "top": "Optics",
+    "sub": "Thermal Monoculars"
+  },
+  "Thermal Rifle Scopes": {
+    "top": "Optics",
+    "sub": "Thermal Rifle Scopes"
+  },
+  "Thermal Rifle Scopes|Thermal Imaging Cameras": {
+    "top": "Optics",
+    "sub": "Thermal Rifle Scopes|Thermal Imaging Cameras"
+  },
+  "Tools": {
+    "top": "Gear",
+    "sub": "Tools"
+  },
+  "Tools|Cleaning Brushes Mops and Swabs": {
+    "top": "Gun Parts",
+    "sub": "Tools|Cleaning Brushes Mops and Swabs"
+  },
+  "Tools|Die Parts Shell Holders & Accessories": {
+    "top": "Reloading",
+    "sub": "Tools|Die Parts Shell Holders & Accessories"
+  },
+  "Tools|Gun Bore Guides": {
+    "top": "Gun Parts",
+    "sub": "Tools|Gun Bore Guides"
+  },
+  "Tools|Gun Cleaning Tools": {
+    "top": "Gun Parts",
+    "sub": "Tools|Gun Cleaning Tools"
+  },
+  "Tower Stands": {
+    "top": "Outdoors",
+    "sub": "Tower Stands"
+  },
+  "Traditional Bows": {
+    "top": "Outdoors",
+    "sub": "Traditional Bows"
+  },
+  "Trail Camera Accessories": {
+    "top": "Outdoors",
+    "sub": "Trail Camera Accessories"
+  },
+  "Trail Camera Accessories|Health & Safety": {
+    "top": "Outdoors",
+    "sub": "Trail Camera Accessories|Health & Safety"
+  },
+  "Tree Saddles": {
+    "top": "Outdoors",
+    "sub": "Tree Saddles"
+  },
+  "Tree Saddles|Hunting": {
+    "top": "Outdoors",
+    "sub": "Tree Saddles|Hunting"
+  },
+  "Treestand Accessories": {
+    "top": "Outdoors",
+    "sub": "Treestand Accessories"
+  },
+  "Treestand Accessories|Accessories": {
+    "top": "Outdoors",
+    "sub": "Treestand Accessories|Accessories"
+  },
+  "Treestand Accessories|Archery Accessories": {
+    "top": "Outdoors",
+    "sub": "Treestand Accessories|Archery Accessories"
+  },
+  "Treestand Accessories|Shooting Rests": {
+    "top": "Outdoors",
+    "sub": "Treestand Accessories|Shooting Rests"
+  },
+  "Treestand Safety Harnesses": {
+    "top": "Outdoors",
+    "sub": "Treestand Safety Harnesses"
+  },
+  "Trigger Pull Gauges": {
+    "top": "Gun Parts",
+    "sub": "Trigger Pull Gauges"
+  },
+  "Trigger Pull Gauges|Powder Measures Dispensers & Scales": {
+    "top": "Reloading",
+    "sub": "Trigger Pull Gauges|Powder Measures Dispensers & Scales"
+  },
+  "Triggers": {
+    "top": "Gun Parts",
+    "sub": "Triggers"
+  },
+  "Tripods": {
+    "top": "Optics",
+    "sub": "Tripods"
+  },
+  "Tube": {
+    "top": "Optics",
+    "sub": "Tube"
+  },
+  "Tube|Shotgun Scopes": {
+    "top": "Optics",
+    "sub": "Tube|Shotgun Scopes"
+  },
+  "Tumblers & Media": {
+    "top": "Reloading",
+    "sub": "Tumblers & Media"
+  },
+  "Turkey Calls": {
+    "top": "Outdoors",
+    "sub": "Turkey Calls"
+  },
+  "Turkey Decoys": {
+    "top": "Outdoors",
+    "sub": "Turkey Decoys"
+  },
+  "Turkey Decoys|Hunting": {
+    "top": "Outdoors",
+    "sub": "Turkey Decoys|Hunting"
+  },
+  "Turkey Decoys|Locator Calls": {
+    "top": "Outdoors",
+    "sub": "Turkey Decoys|Locator Calls"
+  },
+  "Turkey Vests": {
+    "top": "Clothing & Footwear",
+    "sub": "Turkey Vests"
+  },
+  "Turkey Vests|Clothing & Footwear": {
+    "top": "Clothing & Footwear",
+    "sub": "Turkey Vests|Clothing & Footwear"
+  },
+  "Turkey Vests|Shooting Vests": {
+    "top": "Clothing & Footwear",
+    "sub": "Turkey Vests|Shooting Vests"
+  },
+  "Turret Presses": {
+    "top": "Reloading",
+    "sub": "Turret Presses"
+  },
+  "Ultrasonic Cleaners & Dryers": {
+    "top": "Gun Parts",
+    "sub": "Ultrasonic Cleaners & Dryers"
+  },
+  "Ultrasonic Gun Cleaners": {
+    "top": "Gun Parts",
+    "sub": "Ultrasonic Gun Cleaners"
+  },
+  "Upland Calls": {
+    "top": "Outdoors",
+    "sub": "Upland Calls"
+  },
+  "Upland Vests": {
+    "top": "Clothing & Footwear",
+    "sub": "Upland Vests"
+  },
+  "Upland Vests|Cases Safes & Storage|Shooting Vests": {
+    "top": "Clothing & Footwear",
+    "sub": "Upland Vests|Cases Safes & Storage|Shooting Vests"
+  },
+  "Upland Vests|Hunting Packs": {
+    "top": "Outdoors",
+    "sub": "Upland Vests|Hunting Packs"
+  },
+  "Uppers": {
+    "top": "Gun Parts",
+    "sub": "Uppers"
+  },
+  "Used Guns": {
+    "top": "Firearms",
+    "sub": "Used Guns"
+  },
+  "Utensils": {
+    "top": "Outdoors",
+    "sub": "Utensils"
+  },
+  "Vacuum Sealers": {
+    "top": "Outdoors",
+    "sub": "Vacuum Sealers"
+  },
+  "Vacuum Sealers|Hunting": {
+    "top": "Outdoors",
+    "sub": "Vacuum Sealers|Hunting"
+  },
+  "Vests": {
+    "top": "Clothing & Footwear",
+    "sub": "Vests"
+  },
+  "Vests|Collars Leashes & Harnesses": {
+    "top": "Outdoors",
+    "sub": "Vests|Collars Leashes & Harnesses"
+  },
+  "Vests|Hunting Safety": {
+    "top": "Outdoors",
+    "sub": "Vests|Hunting Safety"
+  },
+  "Vests|Rain Gear": {
+    "top": "Clothing & Footwear",
+    "sub": "Vests|Rain Gear"
+  },
+  "Vests|Shooting Vests": {
+    "top": "Clothing & Footwear",
+    "sub": "Vests|Shooting Vests"
+  },
+  "Vests|Vests": {
+    "top": "Clothing & Footwear",
+    "sub": "Vests|Vests"
+  },
+  "Vices & Cradles": {
+    "top": "Gun Parts",
+    "sub": "Vices & Cradles"
+  },
+  "Waders & Wading Boots": {
+    "top": "Clothing & Footwear",
+    "sub": "Waders & Wading Boots"
+  },
+  "Waders & Wading Boots|Clothing & Footwear": {
+    "top": "Clothing & Footwear",
+    "sub": "Waders & Wading Boots|Clothing & Footwear"
+  },
+  "Waders & Wading Boots|Waders & Wading Boots": {
+    "top": "Clothing & Footwear",
+    "sub": "Waders & Wading Boots|Waders & Wading Boots"
+  },
+  "Waist Packs": {
+    "top": "Gear",
+    "sub": "Waist Packs"
+  },
+  "Waist Packs|Packs & Bags": {
+    "top": "Gear",
+    "sub": "Waist Packs|Packs & Bags"
+  },
+  "Water Bottles": {
+    "top": "Outdoors",
+    "sub": "Water Bottles"
+  },
+  "Water Bottles|Hydration Packs": {
+    "top": "Outdoors",
+    "sub": "Water Bottles|Hydration Packs"
+  },
+  "Water Treatment": {
+    "top": "Outdoors",
+    "sub": "Water Treatment"
+  },
+  "Waterfowl Blinds": {
+    "top": "Outdoors",
+    "sub": "Waterfowl Blinds"
+  },
+  "Waterfowl Blinds|Hunting": {
+    "top": "Outdoors",
+    "sub": "Waterfowl Blinds|Hunting"
+  },
+  "Weapon Lights": {
+    "top": "Optics",
+    "sub": "Weapon Lights"
+  },
+  "Windmeters & Flags": {
+    "top": "Outdoors",
+    "sub": "Windmeters & Flags"
+  },
+  "Youth Bows": {
+    "top": "Outdoors",
+    "sub": "Youth Bows"
+  }
+}
