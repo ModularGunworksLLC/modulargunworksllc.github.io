@@ -30,6 +30,7 @@ const THEME_CSS = [
   "/theme/css/woocommerce.css",
   "/theme/css/front-page.css",
   "/theme/css/age-gate.css",
+  "/theme/css/page-content.css",
 ];
 
 export default function RootLayout({
