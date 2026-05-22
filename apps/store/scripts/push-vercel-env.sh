@@ -5,7 +5,9 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 ENV_FILE="${ENV_FILE:-$ROOT/.env.local}"
 PROJECT_ID="${VERCEL_PROJECT_ID:-prj_ZtdTPfs2kqb7B4qfaScHJse0djL8}"
-TEAM="${VERCEL_TEAM:-modulargunworksllcs-projects}"
+export VERCEL_TEAM_ID="${VERCEL_TEAM_ID:-$TEAM_ID}"
+TEAM="${VERCEL_TEAM:-modulargunworksllc1}"
+TEAM_ID="${VERCEL_TEAM_ID:-team_XyIerlP18Cr8S2VFOUKvGKPS}"
 
 if [[ -z "${VERCEL_TOKEN:-}" ]]; then
   echo "ERROR: export VERCEL_TOKEN from https://vercel.com/account/tokens" >&2
