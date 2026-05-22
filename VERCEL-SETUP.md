@@ -25,6 +25,38 @@ After redeploy, the home page should show the Modular Gunworks header/hero (not 
 
 Use the `*.vercel.app` URL from the latest deployment. A gray banner notes that the live store is still on modulargunworks.com.
 
-## Environment variables (later)
+## Catalog on Vercel (no secrets required)
 
-Add in Vercel → Settings → Environment Variables (see `apps/store/.env.example`).
+The shop reads your **live WordPress WooCommerce catalog** (~2k products already synced from Chattanooga). Default store URL is `https://www.modulargunworks.com` — works without env vars.
+
+- `/shop` — product grid  
+- `/api/catalog/sample` — JSON sample (WordPress fallback)
+
+Optional: set `NEXT_PUBLIC_WORDPRESS_STORE_URL` if the live store URL changes.
+
+## Environment variables (Chattanooga direct sync — optional)
+
+**Source on Lightsail:** WordPress `wp-config.php` defines `MGW_CHATTANOOGA_API_SID` / `MGW_CHATTANOOGA_API_TOKEN` (same as the Chattanooga sync plugin).
+
+**Automated push (agent or you, on Lightsail):**
+
+```bash
+# 1) Create token: https://vercel.com/account/tokens
+export VERCEL_TOKEN="..."   # do not paste in chat
+
+# 2) Extract from wp-config → ~/.config/mgw/vercel-store.env (chmod 600)
+apps/store/scripts/extract-store-env.sh > ~/.config/mgw/vercel-store.env
+chmod 600 ~/.config/mgw/vercel-store.env
+
+# 3) Push to project modulargunworksllc-github-io
+apps/store/scripts/push-vercel-env.sh
+
+# 4) Redeploy production (Deployments → ⋯ → Redeploy)
+```
+
+**Manual:** Vercel → **Settings → Environment Variables** → import `~/.config/mgw/vercel-store.env` or paste keys from `apps/store/.env.example`.
+
+**Test after redeploy:**  
+`https://modulargunworksllc-github-io.vercel.app/api/catalog/sample?limit=5`
+
+Ledger (`Bankledger/.env`) is for a **separate** Vercel project later — not mixed into the store project.

@@ -487,3 +487,67 @@ main .content-section ol {
     grid-template-columns: 1fr;
   }
 }
+
+/* Shop (Vercel preview — WordPress catalog bridge) */
+.shop-category-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+  justify-content: center;
+}
+.shop-pill {
+  display: inline-block;
+  padding: 0.4rem 0.85rem;
+  border: 1px solid #ccc;
+  border-radius: 999px;
+  font-size: 0.875rem;
+  text-decoration: none;
+  color: #333;
+  background: #fff;
+}
+.shop-pill:hover,
+.shop-pill.is-active {
+  border-color: var(--color-primary, #c41e3a);
+  color: var(--color-primary, #c41e3a);
+}
+.shop-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 2rem;
+  flex-wrap: wrap;
+}
+.shop-empty {
+  text-align: center;
+  padding: 2rem;
+  color: #666;
+}
+.mgw-product-detail-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.mgw-product-detail-image img {
+  width: 100%;
+  max-height: 480px;
+  object-fit: contain;
+  background: #f9f9f9;
+  border-radius: 8px;
+}
+.breadcrumb {
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+  color: #666;
+}
+.breadcrumb a {
+  color: var(--color-primary, #c41e3a);
+}
+@media (max-width: 768px) {
+  .mgw-product-detail-grid {
+    grid-template-columns: 1fr;
+  }
+}

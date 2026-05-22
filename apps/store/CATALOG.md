@@ -24,6 +24,17 @@ flowchart LR
 | Sellable | Price + image required | Same |
 | NFA | Excluded from storefront | Same |
 
+## WordPress bridge (works on Vercel without Chattanooga env)
+
+The live shop at **modulargunworks.com** already has ~2,000 products synced by `mgw-chattanooga-sync`. The Vercel store reads them via the public **WooCommerce Store API**:
+
+- `GET /wp-json/wc/store/v1/products`
+- Shop grid: `/shop`, `/shop?product_cat=ammunition`
+- Product page: `/shop/product/[slug]`
+- Sample API falls back to WordPress when `CHATTANOOGA_*` is not set
+
+Set `NEXT_PUBLIC_WORDPRESS_STORE_URL=https://www.modulargunworks.com` (optional; this is the default).
+
 ## Environment (Vercel → Settings → Environment Variables)
 
 | Variable | Source |
