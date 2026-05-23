@@ -1,1 +1,0 @@
-Redeploy after setting Root Directory to apps/store.
